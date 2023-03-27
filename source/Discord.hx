@@ -7,6 +7,7 @@ import discord_rpc.DiscordRpc;
 import llua.Lua;
 import llua.State;
 #end
+import psy.Core;
 
 using StringTools;
 
@@ -82,7 +83,7 @@ class DiscordClient
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Engine Version: " + MainMenuState.psychEngineVersion,
+			largeImageText: "Engine Version: " + MainMenuState.psychEngineVersion +" • "+"Core Version: "+ Core.coreVersion,
 			smallImageKey : smallImageKey,
 			// Obtained times are in milliseconds so they are divided so Discord can use it
 			startTimestamp : Std.int(startTimestamp / 1000),

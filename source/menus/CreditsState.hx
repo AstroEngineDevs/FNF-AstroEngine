@@ -1,4 +1,4 @@
-package;
+package menus;
 
 #if desktop
 import Discord.DiscordClient;
@@ -213,7 +213,7 @@ class CreditsState extends MusicBeatState
 					colorTween.cancel();
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new MainMenuState());
+				MusicBeatState.switchState(new menus.MainMenuState());
 				quitting = true;
 			}
 		}

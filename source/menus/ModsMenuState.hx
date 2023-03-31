@@ -1,4 +1,4 @@
-package;
+package menus;
 
 #if desktop
 import Discord.DiscordClient;
@@ -486,16 +486,16 @@ class ModsMenuState extends MusicBeatState
 				TitleState.initialized = false;
 				TitleState.closedState = false;
 				FlxG.sound.music.fadeOut(0.3);
-				if(FreeplayState.vocals != null)
+				if(menus.FreeplayState.vocals != null)
 				{
-					FreeplayState.vocals.fadeOut(0.3);
-					FreeplayState.vocals = null;
+					menus.FreeplayState.vocals.fadeOut(0.3);
+					menus.FreeplayState.vocals = null;
 				}
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
 			}
 			else
 			{
-				MusicBeatState.switchState(new MainMenuState());
+				MusicBeatState.switchState(new menus.MainMenuState());
 			}
 		}
 
@@ -723,7 +723,7 @@ class ModMetadata
 		this.folder = folder;
 		this.name = folder;
 		this.description = "No description provided.";
-		this.color = ModsMenuState.defaultColor;
+		this.color = menus.ModsMenuState.defaultColor;
 		this.restart = false;
 
 		//Try loading json

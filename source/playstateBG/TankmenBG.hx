@@ -1,4 +1,4 @@
-package;
+package playstateBG;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

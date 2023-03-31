@@ -1,4 +1,4 @@
-package;
+package achievements;
 
 #if desktop
 import Discord.DiscordClient;
@@ -13,7 +13,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 import flixel.FlxSubState;
-import Achievements;
+import achievements.Achievements;
 
 using StringTools;
 
@@ -86,7 +86,7 @@ class AchievementsMenuState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(new menus.MainMenuState());
 		}
 	}
 

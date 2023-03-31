@@ -108,7 +108,7 @@ class MasterEditorMenu extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new MainMenuState());
+			MusicBeatState.switchState(new menus.MainMenuState());
 		}
 
 		if (controls.ACCEPT)
@@ -129,7 +129,7 @@ class MasterEditorMenu extends MusicBeatState
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
-			FreeplayState.destroyFreeplayVocals();
+			menus.FreeplayState.destroyFreeplayVocals();
 			#end
 		}
 		

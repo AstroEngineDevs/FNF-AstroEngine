@@ -15,6 +15,8 @@ class ClientPrefs {
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
+	public static var hideFullHUD:Bool = false;
+	public static var botplayStudio:Bool = false;
 	public static var shaders:Bool = true;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
@@ -85,7 +87,7 @@ class ClientPrefs {
 		'volume_down'	=> [NUMPADMINUS, MINUS],
 		
 		'debug_1'		=> [SEVEN, NONE],
-		'debug_2'		=> [EIGHT, NONE]
+		'debug_2'		=> [EIGHT, NONE],
 	];
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 
@@ -103,6 +105,10 @@ class ClientPrefs {
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
+		FlxG.save.data.hideFullHUD = hideFullHUD;
+		FlxG.save.data.botplayStudio = botplayStudio;
+		//botplayStudio
+
 		FlxG.save.data.shaders = shaders;
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
@@ -170,6 +176,13 @@ class ClientPrefs {
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
 		}
+		if(FlxG.save.data.hideFullHUD != null) {
+			hideFullHUD = FlxG.save.data.hideFullHUD;
+		}
+		if(FlxG.save.data.botplayStudio != null) {
+			botplayStudio = FlxG.save.data.botplayStudio;
+		}
+		//botplayStudio
 		if(FlxG.save.data.shaders != null) {
 			shaders = FlxG.save.data.shaders;
 		}
@@ -222,6 +235,7 @@ class ClientPrefs {
 		if(FlxG.save.data.comboOffset != null) {
 			comboOffset = FlxG.save.data.comboOffset;
 		}
+		
 		
 		if(FlxG.save.data.ratingOffset != null) {
 			ratingOffset = FlxG.save.data.ratingOffset;

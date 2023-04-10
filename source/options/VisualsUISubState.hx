@@ -41,12 +41,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('Hide HUD',
-			'If checked, hides most HUD elements.',
-			'hideHud',
-			'bool',
-			false);
-		addOption(option);
+		//removed the hide hud use  hidefullhud in the recording page
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",
@@ -147,8 +142,15 @@ class VisualsUISubState extends BaseOptionsMenu
 	#if !mobile
 	function onChangeFPSCounter()
 	{
+		if(ClientPrefs.showFPS){
+			ClientPrefs.hideFullHUD = false;
+		} else {
+			ClientPrefs.hideFullHUD = true;
+		}
+		
 		if(Main.fpsVar != null)
 			Main.fpsVar.visible = ClientPrefs.showFPS;
+		
 	}
 	#end
 }

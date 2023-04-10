@@ -9,6 +9,7 @@ import flixel.FlxSprite;
 import flixel.FlxCamera;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
@@ -20,6 +21,7 @@ import lime.app.Application;
 import achievements.Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+import psy.Core;
 
 using StringTools;
 
@@ -41,10 +43,21 @@ class MainMenuState extends MusicBeatState
 		'options'
 	];
 
+	private var versionShitInt:Int = 0;
+	private var array:Array<Array<Dynamic>> = [];
+	private var versionShitArray:Array<Array<Dynamic>> = [
+		["Psy Engine v", psy.Core.coreVersion],
+		["Psych Engine v", psych.CorePsych.psychVersion],
+		["Friday Night Funkin' v", Application.current.meta.get('version')]
+	];
+
+
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+
+	var grp:FlxTypedSpriteGroup<FlxSprite>;
 
 	override function create()
 	{
@@ -102,9 +115,6 @@ class MainMenuState extends MusicBeatState
 		add(menuItems);
 
 		var scale:Float = 1;
-		/*if(optionShit.length > 6) {
-			scale = 6 / optionShit.length;
-		}*/
 
 		for (i in 0...optionShit.length)
 		{
@@ -129,14 +139,21 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psych.CorePsych.psychVersion, 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
+		for (i in versionShitArray)
+			array.push(i);
+
+		grp = new FlxTypedSpriteGroup<FlxSprite>();
+
+		for (i in 0...array.length) {
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 66 + versionShitInt, 0, array[i][0] + array[i][1], 12);
+			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		
+			grp.add(versionShit);
+
+			versionShitInt += 22;
+		}
+		grp.scrollFactor.set();
+		add(grp);
 
 		// NG.core.calls.event.logEvent('swag').send();
 

@@ -6,5 +6,5 @@ using StringTools;
 
 class Core 
 {
-    public static var coreVersion:String = '0.0.2';
+    public static var coreVersion:String = '1.5.2';
 }

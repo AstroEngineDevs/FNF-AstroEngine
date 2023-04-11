@@ -29,7 +29,7 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Studio', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Studio', 'Graphics', 'Gameplay', 'Visuals and UI', 'Adjust Delay and Combo'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -56,13 +56,15 @@ class OptionsState extends MusicBeatState
 	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
 
+	var OFFSETFUCKME:Int = 200;
+
 	override function create() {
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
+		bg.color = 0xff525252;
 		bg.updateHitbox();
 
 		bg.screenCenter();
@@ -74,15 +76,22 @@ class OptionsState extends MusicBeatState
 
 		for (i in 0...options.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 0, options[i], true);
-			optionText.screenCenter();
+			var optionText:Alphabet = new Alphabet(0, OFFSETFUCKME, options[i], true);
+			optionText.screenCenter();	
+			optionText.isMenuItem = true;
+			//optionText.changeY = false;
+			optionText.changeX = false;
 			optionText.y += (100 * (i - (options.length / 2))) + 50;
 			grpOptions.add(optionText);
 		}
 
-		selectorLeft = new Alphabet(0, 0, '>', true);
+		selectorLeft = new Alphabet(0, OFFSETFUCKME, '>', true);
+		selectorLeft.isMenuItem = true;
+		selectorLeft.changeX = false;
 		add(selectorLeft);
-		selectorRight = new Alphabet(0, 0, '<', true);
+		selectorRight = new Alphabet(0, OFFSETFUCKME, '<', true);
+		selectorRight.isMenuItem = true;
+		selectorRight.changeX = false;
 		add(selectorRight);
 
 		changeSelection();
@@ -136,6 +145,14 @@ class OptionsState extends MusicBeatState
 				selectorLeft.y = item.y;
 				selectorRight.x = item.x + item.width + 15;
 				selectorRight.y = item.y;
+
+				/* 
+				item.alpha = 1;
+				selectorLeft.x = item.x - 63;
+				selectorLeft.y = item.y - 170;
+				selectorRight.x = item.x + item.width + 15;
+				selectorRight.y = item.y - 170;
+				*/
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));

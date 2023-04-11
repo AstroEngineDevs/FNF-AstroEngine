@@ -2,6 +2,7 @@ package;
 
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
+import psy.Core;
 
 #if LUA_ALLOWED
 import llua.Lua;
@@ -18,7 +19,9 @@ class DiscordClient
 	{
 		trace("Discord Client starting...");
 		DiscordRpc.start({
-			clientID: "863222024192262205",
+			// Psych Engine ID: 863222024192262205
+
+			clientID: psy.Core.coreDiscordID,
 			onReady: onReady,
 			onError: onError,
 			onDisconnected: onDisconnected
@@ -83,7 +86,7 @@ class DiscordClient
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Engine Version: " + psych.CorePsych.psychVersion +" • "+"Core Version: "+ Core.coreVersion,
+			largeImageText: "Psy Version: "+ Core.coreVersion,
 			smallImageKey : smallImageKey,
 			// Obtained times are in milliseconds so they are divided so Discord can use it
 			startTimestamp : Std.int(startTimestamp / 1000),

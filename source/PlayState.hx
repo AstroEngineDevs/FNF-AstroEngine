@@ -2152,7 +2152,9 @@ class PlayState extends MusicBeatState
 
 						countdownReady.screenCenter();
 						countdownReady.antialiasing = antialias;
-						insert(members.indexOf(notes), countdownReady);
+						if(!ClientPrefs.hideFullHUD)
+							insert(members.indexOf(notes), countdownReady);
+
 						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -2172,7 +2174,8 @@ class PlayState extends MusicBeatState
 
 						countdownSet.screenCenter();
 						countdownSet.antialiasing = antialias;
-						insert(members.indexOf(notes), countdownSet);
+						if(!ClientPrefs.hideFullHUD)
+							insert(members.indexOf(notes), countdownSet);
 						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -2194,7 +2197,8 @@ class PlayState extends MusicBeatState
 
 						countdownGo.screenCenter();
 						countdownGo.antialiasing = antialias;
-						insert(members.indexOf(notes), countdownGo);
+						if(!ClientPrefs.hideFullHUD)
+							insert(members.indexOf(notes), countdownGo);
 						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -4998,9 +5002,27 @@ class PlayState extends MusicBeatState
 
 	var lastBeatHit:Int = -1;
 
+	public function fadeout() {
+		FlxTween.tween(camHUD, {alpha: 0}, 2);
+	}
+	public function fadein() { //fades all in
+		FlxTween.tween(camHUD, {alpha: 1}, 2);
+	} 
+
 	override function beatHit()
 	{
 		super.beatHit();
+
+		/*
+		if (SONG.song.toLowerCase() == "stress") {
+			switch (curBeat){
+				case 1:
+					fadein();
+				
+				case 2:
+					fadeout();
+			}
+		} */
 
 		if(lastBeatHit >= curBeat) {
 			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);

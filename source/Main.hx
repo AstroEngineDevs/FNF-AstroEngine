@@ -25,6 +25,7 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 #end
+import psy.Core;
 
 using StringTools;
 

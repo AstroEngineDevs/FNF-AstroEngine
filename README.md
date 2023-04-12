@@ -1,4 +1,4 @@
-# Friday Night Funkin' - ```Psy Engine```
+# Friday Night Funkin' • ```Psy Engine```
 Psych Engine made by Shadow Mario • Yoshubs • RiverOaken
 
 ## Installation:

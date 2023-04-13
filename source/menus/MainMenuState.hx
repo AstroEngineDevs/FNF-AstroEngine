@@ -46,9 +46,9 @@ class MainMenuState extends MusicBeatState
 	private var versionShitInt:Int = 0;
 	private var array:Array<Array<Dynamic>> = [];
 	private var versionShitArray:Array<Array<Dynamic>> = [
-		["Psy Engine v", psy.Core.coreVersion],
+		["Friday Night Funkin' v", Application.current.meta.get('version')],
 		["Psych Engine v", psych.CorePsych.psychVersion],
-		["Friday Night Funkin' v", Application.current.meta.get('version')]
+		["Psy Engine v", psy.Core.coreVersion]
 	];
 
 
@@ -145,12 +145,12 @@ class MainMenuState extends MusicBeatState
 		grp = new FlxTypedSpriteGroup<FlxSprite>();
 
 		for (i in 0...array.length) {
-			var versionShit:FlxText = new FlxText(12, FlxG.height - 66 + versionShitInt, 0, array[i][0] + array[i][1], 12);
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 + versionShitInt, 0, array[i][0] + array[i][1], 12);
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 			grp.add(versionShit);
 
-			versionShitInt += 22;
+			versionShitInt -= 22;
 		}
 		grp.scrollFactor.set();
 		add(grp);

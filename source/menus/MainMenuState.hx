@@ -44,7 +44,6 @@ class MainMenuState extends MusicBeatState
 	];
 
 	private var versionShitInt:Int = 0;
-	private var array:Array<Array<Dynamic>> = [];
 	private var versionShitArray:Array<Array<Dynamic>> = [
 		["Friday Night Funkin' v", Application.current.meta.get('version')],
 		["Psych Engine v", psych.CorePsych.psychVersion],
@@ -139,13 +138,10 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		for (i in versionShitArray)
-			array.push(i);
-
 		grp = new FlxTypedSpriteGroup<FlxSprite>();
 
 		for (i in 0...array.length) {
-			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 + versionShitInt, 0, array[i][0] + array[i][1], 12);
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 + versionShitInt, 0, versionShitArray[i][0] + versionShitArray[i][1], 12);
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 			grp.add(versionShit);

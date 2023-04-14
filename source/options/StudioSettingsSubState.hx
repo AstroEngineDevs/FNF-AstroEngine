@@ -33,22 +33,22 @@ class StudioSettingsSubState extends BaseOptionsMenu
 {
 	public function new()
 	{
-		title = 'Studio';
-		rpcTitle = 'Studio Settings Menu'; //for Discord Rich Presence
+		title = 'Recording Studio';
+		rpcTitle = 'Recording Settings'; //for Discord Rich Presence
 
-		var option:Option = new Option('Hide HUD', // Name
-			'Hide\'s all HUD elements\nimproves performance.', // Description
-			'hideFullHUD', // hideFullHUD
-			'bool', // Variable type
-			false); // Default value
+		var option:Option = new Option('Hide HUD',
+			'Hide\'s all HUD elements\nimproves performance.',
+			'hideFullHUD',
+			'bool',
+			false);
 		addOption(option);
 		option.onChange = onChangefuckmedaddy;
 
-		var option:Option = new Option('Botplay', // Name
-			'It\'s fucking botplay', // Description
-			'botplayStudio', // hideFullHUD
-			'bool', // Variable type
-			false); // Default value
+		var option:Option = new Option('Botplay',
+			'It\'s fucking botplay', 
+			'botplayStudio',
+			'bool',
+			false);
 		addOption(option);
 
 		super();

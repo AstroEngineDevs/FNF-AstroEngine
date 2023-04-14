@@ -140,7 +140,7 @@ class MainMenuState extends MusicBeatState
 
 		grp = new FlxTypedSpriteGroup<FlxSprite>();
 
-		for (i in 0...array.length) {
+		for (i in 0...versionShitArray.length) {
 			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 + versionShitInt, 0, versionShitArray[i][0] + versionShitArray[i][1], 12);
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		

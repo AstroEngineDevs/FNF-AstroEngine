@@ -72,9 +72,13 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1") import hxcodec.VideoHandler as MP4Handler;
-#elseif (hxCodec == "2.6.0") import VideoHandler as MP4Handler;
-#else import vlc.MP4Handler; #end
+	#if (hxCodec >= "2.6.1")
+		import hxcodec.VideoHandler as MP4Handler;
+	#elseif (hxCodec == "2.6.0")
+		import VideoHandler as MP4Handler;
+	#else
+		import vlc.MP4Handler;
+	#end
 #end
 
 using StringTools;
@@ -2152,7 +2156,7 @@ class PlayState extends MusicBeatState
 
 						countdownReady.screenCenter();
 						countdownReady.antialiasing = antialias;
-						if(!ClientPrefs.hideFullHUD)
+					//	if(!ClientPrefs.hideFullHUD)
 							insert(members.indexOf(notes), countdownReady);
 
 						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
@@ -2174,7 +2178,7 @@ class PlayState extends MusicBeatState
 
 						countdownSet.screenCenter();
 						countdownSet.antialiasing = antialias;
-						if(!ClientPrefs.hideFullHUD)
+					//	if(!ClientPrefs.hideFullHUD)
 							insert(members.indexOf(notes), countdownSet);
 						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
@@ -2197,7 +2201,7 @@ class PlayState extends MusicBeatState
 
 						countdownGo.screenCenter();
 						countdownGo.antialiasing = antialias;
-						if(!ClientPrefs.hideFullHUD)
+						//if(!ClientPrefs.hideFullHUD)
 							insert(members.indexOf(notes), countdownGo);
 						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,

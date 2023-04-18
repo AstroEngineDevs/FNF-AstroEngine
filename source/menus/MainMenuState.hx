@@ -23,6 +23,10 @@ import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
 import psy.Core;
 
+#if (flixel >= "5.0.0")
+	import flixel.input.mouse.FlxMouseEvent;
+#end
+
 using StringTools;
 
 class MainMenuState extends MusicBeatState
@@ -43,11 +47,11 @@ class MainMenuState extends MusicBeatState
 		'options'
 	];
 
-	private var versionShitInt:Int = 0;
-	private var versionShitArray:Array<Array<Dynamic>> = [
-		["Friday Night Funkin' v", Application.current.meta.get('version')],
-		["Psych Engine v", psych.CorePsych.psychVersion],
-		["Psy Engine v", psy.Core.coreVersion]
+	private var versionShitInt:Int = 1;
+	private var versionShitArray:Array<Array<Dynamic>> = [// Name, Version, X, Y
+		["Psy Engine v", psy.Core.coreVersion, null, null],
+		["Psych Engine v", psych.CorePsych.psychVersion, null, null],
+		["Friday Night Funkin' v", Application.current.meta.get('version'), null, null]
 	];
 
 
@@ -55,8 +59,6 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
-
-	var grp:FlxTypedSpriteGroup<FlxSprite>;
 
 	override function create()
 	{
@@ -134,22 +136,37 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
+			if (Core.mouseEvents)
+			{
+				#if (flixel >= "5.0.0") // update your fucking haxeflixel version
+					FlxMouseEvent.add(menuItem, null, function(e) stateChangeThing(), function(e)
+					{
+						if (!selectedSomethin)
+						{
+							curSelected = i;
+							changeItem();
+							FlxG.sound.play(Paths.sound('scrollMenu'));
+						}
+					});
+				#end
+			}
 		}
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		grp = new FlxTypedSpriteGroup<FlxSprite>();
+		versionShitArray.reverse();
+		for (i in 0...versionShitArray.length){// ngl it looks ugly, with all the [i]s
+			if (versionShitArray[i][1] == null) versionShitArray[i][1] = "";
 
-		for (i in 0...versionShitArray.length) {
-			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 + versionShitInt, 0, versionShitArray[i][0] + versionShitArray[i][1], 12);
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 * versionShitInt, 0, versionShitArray[i][0] + versionShitArray[i][1]);
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		
-			grp.add(versionShit);
+			versionShit.x += versionShitArray[i][2];
+			versionShit.y -= versionShitArray[i][3];
+			versionShit.scrollFactor.set();
+			add(versionShit);
 
-			versionShitInt -= 22;
+			versionShitInt++;
 		}
-		grp.scrollFactor.set();
-		add(grp);
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -190,6 +207,10 @@ class MainMenuState extends MusicBeatState
 			if(menus.FreeplayState.vocals != null) menus.FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
 
+		if(!FlxG.mouse.visible){
+			FlxG.mouse.visible = true;
+		}
+
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
@@ -216,56 +237,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate')
-				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
-				}
-				else
-				{
-					selectedSomethin = true;
-					FlxG.sound.play(Paths.sound('confirmMenu'));
-
-					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
-
-					menuItems.forEach(function(spr:FlxSprite)
-					{
-						if (curSelected != spr.ID)
-						{
-							FlxTween.tween(spr, {alpha: 0}, 0.4, {
-								ease: FlxEase.quadOut,
-								onComplete: function(twn:FlxTween)
-								{
-									spr.kill();
-								}
-							});
-						}
-						else
-						{
-							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
-							{
-								var daChoice:String = optionShit[curSelected];
-
-								switch (daChoice)
-								{
-									case 'story_mode':
-										MusicBeatState.switchState(new menus.StoryMenuState());
-									case 'freeplay':
-										MusicBeatState.switchState(new menus.FreeplayState());
-									#if MODS_ALLOWED
-									case 'mods':
-										MusicBeatState.switchState(new menus.ModsMenuState());
-									#end
-									case 'awards':
-										MusicBeatState.switchState(new achievements.AchievementsMenuState());
-									case 'credits':
-										MusicBeatState.switchState(new menus.CreditsState());
-									case 'options':
-										LoadingState.loadAndSwitchState(new options.OptionsState());
-								}
-							});
-						}
-					});
-				}
+				stateChangeThing();
 			}
 			#if desktop
 			else if (FlxG.keys.anyJustPressed(debugKeys))
@@ -282,6 +254,59 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.screenCenter(X);
 		});
+	}
+
+	function stateChangeThing(){
+		if (optionShit[curSelected] == 'donate')
+			{
+				CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+			}
+		else
+			{
+				selectedSomethin = true;
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+
+				if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+
+				menuItems.forEach(function(spr:FlxSprite)
+				{
+					if (curSelected != spr.ID)
+					{
+						FlxTween.tween(spr, {alpha: 0}, 0.4, {
+							ease: FlxEase.quadOut,
+							onComplete: function(twn:FlxTween)
+							{
+								spr.kill();
+							}
+						});
+					}
+					else
+					{
+						FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+						{
+							var daChoice:String = optionShit[curSelected];
+
+							switch (daChoice)
+							{
+								case 'story_mode':
+									MusicBeatState.switchState(new menus.StoryMenuState());
+								case 'freeplay':
+									MusicBeatState.switchState(new menus.FreeplayState());
+								#if MODS_ALLOWED
+								case 'mods':
+									MusicBeatState.switchState(new menus.ModsMenuState());
+								#end
+								case 'awards':
+									MusicBeatState.switchState(new achievements.AchievementsMenuState());
+								case 'credits':
+									MusicBeatState.switchState(new menus.CreditsState());
+								case 'options':
+									LoadingState.loadAndSwitchState(new options.OptionsState());
+							}
+						});
+					}
+				});
+			}
 	}
 
 	function changeItem(huh:Int = 0)

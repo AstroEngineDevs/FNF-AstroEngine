@@ -81,6 +81,9 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['Psy Engine Team'],
+			['Hackx2',		'',		'Main Programmer of Psy Engine',								'https://twitter.com/AnimatesHack',	'444444'],
+			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],
@@ -126,7 +129,14 @@ class CreditsState extends MusicBeatState
 					Paths.currentModDirectory = creditsStuff[i][5];
 				}
 
-				var icon:AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
+				//var icon:AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
+
+				// i stole from shadowmario
+				var str:String = 'credits/nullObj';
+				if (Paths.image('credits/' + creditsStuff[i][1]) != null)
+					str = 'credits/' + creditsStuff[i][1];
+
+				var icon:AttachedSprite = new AttachedSprite(str);
 				icon.xAdd = optionText.width + 10;
 				icon.sprTracker = optionText;
 	

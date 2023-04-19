@@ -9,6 +9,7 @@ import flixel.FlxSprite;
 import flixel.FlxCamera;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
+import flixel.util.FlxTimer;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -53,6 +54,7 @@ class MainMenuState extends MusicBeatState
 		["Psych Engine v", psych.CorePsych.psychVersion, null, null],
 		["Friday Night Funkin' v", Application.current.meta.get('version'), null, null]
 	];
+	private var selectedSomethinAnal:Bool = true;
 
 
 	var magenta:FlxSprite;
@@ -138,10 +140,15 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 			if (Core.mouseEvents)
 			{
+				
 				#if (flixel >= "5.0.0") // update your fucking haxeflixel version
 					FlxMouseEvent.add(menuItem, null, function(e) stateChangeThing(), function(e)
 					{
-						if (!selectedSomethin)
+						new FlxTimer().start(0.2, function (tmr:FlxTimer) {
+							selectedSomethinAnal = true;
+						});
+
+						if (!selectedSomethin && selectedSomethinAnal)
 						{
 							curSelected = i;
 							changeItem();
@@ -220,12 +227,14 @@ class MainMenuState extends MusicBeatState
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
+				susOWO();
 			}
 
 			if (controls.UI_DOWN_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
+				susOWO();
 			}
 
 			if (controls.BACK)
@@ -254,6 +263,10 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.screenCenter(X);
 		});
+	}
+
+	function susOWO() {
+		selectedSomethinAnal = false;
 	}
 
 	function stateChangeThing(){

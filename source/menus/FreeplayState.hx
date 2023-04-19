@@ -125,6 +125,7 @@ class FreeplayState extends MusicBeatState
 
 			Paths.currentModDirectory = songs[i].folder;
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
+			icon.animation.curAnim.curFrame = 1;
 			icon.sprTracker = songText;
 
 			// using a FlxGroup is too much fuss!

@@ -1,4 +1,4 @@
-package;
+package menus;
 
 #if desktop
 import sys.thread.Thread;

@@ -1,6 +1,10 @@
+package unused;
+
+// shit doesn't do anything lel
+
 import faxe.Faxe;
 
-import SndTV;
+import unused.SndTV;
 using StringTools;
 
 //praise delahee, i'll figure out what this shit means later!

@@ -147,7 +147,9 @@ class MainMenuState extends MusicBeatState
 				#if (flixel >= "5.0.0") // update your fucking haxeflixel version
 					FlxMouseEvent.add(menuItem, null, function(e) stateChangeThing(), function(e)
 					{
-						selectedSomethinAnal = true;
+						new FlxTimer().start(0.01, function (tmr:FlxTimer) {
+							selectedSomethinAnal = true;
+						});
 
 						if (!selectedSomethin && selectedSomethinAnal)
 						{
@@ -238,7 +240,7 @@ class MainMenuState extends MusicBeatState
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new TitleState());
+				MusicBeatState.switchState(new menus.TitleState());
 			}
 
 			if (controls.ACCEPT)

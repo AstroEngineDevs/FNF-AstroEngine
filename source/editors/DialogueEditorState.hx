@@ -349,9 +349,9 @@ class DialogueEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = menus.TitleState.muteKeys;
+			FlxG.sound.volumeDownKeys = menus.TitleState.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = menus.TitleState.volumeUpKeys;
 			if(FlxG.keys.justPressed.SPACE) {
 				reloadText(false);
 			}

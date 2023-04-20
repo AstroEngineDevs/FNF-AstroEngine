@@ -57,6 +57,7 @@ import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
 import achievements.Achievements;
 import StageData;
+import playstateBG.BackgroundGirls;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
@@ -253,7 +254,7 @@ class PlayState extends MusicBeatState
 	var limoCorpseTwo:BGSprite;
 	var bgLimo:BGSprite;
 	var grpLimoParticles:FlxTypedGroup<BGSprite>;
-	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
+	var grpLimoDancers:FlxTypedGroup<playstateBG.BackgroundDancer>;
 	var fastCar:BGSprite;
 
 	var upperBoppers:BGSprite;
@@ -613,12 +614,12 @@ class PlayState extends MusicBeatState
 					limoCorpseTwo = new BGSprite('gore/noooooo', -500, limoMetalPole.y, 0.4, 0.4, ['henchmen death'], true);
 					add(limoCorpseTwo);
 
-					grpLimoDancers = new FlxTypedGroup<BackgroundDancer>();
+					grpLimoDancers = new FlxTypedGroup<playstateBG.BackgroundDancer>();
 					add(grpLimoDancers);
 
 					for (i in 0...5)
 					{
-						var dancer:BackgroundDancer = new BackgroundDancer((370 * i) + 170, bgLimo.y - 400);
+						var dancer:playstateBG.BackgroundDancer = new playstateBG.BackgroundDancer((370 * i) + 170, bgLimo.y - 400);
 						dancer.scrollFactor.set(0.4, 0.4);
 						grpLimoDancers.add(dancer);
 					}
@@ -2919,7 +2920,7 @@ class PlayState extends MusicBeatState
 							limoCorpse.x = limoLight.x - 50;
 							limoCorpseTwo.x = limoLight.x + 35;
 
-							var dancers:Array<BackgroundDancer> = grpLimoDancers.members;
+							var dancers:Array<playstateBG.BackgroundDancer> = grpLimoDancers.members;
 							for (i in 0...dancers.length) {
 								if(dancers[i].x < FlxG.width * 1.5 && limoLight.x > (370 * i) + 170) {
 									switch(i) {
@@ -2980,7 +2981,7 @@ class PlayState extends MusicBeatState
 					}
 
 					if(limoKillingState > 2) {
-						var dancers:Array<BackgroundDancer> = grpLimoDancers.members;
+						var dancers:Array<playstateBG.BackgroundDancer> = grpLimoDancers.members;
 						for (i in 0...dancers.length) {
 							dancers[i].x = (370 * i) + bgLimo.x + 280;
 						}
@@ -5082,7 +5083,7 @@ class PlayState extends MusicBeatState
 
 			case 'limo':
 				if(!ClientPrefs.lowQuality) {
-					grpLimoDancers.forEach(function(dancer:BackgroundDancer)
+					grpLimoDancers.forEach(function(dancer:playstateBG.BackgroundDancer)
 					{
 						dancer.dance();
 					});

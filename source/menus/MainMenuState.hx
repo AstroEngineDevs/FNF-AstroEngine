@@ -64,6 +64,9 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		
+		FlxG.mouse.visible = true;
+
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
 		#end
@@ -144,9 +147,7 @@ class MainMenuState extends MusicBeatState
 				#if (flixel >= "5.0.0") // update your fucking haxeflixel version
 					FlxMouseEvent.add(menuItem, null, function(e) stateChangeThing(), function(e)
 					{
-						new FlxTimer().start(0.2, function (tmr:FlxTimer) {
-							selectedSomethinAnal = true;
-						});
+						selectedSomethinAnal = true;
 
 						if (!selectedSomethin && selectedSomethinAnal)
 						{
@@ -212,10 +213,6 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 			if(menus.FreeplayState.vocals != null) menus.FreeplayState.vocals.volume += 0.5 * elapsed;
-		}
-
-		if(!FlxG.mouse.visible){
-			FlxG.mouse.visible = true;
 		}
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);

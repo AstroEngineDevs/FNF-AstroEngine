@@ -13,7 +13,7 @@ import openfl.display.StageScaleMode;
 import lime.app.Application;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 
 //crash handler stuff
@@ -37,7 +37,7 @@ class Main extends Sprite
 		initialState: menus.TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 144, // default framerate
-		skipSplash: true, // if the default flixel splash screen should be skipped
+		skipSplash: false, // if the default flixel splash screen should be skipped
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 

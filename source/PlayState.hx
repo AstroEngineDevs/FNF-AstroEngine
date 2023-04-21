@@ -2,7 +2,7 @@ package;
 
 import flixel.graphics.FlxGraphic;
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import Section.SwagSection;
 import Song.SwagSong;
@@ -409,7 +409,7 @@ class PlayState extends MusicBeatState
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		CustomFadeTransition.nextCamera = camOther;
+		fadeTransition.CustomFadeTransition.nextCamera = camOther;
 
 		persistentUpdate = true;
 		persistentDraw = true;
@@ -1369,7 +1369,7 @@ class PlayState extends MusicBeatState
 		}
 		Paths.clearUnusedMemory();
 		
-		CustomFadeTransition.nextCamera = camOther;
+		fadeTransition.CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
 	}
 
@@ -3965,7 +3965,7 @@ class PlayState extends MusicBeatState
 
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
-						CustomFadeTransition.nextCamera = null;
+						fadeTransition.CustomFadeTransition.nextCamera = null;
 					}
 					MusicBeatState.switchState(new menus.StoryMenuState());
 
@@ -4028,7 +4028,7 @@ class PlayState extends MusicBeatState
 				WeekData.loadTheFirstEnabledMod();
 				cancelMusicFadeTween();
 				if(FlxTransitionableState.skipNextTransIn) {
-					CustomFadeTransition.nextCamera = null;
+					fadeTransition.CustomFadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new menus.FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));

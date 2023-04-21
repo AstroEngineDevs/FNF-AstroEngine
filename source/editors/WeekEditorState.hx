@@ -1,7 +1,7 @@
 package editors;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;

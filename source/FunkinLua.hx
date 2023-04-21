@@ -54,7 +54,7 @@ import hscript.Expr;
 #end
 
 #if desktop
-import Discord;
+import client.Discord;
 #end
 
 using StringTools;
@@ -1540,9 +1540,9 @@ class FunkinLua {
 			}
 
 			PlayState.cancelMusicFadeTween();
-			CustomFadeTransition.nextCamera = PlayState.instance.camOther;
+			fadeTransition.CustomFadeTransition.nextCamera = PlayState.instance.camOther;
 			if(FlxTransitionableState.skipNextTransIn)
-				CustomFadeTransition.nextCamera = null;
+				fadeTransition.CustomFadeTransition.nextCamera = null;
 
 			if(PlayState.isStoryMode)
 				MusicBeatState.switchState(new menus.StoryMenuState());

@@ -1,4 +1,4 @@
-package;
+package client;
 
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
@@ -21,7 +21,7 @@ class DiscordClient
 		DiscordRpc.start({
 			// Psych Engine ID: 863222024192262205
 
-			clientID: psy.Core.coreDiscordID,
+			clientID: psy.Core.coreGame.coreDiscordID,
 			onReady: onReady,
 			onError: onError,
 			onDisconnected: onDisconnected
@@ -49,7 +49,7 @@ class DiscordClient
 			details: "In the Menus",
 			state: null,
 			largeImageKey: 'icon',
-			largeImageText: "Psych Engine"
+			largeImageText: "Psy Engine"
 		});
 	}
 

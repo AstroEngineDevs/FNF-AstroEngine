@@ -1,7 +1,7 @@
 package;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
@@ -34,7 +34,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var optionsArray:Array<Dynamic> = [];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
-	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
+	private var checkboxGroup:FlxTypedGroup<options.CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	function getOptions()
@@ -122,7 +122,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		grpTexts = new FlxTypedGroup<AttachedText>();
 		add(grpTexts);
 
-		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
+		checkboxGroup = new FlxTypedGroup<options.CheckboxThingie>();
 		add(checkboxGroup);
 		
 		getOptions();
@@ -140,7 +140,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				optionText.x += 110;
 				optionText.startPosition.x += 110;
 				optionText.snapToPosition();
-				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+				var checkbox:options.CheckboxThingie = new options.CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.offsetX -= 32;
 				checkbox.offsetY = -120;

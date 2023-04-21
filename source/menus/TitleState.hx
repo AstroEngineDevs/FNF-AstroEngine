@@ -36,6 +36,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import openfl.Assets;
 import psy.Core;
+import client.Discord.DiscordClient;
 
 using StringTools;
 typedef TitleData =
@@ -112,6 +113,11 @@ class TitleState extends MusicBeatState
 			}
 		}
 		#end*/
+
+		#if desktop
+		// Updating Discord Rich Presence
+			DiscordClient.changePresence("Viewing The Title", null);
+		#end
 
 		FlxG.game.focusLostFramerate = 60;
 		FlxG.sound.muteKeys = muteKeys;
@@ -205,10 +211,10 @@ class TitleState extends MusicBeatState
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
 		#else
-		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
+		if(FlxG.save.data.flashing == null && !states.FlashingState.leftState) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
-			MusicBeatState.switchState(new FlashingState());
+			MusicBeatState.switchState(new states.FlashingState());
 		} else {
 			if (initialized)
 				startIntro();
@@ -275,7 +281,7 @@ class TitleState extends MusicBeatState
 		// bg.updateHitbox();
 		add(bg);
 
-		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
+		logoBl = new FlxSprite(titleJSON.titlex, (titleJSON.titley + 150));
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
@@ -366,7 +372,7 @@ class TitleState extends MusicBeatState
 		titleText.antialiasing = ClientPrefs.globalAntialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
-		// titleText.screenCenter(X);
+		//titleText.screenCenter(X);
 		add(titleText);
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));

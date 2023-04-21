@@ -1,7 +1,7 @@
 package achievements;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;

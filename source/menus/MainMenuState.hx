@@ -1,7 +1,7 @@
 package menus;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -64,8 +64,10 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		
-		FlxG.mouse.visible = true;
+		if(Core.coreGame.mouseEvents)
+			FlxG.mouse.visible = true;
+		else 
+			FlxG.mouse.visible = false;
 
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
@@ -141,7 +143,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
-			if (Core.mouseEvents)
+			if (Core.coreGame.mouseEvents && !ClientPrefs.lowQuality)
 			{
 				
 				#if (flixel >= "5.0.0") // update your fucking haxeflixel version

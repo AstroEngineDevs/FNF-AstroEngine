@@ -1,7 +1,7 @@
 package menus;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import editors.ChartingState;
 import flash.text.TextField;

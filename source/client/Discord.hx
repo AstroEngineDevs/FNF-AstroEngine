@@ -1,13 +1,13 @@
 package client;
 
-import Sys.sleep;
-import discord_rpc.DiscordRpc;
-import psy.Core;
-
 #if LUA_ALLOWED
 import llua.Lua;
 import llua.State;
 #end
+
+import psy.Core;
+import Sys.sleep;
+import discord_rpc.DiscordRpc;
 import psy.Core;
 
 using StringTools;
@@ -15,12 +15,11 @@ using StringTools;
 class DiscordClient
 {
 	public static var isInitialized:Bool = false;
-	public function new()
-	{
+
+	//** new Function **/
+	public function new(){
 		trace("Discord Client starting...");
 		DiscordRpc.start({
-			// Psych Engine ID: 863222024192262205
-
 			clientID: psy.Core.coreGame.coreDiscordID,
 			onReady: onReady,
 			onError: onError,
@@ -38,13 +37,13 @@ class DiscordClient
 		DiscordRpc.shutdown();
 	}
 	
-	public static function shutdown()
-	{
+	//** onShutdown Function **/
+	public static function shutdown(){
 		DiscordRpc.shutdown();
 	}
 	
-	static function onReady()
-	{
+	//** onReady Function **/
+	static function onReady(){
 		DiscordRpc.presence({
 			details: "In the Menus",
 			state: null,
@@ -53,18 +52,18 @@ class DiscordClient
 		});
 	}
 
-	static function onError(_code:Int, _message:String)
-	{
+	//** onError Function **/
+	static function onError(_code:Int, _message:String){
 		trace('Error! $_code : $_message');
 	}
 
-	static function onDisconnected(_code:Int, _message:String)
-	{
+	//** onDisconnected Function **/
+	static function onDisconnected(_code:Int, _message:String) {
 		trace('Disconnected! $_code : $_message');
 	}
 
-	public static function initialize()
-	{
+	//** initialize Function **/
+	public static function initialize() {
 		var DiscordDaemon = sys.thread.Thread.create(() ->
 		{
 			new DiscordClient();
@@ -73,8 +72,8 @@ class DiscordClient
 		isInitialized = true;
 	}
 
-	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
-	{
+	//** changePresence Function **/
+	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float) {
 		var startTimestamp:Float = if(hasStartTimestamp) Date.now().getTime() else 0;
 
 		if (endTimestamp > 0)
@@ -88,19 +87,17 @@ class DiscordClient
 			largeImageKey: 'icon',
 			largeImageText: "Psy Version: "+ Core.coreVersion,
 			smallImageKey : smallImageKey,
-			// Obtained times are in milliseconds so they are divided so Discord can use it
 			startTimestamp : Std.int(startTimestamp / 1000),
             endTimestamp : Std.int(endTimestamp / 1000)
 		});
-
-		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
 
+	//** Lua Stuff **/
 	#if LUA_ALLOWED
-	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
-			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
-		});
-	}
+		public static function addLuaCallbacks(lua:State) {
+			Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
+				changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
+			});
+		}
 	#end
 }

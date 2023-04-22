@@ -148,7 +148,7 @@ class TitleState extends MusicBeatState
 			{
 				updateVersion = data.split('\n')[0].trim();
 				//var curVersion:String = psych.CorePsych.psychVersion.trim();
-				var curVersion:String = Core.coreVersion.trim();
+				var curVersion:String = Core.mainCoreShit.coreVersion.trim();
 
 				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
 				if(updateVersion != curVersion) {

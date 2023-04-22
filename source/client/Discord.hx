@@ -85,7 +85,7 @@ class DiscordClient
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Psy Version: "+ Core.coreVersion,
+			largeImageText: "Psy Version: "+ Core.mainCoreShit.coreVersion,
 			smallImageKey : smallImageKey,
 			startTimestamp : Std.int(startTimestamp / 1000),
             endTimestamp : Std.int(endTimestamp / 1000)

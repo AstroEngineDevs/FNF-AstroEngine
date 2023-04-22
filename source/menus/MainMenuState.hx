@@ -50,7 +50,7 @@ class MainMenuState extends MusicBeatState
 
 	private var versionShitInt:Int = 1;
 	private var versionShitArray:Array<Array<Dynamic>> = [// Name, Version, X, Y
-		["Psy Engine v", psy.Core.coreVersion, null, null],
+		["Psy Engine v", psy.Core.mainCoreShit.coreVersion, null, null],
 		["Psych Engine v", psych.CorePsych.psychVersion, null, null],
 		["Friday Night Funkin' v", Application.current.meta.get('version'), null, null]
 	];
@@ -64,10 +64,10 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		if(Core.coreGame.mouseEvents)
-			FlxG.mouse.visible = true;
-		else 
-			FlxG.mouse.visible = false;
+
+		FlxG.mouse.visible = false;
+
+		if(Core.coreGame.mouseEvents && !ClientPrefs.lowQuality) FlxG.mouse.visible = true;
 
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();

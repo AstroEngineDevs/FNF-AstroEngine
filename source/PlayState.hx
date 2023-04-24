@@ -62,6 +62,7 @@ import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
 import playstateBG.TankmenBG;
+import playstateBG.BackgroundDancer;
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
@@ -254,7 +255,7 @@ class PlayState extends MusicBeatState
 	var limoCorpseTwo:BGSprite;
 	var bgLimo:BGSprite;
 	var grpLimoParticles:FlxTypedGroup<BGSprite>;
-	var grpLimoDancers:FlxTypedGroup<playstateBG.BackgroundDancer>;
+	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
 	var fastCar:BGSprite;
 
 	var upperBoppers:BGSprite;
@@ -331,6 +332,11 @@ class PlayState extends MusicBeatState
 	public static var lastCombo:FlxSprite;
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
+
+
+	// kys 
+
+	var psyWatermark:FlxText;
 
 	override public function create()
 	{
@@ -614,12 +620,12 @@ class PlayState extends MusicBeatState
 					limoCorpseTwo = new BGSprite('gore/noooooo', -500, limoMetalPole.y, 0.4, 0.4, ['henchmen death'], true);
 					add(limoCorpseTwo);
 
-					grpLimoDancers = new FlxTypedGroup<playstateBG.BackgroundDancer>();
+					grpLimoDancers = new FlxTypedGroup<BackgroundDancer>();
 					add(grpLimoDancers);
 
 					for (i in 0...5)
 					{
-						var dancer:playstateBG.BackgroundDancer = new playstateBG.BackgroundDancer((370 * i) + 170, bgLimo.y - 400);
+						var dancer:BackgroundDancer = new BackgroundDancer((370 * i) + 170, bgLimo.y - 400);
 						dancer.scrollFactor.set(0.4, 0.4);
 						grpLimoDancers.add(dancer);
 					}
@@ -1146,6 +1152,15 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
 
+		psyWatermark = new FlxText(40, healthBarBG.y + 36, 0, "", 16);
+		psyWatermark.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		psyWatermark.scrollFactor.set();
+		psyWatermark.borderSize = 1.25;
+		psyWatermark.visible = !ClientPrefs.hideFullHUD;
+		add(psyWatermark);
+
+		if (ClientPrefs.downScroll) psyWatermark.y = FlxG.height * 0.9 + 45;
+
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.hideFullHUD;
@@ -1184,6 +1199,7 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		psyWatermark.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -2297,6 +2313,8 @@ class PlayState extends MusicBeatState
 			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		}
 
+		psyWatermark.text = SONG.song + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
+
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
@@ -2920,7 +2938,7 @@ class PlayState extends MusicBeatState
 							limoCorpse.x = limoLight.x - 50;
 							limoCorpseTwo.x = limoLight.x + 35;
 
-							var dancers:Array<playstateBG.BackgroundDancer> = grpLimoDancers.members;
+							var dancers:Array<BackgroundDancer> = grpLimoDancers.members;
 							for (i in 0...dancers.length) {
 								if(dancers[i].x < FlxG.width * 1.5 && limoLight.x > (370 * i) + 170) {
 									switch(i) {
@@ -2981,7 +2999,7 @@ class PlayState extends MusicBeatState
 					}
 
 					if(limoKillingState > 2) {
-						var dancers:Array<playstateBG.BackgroundDancer> = grpLimoDancers.members;
+						var dancers:Array<BackgroundDancer> = grpLimoDancers.members;
 						for (i in 0...dancers.length) {
 							dancers[i].x = (370 * i) + bgLimo.x + 280;
 						}
@@ -5083,7 +5101,7 @@ class PlayState extends MusicBeatState
 
 			case 'limo':
 				if(!ClientPrefs.lowQuality) {
-					grpLimoDancers.forEach(function(dancer:playstateBG.BackgroundDancer)
+					grpLimoDancers.forEach(function(dancer:BackgroundDancer)
 					{
 						dancer.dance();
 					});

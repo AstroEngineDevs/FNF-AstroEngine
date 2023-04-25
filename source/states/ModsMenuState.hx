@@ -1,4 +1,4 @@
-package menus;
+package states;
 
 #if desktop
 import client.Discord.DiscordClient;
@@ -482,20 +482,20 @@ class ModsMenuState extends MusicBeatState
 			saveTxt();
 			if(needaReset)
 			{
-				//MusicBeatState.switchState(new menus.TitleState());
-				menus.TitleState.initialized = false;
-				menus.TitleState.closedState = false;
+				//MusicBeatState.switchState(new states.TitleState());
+				states.TitleState.initialized = false;
+				states.TitleState.closedState = false;
 				FlxG.sound.music.fadeOut(0.3);
-				if(menus.FreeplayState.vocals != null)
+				if(states.FreeplayState.vocals != null)
 				{
-					menus.FreeplayState.vocals.fadeOut(0.3);
-					menus.FreeplayState.vocals = null;
+					states.FreeplayState.vocals.fadeOut(0.3);
+					states.FreeplayState.vocals = null;
 				}
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
 			}
 			else
 			{
-				MusicBeatState.switchState(new menus.MainMenuState());
+				MusicBeatState.switchState(new states.MainMenuState());
 			}
 		}
 
@@ -723,7 +723,7 @@ class ModMetadata
 		this.folder = folder;
 		this.name = folder;
 		this.description = "No description provided.";
-		this.color = menus.ModsMenuState.defaultColor;
+		this.color = states.ModsMenuState.defaultColor;
 		this.restart = false;
 
 		//Try loading json

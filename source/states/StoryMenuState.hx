@@ -1,4 +1,4 @@
-package menus;
+package states;
 
 #if desktop
 import client.Discord.DiscordClient;
@@ -265,7 +265,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			movedBack = true;
-			MusicBeatState.switchState(new menus.MainMenuState());
+			MusicBeatState.switchState(new states.MainMenuState());
 		}
 
 		super.update(elapsed);
@@ -324,7 +324,7 @@ class StoryMenuState extends MusicBeatState
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				LoadingState.loadAndSwitchState(new PlayState(), true);
-				menus.FreeplayState.destroyFreeplayVocals();
+				states.FreeplayState.destroyFreeplayVocals();
 			});
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));

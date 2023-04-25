@@ -34,7 +34,7 @@ class Main extends Sprite
 	var game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
-		initialState: menus.TitleState, // initial game state
+		initialState: states.TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 144, // default framerate
 		skipSplash: false, // if the default flixel splash screen should be skipped

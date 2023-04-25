@@ -1,4 +1,4 @@
-package menus;
+package states;
 
 #if desktop
 import client.Discord.DiscordClient;
@@ -216,7 +216,7 @@ class MainMenuState extends MusicBeatState
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-			if(menus.FreeplayState.vocals != null) menus.FreeplayState.vocals.volume += 0.5 * elapsed;
+			if(states.FreeplayState.vocals != null) states.FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
@@ -242,7 +242,7 @@ class MainMenuState extends MusicBeatState
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new menus.TitleState());
+				MusicBeatState.switchState(new states.TitleState());
 			}
 
 			if (controls.ACCEPT)
@@ -303,17 +303,17 @@ class MainMenuState extends MusicBeatState
 							switch (daChoice)
 							{
 								case 'story_mode':
-									MusicBeatState.switchState(new menus.StoryMenuState());
+									MusicBeatState.switchState(new states.StoryMenuState());
 								case 'freeplay':
-									MusicBeatState.switchState(new menus.FreeplayState());
+									MusicBeatState.switchState(new states.FreeplayState());
 								#if MODS_ALLOWED
 								case 'mods':
-									MusicBeatState.switchState(new menus.ModsMenuState());
+									MusicBeatState.switchState(new states.ModsMenuState());
 								#end
 								case 'awards':
 									MusicBeatState.switchState(new achievements.AchievementsMenuState());
 								case 'credits':
-									MusicBeatState.switchState(new menus.CreditsState());
+									MusicBeatState.switchState(new states.CreditsState());
 								case 'options':
 									LoadingState.loadAndSwitchState(new options.OptionsState());
 							}

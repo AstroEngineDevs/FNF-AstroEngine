@@ -1,4 +1,4 @@
-package menus;
+package states;
 
 #if desktop
 import sys.thread.Thread;
@@ -202,12 +202,12 @@ class TitleState extends MusicBeatState
 
 		if (FlxG.save.data.weekCompleted != null)
 		{
-			menus.StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
+			states.StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 		}
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
-		MusicBeatState.switchState(new menus.FreeplayState());
+		MusicBeatState.switchState(new states.FreeplayState());
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
 		#else
@@ -506,7 +506,7 @@ class TitleState extends MusicBeatState
 					if (mustUpdate) {
 						MusicBeatState.switchState(new states.OutdatedState());
 					} else {
-						MusicBeatState.switchState(new menus.MainMenuState());
+						MusicBeatState.switchState(new states.MainMenuState());
 					}
 					closedState = true;
 				});
@@ -548,9 +548,9 @@ class TitleState extends MusicBeatState
 								}
 							});
 							FlxG.sound.music.fadeOut();
-							if(menus.FreeplayState.vocals != null)
+							if(states.FreeplayState.vocals != null)
 							{
-								menus.FreeplayState.vocals.fadeOut();
+								states.FreeplayState.vocals.fadeOut();
 							}
 							closedState = true;
 							transitioning = true;
@@ -762,9 +762,9 @@ class TitleState extends MusicBeatState
 				if(easteregg == 'SHADOW')
 				{
 					FlxG.sound.music.fadeOut();
-					if(menus.FreeplayState.vocals != null)
+					if(states.FreeplayState.vocals != null)
 					{
-						menus.FreeplayState.vocals.fadeOut();
+						states.FreeplayState.vocals.fadeOut();
 					}
 				}
 				#end

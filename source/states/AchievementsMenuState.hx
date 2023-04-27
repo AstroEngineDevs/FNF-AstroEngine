@@ -1,4 +1,4 @@
-package achievements;
+package states;
 
 #if desktop
 import client.Discord.DiscordClient;
@@ -13,7 +13,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 import flixel.FlxSubState;
-import achievements.Achievements;
+import sprites.Achievements;
 
 using StringTools;
 

@@ -1,4 +1,4 @@
-package;
+package backend;
 
 #if MODS_ALLOWED
 import sys.io.File;

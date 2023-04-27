@@ -5,6 +5,7 @@ import client.Discord.DiscordClient;
 #end
 import flash.geom.Rectangle;
 import haxe.Json;
+import backend.StageData;
 import haxe.format.JsonParser;
 import haxe.io.Bytes;
 import Conductor.BPMChangeEvent;

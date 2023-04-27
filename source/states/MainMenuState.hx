@@ -19,7 +19,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
-import achievements.Achievements;
+import sprites.Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
 import psy.Core;
@@ -183,9 +183,10 @@ class MainMenuState extends MusicBeatState
 		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
-
+		
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
+
 		var leDate = Date.now();
 		if (leDate.getDay() == 5 && leDate.getHours() >= 18) {
 			var achieveID:Int = Achievements.getAchievementIndex('friday_night_play');
@@ -311,7 +312,7 @@ class MainMenuState extends MusicBeatState
 									MusicBeatState.switchState(new states.ModsMenuState());
 								#end
 								case 'awards':
-									MusicBeatState.switchState(new achievements.AchievementsMenuState());
+									MusicBeatState.switchState(new states.AchievementsMenuState());
 								case 'credits':
 									MusicBeatState.switchState(new states.CreditsState());
 								case 'options':

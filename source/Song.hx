@@ -4,7 +4,7 @@ import Section.SwagSection;
 import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
-
+import backend.StageData;
 #if sys
 import sys.io.File;
 import sys.FileSystem;

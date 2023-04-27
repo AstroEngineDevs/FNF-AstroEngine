@@ -21,11 +21,13 @@ import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
 import openfl.net.FileReference;
+
+import sprites.DialogueBoxPsych;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
 import haxe.Json;
-import DialogueBoxPsych;
+import sprites.DialogueBoxPsych;
 import lime.system.Clipboard;
 import Alphabet;
 #if sys

@@ -1,4 +1,4 @@
-package achievements;
+package sprites;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -37,6 +37,35 @@ class Achievements {
 		FlxG.log.add('Completed achievement "' + name +'"');
 		achievementsMap.set(name, true);
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+	}
+
+	public static function manageAchievements(lockUnlock:Bool = false) {
+		var textshit:String = "";
+		var epicness:Int = 0;
+		var funky1:String;
+		var jizz:String;
+
+		if (lockUnlock)
+			textshit = "Added";
+		else if (!lockUnlock)
+			textshit = "Removed";
+
+		for (i in 0...achievementsStuff.length)
+		{
+			funky1 = achievementsStuff[i][2];
+			achievementsMap.set(funky1, lockUnlock);
+
+			jizz = funky1 + " | " + textshit + ": " + epicness;
+			
+			trace(jizz);
+			FlxG.log.add(jizz);
+
+			epicness++;
+		}
+
+		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+
+		ClientPrefs.saveSettings();
 	}
 
 	public static function isAchievementUnlocked(name:String) {

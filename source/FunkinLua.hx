@@ -45,7 +45,7 @@ import sys.io.File;
 
 import Type.ValueType;
 import Controls;
-import DialogueBoxPsych;
+import sprites.DialogueBoxPsych;
 
 #if hscript
 import hscript.Parser;

@@ -14,7 +14,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
-import psy.GameEvents;
+import handlers.GameEvents;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -220,7 +220,7 @@ class PauseSubState extends MusicBeatSubstate
 					deleteSkipTimeText();
 					regenMenu();
 				case 'Exit':
-					GameEvents.exitOn();
+					GameEvents.exitOn(0, true);
 				case 'Toggle Practice Mode':
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 					PlayState.changedDifficulty = true;

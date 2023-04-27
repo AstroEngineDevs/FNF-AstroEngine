@@ -7,8 +7,11 @@ import client.Discord.DiscordClient;
 import Section.SwagSection;
 import Song.SwagSong;
 import shaders.WiggleEffect;
+import sprites.DialogueBoxPsych;
+import sprites.DialogueBox;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
+import sprites.NoteSplash;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
@@ -55,11 +58,10 @@ import flixel.effects.particles.FlxParticle;
 import flixel.util.FlxSave;
 import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
-import achievements.Achievements;
-import StageData;
+import sprites.Achievements;
+import backend.StageData;
 import playstateBG.BackgroundGirls;
 import FunkinLua;
-import DialogueBoxPsych;
 import Conductor.Rating;
 import playstateBG.TankmenBG;
 import playstateBG.BackgroundDancer;
@@ -67,6 +69,7 @@ import playstateBG.BackgroundDancer;
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
+import sprites.Boyfriend;
 
 #if sys
 import sys.FileSystem;

@@ -62,6 +62,7 @@ import sprites.Achievements;
 import backend.StageData;
 import playstateBG.BackgroundGirls;
 import FunkinLua;
+import backend.Hscript;
 import Conductor.Rating;
 import playstateBG.TankmenBG;
 import playstateBG.BackgroundDancer;
@@ -2309,7 +2310,11 @@ class PlayState extends MusicBeatState
 			+ ' • Misses: ' + songMisses
 			+ ' • Rating: ' + ratingName
 			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');	
-		} else {
+			/*scoreTxt.text = 'Score: ' + songScore
+			+ ' • Misses: ' + songMisses
+			+ ' • Rating: ' + ratingName
+			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');	
+		*/} else {
 			scoreTxt.text = 'Score: ' + songScore
 			+ ' | Misses: ' + songMisses
 			+ ' | Rating: ' + ratingName

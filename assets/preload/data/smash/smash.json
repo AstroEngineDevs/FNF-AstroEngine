@@ -2,6 +2,7 @@
 	"song": {
 		"player1": "bf",
 		"player2": "mom",
+		"songColor": "0xFF6807B2",
 		"notes": [
 			{
 				"lengthInSteps": 16,

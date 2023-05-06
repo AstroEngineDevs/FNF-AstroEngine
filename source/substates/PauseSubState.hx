@@ -1,4 +1,4 @@
-package states;
+package substates;
 
 import Controls.Control;
 import flixel.FlxG;

@@ -2,6 +2,7 @@
 	"song": {
 		"player1": "bf-holding-gf",
 		"events": [],
+		"songColor": "0xFFFF8020",
 		"gfVersion": "pico-speaker",
 		"notes": [
 			{

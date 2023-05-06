@@ -8,6 +8,7 @@ import Section.SwagSection;
 import Song.SwagSong;
 import shaders.WiggleEffect;
 import sprites.DialogueBoxPsych;
+import backend.StatChangeables;
 import sprites.DialogueBox;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
@@ -352,7 +353,7 @@ class PlayState extends MusicBeatState
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
-		states.PauseSubState.songName = null; //Reset to default
+		substates.PauseSubState.songName = null; //Reset to default
 		playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
 
 		keysArray = [
@@ -1038,7 +1039,7 @@ class PlayState extends MusicBeatState
 		strumLine.visible = !ClientPrefs.hideFullHUD;
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 14, 400, "", 32);
 		//timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.setFormat(Paths.font("PhantomMuff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
@@ -1057,14 +1058,15 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;
 
-		timeBarBG = new AttachedSprite('timeBar');
+	//	timeBarBG = new AttachedSprite('timeBar');
+		timeBarBG = new AttachedSprite('timeBarv2'); 
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
 		timeBarBG.scrollFactor.set();
 		timeBarBG.alpha = 0;
 		timeBarBG.color = FlxColor.BLACK;
 		timeBarBG.xAdd = -4;
-		timeBarBG.yAdd = -4;
+		timeBarBG.yAdd = -5;
 		add(timeBarBG);
 
 		if (ClientPrefs.hideFullHUD)
@@ -1072,10 +1074,10 @@ class PlayState extends MusicBeatState
 		else
 			timeBarBG.visible = showTime;
 
-		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 14), Std.int(timeBarBG.height - 10), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
-		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
+		timeBar.createFilledBar(0xFF000000, FlxColor.fromString(SONG.songColor));
 		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		if (ClientPrefs.hideFullHUD)
@@ -1159,6 +1161,7 @@ class PlayState extends MusicBeatState
 		psyWatermark = new FlxText(40, healthBarBG.y + 36, 0, "", 16);
 		psyWatermark.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		psyWatermark.scrollFactor.set();
+		//psyWatermark.color = FlxColor.fromString(SONG.songColor);
 		psyWatermark.borderSize = 1.25;
 		psyWatermark.visible = !ClientPrefs.hideFullHUD;
 		add(psyWatermark);
@@ -1350,8 +1353,8 @@ class PlayState extends MusicBeatState
 		precacheList.set('missnote2', 'sound');
 		precacheList.set('missnote3', 'sound');
 
-		if (states.PauseSubState.songName != null) {
-			precacheList.set(states.PauseSubState.songName, 'music');
+		if (substates.PauseSubState.songName != null) {
+			precacheList.set(substates.PauseSubState.songName, 'music');
 		} else if(ClientPrefs.pauseMusic != 'None') {
 			precacheList.set(Paths.formatToSongPath(ClientPrefs.pauseMusic), 'music');
 		}
@@ -2310,11 +2313,7 @@ class PlayState extends MusicBeatState
 			+ ' • Misses: ' + songMisses
 			+ ' • Rating: ' + ratingName
 			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');	
-			/*scoreTxt.text = 'Score: ' + songScore
-			+ ' • Misses: ' + songMisses
-			+ ' • Rating: ' + ratingName
-			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');	
-		*/} else {
+			} else {
 			scoreTxt.text = 'Score: ' + songScore
 			+ ' | Misses: ' + songMisses
 			+ ' | Rating: ' + ratingName
@@ -2884,6 +2883,7 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
+		//trace(SONG.songColor);
 
 		if(cpuControlled){
 			ClientPrefs.botplayStudio = true;
@@ -3359,7 +3359,7 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.pause();
 			vocals.pause();
 		}
-		openSubState(new states.PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		openSubState(new substates.PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		//}
 
 		#if desktop
@@ -3968,6 +3968,18 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(percent)) percent = 0;
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 				#end
+				//Stat
+				if (StatChangeables.MAX_SCORE < songScore)
+				{
+					StatChangeables.MAX_SCORE = songScore;
+					StatChangeables.saveStats();
+				}
+				if (StatChangeables.MOST_MISSES < songMisses)
+				{
+					StatChangeables.MOST_MISSES = songMisses;
+					StatChangeables.saveStats();
+				}
+			
 			}
 			playbackRate = 1;
 

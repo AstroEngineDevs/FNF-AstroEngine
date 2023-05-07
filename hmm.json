@@ -17,8 +17,10 @@
     },
     {
       "name": "flixel-addons",
-      "type": "haxelib",
-      "version": null
+      "type": "git",
+      "dir": null,
+      "ref": "dev",
+      "url": "https://github.com/HaxeFlixel/flixel-addons.git"
     },
     {
       "name": "flixel-tools",

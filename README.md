@@ -1,40 +1,37 @@
-# Friday Night Funkin' • ```Psy Engine```
+<div align="center">
+    <img src="art/psyshit/512-modified.png" width="100" height="100"/>
+    <br>
+    <h1>Friday Night Funkin' • <code>Psy Engine</code> </h1>
+    <br>    
+    <img src="https://img.shields.io/github/forks/Hackx2/FNF-PsyEngine?style=for-the-badge" />
+    <img src="https://img.shields.io/github/license/Hackx2/FNF-PsyEngine?style=for-the-badge" />
+    <img src="https://img.shields.io/github/actions/workflow/status/Hackx2/FNF-PsyEngine/main.yml?style=for-the-badge" /> 
+    <br>
+<br>UPDATE HAXE TO 4.2.5 rn NOW BOIII<br><br>
 
-UPDATE HAXE TO 4.2.5 rn NOW BOIII
+Hello, this is a modified version of the **Psych Engine** that includes events and functions missing from the original engine.
 
 ## Installation:
-You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
 
 open up a Command Prompt/PowerShell or Terminal, type `haxelib install hmm`
 
-after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for *Psych Engine!*
+after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for _Psych Engine!_
 
-## Customization:
+---
 
-if you wish to disable things like *Lua Scripts* or *Video Cutscenes*, you can read over to `Project.xml`
- 
-inside `Project.xml`, you will find several variables to customize Psych Engine to your liking
+<h2>Credits:</h2>
 
-to start you off, disabling Videos should be simple, simply Delete the line `"VIDEOS_ALLOWED"` or comment it out by wrapping the line in XML-like comments, like this `<!-- YOUR_LINE_HERE -->`
+[HackTheAir](https://twitter.com/AnimatesHack) - Main **Programmer**
 
-same goes for *Lua Scripts*, comment out or delete the line with `LUA_ALLOWED`, this and other customization options are all available within the `Project.xml` file
+---
 
-## Credits:
-* [HackTheAir](https://twitter.com/AnimatesHack) - Main Programmer
+<h2>Psych Engine Credits::</h2>
 
-## Psych Engine Credits:
-* Shadow Mario - Main Programmer
-* RiverOaken - Artist
-* Yoshubs - Assistant Programmer
+**Shadow Mario** - Main **Programmer**<br>
+**RiverOaken** - Artist<br>
+**Yoshubs** - Assistant **Programmer**<br>
+**bbpanzu** - Ex-**Programmer**<br>
 
-### Special Thanks
-* bbpanzu - Ex-Programmer
-* Yoshubs - New Input System
-* SqirraRNG - Crash Handler and Base code for Chart Editor's Waveform
-* KadeDev - Fixed some cool stuff on Chart Editor and other PRs
-* iFlicky - Composer of Psync and Tea Time, also made the Dialogue Sounds
-* PolybiusProxy - .MP4 Video Loader Library (hxCodec)
-* Keoiki - Note Splash Animations
-* Smokey - Sprite Atlas Support
-* Nebula the Zorua - LUA JIT Fork and some Lua reworks
-_____________________________________
+---
+
+</div>

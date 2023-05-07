@@ -1,7 +1,7 @@
 <div align="center">
     <img src="art/psyshit/512-modified.png" width="100" height="100"/>
     <br>
-    <h1>Friday Night Funkin' • <code>Psy Engine</code> </h1>
+    <h1>Friday Night Funkin' • <code>Psy Engine</code> (<strong>Beta</strong>)</h1>
     <br>    
     <img src="https://img.shields.io/github/forks/Hackx2/FNF-PsyEngine?style=for-the-badge" />
     <img src="https://img.shields.io/github/license/Hackx2/FNF-PsyEngine?style=for-the-badge" />
@@ -21,7 +21,7 @@ after it finishes, simply type `haxelib run hmm install` in order to install all
 
 <h2>Credits:</h2>
 
-[HackTheAir](https://twitter.com/AnimatesHack) - Main **Programmer**
+**[HackTheAir](https://twitter.com/AnimatesHack)** - Main **Programmer**
 
 ---
 

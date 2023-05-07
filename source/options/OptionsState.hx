@@ -1,7 +1,7 @@
 package options;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
@@ -24,12 +24,13 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import backend.StatChangeables;
 
 using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Recording Studio', 'Graphics', 'Gameplay', 'Visuals and UI', 'Adjust Delay and Combo'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Recording Studio', 'Graphics', 'Gameplay','Stats', 'Visuals and UI', 'Adjust Delay and Combo'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -46,6 +47,8 @@ class OptionsState extends MusicBeatState
 				openSubState(new options.VisualsUISubState());
 			case 'Gameplay':
 				openSubState(new options.GameplaySettingsSubState());
+			case 'Stats':
+				LoadingState.loadAndSwitchState(new options.Stats());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
 			case 'Recording Studio':
@@ -63,10 +66,11 @@ class OptionsState extends MusicBeatState
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
+		StatChangeables.loadStats();
+
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xff525252;
 		bg.updateHitbox();
-
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
@@ -78,7 +82,7 @@ class OptionsState extends MusicBeatState
 		{
 			var optionText:Alphabet = new Alphabet(0, OFFSETFUCKME, options[i], true);
 			optionText.screenCenter();	
-			optionText.isMenuItem = true;
+			optionText.isMenuItemCenter = true;
 			//optionText.changeY = false;
 			optionText.changeX = false;
 			optionText.y += (100 * (i - (options.length / 2))) + 50;
@@ -117,7 +121,7 @@ class OptionsState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			MusicBeatState.switchState(new menus.MainMenuState());
+			MusicBeatState.switchState(new states.MainMenuState());
 		}
 
 		if (controls.ACCEPT) {

@@ -1,7 +1,7 @@
 package editors;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -442,9 +442,9 @@ class WeekEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = states.TitleState.muteKeys;
+			FlxG.sound.volumeDownKeys = states.TitleState.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = states.TitleState.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
@@ -805,9 +805,9 @@ class WeekEditorFreeplayState extends MusicBeatState
 				iconInputText.hasFocus = false;
 			}
 		} else {
-			FlxG.sound.muteKeys = TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = states.TitleState.muteKeys;
+			FlxG.sound.volumeDownKeys = states.TitleState.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = states.TitleState.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));

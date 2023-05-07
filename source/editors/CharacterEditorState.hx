@@ -1,7 +1,7 @@
 package editors;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import animateatlas.AtlasFrameMaker;
 import flixel.FlxG;
@@ -1109,9 +1109,9 @@ class CharacterEditorState extends MusicBeatState
 				return;
 			}
 		}
-		FlxG.sound.muteKeys = TitleState.muteKeys;
-		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+		FlxG.sound.muteKeys = states.TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = states.TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = states.TitleState.volumeUpKeys;
 
 		if(!charDropDown.dropPanel.visible) {
 			if (FlxG.keys.justPressed.ESCAPE) {

@@ -8,7 +8,9 @@ import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.text.FlxText;
+import sprites.NoteSplash;
 import flixel.tweens.FlxEase;
+import backend.Conductor;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
@@ -500,7 +502,7 @@ class EditorPlayState extends MusicBeatState
 		}
 
 		keyShit();
-		scoreTxt.text = 'Hits: ' + songHits + ' | Misses: ' + songMisses;
+		scoreTxt.text = 'Hits: ' + songHits + ' • Misses: ' + songMisses;
 		sectionTxt.text = 'Beat: ' + curSection;
 		beatTxt.text = 'Beat: ' + curBeat;
 		stepTxt.text = 'Step: ' + curStep;

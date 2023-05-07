@@ -3,6 +3,7 @@
 		"player1": "bf-holding-gf",
 		"events": [],
 		"gfVersion": "pico-speaker",
+		"songColor": "0xFFFF8020",
 		"notes": [
 			{
 				"sectionNotes": [

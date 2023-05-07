@@ -34,6 +34,7 @@ class Paths
 	public static var ignoreModFolders:Array<String> = [
 		'characters',
 		'custom_events',
+		'custom_haxe',
 		'custom_notetypes',
 		'data',
 		'songs',

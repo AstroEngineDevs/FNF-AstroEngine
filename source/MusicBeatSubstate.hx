@@ -1,8 +1,9 @@
 package;
 
-import Conductor.BPMChangeEvent;
+import backend.Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
+import backend.Conductor;
 import flixel.FlxBasic;
 import flixel.FlxSprite;
 

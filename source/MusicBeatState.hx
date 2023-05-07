@@ -1,9 +1,10 @@
 package;
 
-import Conductor.BPMChangeEvent;
+import backend.Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
 import flixel.math.FlxRect;
+import backend.Conductor;
 import flixel.util.FlxTimer;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxEase;
@@ -38,7 +39,7 @@ class MusicBeatState extends FlxUIState
 		super.create();
 
 		if(!skip) {
-			openSubState(new CustomFadeTransition(0.7, true));
+			openSubState(new fadeTransition.CustomFadeTransition(0.7, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}
@@ -123,14 +124,14 @@ class MusicBeatState extends FlxUIState
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		if(!FlxTransitionableState.skipNextTransIn) {
-			leState.openSubState(new CustomFadeTransition(0.6, false));
+			leState.openSubState(new fadeTransition.CustomFadeTransition(0.6, false));
 			if(nextState == FlxG.state) {
-				CustomFadeTransition.finishCallback = function() {
+				fadeTransition.CustomFadeTransition.finishCallback = function() {
 					FlxG.resetState();
 				};
 				//trace('resetted');
 			} else {
-				CustomFadeTransition.finishCallback = function() {
+				fadeTransition.CustomFadeTransition.finishCallback = function() {
 					FlxG.switchState(nextState);
 				};
 				//trace('changed state');

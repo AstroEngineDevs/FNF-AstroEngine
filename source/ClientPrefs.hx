@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.util.FlxSave;
+import backend.Conductor;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
@@ -124,8 +125,8 @@ class ClientPrefs {
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
 		FlxG.save.data.comboOffset = comboOffset;
-		FlxG.save.data.achievementsMap = achievements.Achievements.achievementsMap;
-		FlxG.save.data.henchmenDeath = achievements.Achievements.henchmenDeath;
+		FlxG.save.data.achievementsMap = sprites.Achievements.achievementsMap;
+		FlxG.save.data.henchmenDeath = sprites.Achievements.henchmenDeath;
 
 		FlxG.save.data.ratingOffset = ratingOffset;
 		FlxG.save.data.sickWindow = sickWindow;
@@ -304,12 +305,12 @@ class ClientPrefs {
 	public static function reloadControls() {
 		PlayerSettings.player1.controls.setKeyboardScheme(KeyboardScheme.Solo);
 
-		TitleState.muteKeys = copyKey(keyBinds.get('volume_mute'));
-		TitleState.volumeDownKeys = copyKey(keyBinds.get('volume_down'));
-		TitleState.volumeUpKeys = copyKey(keyBinds.get('volume_up'));
-		FlxG.sound.muteKeys = TitleState.muteKeys;
-		FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
-		FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+		states.TitleState.muteKeys = copyKey(keyBinds.get('volume_mute'));
+		states.TitleState.volumeDownKeys = copyKey(keyBinds.get('volume_down'));
+		states.TitleState.volumeUpKeys = copyKey(keyBinds.get('volume_up'));
+		FlxG.sound.muteKeys = states.TitleState.muteKeys;
+		FlxG.sound.volumeDownKeys = states.TitleState.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = states.TitleState.volumeUpKeys;
 	}
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey> {
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();

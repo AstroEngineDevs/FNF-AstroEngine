@@ -2,6 +2,7 @@ package;
 
 import lime.app.Promise;
 import lime.app.Future;
+import backend.StageData;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSprite;

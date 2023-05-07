@@ -8,7 +8,9 @@ import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
+import backend.Conductor;
 import flixel.tweens.FlxTween;
+import sprites.Boyfriend;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -96,9 +98,9 @@ class GameOverSubstate extends MusicBeatSubstate
 
 			WeekData.loadTheFirstEnabledMod();
 			if (PlayState.isStoryMode)
-				MusicBeatState.switchState(new menus.StoryMenuState());
+				MusicBeatState.switchState(new states.StoryMenuState());
 			else
-				MusicBeatState.switchState(new menus.FreeplayState());
+				MusicBeatState.switchState(new states.FreeplayState());
 
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);

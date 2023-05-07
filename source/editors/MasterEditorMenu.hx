@@ -1,7 +1,7 @@
 package editors;
 
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -108,7 +108,7 @@ class MasterEditorMenu extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new menus.MainMenuState());
+			MusicBeatState.switchState(new states.MainMenuState());
 		}
 
 		if (controls.ACCEPT)
@@ -129,7 +129,7 @@ class MasterEditorMenu extends MusicBeatState
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
-			menus.FreeplayState.destroyFreeplayVocals();
+			states.FreeplayState.destroyFreeplayVocals();
 			#end
 		}
 		

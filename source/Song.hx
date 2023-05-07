@@ -1,10 +1,11 @@
 package;
 
+import flixel.util.FlxColor;
 import Section.SwagSection;
 import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
-
+import backend.StageData;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -29,6 +30,8 @@ typedef SwagSong =
 	var arrowSkin:String;
 	var splashSkin:String;
 	var validScore:Bool;
+
+	var songColor:String;
 }
 
 class Song
@@ -45,9 +48,13 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
+	public var songColor:String; // was FlxColor
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
+		if(songJson.songColor == "") songJson.songColor = "0xFFFFFFFF";
+		if(songJson.songColor == null) songJson.songColor = "0xFFFFFFFF";
+
 		if(songJson.gfVersion == null)
 		{
 			songJson.gfVersion = songJson.player3;

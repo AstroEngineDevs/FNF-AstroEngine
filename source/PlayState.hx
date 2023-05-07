@@ -2,13 +2,20 @@ package;
 
 import flixel.graphics.FlxGraphic;
 #if desktop
-import Discord.DiscordClient;
+import client.Discord.DiscordClient;
 #end
 import Section.SwagSection;
+import backend.CutsceneHandler;
 import Song.SwagSong;
-import WiggleEffect.WiggleEffectType;
+import states.substates.PauseSubState;
+import shaders.WiggleEffect;
+import sprites.DialogueBoxPsych;
+import backend.StatChangeables;
+import backend.Conductor;
+import sprites.DialogueBox;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
+import sprites.NoteSplash;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
@@ -55,16 +62,19 @@ import flixel.effects.particles.FlxParticle;
 import flixel.util.FlxSave;
 import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
-import achievements.Achievements;
-import StageData;
+import sprites.Achievements;
+import backend.StageData;
+import playstateBG.BackgroundGirls;
 import FunkinLua;
-import DialogueBoxPsych;
-import Conductor.Rating;
+import backend.Hscript;
+import backend.Conductor.Rating;
 import playstateBG.TankmenBG;
+import playstateBG.BackgroundDancer;
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
+import sprites.Boyfriend;
 
 #if sys
 import sys.FileSystem;
@@ -331,6 +341,11 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
+
+	// kys 
+
+	var psyWatermark:FlxText;
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -408,7 +423,7 @@ class PlayState extends MusicBeatState
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		CustomFadeTransition.nextCamera = camOther;
+		fadeTransition.CustomFadeTransition.nextCamera = camOther;
 
 		persistentUpdate = true;
 		persistentDraw = true;
@@ -1027,7 +1042,7 @@ class PlayState extends MusicBeatState
 		strumLine.visible = !ClientPrefs.hideFullHUD;
 
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 14, 400, "", 32);
 		//timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.setFormat(Paths.font("PhantomMuff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
@@ -1046,14 +1061,15 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;
 
-		timeBarBG = new AttachedSprite('timeBar');
+	//	timeBarBG = new AttachedSprite('timeBar');
+		timeBarBG = new AttachedSprite('timeBarv2'); 
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
 		timeBarBG.scrollFactor.set();
 		timeBarBG.alpha = 0;
 		timeBarBG.color = FlxColor.BLACK;
 		timeBarBG.xAdd = -4;
-		timeBarBG.yAdd = -4;
+		timeBarBG.yAdd = -5;
 		add(timeBarBG);
 
 		if (ClientPrefs.hideFullHUD)
@@ -1061,10 +1077,10 @@ class PlayState extends MusicBeatState
 		else
 			timeBarBG.visible = showTime;
 
-		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 14), Std.int(timeBarBG.height - 10), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
-		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
+		timeBar.createFilledBar(0xFF000000, FlxColor.fromString(SONG.songColor));
 		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		if (ClientPrefs.hideFullHUD)
@@ -1145,6 +1161,16 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
 
+		psyWatermark = new FlxText(40, healthBarBG.y + 36, 0, "", 16);
+		psyWatermark.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		psyWatermark.scrollFactor.set();
+		//psyWatermark.color = FlxColor.fromString(SONG.songColor);
+		psyWatermark.borderSize = 1.25;
+		psyWatermark.visible = !ClientPrefs.hideFullHUD;
+		add(psyWatermark);
+
+		if (ClientPrefs.downScroll) psyWatermark.y = FlxG.height * 0.9 + 45;
+
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.hideFullHUD;
@@ -1159,14 +1185,14 @@ class PlayState extends MusicBeatState
 		reloadHealthBarColors();
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideFullHUD;
 		add(scoreTxt);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.setFormat(Paths.font("PhantomMuff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled && !ClientPrefs.hideFullHUD;
@@ -1183,6 +1209,7 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
+		psyWatermark.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -1368,7 +1395,7 @@ class PlayState extends MusicBeatState
 		}
 		Paths.clearUnusedMemory();
 		
-		CustomFadeTransition.nextCamera = camOther;
+		fadeTransition.CustomFadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
 	}
 
@@ -2284,17 +2311,19 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{
-		if (scoreTxt.font == "VCR OSD Mono"){
+		if (scoreTxt.font == "PhantomMuff 1.5"){
 			scoreTxt.text = 'Score: ' + songScore
 			+ ' • Misses: ' + songMisses
 			+ ' • Rating: ' + ratingName
 			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');	
-		} else {
+			} else {
 			scoreTxt.text = 'Score: ' + songScore
 			+ ' | Misses: ' + songMisses
 			+ ' | Rating: ' + ratingName
 			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
 		}
+
+		psyWatermark.text = SONG.song + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
@@ -2857,6 +2886,7 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
+		//trace(SONG.songColor);
 
 		if(cpuControlled){
 			ClientPrefs.botplayStudio = true;
@@ -3941,6 +3971,18 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(percent)) percent = 0;
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 				#end
+				//Stat
+				if (StatChangeables.MAX_SCORE < songScore)
+				{
+					StatChangeables.MAX_SCORE = songScore;
+					StatChangeables.saveStats();
+				}
+				if (StatChangeables.MOST_MISSES < songMisses)
+				{
+					StatChangeables.MOST_MISSES = songMisses;
+					StatChangeables.saveStats();
+				}
+			
 			}
 			playbackRate = 1;
 
@@ -3964,20 +4006,20 @@ class PlayState extends MusicBeatState
 
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
-						CustomFadeTransition.nextCamera = null;
+						fadeTransition.CustomFadeTransition.nextCamera = null;
 					}
-					MusicBeatState.switchState(new menus.StoryMenuState());
+					MusicBeatState.switchState(new states.StoryMenuState());
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
-						menus.StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
+						states.StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
 
 						if (SONG.validScore)
 						{
 							Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
 						}
 
-						FlxG.save.data.weekCompleted = menus.StoryMenuState.weekCompleted;
+						FlxG.save.data.weekCompleted = states.StoryMenuState.weekCompleted;
 						FlxG.save.flush();
 					}
 					changedDifficulty = false;
@@ -4027,9 +4069,9 @@ class PlayState extends MusicBeatState
 				WeekData.loadTheFirstEnabledMod();
 				cancelMusicFadeTween();
 				if(FlxTransitionableState.skipNextTransIn) {
-					CustomFadeTransition.nextCamera = null;
+					fadeTransition.CustomFadeTransition.nextCamera = null;
 				}
-				MusicBeatState.switchState(new menus.FreeplayState());
+				MusicBeatState.switchState(new states.FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
 			}

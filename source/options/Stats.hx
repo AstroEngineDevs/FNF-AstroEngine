@@ -2,17 +2,24 @@ package options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxSubState;
+import flixel.text.FlxText;
+import flixel.util.FlxColor;
+import flixel.group.FlxGroup.FlxTypedGroup;
+
 import Alphabet;
+import psy.Core;
 import backend.StatChangeables;
 
 using StringTools;
 
 class Stats extends MusicBeatState
 {
-	private var statsTxt:Alphabet;
 	private var bg:FlxSprite;
+	private var text:FlxText;
+	private var textBG:FlxSprite;
+
+	private var statsTxt:Alphabet;
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var curSelected:Int = 0;
 
@@ -27,7 +34,7 @@ class Stats extends MusicBeatState
 		StatChangeables.loadStats();
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xffd607e1;
+		bg.color = Core.mainCoreShit.colorMenuImage;
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -41,11 +48,22 @@ class Stats extends MusicBeatState
 			statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
 			statsTxt.screenCenter();
 			statsTxt.text = stats[i][0] + ": " + stats[i][1];
+			statsTxt.alpha = 0.6;
 			statsTxt.isMenuItemCenter = true;
 			statsTxt.targetY = i;
 			statsTxt.changeX = false;
 			grpTexts.add(statsTxt);
 		}
+
+		textBG = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
+		textBG.scrollFactor.set(0, 0);
+		textBG.alpha = 0.6;
+		add(textBG);
+
+		text = new FlxText(textBG.x, textBG.y + 4, FlxG.width, "Press RESET to clear stats!", 18);
+		text.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER);
+		text.scrollFactor.set(0, 0);
+		add(text);
 	}
 
 	override function update(elapsed:Float)
@@ -79,7 +97,6 @@ class Stats extends MusicBeatState
 	function changeSelection(change:Int = 0)
 	{
 		curSelected += change;
-
 		if (curSelected < 0)
 			curSelected = stats.length - 1;
 		if (curSelected >= stats.length)
@@ -94,8 +111,9 @@ class Stats extends MusicBeatState
 
 			item.alpha = 0.6;
 
-			if (item.targetY == 0)
+			if (item.targetY == 0){
 				item.alpha = 1;
+			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}

@@ -4,11 +4,13 @@ package editors;
 import client.Discord.DiscordClient;
 #end
 import flash.geom.Rectangle;
+import backend.Prompt;
 import haxe.Json;
 import backend.StageData;
 import haxe.format.JsonParser;
 import haxe.io.Bytes;
-import Conductor.BPMChangeEvent;
+import backend.Conductor.BPMChangeEvent;
+import backend.Conductor;
 import Section.SwagSection;
 import Song.SwagSong;
 import flixel.FlxG;

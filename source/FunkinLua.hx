@@ -9,7 +9,9 @@ import llua.Convert;
 #end
 
 import animateatlas.AtlasFrameMaker;
+import backend.Conductor;
 import flixel.FlxG;
+import states.substates.PauseSubState;
 import flixel.addons.effects.FlxTrail;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
@@ -1532,7 +1534,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "restartSong", function(?skipTransition:Bool = false) {
 			PlayState.instance.persistentUpdate = false;
-			substates.PauseSubState.restartSong(skipTransition);
+			PauseSubState.restartSong(skipTransition);
 			return true;
 		});
 		Lua_helper.add_callback(lua, "exitSong", function(?skipTransition:Bool = false) {

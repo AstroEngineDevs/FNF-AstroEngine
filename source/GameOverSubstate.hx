@@ -8,6 +8,7 @@ import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
+import backend.Conductor;
 import flixel.tweens.FlxTween;
 import sprites.Boyfriend;
 

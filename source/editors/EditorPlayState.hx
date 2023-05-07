@@ -10,6 +10,7 @@ import flixel.FlxG;
 import flixel.text.FlxText;
 import sprites.NoteSplash;
 import flixel.tweens.FlxEase;
+import backend.Conductor;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;

@@ -48,12 +48,14 @@ class Stats extends MusicBeatState
 			statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
 			statsTxt.screenCenter();
 			statsTxt.text = stats[i][0] + ": " + stats[i][1];
-			statsTxt.alpha = 0.6;
 			statsTxt.isMenuItemCenter = true;
 			statsTxt.targetY = i;
+			statsTxt.ID = i;
 			statsTxt.changeX = false;
 			grpTexts.add(statsTxt);
 		}
+
+		changeSelection();
 
 		textBG = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.scrollFactor.set(0, 0);
@@ -111,7 +113,7 @@ class Stats extends MusicBeatState
 
 			item.alpha = 0.6;
 
-			if (item.targetY == 0){
+			if (item.ID == curSelected){
 				item.alpha = 1;
 			}
 		}

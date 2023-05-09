@@ -5,6 +5,7 @@ import sys.thread.Thread;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;
+import shaders.ColorSwap;
 import flixel.FlxState;
 import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;

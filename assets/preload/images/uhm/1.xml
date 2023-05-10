@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="1.png">
+<SubTexture name="boy instance0000" x="0" y="0" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0001" x="320" y="0" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0002" x="0" y="240" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0003" x="320" y="240" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0004" x="640" y="0" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0005" x="640" y="240" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0006" x="0" y="480" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0007" x="320" y="480" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0008" x="640" y="480" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0009" x="0" y="720" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0010" x="320" y="720" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0011" x="640" y="720" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0012" x="960" y="0" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0013" x="960" y="240" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0014" x="960" y="480" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0015" x="960" y="720" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0016" x="0" y="960" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0017" x="320" y="960" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0018" x="640" y="960" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0019" x="960" y="960" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0020" x="1280" y="0" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+<SubTexture name="boy instance0021" x="1280" y="240" width="320" height="240" frameX="0" frameY="0" frameWidth="320" frameHeight="240" />
+</TextureAtlas>

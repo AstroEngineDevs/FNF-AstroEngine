@@ -10,6 +10,7 @@ import llua.Convert;
 
 import animateatlas.AtlasFrameMaker;
 import backend.Conductor;
+import states.substates.GameOverSubstate;
 import flixel.FlxG;
 import states.substates.PauseSubState;
 import flixel.addons.effects.FlxTrail;

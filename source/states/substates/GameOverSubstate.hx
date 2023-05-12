@@ -1,4 +1,4 @@
-package;
+package states.substates;
 
 import flixel.FlxG;
 import flixel.FlxObject;

@@ -5,6 +5,7 @@ import flixel.graphics.FlxGraphic;
 import client.Discord.DiscordClient;
 #end
 import Section.SwagSection;
+import states.substates.GameOverSubstate;
 import backend.CutsceneHandler;
 import Song.SwagSong;
 import states.substates.PauseSubState;
@@ -95,6 +96,8 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	var sexyUhmTxt:FlxTypedGroup<flixel.FlxSprite>;
+
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
@@ -284,6 +287,7 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
+	public var scoreTxtBG:FlxSprite;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
@@ -343,8 +347,13 @@ class PlayState extends MusicBeatState
 
 
 	// kys 
-
+	var songLeft:FlxText;
 	var psyWatermark:FlxText;
+	var sickTxt:FlxText;
+	var goodsTxt:FlxText;
+	var badTxt:FlxText;
+	var shitsTxt:FlxText;
+	var missTxt:FlxText;
 
 	override public function create()
 	{
@@ -1161,15 +1170,68 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
 
-		psyWatermark = new FlxText(40, healthBarBG.y + 36, 0, "", 16);
+		psyWatermark = new FlxText(40, healthBarBG.y + 37, 0, "", 16);
 		psyWatermark.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		psyWatermark.scrollFactor.set();
-		//psyWatermark.color = FlxColor.fromString(SONG.songColor);
+		psyWatermark.y += 10;
 		psyWatermark.borderSize = 1.25;
+		psyWatermark.alpha = 0;
 		psyWatermark.visible = !ClientPrefs.hideFullHUD;
-		add(psyWatermark);
 
-		if (ClientPrefs.downScroll) psyWatermark.y = FlxG.height * 0.9 + 45;
+		songLeft = new FlxText(1140, healthBarBG.y + 37, 0, "", 16);
+		songLeft.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		songLeft.scrollFactor.set();
+		songLeft.y += 10;
+		songLeft.alpha = 0;
+		songLeft.borderSize = 1.25;
+		songLeft.visible = !ClientPrefs.hideFullHUD;
+	
+		var main_y:Int = 264;
+		var x:Int = 120;
+		var y:Int = 40;
+		sexyUhmTxt = new FlxTypedGroup<FlxSprite>();
+		add(sexyUhmTxt);
+
+		var MAIN_SIZE:Int = 24;
+		
+		sickTxt = new FlxText(x, main_y, 0, "SICKS: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		sickTxt.visible = !ClientPrefs.hideFullHUD;
+		sickTxt.alpha = 0;
+		sickTxt.x = FlxG.width - (sickTxt.width + 55);
+		sexyUhmTxt.add(sickTxt);
+
+		goodsTxt = new FlxText(x, main_y, 0, "GOODS: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		goodsTxt.visible = !ClientPrefs.hideFullHUD;
+		goodsTxt.x = FlxG.width - (sickTxt.width + 55);
+		goodsTxt.y += y;
+		goodsTxt.alpha = 0;
+		sexyUhmTxt.add(goodsTxt);
+
+		badTxt = new FlxText(x, main_y, 0, "BAD: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		badTxt.visible = !ClientPrefs.hideFullHUD;
+		badTxt.x = FlxG.width - (sickTxt.width + 55);
+		badTxt.alpha = 0;
+		badTxt.y = goodsTxt.y + y;
+		sexyUhmTxt.add(badTxt);
+
+		shitsTxt = new FlxText(x, main_y, 0, "SHIT: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		shitsTxt.visible = !ClientPrefs.hideFullHUD;
+		shitsTxt.x = FlxG.width - (sickTxt.width + 55);
+		shitsTxt.y = badTxt.y + y;
+		shitsTxt.alpha = 0;
+		sexyUhmTxt.add(shitsTxt);
+
+		missTxt = new FlxText(x, main_y, 0, "MISS: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		missTxt.visible = !ClientPrefs.hideFullHUD;
+		missTxt.x = FlxG.width - (sickTxt.width + 55);
+		missTxt.y = shitsTxt.y + y;
+		missTxt.alpha = 0;
+		sexyUhmTxt.add(missTxt);
+
+		//if (ClientPrefs.downScroll) psyWatermark.y = FlxG.height * 0.9 + 45;
+		//if (ClientPrefs.downScroll) scoreTxtBG.y = FlxG.height * 0.9 + 45;
+
+		//furry
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
@@ -1187,8 +1249,18 @@ class PlayState extends MusicBeatState
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
+		scoreTxt.alpha = 0;
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideFullHUD;
+
+		scoreTxtBG = new FlxSprite(0,scoreTxt.y).makeGraphic(FlxG.width, 50, FlxColor.BLACK);
+		scoreTxtBG.alpha = 0;
+		scoreTxtBG.visible = !ClientPrefs.hideFullHUD;
+
+		add(scoreTxtBG);
+		scoreTxt.y += 10;
+		add(psyWatermark);
+		add(songLeft);
 		add(scoreTxt);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
@@ -1208,8 +1280,15 @@ class PlayState extends MusicBeatState
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
+		sickTxt.cameras = [camHUD];
+		goodsTxt.cameras = [camHUD];
+		badTxt.cameras = [camHUD];
+		shitsTxt.cameras = [camHUD];
+		missTxt.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		psyWatermark.cameras = [camHUD];
+		songLeft.cameras = [camHUD];
+		scoreTxtBG.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -2324,16 +2403,74 @@ class PlayState extends MusicBeatState
 		}
 
 		psyWatermark.text = SONG.song + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
+	
+		sickTxt.text = 'Sick: ${sicks}';
+		goodsTxt.text = 'Good: ${goods}';
+		badTxt.text = 'Bad: ${bads}';
+		shitsTxt.text = 'Shit: ${shits}';
+		missTxt.text = 'Miss: ${songMisses}';
+/*
+		if (sicks > 0) ratingFC = "SFC";
+		if (goods > 0) ratingFC = "GFC";
+		if (bads > 0 || shits > 0) ratingFC = "FC"; */
 
 		if(ClientPrefs.scoreZoom && !miss && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
-			}
+			}// sexy
 			scoreTxt.scale.x = 1.075;
 			scoreTxt.scale.y = 1.075;
 			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
 				onComplete: function(twn:FlxTween) {
+					scoreTxtTween = null;
+				}
+			});
+
+			psyWatermark.scale.set(1.075, 1.075);
+			scoreTxtTween = FlxTween.tween(psyWatermark.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween)
+				{
+					scoreTxtTween = null;
+				}
+			});
+
+			sickTxt.scale.set(1.075, 1.075);
+			scoreTxtTween = FlxTween.tween(sickTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween)
+				{
+					scoreTxtTween = null;
+				}
+			});
+
+			goodsTxt.scale.set(1.075, 1.075);
+			scoreTxtTween = FlxTween.tween(goodsTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween)
+				{
+					scoreTxtTween = null;
+				}
+			});
+
+			badTxt.scale.set(1.075, 1.075);
+			scoreTxtTween = FlxTween.tween(badTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween)
+				{
+					scoreTxtTween = null;
+				}
+			});
+
+			shitsTxt.scale.set(1.075, 1.075);
+			scoreTxtTween = FlxTween.tween(shitsTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween)
+				{
+					scoreTxtTween = null;
+				}
+			});
+
+			missTxt.scale.set(1.075, 1.075);
+			scoreTxtTween = FlxTween.tween(missTxt.scale, {x: 1, y: 1}, 0.2, {
+				onComplete: function(twn:FlxTween)
+				{
 					scoreTxtTween = null;
 				}
 			});
@@ -2403,6 +2540,26 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		/* rate counter */
+		FlxTween.tween(sickTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(goodsTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(badTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(shitsTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(missTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		/* Background & Shit */
+		FlxTween.tween(songLeft, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(psyWatermark, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(scoreTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(scoreTxtBG, {alpha: 0.6}, 0.5, {ease: FlxEase.circOut});
+
+		/*
+		sickTxt.text = 'Sick: ${sicks}';
+		goodsTxt.text = 'Good: ${goods}';
+		badTxt.text = 'Bad: ${bads}';
+		shitsTxt.text = 'Shit: ${shits}';
+		missTxt.text = 'Miss: ${songMisses}';
+
+		*/
 
 		switch(curStage)
 		{
@@ -3139,6 +3296,8 @@ class PlayState extends MusicBeatState
 
 					if(ClientPrefs.timeBarType != 'Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+
+					songLeft.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / 1000)), false) + " • " + FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
 				}
 			}
 
@@ -3405,8 +3564,8 @@ class PlayState extends MusicBeatState
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
+				//furry
 				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
-
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 				#if desktop

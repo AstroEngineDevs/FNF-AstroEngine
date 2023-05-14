@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="art/psyshit/512-modified.png" width="100" height="100"/>
+    <img src="art/psyshit/512-modified.png" width="300" height="300"/>
     <br>
     <h1>Friday Night Funkin' • <code>Psy Engine</code> (<strong>Beta</strong>)</h1>
     <br>    

@@ -94,10 +94,6 @@ class Stats extends MusicBeatState
 				StatChangeables.resetStats();
 				MusicBeatState.switchState(FlxG.state);
 			}
-
-			if(FlxG.keys.justPressed.SEVEN){
-				MusicBeatState.switchState(new states.AnimatedImageState("BOYKISSER","uhm/1", "boy instance", true, 21));
-			}
 	}
 
 	function changeSelection(change:Int = 0)

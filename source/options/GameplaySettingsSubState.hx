@@ -41,6 +41,14 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Mouse Support',
+		'mouse',
+		'mouseEvents',
+		'bool',
+		false);
+	addOption(option);
+	option.onChange = onChangeEnableDisableMouse;
+
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
 			'If checked, notes go Down instead of Up, simple enough.', //Description
@@ -151,5 +159,9 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 	function onChangeHitsoundVolume()
 	{
 		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+	}
+
+	function onChangeEnableDisableMouse(){
+		FlxG.mouse.visible = ClientPrefs.mouseEvents;
 	}
 }

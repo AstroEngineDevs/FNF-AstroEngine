@@ -91,6 +91,9 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		FlxG.mouse.visible = false;
+		if(ClientPrefs.mouseEvents && !ClientPrefs.lowQuality) FlxG.mouse.visible = true;
+		
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 

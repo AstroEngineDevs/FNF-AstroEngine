@@ -65,10 +65,6 @@ class MainMenuState extends MusicBeatState
 	override function create()
 	{
 
-		FlxG.mouse.visible = false;
-
-		if(Core.coreGame.mouseEvents && !ClientPrefs.lowQuality) FlxG.mouse.visible = true;
-
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
 		#end
@@ -143,10 +139,10 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
-			if (Core.coreGame.mouseEvents && !ClientPrefs.lowQuality)
+			if (ClientPrefs.mouseEvents && !ClientPrefs.lowQuality)
 			{
 				
-				#if (flixel >= "5.0.0") // update your fucking haxeflixel version
+				#if (flixel >= "5.0.0") // update your fucking flixel
 					FlxMouseEvent.add(menuItem, null, function(e) stateChangeThing(), function(e)
 					{
 						new FlxTimer().start(0.01, function (tmr:FlxTimer) {

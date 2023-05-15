@@ -13,7 +13,7 @@ class AnimatedImageState extends MusicBeatState
 	var title:FlxText;
 	var index:FlxSprite;
 
-	public function new(text:String, image:String, animPrefix:String, center:Bool, framerate:Int = 24)
+	public function new(text:String, image:String, animPrefix:String, center:Bool, framerate:Int = 24, returnState:FlxState, color:FlxColor = FlxColorPastel.PASTELPINK)
 	{
 		super();
 		FlxG.sound.music.stop();
@@ -22,7 +22,7 @@ class AnimatedImageState extends MusicBeatState
 		add(background);
 
 		title = new FlxText();
-		title.setFormat(Paths.font("PhantomMuff.ttf"), 128, FlxColorPastel.PASTELPINK, CENTER);
+		title.setFormat(Paths.font("PhantomMuff.ttf"), 128, color, CENTER);
 		title.text = text;
 		title.y += 25;
 		title.screenCenter(X);
@@ -33,8 +33,7 @@ class AnimatedImageState extends MusicBeatState
 		index.frames = Paths.getSparrowAtlas(image);
 		index.antialiasing = ClientPrefs.globalAntialiasing;
 		index.animation.addByPrefix('instance', animPrefix, framerate, true);
-		if (center)
-			index.screenCenter();
+		if (center) index.screenCenter();
 		index.animation.play('instance');
 		index.updateHitbox();
 		add(index);
@@ -46,7 +45,7 @@ class AnimatedImageState extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new options.Stats());
+			MusicBeatState.switchState(returnState);
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
 	}

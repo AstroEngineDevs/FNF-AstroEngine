@@ -11,7 +11,6 @@ class Core extends FlxSprite
     //** Customization **/
 	public static var coreGame = {
 		coreDiscordID: "1095422496473358356",
-		mouseEvents: false, // Desktop Only! 
 	}
 
     //** Other Shit **/
@@ -27,7 +26,7 @@ class Core extends FlxSprite
 		super();
         
 		if (ClientPrefs.lowQuality) {
-			coreGame.mouseEvents = false;
+			ClientPrefs.mouseEvents = false;
 		}
 	}
 }

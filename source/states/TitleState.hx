@@ -100,8 +100,12 @@ class TitleState extends MusicBeatState
 		#if LUA_ALLOWED
 		Paths.pushGlobalMods();
 		#end
-		trace(FlxG.save.data.maxScore);
-		trace(FlxG.save.data.mostMisses);
+		var maxS = FlxG.save.data.maxScore;
+		var mostM = FlxG.save.data.mostMisses;
+		if(maxS != null)
+			trace(FlxG.save.data.maxScore);
+		if(mostM != null)
+			trace(FlxG.save.data.mostMisses);
 		StatChangeables.loadStats();
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
 		WeekData.loadTheFirstEnabledMod();

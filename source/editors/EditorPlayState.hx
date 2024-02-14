@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.text.FlxText;
-import sprites.NoteSplash;
+import game.objects.NoteSplash;
 import flixel.tweens.FlxEase;
 import backend.Conductor;
 import flixel.tweens.FlxTween;

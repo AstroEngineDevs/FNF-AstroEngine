@@ -1,4 +1,4 @@
-package options;
+package game.options;
 
 import flixel.util.FlxStringUtil;
 import flixel.tweens.FlxEase;
@@ -37,7 +37,7 @@ class NoteOffsetState extends MusicBeatState
 	var timeBarBG:FlxSprite;
 	var timeBar:FlxBar;
 	var timeTxt:FlxText;
-	var beatText:Alphabet;
+	var beatText:game.objects.Alphabet;
 	var beatTween:FlxTween;
 
 	var changeModeText:FlxText;
@@ -143,7 +143,7 @@ class NoteOffsetState extends MusicBeatState
 
 		// Note delay stuff
 		
-		beatText = new Alphabet(0, 0, 'Beat Hit!', true);
+		beatText = new game.objects.Alphabet(0, 0, 'Beat Hit!', true);
 		beatText.scaleX = 0.6;
 		beatText.scaleY = 0.6;
 		beatText.x += 260;
@@ -356,7 +356,7 @@ class NoteOffsetState extends MusicBeatState
 
 			persistentUpdate = false;
 			fadeTransition.CustomFadeTransition.nextCamera = camOther;
-			MusicBeatState.switchState(new options.OptionsState());
+			MusicBeatState.switchState(new states.OptionsState());
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
 			FlxG.mouse.visible = false;
 		}

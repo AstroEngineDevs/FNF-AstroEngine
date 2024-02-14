@@ -2,7 +2,7 @@ package;
 
 import flixel.graphics.FlxGraphic;
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import Section.SwagSection;
 import states.substates.GameOverSubstate;
@@ -10,13 +10,13 @@ import backend.CutsceneHandler;
 import Song.SwagSong;
 import states.substates.PauseSubState;
 import shaders.WiggleEffect;
-import sprites.DialogueBoxPsych;
+import game.objects.DialogueBoxPsych;
 import backend.StatChangeables;
 import backend.Conductor;
-import sprites.DialogueBox;
+import game.objects.DialogueBox;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
-import sprites.NoteSplash;
+import game.objects.NoteSplash;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
@@ -63,7 +63,7 @@ import flixel.effects.particles.FlxParticle;
 import flixel.util.FlxSave;
 import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
-import sprites.Achievements;
+import game.objects.Achievements;
 import backend.StageData;
 import playstateBG.BackgroundGirls;
 import FunkinLua;
@@ -75,7 +75,7 @@ import playstateBG.BackgroundDancer;
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
-import sprites.Boyfriend;
+import game.objects.Boyfriend;
 
 #if sys
 import sys.FileSystem;
@@ -3043,7 +3043,6 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
-		//trace(SONG.songColor);
 
 		if(cpuControlled){
 			ClientPrefs.botplayStudio = true;
@@ -4325,9 +4324,11 @@ class PlayState extends MusicBeatState
 		score = daRating.score;
 
 		if(daRating.noteSplash && !note.noteSplashDisabled)
-		{
 			spawnNoteSplashOnNote(note);
-		}
+		
+		if(ClientPrefs.opnoteSplashes && note.hitByOpponent)
+				spawnNoteSplashOnNote(note);
+
 
 		if(!practiceMode && !cpuControlled) {
 			songScore += score;
@@ -4828,6 +4829,9 @@ class PlayState extends MusicBeatState
 		StrumPlayAnim(true, Std.int(Math.abs(note.noteData)), time);
 		note.hitByOpponent = true;
 
+		if(ClientPrefs.opnoteSplashes && !note.isSustainNote)
+			spawnNoteSplashOnNote(note);
+
 		callOnLuas('opponentNoteHit', [notes.members.indexOf(note), Math.abs(note.noteData), note.noteType, note.isSustainNote]);
 
 		if (!note.isSustainNote)
@@ -4947,8 +4951,12 @@ class PlayState extends MusicBeatState
 	}
 
 	public function spawnNoteSplashOnNote(note:Note) {
+
 		if(ClientPrefs.noteSplashes && note != null && !ClientPrefs.hideFullHUD) {
 			var strum:StrumNote = playerStrums.members[note.noteData];
+			if(ClientPrefs.opnoteSplashes){
+				if(note.hitByOpponent) strum = opponentStrums.members[note.noteData];
+			}
 			if(strum != null) {
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
 			}

@@ -1,7 +1,7 @@
-package options;
+package states;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
@@ -25,39 +25,40 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 import backend.StatChangeables;
+import game.options.*;
 
 using StringTools;
 
 class OptionsState extends MusicBeatState
 {
 	var options:Array<String> = ['Note Colors', 'Controls', 'Recording Studio', 'Graphics', 'Gameplay','Stats', 'Visuals and UI', 'Adjust Delay and Combo'];
-	private var grpOptions:FlxTypedGroup<Alphabet>;
+	private var grpOptions:FlxTypedGroup<game.objects.Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
 			case 'Note Colors':
-				openSubState(new options.NotesSubState());
+				openSubState(new NotesSubState());
 			case 'Controls':
-				openSubState(new options.ControlsSubState());
+				openSubState(new ControlsSubState());
 			case 'Graphics':
-				openSubState(new options.GraphicsSettingsSubState());
+				openSubState(new GraphicsSettingsSubState());
 			case 'Visuals and UI':
-				openSubState(new options.VisualsUISubState());
+				openSubState(new VisualsUISubState());
 			case 'Gameplay':
-				openSubState(new options.GameplaySettingsSubState());
+				openSubState(new GameplaySettingsSubState());
 			case 'Stats':
-				LoadingState.loadAndSwitchState(new options.Stats());
+				LoadingState.loadAndSwitchState(new Stats());
 			case 'Adjust Delay and Combo':
-				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
+				LoadingState.loadAndSwitchState(new NoteOffsetState());
 			case 'Recording Studio':
-				openSubState(new options.StudioSettingsSubState());
+				openSubState(new StudioSettingsSubState());
 		}
 	}
 
-	var selectorLeft:Alphabet;
-	var selectorRight:Alphabet;
+	var selectorLeft:game.objects.Alphabet;
+	var selectorRight:game.objects.Alphabet;
 
 	var OFFSETFUCKME:Int = 200;
 
@@ -75,12 +76,12 @@ class OptionsState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		grpOptions = new FlxTypedGroup<Alphabet>();
+		grpOptions = new FlxTypedGroup<game.objects.Alphabet>();
 		add(grpOptions);
 
 		for (i in 0...options.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, OFFSETFUCKME, options[i], true);
+			var optionText:game.objects.Alphabet = new game.objects.Alphabet(0, OFFSETFUCKME, options[i], true);
 			optionText.screenCenter();	
 			optionText.isMenuItemCenter = true;
 			//optionText.changeY = false;
@@ -89,11 +90,11 @@ class OptionsState extends MusicBeatState
 			grpOptions.add(optionText);
 		}
 
-		selectorLeft = new Alphabet(0, OFFSETFUCKME, '>', true);
+		selectorLeft = new game.objects.Alphabet(0, OFFSETFUCKME, '>', true);
 		selectorLeft.isMenuItem = true;
 		selectorLeft.changeX = false;
 		add(selectorLeft);
-		selectorRight = new Alphabet(0, OFFSETFUCKME, '<', true);
+		selectorRight = new game.objects.Alphabet(0, OFFSETFUCKME, '<', true);
 		selectorRight.isMenuItem = true;
 		selectorRight.changeX = false;
 		add(selectorRight);

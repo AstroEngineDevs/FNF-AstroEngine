@@ -3,7 +3,7 @@
     "song": "Monster",
     "bpm": 95,
     "needsVoices": true,
-    "songColor": "0xFFFF0000",
+    "songColor": "0xFF0000",
     "player1": "bf",
     "player2": "monster",
     "speed": 1.3,

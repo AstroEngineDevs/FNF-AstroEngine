@@ -50,7 +50,7 @@ class HScript
 		interp.variables.set('Conductor', Conductor);
 		interp.variables.set('ClientPrefs', ClientPrefs);
 		interp.variables.set('Character', Character);
-		interp.variables.set('Alphabet', Alphabet);
+		interp.variables.set('Alphabet', game.objects.Alphabet);
 		interp.variables.set('CustomSubstate', backend.CustomSubstate);
 		#if (!flash && sys)
 		interp.variables.set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);

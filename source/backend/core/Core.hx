@@ -1,8 +1,6 @@
-package psy;
+package backend.core;
 
 import flixel.FlxSprite;
-import flixel.util.FlxColor;
-import flixel.FlxG;
 
 using StringTools;
 
@@ -15,7 +13,7 @@ class Core extends FlxSprite
 
     //** Other Shit **/
 	public static var mainCoreShit = {
-		coreVersion: '1.5.2',
+		coreVersion: '1.6',
 		colorMenuImage: 0xff525252,
 		mainRepo: "https://github.com/Hackx2/FNF-PsyEngine",
 	}
@@ -25,8 +23,7 @@ class Core extends FlxSprite
 	{
 		super();
         
-		if (ClientPrefs.lowQuality) {
+		if (ClientPrefs.lowQuality)
 			ClientPrefs.mouseEvents = false;
-		}
 	}
 }

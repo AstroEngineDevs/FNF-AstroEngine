@@ -3,7 +3,7 @@ package;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 
-class AttachedText extends Alphabet
+class AttachedText extends game.objects.Alphabet
 {
 	public var offsetX:Float = 0;
 	public var offsetY:Float = 0;

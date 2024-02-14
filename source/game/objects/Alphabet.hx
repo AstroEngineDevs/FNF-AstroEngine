@@ -1,4 +1,4 @@
-package;
+package game.objects;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -328,7 +328,7 @@ class AlphaCharacter extends FlxSprite
 		'~'  => {offsets: [0, 16]}
 	];
 
-	var parent:Alphabet;
+	var parent:game.objects.Alphabet;
 	public var alignOffset:Float = 0; //Don't change this
 	public var letterOffset:Array<Float> = [0, 0];
 	public var spawnPos:FlxPoint = new FlxPoint();
@@ -336,7 +336,7 @@ class AlphaCharacter extends FlxSprite
 
 	public var row:Int = 0;
 	public var rowWidth:Float = 0;
-	public function new(x:Float, y:Float, character:String, bold:Bool, parent:Alphabet)
+	public function new(x:Float, y:Float, character:String, bold:Bool, parent:game.objects.Alphabet)
 	{
 		super(x, y);
 		this.parent = parent;

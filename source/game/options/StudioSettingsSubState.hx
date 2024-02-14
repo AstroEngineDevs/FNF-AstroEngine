@@ -1,7 +1,7 @@
-package options;
+package game.options;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxCamera;
@@ -26,6 +26,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 import openfl.Lib;
+import game.options.*;
 
 using StringTools;
 
@@ -62,7 +63,7 @@ class StudioSettingsSubState extends BaseOptionsMenu
 			ClientPrefs.showFPS = true;
 		}
 
-		if(Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.showFPS;
+		if(game.Main.fpsVar != null)
+			game.Main.fpsVar.visible = ClientPrefs.showFPS;
 	}
 }

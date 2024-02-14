@@ -1,5 +1,6 @@
 package states.substates;
 
+import game.objects.Alphabet;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
@@ -10,11 +11,11 @@ using StringTools;
 class ResetScoreSubState extends MusicBeatSubstate
 {
 	var bg:FlxSprite;
-	var alphabetArray:Array<Alphabet> = [];
+	var alphabetArray:Array<game.objects.Alphabet> = [];
 	var icon:HealthIcon;
 	var onYes:Bool = false;
-	var yesText:Alphabet;
-	var noText:Alphabet;
+	var yesText:game.objects.Alphabet;
+	var noText:game.objects.Alphabet;
 
 	var song:String;
 	var difficulty:Int;
@@ -41,12 +42,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 		add(bg);
 
 		var tooLong:Float = (name.length > 18) ? 0.8 : 1; //Fucking Winter Horrorland
-		var text:Alphabet = new Alphabet(0, 180, "Reset the score of", true);
+		var text:game.objects.Alphabet = new Alphabet(0, 180, "Reset the score of", true);
 		text.screenCenter(X);
 		alphabetArray.push(text);
 		text.alpha = 0;
 		add(text);
-		var text:Alphabet = new Alphabet(0, text.y + 90, name, true);
+		var text:game.objects.Alphabet = new Alphabet(0, text.y + 90, name, true);
 		text.scaleX = tooLong;
 		text.screenCenter(X);
 		if(week == -1) text.x += 60 * tooLong;

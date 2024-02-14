@@ -1,14 +1,13 @@
-package client;
+package backend.client;
 
 #if LUA_ALLOWED
 import llua.Lua;
 import llua.State;
 #end
 
-import psy.Core;
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
-import psy.Core;
+import backend.core.*;
 
 using StringTools;
 
@@ -20,7 +19,7 @@ class DiscordClient
 	public function new(){
 		trace("Discord Client starting...");
 		DiscordRpc.start({
-			clientID: psy.Core.coreGame.coreDiscordID,
+			clientID: Core.coreGame.coreDiscordID,
 			onReady: onReady,
 			onError: onError,
 			onDisconnected: onDisconnected

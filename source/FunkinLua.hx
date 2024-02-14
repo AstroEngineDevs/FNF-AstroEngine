@@ -30,6 +30,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import openfl.Lib;
 import openfl.display.BlendMode;
+import backend.core.*;
 import openfl.filters.BitmapFilter;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
@@ -48,7 +49,7 @@ import sys.io.File;
 
 import Type.ValueType;
 import Controls;
-import sprites.DialogueBoxPsych;
+import game.objects.DialogueBoxPsych;
 
 #if hscript
 import backend.Hscript;
@@ -60,7 +61,7 @@ import hscript.Expr;
 import backend.CustomSubstate;
 
 #if desktop
-import client.Discord;
+import backend.client.Discord;
 #end
 
 using StringTools;
@@ -165,7 +166,7 @@ class FunkinLua {
 		set('rating', 0);
 		set('ratingName', '');
 		set('ratingFC', '');
-		set('version', psych.CorePsych.psychVersion.trim());
+		set('version', CorePsych.psychVersion.trim());
 
 		set('inGameOver', false);
 		set('mustHitSection', false);

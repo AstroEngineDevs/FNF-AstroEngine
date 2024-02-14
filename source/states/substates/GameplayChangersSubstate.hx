@@ -1,7 +1,7 @@
 package states.substates; 
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
@@ -33,8 +33,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var curSelected:Int = 0;
 	private var optionsArray:Array<Dynamic> = [];
 
-	private var grpOptions:FlxTypedGroup<Alphabet>;
-	private var checkboxGroup:FlxTypedGroup<options.CheckboxThingie>;
+	private var grpOptions:FlxTypedGroup<game.objects.Alphabet>;
+	private var checkboxGroup:FlxTypedGroup<game.options.CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	function getOptions()
@@ -116,20 +116,20 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		add(bg);
 
 		// avoids lagspikes while scrolling through menus!
-		grpOptions = new FlxTypedGroup<Alphabet>();
+		grpOptions = new FlxTypedGroup<game.objects.Alphabet>();
 		add(grpOptions);
 
 		grpTexts = new FlxTypedGroup<AttachedText>();
 		add(grpTexts);
 
-		checkboxGroup = new FlxTypedGroup<options.CheckboxThingie>();
+		checkboxGroup = new FlxTypedGroup<game.options.CheckboxThingie>();
 		add(checkboxGroup);
 		
 		getOptions();
 
 		for (i in 0...optionsArray.length)
 		{
-			var optionText:Alphabet = new Alphabet(200, 360, optionsArray[i].name, true);
+			var optionText:game.objects.Alphabet = new game.objects.Alphabet(200, 360, optionsArray[i].name, true);
 			optionText.isMenuItem = true;
 			optionText.scaleX = 0.8;
 			optionText.scaleY = 0.8;
@@ -140,7 +140,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				optionText.x += 110;
 				optionText.startPosition.x += 110;
 				optionText.snapToPosition();
-				var checkbox:options.CheckboxThingie = new options.CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
+				var checkbox:game.options.CheckboxThingie = new game.options.CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
 				checkbox.sprTracker = optionText;
 				checkbox.offsetX -= 32;
 				checkbox.offsetY = -120;
@@ -382,7 +382,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 class GameplayOption
 {
-	private var child:Alphabet;
+	private var child:game.objects.Alphabet;
 	public var text(get, set):String;
 	public var onChange:Void->Void = null; //Pressed enter (on Bool type options) or pressed/held left/right (on other types)
 
@@ -471,7 +471,7 @@ class GameplayOption
 		ClientPrefs.gameplaySettings.set(variable, value);
 	}
 
-	public function setChild(child:Alphabet)
+	public function setChild(child:game.objects.Alphabet)
 	{
 		this.child = child;
 	}

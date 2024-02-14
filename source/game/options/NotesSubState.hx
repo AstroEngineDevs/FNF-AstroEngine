@@ -1,7 +1,7 @@
-package options;
+package game.options;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
@@ -25,7 +25,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
-import psy.Core;
+import backend.core.*;
 
 using StringTools;
 
@@ -33,7 +33,7 @@ class NotesSubState extends MusicBeatSubstate
 {
 	private static var curSelected:Int = 0;
 	private static var typeSelected:Int = 0;
-	private var grpNumbers:FlxTypedGroup<Alphabet>;
+	private var grpNumbers:FlxTypedGroup<game.objects.Alphabet>;
 	private var grpNotes:FlxTypedGroup<FlxSprite>;
 	private var shaderArray:Array<ColorSwap> = [];
 	var curValue:Float = 0;
@@ -41,7 +41,7 @@ class NotesSubState extends MusicBeatSubstate
 	var nextAccept:Int = 5;
 
 	var blackBG:FlxSprite;
-	var hsbText:Alphabet;
+	var hsbText:game.objects.Alphabet;
 
 	var posX = 230;
 	public function new() {
@@ -59,13 +59,13 @@ class NotesSubState extends MusicBeatSubstate
 
 		grpNotes = new FlxTypedGroup<FlxSprite>();
 		add(grpNotes);
-		grpNumbers = new FlxTypedGroup<Alphabet>();
+		grpNumbers = new FlxTypedGroup<game.objects.Alphabet>();
 		add(grpNumbers);
 
 		for (i in 0...ClientPrefs.arrowHSV.length) {
 			var yPos:Float = (165 * i) + 35;
 			for (j in 0...3) {
-				var optionText:Alphabet = new Alphabet(posX + (225 * j) + 250, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true);
+				var optionText:game.objects.Alphabet = new game.objects.Alphabet(posX + (225 * j) + 250, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true);
 				grpNumbers.add(optionText);
 			}
 
@@ -85,7 +85,7 @@ class NotesSubState extends MusicBeatSubstate
 			shaderArray.push(newShader);
 		}
 
-		hsbText = new Alphabet(posX + 560, 0, "Hue    Saturation  Brightness", false);
+		hsbText = new game.objects.Alphabet(posX + 560, 0, "Hue    Saturation  Brightness", false);
 		hsbText.scaleX = 0.6;
 		hsbText.scaleY = 0.6;
 		add(hsbText);

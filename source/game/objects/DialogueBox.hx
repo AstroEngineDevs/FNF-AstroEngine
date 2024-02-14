@@ -1,4 +1,4 @@
-package sprites;
+package game.objects;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -236,7 +236,7 @@ class DialogueBox extends FlxSpriteGroup
 	function startDialogue():Void
 	{
 		cleanDialog();
-		// var theDialog:Alphabet = new Alphabet(0, 70, dialogueList[0], false, true);
+		// var theDialog:game.objects.Alphabet = new Alphabet(0, 70, dialogueList[0], false, true);
 		// dialogue = theDialog;
 		// add(theDialog);
 

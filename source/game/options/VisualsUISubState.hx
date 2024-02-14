@@ -1,7 +1,7 @@
-package options;
+package game.options;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
@@ -24,6 +24,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import game.options.*;
 
 using StringTools;
 
@@ -37,6 +38,13 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Note Splashes',
 			"If unchecked, hitting \"Sick!\" notes won't show particles.",
 			'noteSplashes',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Opponent Note Splashes',
+			"Dude.",
+			'opnoteSplashes',
 			'bool',
 			true);
 		addOption(option);
@@ -148,8 +156,8 @@ class VisualsUISubState extends BaseOptionsMenu
 			ClientPrefs.hideFullHUD = true;
 		}
 		
-		if(Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.showFPS;
+		if(game.Main.fpsVar != null)
+			game.Main.fpsVar.visible = ClientPrefs.showFPS;
 		
 	}
 	#end

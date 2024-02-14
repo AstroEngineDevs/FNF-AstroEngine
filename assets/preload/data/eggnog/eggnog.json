@@ -5,7 +5,7 @@
     "needsVoices": true,
     "player1": "bf-christmas",
     "player2": "parents-christmas",
-    "songColor": "0xFFB2075F",
+    "songColor": "0xB2075F",
     "speed": 1.6,
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

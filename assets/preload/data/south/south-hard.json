@@ -1,7 +1,7 @@
 {
   "song": {
     "song": "South",
-    "songColor": "0xFFFF8020",
+    "songColor": "0xFF8020",
     "bpm": 165.0,
     "needsVoices": true,
     "player1": "bf",

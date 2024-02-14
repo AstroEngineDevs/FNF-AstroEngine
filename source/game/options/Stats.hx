@@ -1,4 +1,4 @@
-package options;
+package game.options;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,8 +7,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-import Alphabet;
-import psy.Core;
+import game.objects.Alphabet;
+import backend.core.*;
 import backend.StatChangeables;
 
 using StringTools;
@@ -19,7 +19,7 @@ class Stats extends MusicBeatState
 	private var text:FlxText;
 	private var textBG:FlxSprite;
 
-	private var statsTxt:Alphabet;
+	private var statsTxt:game.objects.Alphabet;
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var curSelected:Int = 0;
 
@@ -83,7 +83,7 @@ class Stats extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new options.OptionsState());
+			MusicBeatState.switchState(new states.OptionsState());
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			StatChangeables.saveStats();
 		}

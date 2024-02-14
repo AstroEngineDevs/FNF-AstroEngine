@@ -26,10 +26,10 @@ import sys.io.File;
 #end
 import Type.ValueType;
 import Controls;
-import sprites.DialogueBoxPsych;
+import game.objects.DialogueBoxPsych;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 
 using StringTools;

@@ -1,7 +1,7 @@
 package editors;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -28,7 +28,7 @@ class MasterEditorMenu extends MusicBeatState
 		'Character Editor',
 		'Chart Editor'
 	];
-	private var grpTexts:FlxTypedGroup<Alphabet>;
+	private var grpTexts:FlxTypedGroup<game.objects.Alphabet>;
 	private var directories:Array<String> = [null];
 
 	private var curSelected = 0;
@@ -48,12 +48,12 @@ class MasterEditorMenu extends MusicBeatState
 		bg.color = 0xFF353535;
 		add(bg);
 
-		grpTexts = new FlxTypedGroup<Alphabet>();
+		grpTexts = new FlxTypedGroup<game.objects.Alphabet>();
 		add(grpTexts);
 
 		for (i in 0...options.length)
 		{
-			var leText:Alphabet = new Alphabet(90, 320, options[i], true);
+			var leText:game.objects.Alphabet = new game.objects.Alphabet(90, 320, options[i], true);
 			leText.isMenuItem = true;
 			leText.targetY = i;
 			grpTexts.add(leText);

@@ -1,7 +1,7 @@
 {
   "song": {
     "song": "Tutorial",
-    "songColor": "0xFFBD1111",
+    "songColor": "0xBD1111",
     "notes": [
       {
         "mustHitSection": true,

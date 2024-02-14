@@ -1,7 +1,7 @@
 package editors;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flash.geom.Rectangle;
 import backend.Prompt;
@@ -2207,11 +2207,12 @@ class ChartingState extends MusicBeatState
 		var st:Float = sectionStartTime();
 		var et:Float = st + (Conductor.stepCrochet * steps);
 
-		if (FlxG.save.data.chart_waveformInst) {
+	if (FlxG.save.data.chart_waveformInst) {
+		   @:privateAccess { 
 			var sound:FlxSound = FlxG.sound.music;
 			if (sound._sound != null && sound._sound.__buffer != null) {
-				var bytes:Bytes = sound._sound.__buffer.data.toBytes();
-
+            } 
+            var bytes:Bytes = sound._sound.__buffer.data.toBytes();
 				wavData = waveformData(
 					sound._sound.__buffer,
 					bytes,
@@ -2225,8 +2226,10 @@ class ChartingState extends MusicBeatState
 		}
 
 		if (FlxG.save.data.chart_waveformVoices) {
+            @:privateAccess { 
 			var sound:FlxSound = vocals;
 			if (sound._sound != null && sound._sound.__buffer != null) {
+			}
 				var bytes:Bytes = sound._sound.__buffer.data.toBytes();
 
 				wavData = waveformData(

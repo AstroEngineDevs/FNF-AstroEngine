@@ -5,7 +5,7 @@
     "needsVoices": true,
     "player1": "bf-pixel",
     "player2": "spirit",
-    "songColor": "0xFFFF0026",
+    "songColor": "0xFF0026",
     "speed": 1.5,
     "notes": [
       {

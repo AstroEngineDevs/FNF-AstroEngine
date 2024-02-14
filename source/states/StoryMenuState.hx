@@ -1,7 +1,7 @@
 package states;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import states.substates.GameplayChangersSubstate;

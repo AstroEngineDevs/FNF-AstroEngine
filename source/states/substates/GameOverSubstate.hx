@@ -10,7 +10,7 @@ import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import backend.Conductor;
 import flixel.tweens.FlxTween;
-import sprites.Boyfriend;
+import game.objects.Boyfriend;
 
 class GameOverSubstate extends MusicBeatSubstate
 {

@@ -1,7 +1,7 @@
 package states;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flash.text.TextField;
 import flixel.FlxG;
@@ -329,7 +329,7 @@ class ModsMenuState extends MusicBeatState
 			var newMod:ModMetadata = new ModMetadata(values[0]);
 			mods.push(newMod);
 
-			newMod.alphabet = new Alphabet(0, 0, mods[i].name, true);
+			newMod.alphabet = new game.objects.Alphabet(0, 0, mods[i].name, true);
 			var scale:Float = Math.min(840 / newMod.alphabet.width, 1);
 			newMod.alphabet.scaleX = scale;
 			newMod.alphabet.scaleY = scale;
@@ -715,7 +715,7 @@ class ModMetadata
 	public var description:String;
 	public var color:FlxColor;
 	public var restart:Bool;//trust me. this is very important
-	public var alphabet:Alphabet;
+	public var alphabet:game.objects.Alphabet;
 	public var icon:AttachedSprite;
 
 	public function new(folder:String)

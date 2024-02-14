@@ -2,7 +2,7 @@
   "song": {
     "song": "Blammed",
     "bpm": 165.0,
-    "songColor": "0xFF6807B2",
+    "songColor": "0x6807B2",
     "needsVoices": true,
     "player1": "bf",
     "player2": "pico",

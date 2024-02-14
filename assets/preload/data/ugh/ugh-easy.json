@@ -2,7 +2,7 @@
   "song": {
     "song": "Ugh",
     "bpm": 160.0,
-    "songColor": "0xFFFF7300",
+    "songColor": "0xFF7300",
     "needsVoices": true,
     "player1": "bf",
     "player2": "tankman",

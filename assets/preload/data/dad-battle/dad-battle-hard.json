@@ -3,7 +3,7 @@
     "song": "Dad Battle",
     "bpm": 180.0,
     "needsVoices": true,
-    "songColor": "0xFF6807B2",
+    "songColor": "0x6807B2",
     "player1": "bf",
     "player2": "dad",
     "speed": 2.3,

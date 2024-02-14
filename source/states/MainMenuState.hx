@@ -1,7 +1,7 @@
 package states;
-
+import backend.core.*;
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -19,10 +19,10 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
-import sprites.Achievements;
+import game.objects.Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
-import psy.Core;
+import backend.core.*;
 
 #if (flixel >= "5.0.0")
 	import flixel.input.mouse.FlxMouseEvent;
@@ -50,8 +50,8 @@ class MainMenuState extends MusicBeatState
 
 	private var versionShitInt:Int = 1;
 	private var versionShitArray:Array<Array<Dynamic>> = [// Name, Version, X, Y
-		["Psy Engine v", psy.Core.mainCoreShit.coreVersion, null, null],
-		["Psych Engine v", psych.CorePsych.psychVersion, null, null],
+		["Psy Engine v", Core.mainCoreShit.coreVersion, null, null],
+		["Psych Engine v", CorePsych.psychVersion, null, null],
 		["Friday Night Funkin' v", Application.current.meta.get('version'), null, null]
 	];
 	private var selectedSomethinAnal:Bool = true;
@@ -312,7 +312,7 @@ class MainMenuState extends MusicBeatState
 								case 'credits':
 									MusicBeatState.switchState(new states.CreditsState());
 								case 'options':
-									LoadingState.loadAndSwitchState(new options.OptionsState());
+									LoadingState.loadAndSwitchState(new states.OptionsState());
 							}
 						});
 					}

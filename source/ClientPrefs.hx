@@ -15,6 +15,7 @@ class ClientPrefs {
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
+	public static var opnoteSplashes:Bool = true;
 	public static var lowQuality:Bool = false;
 	public static var hideFullHUD:Bool = false;
 	public static var botplayStudio:Bool = false;
@@ -106,6 +107,7 @@ class ClientPrefs {
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
+		FlxG.save.data.opnoteSplashes = opnoteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.hideFullHUD = hideFullHUD;
 		FlxG.save.data.botplayStudio = botplayStudio;
@@ -126,8 +128,8 @@ class ClientPrefs {
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.healthBarAlpha = healthBarAlpha;
 		FlxG.save.data.comboOffset = comboOffset;
-		FlxG.save.data.achievementsMap = sprites.Achievements.achievementsMap;
-		FlxG.save.data.henchmenDeath = sprites.Achievements.henchmenDeath;
+		FlxG.save.data.achievementsMap = game.objects.Achievements.achievementsMap;
+		FlxG.save.data.henchmenDeath = game.objects.Achievements.henchmenDeath;
 
 		FlxG.save.data.ratingOffset = ratingOffset;
 		FlxG.save.data.sickWindow = sickWindow;
@@ -163,8 +165,8 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.showFPS != null) {
 			showFPS = FlxG.save.data.showFPS;
-			if(Main.fpsVar != null) {
-				Main.fpsVar.visible = showFPS;
+			if(game.Main.fpsVar != null) {
+				game.Main.fpsVar.visible = showFPS;
 			}
 		}
 		if(FlxG.save.data.flashing != null) {
@@ -175,6 +177,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
+		}
+		if(FlxG.save.data.opnoteSplashes != null) {
+			opnoteSplashes = FlxG.save.data.opnoteSplashes;
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;

@@ -1,4 +1,4 @@
-package;
+package game;
 
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
@@ -13,7 +13,7 @@ import openfl.display.StageScaleMode;
 import lime.app.Application;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 
 //crash handler stuff
@@ -25,7 +25,8 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 #end
-import psy.Core;
+import backend.core.*;
+import game.FPS;
 
 using StringTools;
 
@@ -47,7 +48,7 @@ class Main extends Sprite
 
 	public static function main():Void
 	{
-		Lib.current.addChild(new Main());
+		Lib.current.addChild(new game.Main());
 	}
 
 	public function new()

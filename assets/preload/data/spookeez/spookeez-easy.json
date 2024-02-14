@@ -1,7 +1,7 @@
 {
   "song": {
     "player1": "bf",
-    "songColor": "0xFFFF8020",
+    "songColor": "0xFF8020",
     "notes": [
       { "sectionNotes": [], "lengthInSteps": 16, "mustHitSection": true },
       { "sectionNotes": [], "lengthInSteps": 16, "mustHitSection": true },

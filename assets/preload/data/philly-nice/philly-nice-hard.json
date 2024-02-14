@@ -4,7 +4,7 @@
     "bpm": 175.0,
     "needsVoices": true,
     "player1": "bf",
-    "songColor": "0xFF00C100",
+    "songColor": "0x00C100",
     "player2": "pico",
     "speed": 2.0,
     "notes": [

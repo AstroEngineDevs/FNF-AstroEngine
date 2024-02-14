@@ -1,7 +1,7 @@
 package editors;
 
 #if desktop
-import client.Discord.DiscordClient;
+import backend.client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -22,14 +22,14 @@ import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
 import openfl.net.FileReference;
 
-import sprites.DialogueBoxPsych;
+import game.objects.DialogueBoxPsych;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import flash.net.FileFilter;
 import haxe.Json;
-import sprites.DialogueBoxPsych;
+import game.objects.DialogueBoxPsych;
 import lime.system.Clipboard;
-import Alphabet;
+import game.objects.Alphabet;
 #if sys
 import sys.io.File;
 #end

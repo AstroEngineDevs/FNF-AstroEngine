@@ -1,4 +1,4 @@
-package options;
+package game.options;
 
 import flash.text.TextField;
 import flixel.FlxG;
@@ -25,7 +25,7 @@ using StringTools;
 
 class Option
 {
-	private var child:Alphabet;
+	private var child:game.objects.Alphabet;
 	public var text(get, set):String;
 	public var onChange:Void->Void = null; //Pressed enter (on Bool type options) or pressed/held left/right (on other types)
 
@@ -116,7 +116,7 @@ class Option
 		Reflect.setProperty(ClientPrefs, variable, value);
 	}
 
-	public function setChild(child:Alphabet)
+	public function setChild(child:game.objects.Alphabet)
 	{
 		this.child = child;
 	}

@@ -4,7 +4,7 @@
     "bpm": 180.0,
     "needsVoices": true,
     "player1": "bf",
-    "songColor": "0xFF6807B2",
+    "songColor": "0x6807B2",
     "player2": "dad",
     "speed": 1.5,
     "notes": [

@@ -20,7 +20,7 @@ import openfl.display.BitmapData;
 import sys.FileSystem;
 import sys.io.File;
 #end
-import options.GraphicsSettingsSubState;
+import game.options.GraphicsSettingsSubState;
 //import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFrame;
@@ -38,8 +38,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import openfl.Assets;
-import psy.Core;
-import client.Discord.DiscordClient;
+import backend.core.*;
+import backend.client.Discord.DiscordClient;
 
 using StringTools;
 typedef TitleData =
@@ -64,7 +64,7 @@ class TitleState extends MusicBeatState
 
 	var blackScreen:FlxSprite;
 	var credGroup:FlxGroup;
-	var credTextShit:Alphabet;
+	var credTextShit:game.objects.Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
 	
@@ -160,7 +160,7 @@ class TitleState extends MusicBeatState
 			http.onData = function (data:String)
 			{
 				updateVersion = data.split('\n')[0].trim();
-				//var curVersion:String = psych.CorePsych.psychVersion.trim();
+				
 				var curVersion:String = Core.mainCoreShit.coreVersion.trim();
 
 				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
@@ -403,7 +403,7 @@ class TitleState extends MusicBeatState
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		credGroup.add(blackScreen);
 
-		credTextShit = new Alphabet(0, 0, "", true);
+		credTextShit = new game.objects.Alphabet(0, 0, "", true);
 		credTextShit.screenCenter();
 
 		// credTextShit.alignment = CENTER;
@@ -595,7 +595,7 @@ class TitleState extends MusicBeatState
 	{
 		for (i in 0...textArray.length)
 		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
+			var money:game.objects.Alphabet = new game.objects.Alphabet(0, 0, textArray[i], true);
 			money.screenCenter(X);
 			money.y += (i * 60) + 200 + offset;
 			if(credGroup != null && textGroup != null) {
@@ -608,7 +608,7 @@ class TitleState extends MusicBeatState
 	function addMoreText(text:String, ?offset:Float = 0)
 	{
 		if(textGroup != null && credGroup != null) {
-			var coolText:Alphabet = new Alphabet(0, 0, text, true);
+			var coolText:game.objects.Alphabet = new game.objects.Alphabet(0, 0, text, true);
 			coolText.screenCenter(X);
 			coolText.y += (textGroup.length * 60) + 200 + offset;
 			credGroup.add(coolText);

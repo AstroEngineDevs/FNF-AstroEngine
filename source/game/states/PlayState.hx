@@ -1,5 +1,6 @@
 package game.states;
 
+import backend.utils.ClientPrefs;
 import game.objects.Note.EventNote;
 import game.objects.Note;
 import game.objects.characters.Character;
@@ -295,6 +296,7 @@ class PlayState extends MusicBeatState
 	public var scoreTxt:FlxText;
 	public var scoreTxtBG:FlxSprite;
 	var timeTxt:FlxText;
+	var versionTxtSmth:FlxText;
 	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
@@ -1087,6 +1089,13 @@ class PlayState extends MusicBeatState
 		timeBarBG.yAdd = -5;
 		add(timeBarBG);
 
+		versionTxtSmth = new FlxText(FlxG.width - 300, 10, 400, "Astro Engine: v"+EngineData.mainCoreShit.coreVersion, 32);
+		versionTxtSmth.setFormat(backend.utils.Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionTxtSmth.scrollFactor.set();
+		versionTxtSmth.alpha = 0;
+		versionTxtSmth.updateHitbox();
+		versionTxtSmth.visible = !backend.utils.ClientPrefs.hideFullHUD;
+
 		if (backend.utils.ClientPrefs.hideFullHUD)
 			timeBarBG.visible = false;
 		else
@@ -1261,9 +1270,15 @@ class PlayState extends MusicBeatState
 
 		scoreTxtBG = new FlxSprite(0,scoreTxt.y).makeGraphic(FlxG.width, 50, FlxColor.BLACK);
 		scoreTxtBG.alpha = 0;
-		scoreTxtBG.visible = !backend.utils.ClientPrefs.hideFullHUD;
+		scoreTxtBG.visible = false;
+
+		if(!ClientPrefs.downScroll)
+			scoreTxtBG.visible = true;
+		if(backend.utils.ClientPrefs.hideFullHUD)
+			scoreTxtBG.visible = false;
 
 		add(scoreTxtBG);
+		add(versionTxtSmth);
 		scoreTxt.y += 10;
 		add(psyWatermark);
 		add(songLeft);
@@ -1299,6 +1314,7 @@ class PlayState extends MusicBeatState
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
+		versionTxtSmth.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -2546,6 +2562,7 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(versionTxtSmth, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		/* rate counter */
 		FlxTween.tween(sickTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(goodsTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});

@@ -5,10 +5,13 @@ import backend.client.Discord.DiscordClient;
 #end
 import game.editors.ChartingState;
 import game.objects.HealthIcon;
+import game.states.PlayState;
 import game.states.substates.GameplayChangersSubstate;
 import game.states.substates.ResetScoreSubState;
 import flash.text.TextField;
+import backend.Highscore;
 import flixel.FlxG;
+import backend.Song;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import game.states.substates.GameOverSubstate;
@@ -21,7 +24,7 @@ import flixel.tweens.FlxTween;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
-import WeekData;
+
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end

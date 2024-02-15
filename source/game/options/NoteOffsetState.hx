@@ -3,6 +3,7 @@ package game.options;
 import flixel.util.FlxStringUtil;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import game.objects.BGSprite;
 import game.objects.characters.Character;
 import flixel.tweens.FlxEase;
 import flixel.text.FlxText;

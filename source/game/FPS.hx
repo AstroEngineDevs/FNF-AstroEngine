@@ -92,7 +92,7 @@ class FPS extends TextField
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 
-            text += '\nPsy Engine: '+EngineData.mainCoreShit.coreVersion;
+            text += '\nAstro Engine: '+EngineData.mainCoreShit.coreVersion;
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= backend.utils.ClientPrefs.framerate / 2)

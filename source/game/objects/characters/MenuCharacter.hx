@@ -1,4 +1,4 @@
-package;
+package game.objects.characters;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;

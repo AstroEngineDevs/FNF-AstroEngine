@@ -1,4 +1,4 @@
-package;
+package game.states;
 
 import game.objects.Note.EventNote;
 import game.objects.Note;
@@ -7,13 +7,16 @@ import game.objects.HealthIcon;
 import game.objects.AttachedSprite;
 import flixel.graphics.FlxGraphic;
 import game.objects.StrumNote;
+import backend.Highscore;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end
 import backend.utils.Section.SwagSection;
+import backend.Song;
+import game.objects.BGSprite;
 import game.states.substates.GameOverSubstate;
-import backend.CutsceneHandler;
-import Song.SwagSong;
+import backend.handlers.CutsceneHandler;
+import backend.Song.SwagSong;
 import game.states.substates.PauseSubState;
 import game.objects.shaders.WiggleEffect;
 import game.objects.DialogueBoxPsych;
@@ -71,7 +74,7 @@ import animateatlas.AtlasFrameMaker;
 import game.objects.Achievements;
 import backend.StageData;
 import game.objects.playstateBG.*;
-import FunkinLua;
+import backend.FunkinLua;
 import backend.Hscript;
 import backend.Conductor.Rating;
 #if !flash 

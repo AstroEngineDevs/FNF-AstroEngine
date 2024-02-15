@@ -1,3 +1,5 @@
+package backend;
+
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
 

@@ -5,6 +5,8 @@ import backend.client.Discord.DiscordClient;
 #end
 import animateatlas.AtlasFrameMaker;
 import flixel.FlxG;
+import game.objects.BGSprite;
+import game.states.PlayState;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;

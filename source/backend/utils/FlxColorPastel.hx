@@ -1,4 +1,4 @@
-package;
+package backend.utils;
 
 import flixel.util.FlxColor;
 

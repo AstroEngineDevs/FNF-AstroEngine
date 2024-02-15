@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import game.objects.shaders.ColorSwap;
+import game.states.PlayState;
 
 class NoteSplash extends FlxSprite
 {

@@ -1,4 +1,4 @@
-package;
+package backend;
 
 import openfl.display.BitmapData;
 #if LUA_ALLOWED
@@ -7,6 +7,9 @@ import llua.LuaL;
 import llua.State;
 import llua.Convert;
 #end
+import backend.Song;
+import backend.Highscore;
+import game.states.PlayState;
 import game.objects.characters.Character;
 import animateatlas.AtlasFrameMaker;
 import backend.Conductor;

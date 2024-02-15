@@ -1,4 +1,4 @@
-package;
+package game.objects;
 
 import game.objects.Alphabet;
 import flixel.FlxG;

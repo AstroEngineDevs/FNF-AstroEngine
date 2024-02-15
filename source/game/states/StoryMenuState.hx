@@ -4,9 +4,11 @@ package game.states;
 import backend.client.Discord.DiscordClient;
 #end
 import flixel.FlxG;
+import game.states.PlayState;
 import game.states.substates.GameplayChangersSubstate;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
+import backend.Highscore;
 import game.states.substates.ResetScoreSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -19,7 +21,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.net.curl.CURLCode;
 import flixel.graphics.FlxGraphic;
-import WeekData;
+import backend.Song;
 
 using StringTools;
 

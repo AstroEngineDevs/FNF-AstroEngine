@@ -1,8 +1,9 @@
-package backend;
+package backend.handlers;
 
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxBasic;
+import game.states.PlayState;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.graphics.atlas.FlxAtlas;

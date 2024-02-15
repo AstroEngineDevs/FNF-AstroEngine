@@ -5,6 +5,7 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import openfl.Assets;
 import haxe.Json;
+import game.states.PlayState;
 import openfl.display.BitmapData;
 import animateatlas.JSONData.AtlasData;
 import animateatlas.JSONData.AnimationData;

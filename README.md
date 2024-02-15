@@ -1,11 +1,11 @@
 <div align="center">
-    <img src="art/psyshit/512-modified.png" width="250" height="250"/>
+    <img src="art/astroshit/512-modified.png" width="250" height="250"/>
     <br>
-    <h1>Friday Night Funkin' • <code>Psy Engine</code> (<strong>Beta</strong>)</h1>
+    <h1>Friday Night Funkin' • <code>Astro Engine</code> (<strong>Beta</strong>)</h1>
     <br>    
-    <img src="https://img.shields.io/github/forks/Hackx2/FNF-PsyEngine?style=for-the-badge" />
-    <img src="https://img.shields.io/github/license/Hackx2/FNF-PsyEngine?style=for-the-badge" />
-    <img src="https://img.shields.io/github/actions/workflow/status/Hackx2/FNF-PsyEngine/main.yml?style=for-the-badge" /> 
+    <img src="https://img.shields.io/github/forks/Hackx2/FNF-AstroEngine?style=for-the-badge" />
+    <img src="https://img.shields.io/github/license/Hackx2/FNF-AstroEngine?style=for-the-badge" />
+    <img src="https://img.shields.io/github/actions/workflow/status/Hackx2/FNF-AstroEngine/main.yml?style=for-the-badge" /> 
     <br>
 <br>UPDATE HAXE TO 4.2.5 rn NOW BOIII<br><br>
 

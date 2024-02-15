@@ -1,10 +1,11 @@
-package;
+package backend.data;
 
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
 #end
 import lime.utils.Assets;
+import game.states.PlayState;
 import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
 import haxe.format.JsonParser;

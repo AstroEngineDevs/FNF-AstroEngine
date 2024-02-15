@@ -1,5 +1,4 @@
 package animateatlas;
-
 //Soon
 typedef AnimationData = {
 	?ANIMATION:SymbolData,

@@ -1,4 +1,4 @@
-package;
+package backend;
 
 import backend.utils.Controls;
 import flixel.FlxCamera;

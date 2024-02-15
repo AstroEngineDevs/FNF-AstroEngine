@@ -47,7 +47,7 @@ class DiscordClient
 			details: "In the Menus",
 			state: null,
 			largeImageKey: 'icon',
-			largeImageText: "Psy Engine"
+			largeImageText: "Astro Engine"
 		});
 	}
 
@@ -84,7 +84,7 @@ class DiscordClient
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Psy Version: "+ EngineData.mainCoreShit.coreVersion,
+			largeImageText: "Astro Version: "+ EngineData.mainCoreShit.coreVersion,
 			smallImageKey : smallImageKey,
 			startTimestamp : Std.int(startTimestamp / 1000),
             endTimestamp : Std.int(endTimestamp / 1000)

@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.util.FlxColor;
 import game.objects.HealthIcon;
+import backend.Highscore;
 
 using StringTools;
 

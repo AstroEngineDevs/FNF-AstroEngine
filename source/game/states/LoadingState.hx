@@ -1,9 +1,10 @@
-package;
+package game.states;
 
 import lime.app.Promise;
 import lime.app.Future;
 import backend.StageData;
 import flixel.FlxG;
+import game.states.PlayState;
 import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -14,6 +15,7 @@ import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
+import backend.system.MusicBeatState;
 
 import haxe.io.Path;
 

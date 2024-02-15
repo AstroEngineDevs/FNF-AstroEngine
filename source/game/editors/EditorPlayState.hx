@@ -1,6 +1,6 @@
 package game.editors;
 import backend.utils.Section.SwagSection;
-import Song.SwagSong;
+import backend.Song.SwagSong;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.util.FlxColor;
@@ -9,6 +9,7 @@ import flixel.FlxG;
 import flixel.text.FlxText;
 import game.objects.NoteSplash;
 import flixel.tweens.FlxEase;
+import game.states.PlayState;
 import backend.Conductor;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
@@ -19,7 +20,7 @@ import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
-import FunkinLua;
+import backend.FunkinLua;
 
 using StringTools;
 

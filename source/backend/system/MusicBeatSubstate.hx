@@ -1,4 +1,4 @@
-package;
+package backend.system;
 
 import backend.Conductor.BPMChangeEvent;
 import flixel.FlxG;

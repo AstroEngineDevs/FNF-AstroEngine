@@ -14,7 +14,7 @@ using StringTools;
 	public static var mainCoreShit = {
 		coreVersion: '1.6',
 		colorMenuImage: 0xff525252,
-		mainRepo: "https://github.com/Hackx2/FNF-PsyEngine",
+		mainRepo: "https://github.com/Hackx2/FNF-AstroEngine",
 	}
 
 	//** ignore this **/

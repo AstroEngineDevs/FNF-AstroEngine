@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
+import game.states.PlayState;
 import flixel.util.FlxColor;
 import flash.display.BitmapData;
 import backend.Conductor;

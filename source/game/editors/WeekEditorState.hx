@@ -32,7 +32,7 @@ import haxe.Json;
 import sys.io.File;
 import sys.FileSystem;
 #end
-import WeekData;
+
 
 using StringTools;
 

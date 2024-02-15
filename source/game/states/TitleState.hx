@@ -6,6 +6,7 @@ import sys.thread.Thread;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import game.objects.shaders.ColorSwap;
+import backend.Highscore;
 import flixel.FlxState;
 import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;
@@ -155,7 +156,7 @@ class TitleState extends MusicBeatState
 		if(backend.utils.ClientPrefs.checkForUpdates && !closedState) {
 			trace('checking for update');
 			//var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
-			var http = new haxe.Http("https://raw.githubusercontent.com/Hackx2/FNF-PsyEngine/main/gitVersion.txt");
+			var http = new haxe.Http("https://raw.githubusercontent.com/Hackx2/FNF-AstroEngine/main/gitVersion.txt");
 
 			http.onData = function (data:String)
 			{

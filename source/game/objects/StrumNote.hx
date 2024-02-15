@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import game.objects.shaders.ColorSwap;
 import game.objects.Note;
+import game.states.PlayState;
 
 using StringTools;
 

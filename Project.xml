@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Psy Engine" file="PsyEngine" packageName="com.hackx2.psyengine" package="com.hackx2.psyengine" main="game.Main" version="0.2.8" company="Hackx2" />
+	<app title="Friday Night Funkin': Astro Engine" file="Astro Engine" packageName="com.hackx2.astroengine" package="com.hackx2.astroengine" main="game.Main" version="0.2.8" company="Hackx2" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />

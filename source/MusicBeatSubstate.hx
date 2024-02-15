@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.FlxSubState;
 import backend.Conductor;
 import flixel.FlxBasic;
+import backend.utils.Controls;
 import flixel.FlxSprite;
 
 class MusicBeatSubstate extends FlxSubState
@@ -52,7 +53,7 @@ class MusicBeatSubstate extends FlxSubState
 	{
 		var lastChange = Conductor.getBPMFromSeconds(Conductor.songPosition);
 
-		var shit = ((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / lastChange.stepCrochet;
+		var shit = ((Conductor.songPosition - backend.utils.ClientPrefs.noteOffset) - lastChange.songTime) / lastChange.stepCrochet;
 		curDecStep = lastChange.stepTime + shit;
 		curStep = lastChange.stepTime + Math.floor(shit);
 	}

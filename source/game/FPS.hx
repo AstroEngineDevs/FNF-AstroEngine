@@ -1,7 +1,7 @@
 
 package game;
 
-import backend.core.Core;
+import backend.data.EngineData;
 import haxe.Timer;
 import openfl.events.Event;
 import openfl.text.TextField;
@@ -80,7 +80,7 @@ class FPS extends TextField
 
 		var currentCount = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
-		if (currentFPS > ClientPrefs.framerate) currentFPS = ClientPrefs.framerate;
+		if (currentFPS > backend.utils.ClientPrefs.framerate) currentFPS = backend.utils.ClientPrefs.framerate;
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
@@ -92,10 +92,10 @@ class FPS extends TextField
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 
-            text += '\nPsy Engine: '+Core.mainCoreShit.coreVersion;
+            text += '\nPsy Engine: '+EngineData.mainCoreShit.coreVersion;
 
 			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
+			if (memoryMegas > 3000 || currentFPS <= backend.utils.ClientPrefs.framerate / 2)
 			{
 				textColor = 0xFFFF0000;
 			}

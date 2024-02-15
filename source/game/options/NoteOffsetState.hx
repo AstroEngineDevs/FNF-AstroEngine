@@ -3,6 +3,7 @@ package game.options;
 import flixel.util.FlxStringUtil;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import game.objects.characters.Character;
 import flixel.tweens.FlxEase;
 import flixel.text.FlxText;
 import flixel.group.FlxSpriteGroup;
@@ -19,8 +20,8 @@ using StringTools;
 
 class NoteOffsetState extends MusicBeatState
 {
-	var boyfriend:Character;
-	var gf:Character;
+	var boyfriend:game.objects.characters.Character;
+	var gf:game.objects.characters.Character;
 
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
@@ -56,7 +57,7 @@ class NoteOffsetState extends MusicBeatState
 		FlxG.cameras.add(camOther, false);
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		fadeTransition.CustomFadeTransition.nextCamera = camOther;
+		game.transitions.CustomFadeTransition.nextCamera = camOther;
 		FlxG.camera.scroll.set(120, 130);
 
 		persistentUpdate = true;
@@ -70,7 +71,7 @@ class NoteOffsetState extends MusicBeatState
 		stageFront.updateHitbox();
 		add(stageFront);
 
-		if(!ClientPrefs.lowQuality) {
+		if(!backend.utils.ClientPrefs.lowQuality) {
 			var stageLight:BGSprite = new BGSprite('stage_light', -125, -100, 0.9, 0.9);
 			stageLight.setGraphicSize(Std.int(stageLight.width * 1.1));
 			stageLight.updateHitbox();
@@ -104,11 +105,11 @@ class NoteOffsetState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
 
-		rating = new FlxSprite().loadGraphic(Paths.image('sick'));
+		rating = new FlxSprite().loadGraphic(backend.utils.Paths.image('sick'));
 		rating.cameras = [camHUD];
 		rating.setGraphicSize(Std.int(rating.width * 0.7));
 		rating.updateHitbox();
-		rating.antialiasing = ClientPrefs.globalAntialiasing;
+		rating.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 		
 		add(rating);
 
@@ -125,11 +126,11 @@ class NoteOffsetState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(Paths.image('num' + i));
+			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(backend.utils.Paths.image('num' + i));
 			numScore.cameras = [camHUD];
 			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			numScore.updateHitbox();
-			numScore.antialiasing = ClientPrefs.globalAntialiasing;
+			numScore.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 			comboNums.add(numScore);
 			daLoop++;
 		}
@@ -153,16 +154,16 @@ class NoteOffsetState extends MusicBeatState
 		add(beatText);
 		
 		timeTxt = new FlxText(0, 600, FlxG.width, "", 32);
-		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.setFormat(backend.utils.Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.borderSize = 2;
 		timeTxt.visible = false;
 		timeTxt.cameras = [camHUD];
 
-		barPercent = ClientPrefs.noteOffset;
+		barPercent = backend.utils.ClientPrefs.noteOffset;
 		updateNoteDelay();
 		
-		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(Paths.image('timeBar'));
+		timeBarBG = new FlxSprite(0, timeTxt.y + 8).loadGraphic(backend.utils.Paths.image('timeBar'));
 		timeBarBG.setGraphicSize(Std.int(timeBarBG.width * 1.2));
 		timeBarBG.updateHitbox();
 		timeBarBG.cameras = [camHUD];
@@ -190,14 +191,14 @@ class NoteOffsetState extends MusicBeatState
 		add(blackBox);
 
 		changeModeText = new FlxText(0, 4, FlxG.width, "", 32);
-		changeModeText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
+		changeModeText.setFormat(backend.utils.Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		changeModeText.scrollFactor.set();
 		changeModeText.cameras = [camHUD];
 		add(changeModeText);
 		updateMode();
 
 		Conductor.changeBPM(128.0);
-		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
+		FlxG.sound.playMusic(backend.utils.Paths.music('offsetSong'), 1, true);
 
 		super.create();
 	}
@@ -237,21 +238,21 @@ class NoteOffsetState extends MusicBeatState
 						switch(i)
 						{
 							case 0:
-								ClientPrefs.comboOffset[0] -= addNum;
+								backend.utils.ClientPrefs.comboOffset[0] -= addNum;
 							case 1:
-								ClientPrefs.comboOffset[0] += addNum;
+								backend.utils.ClientPrefs.comboOffset[0] += addNum;
 							case 2:
-								ClientPrefs.comboOffset[1] += addNum;
+								backend.utils.ClientPrefs.comboOffset[1] += addNum;
 							case 3:
-								ClientPrefs.comboOffset[1] -= addNum;
+								backend.utils.ClientPrefs.comboOffset[1] -= addNum;
 							case 4:
-								ClientPrefs.comboOffset[2] -= addNum;
+								backend.utils.ClientPrefs.comboOffset[2] -= addNum;
 							case 5:
-								ClientPrefs.comboOffset[2] += addNum;
+								backend.utils.ClientPrefs.comboOffset[2] += addNum;
 							case 6:
-								ClientPrefs.comboOffset[3] += addNum;
+								backend.utils.ClientPrefs.comboOffset[3] += addNum;
 							case 7:
-								ClientPrefs.comboOffset[3] -= addNum;
+								backend.utils.ClientPrefs.comboOffset[3] -= addNum;
 						}
 					}
 				}
@@ -267,16 +268,16 @@ class NoteOffsetState extends MusicBeatState
 					startMousePos.y - comboNums.y >= 0 && startMousePos.y - comboNums.y <= comboNums.height)
 				{
 					holdingObjectType = true;
-					startComboOffset.x = ClientPrefs.comboOffset[2];
-					startComboOffset.y = ClientPrefs.comboOffset[3];
+					startComboOffset.x = backend.utils.ClientPrefs.comboOffset[2];
+					startComboOffset.y = backend.utils.ClientPrefs.comboOffset[3];
 					//trace('yo bro');
 				}
 				else if (startMousePos.x - rating.x >= 0 && startMousePos.x - rating.x <= rating.width &&
 						 startMousePos.y - rating.y >= 0 && startMousePos.y - rating.y <= rating.height)
 				{
 					holdingObjectType = false;
-					startComboOffset.x = ClientPrefs.comboOffset[0];
-					startComboOffset.y = ClientPrefs.comboOffset[1];
+					startComboOffset.x = backend.utils.ClientPrefs.comboOffset[0];
+					startComboOffset.y = backend.utils.ClientPrefs.comboOffset[1];
 					//trace('heya');
 				}
 			}
@@ -291,17 +292,17 @@ class NoteOffsetState extends MusicBeatState
 				{
 					var mousePos:FlxPoint = FlxG.mouse.getScreenPosition(camHUD);
 					var addNum:Int = holdingObjectType ? 2 : 0;
-					ClientPrefs.comboOffset[addNum + 0] = Math.round((mousePos.x - startMousePos.x) + startComboOffset.x);
-					ClientPrefs.comboOffset[addNum + 1] = -Math.round((mousePos.y - startMousePos.y) - startComboOffset.y);
+					backend.utils.ClientPrefs.comboOffset[addNum + 0] = Math.round((mousePos.x - startMousePos.x) + startComboOffset.x);
+					backend.utils.ClientPrefs.comboOffset[addNum + 1] = -Math.round((mousePos.y - startMousePos.y) - startComboOffset.y);
 					repositionCombo();
 				}
 			}
 
 			if(controls.RESET)
 			{
-				for (i in 0...ClientPrefs.comboOffset.length)
+				for (i in 0...backend.utils.ClientPrefs.comboOffset.length)
 				{
-					ClientPrefs.comboOffset[i] = 0;
+					backend.utils.ClientPrefs.comboOffset[i] = 0;
 				}
 				repositionCombo();
 			}
@@ -310,12 +311,12 @@ class NoteOffsetState extends MusicBeatState
 		{
 			if(controls.UI_LEFT_P)
 			{
-				barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset - 1, delayMax));
+				barPercent = Math.max(delayMin, Math.min(backend.utils.ClientPrefs.noteOffset - 1, delayMax));
 				updateNoteDelay();
 			}
 			else if(controls.UI_RIGHT_P)
 			{
-				barPercent = Math.max(delayMin, Math.min(ClientPrefs.noteOffset + 1, delayMax));
+				barPercent = Math.max(delayMin, Math.min(backend.utils.ClientPrefs.noteOffset + 1, delayMax));
 				updateNoteDelay();
 			}
 
@@ -355,9 +356,9 @@ class NoteOffsetState extends MusicBeatState
 			if(beatTween != null) beatTween.cancel();
 
 			persistentUpdate = false;
-			fadeTransition.CustomFadeTransition.nextCamera = camOther;
-			MusicBeatState.switchState(new states.OptionsState());
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
+			game.transitions.CustomFadeTransition.nextCamera = camOther;
+			MusicBeatState.switchState(new game.states.OptionsState());
+			FlxG.sound.playMusic(backend.utils.Paths.music('freakyMenu'), 1, true);
 			FlxG.mouse.visible = false;
 		}
 
@@ -410,12 +411,12 @@ class NoteOffsetState extends MusicBeatState
 	function repositionCombo()
 	{
 		rating.screenCenter();
-		rating.x = coolText.x - 40 + ClientPrefs.comboOffset[0];
-		rating.y -= 60 + ClientPrefs.comboOffset[1];
+		rating.x = coolText.x - 40 + backend.utils.ClientPrefs.comboOffset[0];
+		rating.y -= 60 + backend.utils.ClientPrefs.comboOffset[1];
 
 		comboNums.screenCenter();
-		comboNums.x = coolText.x - 90 + ClientPrefs.comboOffset[2];
-		comboNums.y += 80 - ClientPrefs.comboOffset[3];
+		comboNums.x = coolText.x - 90 + backend.utils.ClientPrefs.comboOffset[2];
+		comboNums.y += 80 - backend.utils.ClientPrefs.comboOffset[3];
 		reloadTexts();
 	}
 
@@ -424,7 +425,7 @@ class NoteOffsetState extends MusicBeatState
 		for (i in 0...4)
 		{
 			var text:FlxText = new FlxText(10, 48 + (i * 30), 0, '', 24);
-			text.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			text.setFormat(backend.utils.Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			text.scrollFactor.set();
 			text.borderSize = 2;
 			dumbTexts.add(text);
@@ -444,16 +445,16 @@ class NoteOffsetState extends MusicBeatState
 			switch(i)
 			{
 				case 0: dumbTexts.members[i].text = 'Rating Offset:';
-				case 1: dumbTexts.members[i].text = '[' + ClientPrefs.comboOffset[0] + ', ' + ClientPrefs.comboOffset[1] + ']';
+				case 1: dumbTexts.members[i].text = '[' + backend.utils.ClientPrefs.comboOffset[0] + ', ' + backend.utils.ClientPrefs.comboOffset[1] + ']';
 				case 2: dumbTexts.members[i].text = 'Numbers Offset:';
-				case 3: dumbTexts.members[i].text = '[' + ClientPrefs.comboOffset[2] + ', ' + ClientPrefs.comboOffset[3] + ']';
+				case 3: dumbTexts.members[i].text = '[' + backend.utils.ClientPrefs.comboOffset[2] + ', ' + backend.utils.ClientPrefs.comboOffset[3] + ']';
 			}
 		}
 	}
 
 	function updateNoteDelay()
 	{
-		ClientPrefs.noteOffset = Math.round(barPercent);
+		backend.utils.ClientPrefs.noteOffset = Math.round(barPercent);
 		timeTxt.text = 'Current offset: ' + Math.floor(barPercent) + ' ms';
 	}
 

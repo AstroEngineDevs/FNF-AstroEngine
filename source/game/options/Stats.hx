@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
 import game.objects.Alphabet;
-import backend.core.*;
+import backend.data.*;
 import backend.StatChangeables;
 
 using StringTools;
@@ -29,15 +29,15 @@ class Stats extends MusicBeatState
     ];
 
 	override function create() {
-		Paths.clearStoredMemory();
-		Paths.clearUnusedMemory();
+		backend.utils.Paths.clearStoredMemory();
+		backend.utils.Paths.clearUnusedMemory();
 		StatChangeables.loadStats();
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = Core.mainCoreShit.colorMenuImage;
+		bg = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
+		bg.color = EngineData.mainCoreShit.colorMenuImage;
 		bg.updateHitbox();
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 		add(bg);
 
 		grpTexts = new FlxTypedGroup<Alphabet>();
@@ -63,7 +63,7 @@ class Stats extends MusicBeatState
 		add(textBG);
 
 		text = new FlxText(textBG.x, textBG.y + 4, FlxG.width, "Press RESET to clear stats!", 18);
-		text.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER);
+		text.setFormat(backend.utils.Paths.font("vcr.ttf"), 18, FlxColor.WHITE, CENTER);
 		text.scrollFactor.set(0, 0);
 		add(text);
 	}
@@ -83,14 +83,14 @@ class Stats extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			MusicBeatState.switchState(new states.OptionsState());
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+			MusicBeatState.switchState(new game.states.OptionsState());
+			FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
 			StatChangeables.saveStats();
 		}
 
 		if(controls.RESET)
 			{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
 				StatChangeables.resetStats();
 				MusicBeatState.switchState(FlxG.state);
 			}
@@ -117,6 +117,6 @@ class Stats extends MusicBeatState
 				item.alpha = 1;
 			}
 		}
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 	}
 }

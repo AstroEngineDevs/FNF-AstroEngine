@@ -92,7 +92,7 @@ class WeekData {
 		#if MODS_ALLOWED
 		var disabledMods:Array<String> = [];
 		var modsListPath:String = 'modsList.txt';
-		var directories:Array<String> = [Paths.mods(), Paths.getPreloadPath()];
+		var directories:Array<String> = [backend.utils.Paths.mods(), backend.utils.Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
 		if(FileSystem.exists(modsListPath))
 		{
@@ -106,9 +106,9 @@ class WeekData {
 				}
 				else // Sort mod loading order based on modsList.txt file
 				{
-					var path = haxe.io.Path.join([Paths.mods(), splitName[0]]);
+					var path = haxe.io.Path.join([backend.utils.Paths.mods(), splitName[0]]);
 					//trace('trying to push: ' + splitName[0]);
-					if (sys.FileSystem.isDirectory(path) && !Paths.ignoreModFolders.contains(splitName[0]) && !disabledMods.contains(splitName[0]) && !directories.contains(path + '/'))
+					if (sys.FileSystem.isDirectory(path) && !backend.utils.Paths.ignoreModFolders.contains(splitName[0]) && !disabledMods.contains(splitName[0]) && !directories.contains(path + '/'))
 					{
 						directories.push(path + '/');
 						//trace('pushed Directory: ' + splitName[0]);
@@ -117,10 +117,10 @@ class WeekData {
 			}
 		}
 
-		var modsDirectories:Array<String> = Paths.getModDirectories();
+		var modsDirectories:Array<String> = backend.utils.Paths.getModDirectories();
 		for (folder in modsDirectories)
 		{
-			var pathThing:String = haxe.io.Path.join([Paths.mods(), folder]) + '/';
+			var pathThing:String = haxe.io.Path.join([backend.utils.Paths.mods(), folder]) + '/';
 			if (!disabledMods.contains(folder) && !directories.contains(pathThing))
 			{
 				directories.push(pathThing);
@@ -128,11 +128,11 @@ class WeekData {
 			}
 		}
 		#else
-		var directories:Array<String> = [Paths.getPreloadPath()];
+		var directories:Array<String> = [backend.utils.Paths.getPreloadPath()];
 		var originalLength:Int = directories.length;
 		#end
 
-		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getPreloadPath('weeks/weekList.txt'));
+		var sexList:Array<String> = CoolUtil.coolTextFile(backend.utils.Paths.getPreloadPath('weeks/weekList.txt'));
 		for (i in 0...sexList.length) {
 			for (j in 0...directories.length) {
 				var fileToCheck:String = directories[j] + 'weeks/' + sexList[i] + '.json';
@@ -143,7 +143,7 @@ class WeekData {
 
 						#if MODS_ALLOWED
 						if(j >= originalLength) {
-							weekFile.folder = directories[j].substring(Paths.mods().length, directories[j].length-1);
+							weekFile.folder = directories[j].substring(backend.utils.Paths.mods().length, directories[j].length-1);
 						}
 						#end
 
@@ -194,7 +194,7 @@ class WeekData {
 				if(i >= originalLength)
 				{
 					#if MODS_ALLOWED
-					weekFile.folder = directory.substring(Paths.mods().length, directory.length-1);
+					weekFile.folder = directory.substring(backend.utils.Paths.mods().length, directory.length-1);
 					#end
 				}
 				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay))
@@ -237,15 +237,15 @@ class WeekData {
 	}
 
 	public static function setDirectoryFromWeek(?data:WeekData = null) {
-		Paths.currentModDirectory = '';
+		backend.utils.Paths.currentModDirectory = '';
 		if(data != null && data.folder != null && data.folder.length > 0) {
-			Paths.currentModDirectory = data.folder;
+			backend.utils.Paths.currentModDirectory = data.folder;
 		}
 	}
 
 	public static function loadTheFirstEnabledMod()
 	{
-		Paths.currentModDirectory = '';
+		backend.utils.Paths.currentModDirectory = '';
 		
 		#if MODS_ALLOWED
 		if (FileSystem.exists("modsList.txt"))
@@ -258,7 +258,7 @@ class WeekData {
 				if (dat[1] == "1" && !foundTheTop)
 				{
 					foundTheTop = true;
-					Paths.currentModDirectory = dat[0];
+					backend.utils.Paths.currentModDirectory = dat[0];
 				}
 			}
 		}

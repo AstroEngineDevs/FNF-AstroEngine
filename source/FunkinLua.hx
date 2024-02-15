@@ -7,12 +7,12 @@ import llua.LuaL;
 import llua.State;
 import llua.Convert;
 #end
-
+import game.objects.characters.Character;
 import animateatlas.AtlasFrameMaker;
 import backend.Conductor;
-import states.substates.GameOverSubstate;
+import game.states.substates.GameOverSubstate;
 import flixel.FlxG;
-import states.substates.PauseSubState;
+import game.states.substates.PauseSubState;
 import flixel.addons.effects.FlxTrail;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
@@ -30,7 +30,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import openfl.Lib;
 import openfl.display.BlendMode;
-import backend.core.*;
+import backend.data.*;
 import openfl.filters.BitmapFilter;
 import openfl.utils.Assets;
 import flixel.math.FlxMath;
@@ -48,7 +48,7 @@ import sys.io.File;
 #end
 
 import Type.ValueType;
-import Controls;
+import backend.utils.Controls;
 import game.objects.DialogueBoxPsych;
 
 #if hscript
@@ -131,7 +131,7 @@ class FunkinLua {
 		set('stepCrochet', Conductor.stepCrochet);
 		set('songLength', FlxG.sound.music.length);
 		set('songName', PlayState.SONG.song);
-		set('songPath', Paths.formatToSongPath(PlayState.SONG.song));
+		set('songPath', backend.utils.Paths.formatToSongPath(PlayState.SONG.song));
 		set('startedCountdown', false);
 		set('curStage', PlayState.SONG.stage);
 
@@ -140,7 +140,7 @@ class FunkinLua {
 
 		var difficultyName:String = CoolUtil.difficulties[PlayState.storyDifficulty];
 		set('difficultyName', difficultyName);
-		set('difficultyPath', Paths.formatToSongPath(difficultyName));
+		set('difficultyPath', backend.utils.Paths.formatToSongPath(difficultyName));
 		set('weekRaw', PlayState.storyWeek);
 		set('week', WeekData.weeksList[PlayState.storyWeek]);
 		set('seenCutscene', PlayState.seenCutscene);
@@ -166,7 +166,7 @@ class FunkinLua {
 		set('rating', 0);
 		set('ratingName', '');
 		set('ratingFC', '');
-		set('version', CorePsych.psychVersion.trim());
+		set('version', PsychData.psychVersion.trim());
 
 		set('inGameOver', false);
 		set('mustHitSection', false);
@@ -202,23 +202,23 @@ class FunkinLua {
 		set('gfName', PlayState.SONG.gfVersion);
 
 		// Some settings, no jokes
-		set('downscroll', ClientPrefs.downScroll);
-		set('middlescroll', ClientPrefs.middleScroll);
-		set('framerate', ClientPrefs.framerate);
-		set('ghostTapping', ClientPrefs.ghostTapping);
-		set('hideHud', ClientPrefs.hideHud);
-		set('timeBarType', ClientPrefs.timeBarType);
-		set('scoreZoom', ClientPrefs.scoreZoom);
-		set('cameraZoomOnBeat', ClientPrefs.camZooms);
-		set('flashingLights', ClientPrefs.flashing);
-		set('noteOffset', ClientPrefs.noteOffset);
-		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
-		set('noResetButton', ClientPrefs.noReset);
-		set('lowQuality', ClientPrefs.lowQuality);
-		set('hideFullHUD', ClientPrefs.hideFullHUD);
-		set('shadersEnabled', ClientPrefs.shaders);
+		set('downscroll', backend.utils.ClientPrefs.downScroll);
+		set('middlescroll', backend.utils.ClientPrefs.middleScroll);
+		set('framerate', backend.utils.ClientPrefs.framerate);
+		set('ghostTapping', backend.utils.ClientPrefs.ghostTapping);
+		set('hideHud', backend.utils.ClientPrefs.hideHud);
+		set('timeBarType', backend.utils.ClientPrefs.timeBarType);
+		set('scoreZoom', backend.utils.ClientPrefs.scoreZoom);
+		set('cameraZoomOnBeat', backend.utils.ClientPrefs.camZooms);
+		set('flashingLights', backend.utils.ClientPrefs.flashing);
+		set('noteOffset', backend.utils.ClientPrefs.noteOffset);
+		set('healthBarAlpha', backend.utils.ClientPrefs.healthBarAlpha);
+		set('noResetButton', backend.utils.ClientPrefs.noReset);
+		set('lowQuality', backend.utils.ClientPrefs.lowQuality);
+		set('hideFullHUD', backend.utils.ClientPrefs.hideFullHUD);
+		set('shadersEnabled', backend.utils.ClientPrefs.shaders);
 		set('scriptName', scriptName);
-		set('currentModDirectory', Paths.currentModDirectory);
+		set('currentModDirectory', backend.utils.Paths.currentModDirectory);
 
 		#if windows
 		set('buildTarget', 'windows');
@@ -261,7 +261,7 @@ class FunkinLua {
 
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
-			if(!ClientPrefs.shaders) return false;
+			if(!backend.utils.ClientPrefs.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			return initLuaShader(name, glslVersion);
@@ -272,7 +272,7 @@ class FunkinLua {
 		});
 		
 		Lua_helper.add_callback(lua, "setSpriteShader", function(obj:String, shader:String) {
-			if(!ClientPrefs.shaders) return false;
+			if(!backend.utils.ClientPrefs.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			if(!PlayState.instance.runtimeShaders.exists(shader) && !initLuaShader(shader))
@@ -459,7 +459,7 @@ class FunkinLua {
 			if(shader == null) return;
 
 			// trace('bitmapdatapath: $bitmapdataPath');
-			var value = Paths.image(bitmapdataPath);
+			var value = backend.utils.Paths.image(bitmapdataPath);
 			if(value != null && value.bitmap != null)
 			{
 				// trace('Found bitmapdata. Width: ${value.bitmap.width} Height: ${value.bitmap.height}');
@@ -519,9 +519,9 @@ class FunkinLua {
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
 			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders(cervix)))
+			if(FileSystem.exists(backend.utils.Paths.modFolders(cervix)))
 			{
-				cervix = Paths.modFolders(cervix);
+				cervix = backend.utils.Paths.modFolders(cervix);
 				doPush = true;
 			}
 			else if(FileSystem.exists(cervix))
@@ -529,13 +529,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = backend.utils.Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = backend.utils.Paths.getPreloadPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -572,9 +572,9 @@ class FunkinLua {
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
 			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders(cervix)))
+			if(FileSystem.exists(backend.utils.Paths.modFolders(cervix)))
 			{
-				cervix = Paths.modFolders(cervix);
+				cervix = backend.utils.Paths.modFolders(cervix);
 				doPush = true;
 			}
 			else if(FileSystem.exists(cervix))
@@ -582,13 +582,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = backend.utils.Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = backend.utils.Paths.getPreloadPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -624,9 +624,9 @@ class FunkinLua {
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
 			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders(cervix)))
+			if(FileSystem.exists(backend.utils.Paths.modFolders(cervix)))
 			{
-				cervix = Paths.modFolders(cervix);
+				cervix = backend.utils.Paths.modFolders(cervix);
 				doPush = true;
 			}
 			else if(FileSystem.exists(cervix))
@@ -634,13 +634,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = backend.utils.Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = backend.utils.Paths.getPreloadPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -662,9 +662,9 @@ class FunkinLua {
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
 			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders(cervix)))
+			if(FileSystem.exists(backend.utils.Paths.modFolders(cervix)))
 			{
-				cervix = Paths.modFolders(cervix);
+				cervix = backend.utils.Paths.modFolders(cervix);
 				doPush = true;
 			}
 			else if(FileSystem.exists(cervix))
@@ -672,13 +672,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = backend.utils.Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = backend.utils.Paths.getPreloadPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -744,9 +744,9 @@ class FunkinLua {
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
 			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders(cervix)))
+			if(FileSystem.exists(backend.utils.Paths.modFolders(cervix)))
 			{
-				cervix = Paths.modFolders(cervix);
+				cervix = backend.utils.Paths.modFolders(cervix);
 				doPush = true;
 			}
 			else if(FileSystem.exists(cervix))
@@ -754,13 +754,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = backend.utils.Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = backend.utils.Paths.getPreloadPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -784,9 +784,9 @@ class FunkinLua {
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
 			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders(cervix)))
+			if(FileSystem.exists(backend.utils.Paths.modFolders(cervix)))
 			{
-				cervix = Paths.modFolders(cervix);
+				cervix = backend.utils.Paths.modFolders(cervix);
 				doPush = true;
 			}
 			else if(FileSystem.exists(cervix))
@@ -794,13 +794,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = backend.utils.Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = backend.utils.Paths.getPreloadPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -829,9 +829,9 @@ class FunkinLua {
 			if(luaFile.endsWith(".lua"))cervix=luaFile;
 			var doPush = false;
 			#if MODS_ALLOWED
-			if(FileSystem.exists(Paths.modFolders(cervix)))
+			if(FileSystem.exists(backend.utils.Paths.modFolders(cervix)))
 			{
-				cervix = Paths.modFolders(cervix);
+				cervix = backend.utils.Paths.modFolders(cervix);
 				doPush = true;
 			}
 			else if(FileSystem.exists(cervix))
@@ -839,13 +839,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = backend.utils.Paths.getPreloadPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = backend.utils.Paths.getPreloadPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -938,7 +938,7 @@ class FunkinLua {
 
 			if(spr != null && image != null && image.length > 0)
 			{
-				spr.loadGraphic(Paths.image(image), animated, gridX, gridY);
+				spr.loadGraphic(backend.utils.Paths.image(image), animated, gridX, gridY);
 			}
 		});
 		Lua_helper.add_callback(lua, "loadFrames", function(variable:String, image:String, spriteType:String = "sparrow") {
@@ -1177,7 +1177,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTweenX", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+			var testicle:game.objects.StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, {x: value}, duration, {ease: getFlxEaseByString(ease),
@@ -1191,7 +1191,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTweenY", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+			var testicle:game.objects.StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, {y: value}, duration, {ease: getFlxEaseByString(ease),
@@ -1205,7 +1205,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+			var testicle:game.objects.StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, {angle: value}, duration, {ease: getFlxEaseByString(ease),
@@ -1219,7 +1219,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTweenDirection", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+			var testicle:game.objects.StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, {direction: value}, duration, {ease: getFlxEaseByString(ease),
@@ -1265,7 +1265,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTweenAngle", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+			var testicle:game.objects.StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, {angle: value}, duration, {ease: getFlxEaseByString(ease),
@@ -1279,7 +1279,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "noteTweenAlpha", function(tag:String, note:Int, value:Dynamic, duration:Float, ease:String) {
 			cancelTween(tag);
 			if(note < 0) note = 0;
-			var testicle:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
+			var testicle:game.objects.StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
 
 			if(testicle != null) {
 				PlayState.instance.modchartTweens.set(tag, FlxTween.tween(testicle, {alpha: value}, duration, {ease: getFlxEaseByString(ease),
@@ -1509,7 +1509,7 @@ class FunkinLua {
 			PlayState.instance.addCharacterToList(name, charType);
 		});
 		Lua_helper.add_callback(lua, "precacheImage", function(name:String) {
-			Paths.returnGraphic(name);
+			backend.utils.Paths.returnGraphic(name);
 		});
 		Lua_helper.add_callback(lua, "precacheSound", function(name:String) {
 			CoolUtil.precacheSound(name);
@@ -1547,16 +1547,16 @@ class FunkinLua {
 			}
 
 			PlayState.cancelMusicFadeTween();
-			fadeTransition.CustomFadeTransition.nextCamera = PlayState.instance.camOther;
+			game.transitions.CustomFadeTransition.nextCamera = PlayState.instance.camOther;
 			if(FlxTransitionableState.skipNextTransIn)
-				fadeTransition.CustomFadeTransition.nextCamera = null;
+				game.transitions.CustomFadeTransition.nextCamera = null;
 
 			if(PlayState.isStoryMode)
-				MusicBeatState.switchState(new states.StoryMenuState());
+				MusicBeatState.switchState(new game.states.StoryMenuState());
 			else
-				MusicBeatState.switchState(new states.FreeplayState());
+				MusicBeatState.switchState(new game.states.FreeplayState());
 
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(backend.utils.Paths.music('freakyMenu'));
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
 			PlayState.instance.transitioning = true;
@@ -1721,9 +1721,9 @@ class FunkinLua {
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
 			if(image != null && image.length > 0)
 			{
-				leSprite.loadGraphic(Paths.image(image));
+				leSprite.loadGraphic(backend.utils.Paths.image(image));
 			}
-			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
@@ -1733,7 +1733,7 @@ class FunkinLua {
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
 
 			loadFrames(leSprite, image, spriteType);
-			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
 
@@ -1829,7 +1829,7 @@ class FunkinLua {
 					{
 						//convert spr to Character
 						var obj:Dynamic = spr;
-						var spr:Character = obj;
+						var spr:game.objects.characters.Character = obj;
 						spr.playAnim(name, forced, reverse, startFrame);
 					}
 					else
@@ -1845,7 +1845,7 @@ class FunkinLua {
 				return true;
 			}
 
-			var char:Character = Reflect.getProperty(getInstance(), obj);
+			var char:game.objects.characters.Character = Reflect.getProperty(getInstance(), obj);
 			if(char != null) {
 				char.addOffset(anim, x, y);
 				return true;
@@ -2141,10 +2141,10 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, music:String = null) {
 			var path:String;
 			#if MODS_ALLOWED
-			path = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
+			path = backend.utils.Paths.modsJson(backend.utils.Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 			if(!FileSystem.exists(path))
 			#end
-				path = Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
+				path = backend.utils.Paths.json(backend.utils.Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 
 			luaTrace('startDialogue: Trying to load dialogue: ' + path);
 
@@ -2174,7 +2174,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
-			if(FileSystem.exists(Paths.video(videoFile))) {
+			if(FileSystem.exists(backend.utils.Paths.video(videoFile))) {
 				PlayState.instance.startVideo(videoFile);
 				return true;
 			} else {
@@ -2193,7 +2193,7 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "playMusic", function(sound:String, volume:Float = 1, loop:Bool = false) {
-			FlxG.sound.playMusic(Paths.music(sound), volume, loop);
+			FlxG.sound.playMusic(backend.utils.Paths.music(sound), volume, loop);
 		});
 		Lua_helper.add_callback(lua, "playSound", function(sound:String, volume:Float = 1, ?tag:String = null) {
 			if(tag != null && tag.length > 0) {
@@ -2201,13 +2201,13 @@ class FunkinLua {
 				if(PlayState.instance.modchartSounds.exists(tag)) {
 					PlayState.instance.modchartSounds.get(tag).stop();
 				}
-				PlayState.instance.modchartSounds.set(tag, FlxG.sound.play(Paths.sound(sound), volume, false, function() {
+				PlayState.instance.modchartSounds.set(tag, FlxG.sound.play(backend.utils.Paths.sound(sound), volume, false, function() {
 					PlayState.instance.modchartSounds.remove(tag);
 					PlayState.instance.callOnLuas('onSoundFinished', [tag]);
 				}));
 				return;
 			}
-			FlxG.sound.play(Paths.sound(sound), volume);
+			FlxG.sound.play(backend.utils.Paths.sound(sound), volume);
 		});
 		Lua_helper.add_callback(lua, "stopSound", function(tag:String) {
 			if(tag != null && tag.length > 1 && PlayState.instance.modchartSounds.exists(tag)) {
@@ -2380,7 +2380,7 @@ class FunkinLua {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
 			{
-				obj.font = Paths.font(newFont);
+				obj.font = backend.utils.Paths.font(newFont);
 				return true;
 			}
 			luaTrace("setTextFont: Object " + tag + " doesn't exist!", false, false, FlxColor.RED);
@@ -2526,25 +2526,25 @@ class FunkinLua {
 				return FileSystem.exists(filename);
 			}
 
-			var path:String = Paths.modFolders(filename);
+			var path:String = backend.utils.Paths.modFolders(filename);
 			if(FileSystem.exists(path))
 			{
 				return true;
 			}
-			return FileSystem.exists(Paths.getPath('assets/$filename', TEXT));
+			return FileSystem.exists(backend.utils.Paths.getPath('assets/$filename', TEXT));
 			#else
 			if(absolute)
 			{
 				return Assets.exists(filename);
 			}
-			return Assets.exists(Paths.getPath('assets/$filename', TEXT));
+			return Assets.exists(backend.utils.Paths.getPath('assets/$filename', TEXT));
 			#end
 		});
 		Lua_helper.add_callback(lua, "saveFile", function(path:String, content:String, ?absolute:Bool = false)
 		{
 			try {
 				if(!absolute)
-					File.saveContent(Paths.mods(path), content);
+					File.saveContent(backend.utils.Paths.mods(path), content);
 				else
 					File.saveContent(path, content);
 
@@ -2560,7 +2560,7 @@ class FunkinLua {
 				#if MODS_ALLOWED
 				if(!ignoreModFolders)
 				{
-					var lePath:String = Paths.modFolders(path);
+					var lePath:String = backend.utils.Paths.modFolders(path);
 					if(FileSystem.exists(lePath))
 					{
 						FileSystem.deleteFile(lePath);
@@ -2569,7 +2569,7 @@ class FunkinLua {
 				}
 				#end
 
-				var lePath:String = Paths.getPath(path, TEXT);
+				var lePath:String = backend.utils.Paths.getPath(path, TEXT);
 				if(Assets.exists(lePath))
 				{
 					FileSystem.deleteFile(lePath);
@@ -2581,7 +2581,7 @@ class FunkinLua {
 			return false;
 		});
 		Lua_helper.add_callback(lua, "getTextFromFile", function(path:String, ?ignoreModFolders:Bool = false) {
-			return Paths.getTextFromFile(path, ignoreModFolders);
+			return backend.utils.Paths.getTextFromFile(path, ignoreModFolders);
 		});
 
 		// DEPRECATED, DONT MESS WITH THESE SHITS, ITS JUST THERE FOR BACKWARD COMPATIBILITY
@@ -2871,7 +2871,7 @@ class FunkinLua {
 	
 	function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
-		if(!ClientPrefs.shaders) return false;
+		if(!backend.utils.ClientPrefs.shaders) return false;
 
 		#if (!flash && sys)
 		if(PlayState.instance.runtimeShaders.exists(name))
@@ -2880,12 +2880,12 @@ class FunkinLua {
 			return true;
 		}
 
-		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
-		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
+		var foldersToCheck:Array<String> = [backend.utils.Paths.mods('shaders/')];
+		if(backend.utils.Paths.currentModDirectory != null && backend.utils.Paths.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, backend.utils.Paths.mods(backend.utils.Paths.currentModDirectory + '/shaders/'));
 
-		for(mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
+		for(mod in backend.utils.Paths.getGlobalMods())
+			foldersToCheck.insert(0, backend.utils.Paths.mods(mod + '/shaders/'));
 		
 		for (folder in foldersToCheck)
 		{
@@ -2956,10 +2956,10 @@ class FunkinLua {
 				spr.frames = AtlasFrameMaker.construct(image, null, true);
 
 			case "packer" | "packeratlas" | "pac":
-				spr.frames = Paths.getPackerAtlas(image);
+				spr.frames = backend.utils.Paths.getPackerAtlas(image);
 
 			default:
-				spr.frames = Paths.getSparrowAtlas(image);
+				spr.frames = backend.utils.Paths.getSparrowAtlas(image);
 		}
 	}
 
@@ -3292,7 +3292,7 @@ class ModchartSprite extends FlxSprite
 	public function new(?x:Float = 0, ?y:Float = 0)
 	{
 		super(x, y);
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 	}
 }
 
@@ -3302,7 +3302,7 @@ class ModchartText extends FlxText
 	public function new(x:Float, y:Float, text:String, width:Float)
 	{
 		super(x, y, width, text, 16);
-		setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		setFormat(backend.utils.Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		cameras = [PlayState.instance.camHUD];
 		scrollFactor.set();
 		borderSize = 2;
@@ -3316,7 +3316,7 @@ class DebugLuaText extends FlxText
 	public function new(text:String, parentGroup:FlxTypedGroup<DebugLuaText>, color:FlxColor) {
 		this.parentGroup = parentGroup;
 		super(10, 10, 0, text, 16);
-		setFormat(Paths.font("vcr.ttf"), 16, color, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		setFormat(backend.utils.Paths.font("vcr.ttf"), 16, color, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scrollFactor.set();
 		borderSize = 1;
 	}

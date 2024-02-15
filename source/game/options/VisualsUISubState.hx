@@ -23,7 +23,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
-import Controls;
+import backend.utils.Controls;
 import game.options.*;
 
 using StringTools;
@@ -133,31 +133,31 @@ class VisualsUISubState extends BaseOptionsMenu
 	var changedMusic:Bool = false;
 	function onChangePauseMusic()
 	{
-		if(ClientPrefs.pauseMusic == 'None')
+		if(backend.utils.ClientPrefs.pauseMusic == 'None')
 			FlxG.sound.music.volume = 0;
 		else
-			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)));
+			FlxG.sound.playMusic(backend.utils.Paths.music(backend.utils.Paths.formatToSongPath(backend.utils.ClientPrefs.pauseMusic)));
 
 		changedMusic = true;
 	}
 
 	override function destroy()
 	{
-		if(changedMusic) FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		if(changedMusic) FlxG.sound.playMusic(backend.utils.Paths.music('freakyMenu'));
 		super.destroy();
 	}
 
 	#if !mobile
 	function onChangeFPSCounter()
 	{
-		if(ClientPrefs.showFPS){
-			ClientPrefs.hideFullHUD = false;
+		if(backend.utils.ClientPrefs.showFPS){
+			backend.utils.ClientPrefs.hideFullHUD = false;
 		} else {
-			ClientPrefs.hideFullHUD = true;
+			backend.utils.ClientPrefs.hideFullHUD = true;
 		}
 		
 		if(game.Main.fpsVar != null)
-			game.Main.fpsVar.visible = ClientPrefs.showFPS;
+			game.Main.fpsVar.visible = backend.utils.ClientPrefs.showFPS;
 		
 	}
 	#end

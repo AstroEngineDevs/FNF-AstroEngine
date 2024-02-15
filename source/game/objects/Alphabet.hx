@@ -341,7 +341,7 @@ class AlphaCharacter extends FlxSprite
 		super(x, y);
 		this.parent = parent;
 		image = 'alphabet';
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 
 		var curLetter:Letter = allLetters.get('?');
 		var lowercase = character.toLowerCase();
@@ -408,7 +408,7 @@ class AlphaCharacter extends FlxSprite
 			lastAnim = animation.name;
 		}
 		image = name;
-		frames = Paths.getSparrowAtlas(name);
+		frames = backend.utils.Paths.getSparrowAtlas(name);
 		this.scale.x = parent.scaleX;
 		this.scale.y = parent.scaleY;
 		alignOffset = 0;

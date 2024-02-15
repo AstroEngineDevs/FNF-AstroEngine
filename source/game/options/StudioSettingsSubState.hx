@@ -24,7 +24,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
-import Controls;
+import backend.utils.Controls;
 import openfl.Lib;
 import game.options.*;
 
@@ -57,13 +57,13 @@ class StudioSettingsSubState extends BaseOptionsMenu
 
 	function onChangefuckmedaddy()
 	{
-		if (ClientPrefs.hideFullHUD){
-			ClientPrefs.showFPS = false;
+		if (backend.utils.ClientPrefs.hideFullHUD){
+			backend.utils.ClientPrefs.showFPS = false;
 		}else{
-			ClientPrefs.showFPS = true;
+			backend.utils.ClientPrefs.showFPS = true;
 		}
 
 		if(game.Main.fpsVar != null)
-			game.Main.fpsVar.visible = ClientPrefs.showFPS;
+			game.Main.fpsVar.visible = backend.utils.ClientPrefs.showFPS;
 	}
 }

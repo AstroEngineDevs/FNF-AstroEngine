@@ -47,7 +47,7 @@ class CoolUtil
 		{
 			fileSuffix = '';
 		}
-		return Paths.formatToSongPath(fileSuffix);
+		return backend.utils.Paths.formatToSongPath(fileSuffix);
 	}
 
 	public static function difficultyString():String
@@ -125,11 +125,11 @@ class CoolUtil
 
 	//uhhhh does this even work at all? i'm starting to doubt
 	public static function precacheSound(sound:String, ?library:String = null):Void {
-		Paths.sound(sound, library);
+		backend.utils.Paths.sound(sound, library);
 	}
 
 	public static function precacheMusic(sound:String, ?library:String = null):Void {
-		Paths.music(sound, library);
+		backend.utils.Paths.music(sound, library);
 	}
 
 	public static function browserLoad(site:String) {

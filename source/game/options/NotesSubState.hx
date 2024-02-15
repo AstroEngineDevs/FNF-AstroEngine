@@ -20,12 +20,12 @@ import flixel.util.FlxSave;
 import haxe.Json;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import shaders.ColorSwap;
+import game.objects.shaders.ColorSwap;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
-import Controls;
-import backend.core.*;
+import backend.utils.Controls;
+import backend.data.*;
 
 using StringTools;
 
@@ -47,10 +47,10 @@ class NotesSubState extends MusicBeatSubstate
 	public function new() {
 		super();
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = Core.mainCoreShit.colorMenuImage;
+		var bg:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
+		bg.color = EngineData.mainCoreShit.colorMenuImage;
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 		add(bg);
 		
 		blackBG = new FlxSprite(posX - 25).makeGraphic(870, 200, FlxColor.BLACK);
@@ -62,26 +62,26 @@ class NotesSubState extends MusicBeatSubstate
 		grpNumbers = new FlxTypedGroup<game.objects.Alphabet>();
 		add(grpNumbers);
 
-		for (i in 0...ClientPrefs.arrowHSV.length) {
+		for (i in 0...backend.utils.ClientPrefs.arrowHSV.length) {
 			var yPos:Float = (165 * i) + 35;
 			for (j in 0...3) {
-				var optionText:game.objects.Alphabet = new game.objects.Alphabet(posX + (225 * j) + 250, yPos + 60, Std.string(ClientPrefs.arrowHSV[i][j]), true);
+				var optionText:game.objects.Alphabet = new game.objects.Alphabet(posX + (225 * j) + 250, yPos + 60, Std.string(backend.utils.ClientPrefs.arrowHSV[i][j]), true);
 				grpNumbers.add(optionText);
 			}
 
 			var note:FlxSprite = new FlxSprite(posX, yPos);
-			note.frames = Paths.getSparrowAtlas('NOTE_assets');
+			note.frames = backend.utils.Paths.getSparrowAtlas('NOTE_assets');
 			var animations:Array<String> = ['purple0', 'blue0', 'green0', 'red0'];
 			note.animation.addByPrefix('idle', animations[i]);
 			note.animation.play('idle');
-			note.antialiasing = ClientPrefs.globalAntialiasing;
+			note.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 			grpNotes.add(note);
 
 			var newShader:ColorSwap = new ColorSwap();
 			note.shader = newShader.shader;
-			newShader.hue = ClientPrefs.arrowHSV[i][0] / 360;
-			newShader.saturation = ClientPrefs.arrowHSV[i][1] / 100;
-			newShader.brightness = ClientPrefs.arrowHSV[i][2] / 100;
+			newShader.hue = backend.utils.ClientPrefs.arrowHSV[i][0] / 360;
+			newShader.saturation = backend.utils.ClientPrefs.arrowHSV[i][1] / 100;
+			newShader.brightness = backend.utils.ClientPrefs.arrowHSV[i][2] / 100;
 			shaderArray.push(newShader);
 		}
 
@@ -99,13 +99,13 @@ class NotesSubState extends MusicBeatSubstate
 			if(holdTime < 0.5) {
 				if(controls.UI_LEFT_P) {
 					updateValue(-1);
-					FlxG.sound.play(Paths.sound('scrollMenu'));
+					FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 				} else if(controls.UI_RIGHT_P) {
 					updateValue(1);
-					FlxG.sound.play(Paths.sound('scrollMenu'));
+					FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 				} else if(controls.RESET) {
 					resetValue(curSelected, typeSelected);
-					FlxG.sound.play(Paths.sound('scrollMenu'));
+					FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 				}
 				if(controls.UI_LEFT_R || controls.UI_RIGHT_R) {
 					holdTime = 0;
@@ -123,35 +123,35 @@ class NotesSubState extends MusicBeatSubstate
 					updateValue(elapsed * add);
 				}
 				if(controls.UI_LEFT_R || controls.UI_RIGHT_R) {
-					FlxG.sound.play(Paths.sound('scrollMenu'));
+					FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 					holdTime = 0;
 				}
 			}
 		} else {
 			if (controls.UI_UP_P) {
 				changeSelection(-1);
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 			}
 			if (controls.UI_DOWN_P) {
 				changeSelection(1);
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 			}
 			if (controls.UI_LEFT_P) {
 				changeType(-1);
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 			}
 			if (controls.UI_RIGHT_P) {
 				changeType(1);
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 			}
 			if(controls.RESET) {
 				for (i in 0...3) {
 					resetValue(curSelected, i);
 				}
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 			}
 			if (controls.ACCEPT && nextAccept <= 0) {
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 				changingNote = true;
 				holdTime = 0;
 				for (i in 0...grpNumbers.length) {
@@ -180,7 +180,7 @@ class NotesSubState extends MusicBeatSubstate
 				changeSelection();
 			}
 			changingNote = false;
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+			FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
 		}
 
 		if(nextAccept > 0) {
@@ -192,11 +192,11 @@ class NotesSubState extends MusicBeatSubstate
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)
-			curSelected = ClientPrefs.arrowHSV.length-1;
-		if (curSelected >= ClientPrefs.arrowHSV.length)
+			curSelected = backend.utils.ClientPrefs.arrowHSV.length-1;
+		if (curSelected >= backend.utils.ClientPrefs.arrowHSV.length)
 			curSelected = 0;
 
-		curValue = ClientPrefs.arrowHSV[curSelected][typeSelected];
+		curValue = backend.utils.ClientPrefs.arrowHSV[curSelected][typeSelected];
 		updateValue();
 
 		for (i in 0...grpNumbers.length) {
@@ -217,7 +217,7 @@ class NotesSubState extends MusicBeatSubstate
 				blackBG.y = item.y - 20;
 			}
 		}
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 	}
 
 	function changeType(change:Int = 0) {
@@ -227,7 +227,7 @@ class NotesSubState extends MusicBeatSubstate
 		if (typeSelected > 2)
 			typeSelected = 0;
 
-		curValue = ClientPrefs.arrowHSV[curSelected][typeSelected];
+		curValue = backend.utils.ClientPrefs.arrowHSV[curSelected][typeSelected];
 		updateValue();
 
 		for (i in 0...grpNumbers.length) {
@@ -241,7 +241,7 @@ class NotesSubState extends MusicBeatSubstate
 
 	function resetValue(selected:Int, type:Int) {
 		curValue = 0;
-		ClientPrefs.arrowHSV[selected][type] = 0;
+		backend.utils.ClientPrefs.arrowHSV[selected][type] = 0;
 		switch(type) {
 			case 0: shaderArray[selected].hue = 0;
 			case 1: shaderArray[selected].saturation = 0;
@@ -271,7 +271,7 @@ class NotesSubState extends MusicBeatSubstate
 			curValue = max;
 		}
 		roundedValue = Math.round(curValue);
-		ClientPrefs.arrowHSV[curSelected][typeSelected] = roundedValue;
+		backend.utils.ClientPrefs.arrowHSV[curSelected][typeSelected] = roundedValue;
 
 		switch(typeSelected) {
 			case 0: shaderArray[curSelected].hue = roundedValue / 360;

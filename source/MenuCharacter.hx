@@ -37,7 +37,7 @@ class MenuCharacter extends FlxSprite
 		if(character == this.character) return;
 
 		this.character = character;
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 		visible = true;
 
 		var dontPlayAnim:Bool = false;
@@ -54,26 +54,26 @@ class MenuCharacter extends FlxSprite
 				var rawJson = null;
 
 				#if MODS_ALLOWED
-				var path:String = Paths.modFolders(characterPath);
+				var path:String = backend.utils.Paths.modFolders(characterPath);
 				if (!FileSystem.exists(path)) {
-					path = Paths.getPreloadPath(characterPath);
+					path = backend.utils.Paths.getPreloadPath(characterPath);
 				}
 
 				if(!FileSystem.exists(path)) {
-					path = Paths.getPreloadPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
+					path = backend.utils.Paths.getPreloadPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
 				}
 				rawJson = File.getContent(path);
 
 				#else
-				var path:String = Paths.getPreloadPath(characterPath);
+				var path:String = backend.utils.Paths.getPreloadPath(characterPath);
 				if(!Assets.exists(path)) {
-					path = Paths.getPreloadPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
+					path = backend.utils.Paths.getPreloadPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
 				}
 				rawJson = Assets.getText(path);
 				#end
 				
 				var charFile:MenuCharacterFile = cast Json.parse(rawJson);
-				frames = Paths.getSparrowAtlas('menucharacters/' + charFile.image);
+				frames = backend.utils.Paths.getSparrowAtlas('menucharacters/' + charFile.image);
 				animation.addByPrefix('idle', charFile.idle_anim, 24);
 
 				var confirmAnim:String = charFile.confirm_anim;

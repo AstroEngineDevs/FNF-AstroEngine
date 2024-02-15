@@ -25,8 +25,9 @@ import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
 #end
-import backend.core.*;
+import backend.data.*;
 import game.FPS;
+import game.states.TitleState;
 
 using StringTools;
 
@@ -35,7 +36,6 @@ class Main extends Sprite
 	var game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
-		initialState: states.TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 144, // default framerate
 		skipSplash: false, // if the default flixel splash screen should be skipped
@@ -44,12 +44,20 @@ class Main extends Sprite
 
 	public static var fpsVar:FPS;
 
-	// You can pretty much ignore everything from here on - your code should go in your states.
+	// You can pretty much ignore everything from here on - your code should go in your game.states.
 
 	public static function main():Void
 	{
 		Lib.current.addChild(new game.Main());
 	}
+
+	public static function exitOn(?type:Int = 0, ?traceE:Bool = false)
+		{
+			if (traceE)
+				trace("Exit at " + Date.now().toString());
+	
+			Sys.exit(type);
+		}
 
 	public function new()
 	{
@@ -89,8 +97,8 @@ class Main extends Sprite
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
 	
-		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		backend.utils.ClientPrefs.loadDefaultKeys();
+		addChild(new FlxGame(game.width, game.height, TitleState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
@@ -98,7 +106,7 @@ class Main extends Sprite
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		if(fpsVar != null) {
-			fpsVar.visible = ClientPrefs.showFPS;
+			fpsVar.visible = backend.utils.ClientPrefs.showFPS;
 		}
 		#end
 
@@ -147,7 +155,7 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page:" + Core.mainCoreShit.mainRepo + "\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page:" + EngineData.mainCoreShit.mainRepo + "\n\n> Crash Handler written by: sqirra-rng";
 
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");

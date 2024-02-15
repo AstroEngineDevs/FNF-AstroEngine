@@ -36,7 +36,7 @@ class Achievements {
 	public static function unlockAchievement(name:String):Void {
 		FlxG.log.add('Completed achievement "' + name +'"');
 		achievementsMap.set(name, true);
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+		FlxG.sound.play(backend.utils.Paths.sound('confirmMenu'), 0.7);
 	}
 
 	public static function manageAchievements(lockUnlock:Bool = false) {
@@ -63,9 +63,9 @@ class Achievements {
 			epicness++;
 		}
 
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+		FlxG.sound.play(backend.utils.Paths.sound('confirmMenu'), 0.7);
 
-		ClientPrefs.saveSettings();
+		backend.utils.ClientPrefs.saveSettings();
 	}
 
 	public static function isAchievementUnlocked(name:String) {
@@ -103,7 +103,7 @@ class AttachedAchievement extends FlxSprite {
 		super(x, y);
 
 		changeAchievement(name);
-		antialiasing = ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 	}
 
 	public function changeAchievement(tag:String) {
@@ -113,9 +113,9 @@ class AttachedAchievement extends FlxSprite {
 
 	public function reloadAchievementImage() {
 		if(Achievements.isAchievementUnlocked(tag)) {
-			loadGraphic(Paths.image('achievements/' + tag));
+			loadGraphic(backend.utils.Paths.image('achievements/' + tag));
 		} else {
-			loadGraphic(Paths.image('achievements/lockedachievement'));
+			loadGraphic(backend.utils.Paths.image('achievements/lockedachievement'));
 		}
 		scale.set(0.7, 0.7);
 		updateHitbox();
@@ -135,24 +135,24 @@ class AchievementObject extends FlxSpriteGroup {
 	public function new(name:String, ?camera:FlxCamera = null)
 	{
 		super(x, y);
-		ClientPrefs.saveSettings();
+		backend.utils.ClientPrefs.saveSettings();
 
 		var id:Int = Achievements.getAchievementIndex(name);
 		var achievementBG:FlxSprite = new FlxSprite(60, 50).makeGraphic(420, 120, FlxColor.BLACK);
 		achievementBG.scrollFactor.set();
 
-		var achievementIcon:FlxSprite = new FlxSprite(achievementBG.x + 10, achievementBG.y + 10).loadGraphic(Paths.image('achievements/' + name));
+		var achievementIcon:FlxSprite = new FlxSprite(achievementBG.x + 10, achievementBG.y + 10).loadGraphic(backend.utils.Paths.image('achievements/' + name));
 		achievementIcon.scrollFactor.set();
 		achievementIcon.setGraphicSize(Std.int(achievementIcon.width * (2 / 3)));
 		achievementIcon.updateHitbox();
-		achievementIcon.antialiasing = ClientPrefs.globalAntialiasing;
+		achievementIcon.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 
 		var achievementName:FlxText = new FlxText(achievementIcon.x + achievementIcon.width + 20, achievementIcon.y + 16, 280, Achievements.achievementsStuff[id][0], 16);
-		achievementName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
+		achievementName.setFormat(backend.utils.Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
 		achievementName.scrollFactor.set();
 
 		var achievementText:FlxText = new FlxText(achievementName.x, achievementName.y + 32, 280, Achievements.achievementsStuff[id][1], 16);
-		achievementText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
+		achievementText.setFormat(backend.utils.Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
 		achievementText.scrollFactor.set();
 
 		add(achievementBG);

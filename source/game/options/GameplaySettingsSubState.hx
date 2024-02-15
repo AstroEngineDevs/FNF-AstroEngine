@@ -23,7 +23,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
-import Controls;
+import backend.utils.Controls;
 import game.options.*;
 
 using StringTools;
@@ -159,10 +159,10 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(backend.utils.Paths.sound('hitsound'), backend.utils.ClientPrefs.hitsoundVolume);
 	}
 
 	function onChangeEnableDisableMouse(){
-		FlxG.mouse.visible = ClientPrefs.mouseEvents;
+		FlxG.mouse.visible = backend.utils.ClientPrefs.mouseEvents;
 	}
 }

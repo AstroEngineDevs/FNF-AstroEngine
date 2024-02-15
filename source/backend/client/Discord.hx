@@ -7,7 +7,7 @@ import llua.State;
 
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
-import backend.core.*;
+import backend.data.*;
 
 using StringTools;
 
@@ -19,7 +19,7 @@ class DiscordClient
 	public function new(){
 		trace("Discord Client starting...");
 		DiscordRpc.start({
-			clientID: Core.coreGame.coreDiscordID,
+			clientID: EngineData.coreGame.coreDiscordID,
 			onReady: onReady,
 			onError: onError,
 			onDisconnected: onDisconnected
@@ -84,7 +84,7 @@ class DiscordClient
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Psy Version: "+ Core.mainCoreShit.coreVersion,
+			largeImageText: "Psy Version: "+ EngineData.mainCoreShit.coreVersion,
 			smallImageKey : smallImageKey,
 			startTimestamp : Std.int(startTimestamp / 1000),
             endTimestamp : Std.int(endTimestamp / 1000)

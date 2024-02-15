@@ -23,8 +23,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
-import Controls;
-import backend.core.*;
+import backend.utils.Controls;
+import backend.data.*;
 
 using StringTools;
 
@@ -73,10 +73,10 @@ class ControlsSubState extends MusicBeatSubstate {
 	public function new() {
 		super();
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = Core.mainCoreShit.colorMenuImage;
+		var bg:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
+		bg.color = EngineData.mainCoreShit.colorMenuImage;
 		bg.screenCenter();
-		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
 		add(bg);
 
 		grpOptions = new FlxTypedGroup<game.objects.Alphabet>();
@@ -129,17 +129,17 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 
 			if (controls.BACK) {
-				ClientPrefs.reloadControls();
+				backend.utils.ClientPrefs.reloadControls();
 				close();
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
 			}
 
 			if(controls.ACCEPT && nextAccept <= 0) {
 				if(optionShit[curSelected][0] == defaultKey) {
-					ClientPrefs.keyBinds = ClientPrefs.defaultKeys.copy();
+					backend.utils.ClientPrefs.keyBinds = backend.utils.ClientPrefs.defaultKeys.copy();
 					reloadKeys();
 					changeSelection();
-					FlxG.sound.play(Paths.sound('confirmMenu'));
+					FlxG.sound.play(backend.utils.Paths.sound('confirmMenu'));
 				} else if(!unselectableCheck(curSelected)) {
 					bindingTime = 0;
 					rebindingKey = true;
@@ -148,23 +148,23 @@ class ControlsSubState extends MusicBeatSubstate {
 					} else {
 						grpInputs[getInputTextNum()].alpha = 0;
 					}
-					FlxG.sound.play(Paths.sound('scrollMenu'));
+					FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 				}
 			}
 		} else {
 			var keyPressed:Int = FlxG.keys.firstJustPressed();
 			if (keyPressed > -1) {
-				var keysArray:Array<FlxKey> = ClientPrefs.keyBinds.get(optionShit[curSelected][1]);
+				var keysArray:Array<FlxKey> = backend.utils.ClientPrefs.keyBinds.get(optionShit[curSelected][1]);
 				keysArray[curAlt ? 1 : 0] = keyPressed;
 
 				var opposite:Int = (curAlt ? 0 : 1);
 				if(keysArray[opposite] == keysArray[1 - opposite]) {
 					keysArray[opposite] = NONE;
 				}
-				ClientPrefs.keyBinds.set(optionShit[curSelected][1], keysArray);
+				backend.utils.ClientPrefs.keyBinds.set(optionShit[curSelected][1], keysArray);
 
 				reloadKeys();
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('confirmMenu'));
 				rebindingKey = false;
 			}
 
@@ -175,7 +175,7 @@ class ControlsSubState extends MusicBeatSubstate {
 				} else {
 					grpInputs[curSelected].alpha = 1;
 				}
-				FlxG.sound.play(Paths.sound('scrollMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 				rebindingKey = false;
 				bindingTime = 0;
 			}
@@ -241,7 +241,7 @@ class ControlsSubState extends MusicBeatSubstate {
 				}
 			}
 		}
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 	}
 
 	function changeAlt() {
@@ -264,7 +264,7 @@ class ControlsSubState extends MusicBeatSubstate {
 				break;
 			}
 		}
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 	}
 
 	private function unselectableCheck(num:Int, ?checkDefaultKey:Bool = false):Bool {
@@ -275,7 +275,7 @@ class ControlsSubState extends MusicBeatSubstate {
 	}
 
 	private function addBindTexts(optionText:game.objects.Alphabet, num:Int) {
-		var keys:Array<Dynamic> = ClientPrefs.keyBinds.get(optionShit[num][1]);
+		var keys:Array<Dynamic> = backend.utils.ClientPrefs.keyBinds.get(optionShit[num][1]);
 		var text1 = new AttachedText(InputFormatter.getKeyName(keys[0]), 400, -55);
 		text1.setPosition(optionText.x + 400, optionText.y - 55);
 		text1.sprTracker = optionText;
@@ -303,7 +303,7 @@ class ControlsSubState extends MusicBeatSubstate {
 			item.destroy();
 		}
 
-		trace('Reloaded keys: ' + ClientPrefs.keyBinds);
+		trace('Reloaded keys: ' + backend.utils.ClientPrefs.keyBinds);
 
 		for (i in 0...grpOptions.length) {
 			if(!unselectableCheck(i, true)) {

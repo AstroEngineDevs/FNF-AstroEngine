@@ -19,7 +19,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
-import Controls;
+import backend.utils.Controls;
 
 using StringTools;
 
@@ -36,7 +36,7 @@ class Option
 	public var showBoyfriend:Bool = false;
 	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
 
-	private var variable:String = null; //Variable from ClientPrefs.hx
+	private var variable:String = null; //Variable from backend.utils.ClientPrefs.hx
 	public var defaultValue:Dynamic = null;
 
 	public var curOption:Int = 0; //Don't change this
@@ -109,11 +109,11 @@ class Option
 
 	public function getValue():Dynamic
 	{
-		return Reflect.getProperty(ClientPrefs, variable);
+		return Reflect.getProperty(backend.utils.ClientPrefs, variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		Reflect.setProperty(ClientPrefs, variable, value);
+		Reflect.setProperty(backend.utils.ClientPrefs, variable, value);
 	}
 
 	public function setChild(child:game.objects.Alphabet)

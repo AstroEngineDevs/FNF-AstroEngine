@@ -1,7 +1,7 @@
 package backend;
 
 import game.states.PlayState;
-
+import backend.system.MusicBeatSubstate;
 class CustomSubstate extends MusicBeatSubstate
 {
 	public static var name:String = 'unnamed';

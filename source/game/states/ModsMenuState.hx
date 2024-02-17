@@ -1,5 +1,8 @@
 package game.states;
 
+import backend.data.WeekData;
+import backend.CoolUtil;
+import game.objects.AttachedSprite;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end

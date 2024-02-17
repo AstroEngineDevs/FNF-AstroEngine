@@ -1,5 +1,6 @@
 package game.objects;
 
+import backend.CoolUtil;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;

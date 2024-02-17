@@ -1,5 +1,7 @@
 package game.states;
 
+import backend.PlayerSettings;
+import backend.CoolUtil;
 #if desktop
 import sys.thread.Thread;
 #end

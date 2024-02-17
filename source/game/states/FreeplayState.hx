@@ -25,6 +25,9 @@ import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
 
+import backend.data.WeekData.WeekFile;
+import backend.data.WeekData.WeekData;
+import backend.CoolUtil;
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
 #if MODS_ALLOWED

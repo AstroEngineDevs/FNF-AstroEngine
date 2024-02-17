@@ -1,5 +1,8 @@
 package game.states.substates;
 
+import backend.CoolUtil;
+import backend.data.WeekData;
+import backend.system.MusicBeatSubstate;
 import game.objects.Alphabet;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -7,7 +10,7 @@ import flixel.FlxSubState;
 import flixel.util.FlxColor;
 import game.objects.HealthIcon;
 import backend.Highscore;
-
+import backend.system.MusicBeatSubstate;
 using StringTools;
 
 class ResetScoreSubState extends MusicBeatSubstate

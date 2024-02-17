@@ -1,5 +1,6 @@
 package game.options;
 
+import backend.system.MusicBeatSubstate;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end

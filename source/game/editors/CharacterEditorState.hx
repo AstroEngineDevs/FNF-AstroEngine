@@ -1,5 +1,6 @@
 package game.editors;
 
+import backend.CoolUtil;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end
@@ -10,6 +11,7 @@ import game.states.PlayState;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import game.objects.FlxUIDropDownMenuCustom;
 import flixel.FlxCamera;
 import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;

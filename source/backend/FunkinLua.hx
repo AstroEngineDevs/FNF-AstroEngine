@@ -1,5 +1,6 @@
 package backend;
 
+import game.states.LoadingState;
 import openfl.display.BitmapData;
 #if LUA_ALLOWED
 import llua.Lua;

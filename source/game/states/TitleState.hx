@@ -41,6 +41,7 @@ import flixel.util.FlxTimer;
 import openfl.Assets;
 import backend.data.*;
 import backend.client.Discord.DiscordClient;
+import backend.system.MusicBeatState;
 
 using StringTools;
 typedef TitleData =

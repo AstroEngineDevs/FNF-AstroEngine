@@ -36,6 +36,8 @@ import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import lime.system.Clipboard;
 import flixel.animation.FlxAnimation;
 import game.objects.HealthIcon;
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 #if MODS_ALLOWED
 import sys.FileSystem;

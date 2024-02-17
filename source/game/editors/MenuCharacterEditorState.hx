@@ -28,6 +28,8 @@ import haxe.Json;
 #if sys
 import sys.io.File;
 #end
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 using StringTools;
 

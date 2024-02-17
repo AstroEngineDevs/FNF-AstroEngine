@@ -12,6 +12,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import backend.data.PsychData;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 class OutdatedState extends MusicBeatState
 {
 	public static var leftState:Bool = false;

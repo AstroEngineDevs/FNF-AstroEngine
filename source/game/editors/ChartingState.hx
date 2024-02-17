@@ -53,6 +53,8 @@ import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 import game.objects.HealthIcon;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 using StringTools;
 #if sys
 import flash.media.Sound;

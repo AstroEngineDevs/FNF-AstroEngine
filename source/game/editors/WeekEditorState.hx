@@ -33,6 +33,8 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 using StringTools;
 

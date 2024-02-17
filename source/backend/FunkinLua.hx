@@ -53,6 +53,8 @@ import sys.io.File;
 import Type.ValueType;
 import backend.utils.Controls;
 import game.objects.DialogueBoxPsych;
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 #if hscript
 import backend.Hscript;

@@ -5,6 +5,8 @@ import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import backend.system.MusicBeatState;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 class GitarooPause extends MusicBeatState
 {
 	var replayButton:FlxSprite;

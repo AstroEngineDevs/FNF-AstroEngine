@@ -24,6 +24,8 @@ import game.editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
 import backend.data.*;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 #if (flixel >= "5.0.0")
 	import flixel.input.mouse.FlxMouseEvent;
 #end

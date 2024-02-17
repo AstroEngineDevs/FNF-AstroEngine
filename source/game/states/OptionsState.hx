@@ -27,6 +27,8 @@ import backend.utils.Controls;
 import backend.StatChangeables;
 import game.options.*;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 using StringTools;
 
 class OptionsState extends MusicBeatState

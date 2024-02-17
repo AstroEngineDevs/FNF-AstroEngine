@@ -23,6 +23,8 @@ import lime.net.curl.CURLCode;
 import flixel.graphics.FlxGraphic;
 import backend.Song;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 using StringTools;
 
 class StoryMenuState extends MusicBeatState

@@ -19,6 +19,8 @@ import sys.io.File;
 #end
 import lime.utils.Assets;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 using StringTools;
 
 class CreditsState extends MusicBeatState

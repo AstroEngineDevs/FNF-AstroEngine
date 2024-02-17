@@ -1,11 +1,14 @@
 package game.states;
 
+import backend.utils.FlxColorPastel;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 using StringTools;
 
 class AnimatedImageState extends MusicBeatState

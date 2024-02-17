@@ -54,6 +54,7 @@ import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 import game.objects.HealthIcon;
 import game.objects.AttachedText;
+import game.objects.Note;
 
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;

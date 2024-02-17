@@ -28,6 +28,8 @@ import backend.utils.Controls;
 import backend.data.*;
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
+import game.objects.AttachedText;
+import game.objects.*;
 
 using StringTools;
 

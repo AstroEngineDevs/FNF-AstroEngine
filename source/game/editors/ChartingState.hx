@@ -9,7 +9,7 @@ import game.states.PlayState;
 import backend.StageData;
 import backend.Song;
 import haxe.format.JsonParser;
-import game.objects.AttachedText;
+import game.objects.AttachedSprite;
 import haxe.io.Bytes;
 import game.objects.characters.Character;
 import backend.Conductor.BPMChangeEvent;
@@ -53,6 +53,7 @@ import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 import game.objects.HealthIcon;
+import game.objects.AttachedText;
 
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;

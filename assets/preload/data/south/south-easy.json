@@ -2,7 +2,7 @@
   "song": {
     "song": "South",
     "bpm": 165.0,
-    "songColor": "0xFFFF8020",
+    "songColor": "0xFF8020",
     "needsVoices": true,
     "player1": "bf",
     "player2": "spooky",

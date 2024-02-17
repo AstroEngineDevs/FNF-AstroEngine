@@ -20,6 +20,8 @@ import llua.Convert;
 import backend.CustomSubstate;
 import backend.Conductor;
 import haxe.Exception;
+import game.objects.characters.Character;
+import game.states.PlayState;
 
 using StringTools;
 
@@ -46,11 +48,11 @@ class HScript
 		interp.variables.set('FlxEase', flixel.tweens.FlxEase);
 		interp.variables.set('PlayState', PlayState);
 		interp.variables.set('game', PlayState.instance);
-		interp.variables.set('Paths', Paths);
+		interp.variables.set('backend.utils.Paths', backend.utils.Paths);
 		interp.variables.set('Conductor', Conductor);
-		interp.variables.set('ClientPrefs', ClientPrefs);
+		interp.variables.set('backend.utils.ClientPrefs', backend.utils.ClientPrefs);
 		interp.variables.set('Character', Character);
-		interp.variables.set('Alphabet', Alphabet);
+		interp.variables.set('Alphabet', game.objects.Alphabet);
 		interp.variables.set('CustomSubstate', backend.CustomSubstate);
 		#if (!flash && sys)
 		interp.variables.set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);

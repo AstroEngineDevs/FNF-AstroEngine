@@ -63,9 +63,9 @@ class Prompt extends MusicBeatSubstate
 		makeSelectorGraphic(panel,300,150,0xff999999);
 		makeSelectorGraphic(panelbg,304,154,0xff000000);
 		//panel.makeGraphic(300, 150, 0xff999999);
-		//panel.loadGraphic(Paths.image('ui/promptbg'));
+		//panel.loadGraphic(backend.utils.Paths.image('ui/promptbg'));
 		/*
-		buttons.frames = Paths.getSparrowAtlas('ui/prompt_buttons');
+		buttons.frames = backend.utils.Paths.getSparrowAtlas('ui/prompt_buttons');
 		buttons.animation.addByIndices('but0', 'buttons', [0], '', 0);
 		buttons.animation.addByIndices('but1', 'buttons', [1], '', 0);
 		buttons.animation.play('but0');
@@ -110,7 +110,7 @@ class Prompt extends MusicBeatSubstate
 			}else{
 				selected = 0;
 			}
-			FlxG.sound.play(Paths.sound('scrollMenu'));
+			FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));
 			//buttons.animation.play('but' + selected);
 		}
 		buttonAccept.color.brightness = 0.5;
@@ -119,10 +119,10 @@ class Prompt extends MusicBeatSubstate
 		if (selected == 1 ) buttonNo.color.brightness = 0.9;
 		if (controls.ACCEPT ){
 			if (selected == 0){
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('confirmMenu'));
 				if(okc != null)okc();
 			}else{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
 				if(cancelc != null)cancelc();
 			}
 			close();

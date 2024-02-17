@@ -1,5 +1,4 @@
 package animateatlas.tilecontainer;
-
 import openfl.display.Tileset;
 import animateatlas.JSONData.PointData;
 import openfl.errors.ArgumentError;

@@ -39,7 +39,7 @@ class FlxSound extends FlxBasic
 	public var y:Float;
 
 	/**
-	 * Whether or not this sound should be automatically destroyed when you switch states.
+	 * Whether or not this sound should be automatically destroyed when you switch game.states.
 	 */
 	public var persist:Bool;
 

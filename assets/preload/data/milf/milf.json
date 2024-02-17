@@ -4,7 +4,7 @@
     "bpm": 180.0,
     "needsVoices": true,
     "player1": "bf-car",
-    "songColor": "0xFFFF4DC9",
+    "songColor": "0xFF4DC9",
     "player2": "mom-car",
     "speed": 1.7,
     "notes": [

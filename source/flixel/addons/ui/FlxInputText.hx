@@ -24,7 +24,7 @@ import flixel.util.FlxTimer;
  * @link http://forums.flixel.org/index.php/topic,272.0.html
  *
  * Copyright (c) 2009 Martín Sebastián Wain
- * License: Creative Commons Attribution 3.0 United States
+ * License: Creative Commons Attribution 3.0 United game.states
  * @link http://creativecommons.org/licenses/by/3.0/us/
  * 
  * Modified by PlankDev to support cut/copy/paste

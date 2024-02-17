@@ -4,7 +4,7 @@
     "bpm": 95,
     "needsVoices": true,
     "player1": "bf",
-    "songColor": "0xFFFF0000",
+    "songColor": "0xFF0000",
     "player2": "monster",
     "speed": 1.3,
     "notes": [

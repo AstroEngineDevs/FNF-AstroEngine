@@ -4,7 +4,7 @@
     "bpm": 150.0,
     "needsVoices": true,
     "player1": "bf",
-    "songColor": "0xFF7A90FF",
+    "songColor": "0x7A90FF",
     "player2": "bf-pixel-opponent",
     "speed": 1.6,
     "notes": [

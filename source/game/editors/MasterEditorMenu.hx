@@ -16,6 +16,8 @@ import flixel.system.FlxSound;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 using StringTools;
 

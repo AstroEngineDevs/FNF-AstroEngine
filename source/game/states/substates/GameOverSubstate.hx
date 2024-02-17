@@ -13,6 +13,8 @@ import backend.Conductor;
 import flixel.tweens.FlxTween;
 import game.objects.characters.Boyfriend;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 class GameOverSubstate extends MusicBeatSubstate
 {
 	public var boyfriend:Boyfriend;

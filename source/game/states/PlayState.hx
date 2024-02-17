@@ -89,6 +89,8 @@ import game.objects.characters.Boyfriend;
 import sys.FileSystem;
 import sys.io.File;
 #end
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 #if VIDEOS_ALLOWED
 	#if (hxCodec >= "2.6.1")

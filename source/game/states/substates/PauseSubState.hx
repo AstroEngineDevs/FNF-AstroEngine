@@ -20,6 +20,9 @@ import flixel.FlxCamera;
 import flixel.util.FlxStringUtil;
 import backend.Song;
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
+
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<game.objects.Alphabet>;

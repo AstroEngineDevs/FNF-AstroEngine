@@ -26,6 +26,8 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import backend.utils.Controls;
 import backend.data.*;
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 using StringTools;
 

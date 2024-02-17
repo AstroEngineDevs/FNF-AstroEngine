@@ -30,5 +30,6 @@ import backend.client.Discord.DiscordClient;
 #end
 
 import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 
 #end

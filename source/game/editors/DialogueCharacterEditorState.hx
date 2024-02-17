@@ -34,6 +34,8 @@ import game.objects.Alphabet;
 import sys.io.File;
 #end
 
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
 using StringTools;
 
 class DialogueCharacterEditorState extends MusicBeatState

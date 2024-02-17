@@ -1,4 +1,6 @@
 package game.editors;
+import game.states.LoadingState;
+import game.objects.Note;
 import backend.utils.Section.SwagSection;
 import backend.Song.SwagSong;
 import flixel.group.FlxGroup.FlxTypedGroup;

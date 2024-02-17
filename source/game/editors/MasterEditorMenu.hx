@@ -18,7 +18,10 @@ import sys.FileSystem;
 #end
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
+import backend.data.WeekData.WeekFile;
+import backend.data.WeekData.WeekData;
 
+import game.states.LoadingState;
 using StringTools;
 
 class MasterEditorMenu extends MusicBeatState

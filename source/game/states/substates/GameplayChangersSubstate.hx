@@ -1,5 +1,6 @@
 package game.states.substates; 
 
+import game.objects.AttachedText;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end
@@ -24,6 +25,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import backend.utils.Controls;
+import backend.system.MusicBeatSubstate;
 
 using StringTools;
 

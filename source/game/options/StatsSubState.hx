@@ -10,7 +10,11 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import game.objects.Alphabet;
 import backend.data.*;
 import backend.StatChangeables;
-
+import backend.system.MusicBeatSubstate;
+import backend.utils.Paths;
+#if desktop
+import backend.client.Discord.DiscordClient;
+#end
 using StringTools;
 
 class StatsSubState extends MusicBeatSubstate

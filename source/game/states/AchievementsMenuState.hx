@@ -1,5 +1,6 @@
 package game.states;
 
+import backend.system.MusicBeatState;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end

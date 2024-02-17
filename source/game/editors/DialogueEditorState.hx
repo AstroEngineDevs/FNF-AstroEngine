@@ -1,5 +1,6 @@
 package game.editors;
 
+import game.objects.TypedAlphabet;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end

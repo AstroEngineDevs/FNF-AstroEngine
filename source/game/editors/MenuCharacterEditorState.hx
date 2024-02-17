@@ -1,5 +1,6 @@
 package game.editors;
 
+import game.objects.characters.MenuCharacter;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end

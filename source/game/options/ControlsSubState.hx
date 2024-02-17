@@ -1,5 +1,7 @@
 package game.options;
 
+import game.objects.AttachedText;
+import backend.system.MusicBeatSubstate;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end

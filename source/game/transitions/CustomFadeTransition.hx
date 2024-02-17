@@ -1,5 +1,6 @@
 package game.transitions;
 
+import backend.CoolUtil;
 import backend.Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -13,6 +14,7 @@ import flixel.util.FlxGradient;
 import flixel.FlxSubState;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import backend.system.MusicBeatSubstate;
 
 class CustomFadeTransition extends MusicBeatSubstate {
 	public static var finishCallback:Void->Void;

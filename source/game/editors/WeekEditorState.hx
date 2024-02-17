@@ -1,5 +1,9 @@
 package game.editors;
 
+import backend.data.WeekData;
+import backend.data.WeekData.WeekFile;
+import game.objects.MenuItem;
+import game.objects.characters.MenuCharacter;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end

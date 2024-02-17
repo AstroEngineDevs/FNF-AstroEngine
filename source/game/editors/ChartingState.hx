@@ -1,4 +1,6 @@
 package game.editors;
+import game.states.LoadingState;
+import backend.CoolUtil;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end
@@ -18,6 +20,7 @@ import backend.utils.Section.SwagSection;
 import backend.Song.SwagSong;
 import flixel.FlxG;
 import flixel.FlxObject;
+import game.objects.FlxUIDropDownMenuCustom;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;

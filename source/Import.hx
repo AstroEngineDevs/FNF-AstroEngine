@@ -1,5 +1,3 @@
-package game;
-
 #if !macro
 import flixel.FlxG;
 import game.*;

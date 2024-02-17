@@ -49,7 +49,7 @@ class OptionsState extends MusicBeatState
 			case 'Gameplay':
 				openSubState(new GameplaySettingsSubState());
 			case 'Stats':
-				LoadingState.loadAndSwitchState(new Stats());
+				openSubState(new StatsSubState());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new NoteOffsetState());
 			case 'Recording Studio':

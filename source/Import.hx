@@ -22,4 +22,13 @@ import backend.CoolUtil;
 
 import game.states.LoadingState;
 import game.objects.FlxUIDropDownMenuCustom;
+
+import backend.utils.Paths;
+
+#if desktop
+import backend.client.Discord.DiscordClient;
+#end
+
+import backend.system.MusicBeatSubstate;
+
 #end

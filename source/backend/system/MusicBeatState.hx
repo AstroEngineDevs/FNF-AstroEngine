@@ -40,7 +40,7 @@ class MusicBeatState extends FlxUIState
 		super.create();
 
 		if(!skip) {
-			openSubState(new game.transitions.CustomFadeTransition(0.7, true));
+			openSubState(new game.transitions.CustomFadeTransition(0.5, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}

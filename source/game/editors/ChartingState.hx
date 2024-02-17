@@ -9,6 +9,7 @@ import game.states.PlayState;
 import backend.StageData;
 import backend.Song;
 import haxe.format.JsonParser;
+import game.objects.AttachedText;
 import haxe.io.Bytes;
 import game.objects.characters.Character;
 import backend.Conductor.BPMChangeEvent;

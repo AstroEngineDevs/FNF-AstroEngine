@@ -18,7 +18,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 import lime.utils.Assets;
-
+import game.objects.AttachedText;
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
 using StringTools;

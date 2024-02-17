@@ -1,6 +1,7 @@
 package game.objects;
 
 import flixel.FlxSprite;
+import game.objects.AttachedText;
 
 using StringTools;
 

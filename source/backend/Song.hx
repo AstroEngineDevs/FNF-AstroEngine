@@ -1,17 +1,9 @@
 package backend;
 
-import flixel.util.FlxColor;
-import backend.utils.Section.SwagSection;
 import haxe.Json;
-import haxe.format.JsonParser;
 import lime.utils.Assets;
-import backend.StageData;
-#if sys
-import sys.io.File;
-import sys.FileSystem;
-#end
 
-using StringTools;
+import backend.Section;
 
 typedef SwagSong =
 {
@@ -27,11 +19,15 @@ typedef SwagSong =
 	var gfVersion:String;
 	var stage:String;
 
-	var arrowSkin:String;
-	var splashSkin:String;
-	var validScore:Bool;
+	@:optional var gameOverChar:String;
+	@:optional var gameOverSound:String;
+	@:optional var gameOverLoop:String;
+	@:optional var gameOverEnd:String;
+	
+	@:optional var disableNoteRGB:Bool;
 
-	var songColor:String;
+	@:optional var arrowSkin:String;
+	@:optional var splashSkin:String;
 }
 
 class Song
@@ -43,18 +39,19 @@ class Song
 	public var needsVoices:Bool = true;
 	public var arrowSkin:String;
 	public var splashSkin:String;
+	public var gameOverChar:String;
+	public var gameOverSound:String;
+	public var gameOverLoop:String;
+	public var gameOverEnd:String;
+	public var disableNoteRGB:Bool = false;
 	public var speed:Float = 1;
 	public var stage:String;
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
-	public var songColor:String; // was FlxColor
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
-		if(songJson.songColor == "") songJson.songColor = "0xFFFFFFFF";
-		if(songJson.songColor == null) songJson.songColor = "0xFFFFFFFF";
-
 		if(songJson.gfVersion == null)
 		{
 			songJson.gfVersion = songJson.player3;
@@ -97,21 +94,24 @@ class Song
 	{
 		var rawJson = null;
 		
-		var formattedFolder:String = backend.utils.Paths.formatToSongPath(folder);
-		var formattedSong:String = backend.utils.Paths.formatToSongPath(jsonInput);
+		var formattedFolder:String = Paths.formatToSongPath(folder);
+		var formattedSong:String = Paths.formatToSongPath(jsonInput);
 		#if MODS_ALLOWED
-		var moddyFile:String = backend.utils.Paths.modsJson(formattedFolder + '/' + formattedSong);
+		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
 		if(FileSystem.exists(moddyFile)) {
 			rawJson = File.getContent(moddyFile).trim();
 		}
 		#end
 
 		if(rawJson == null) {
+			var path:String = Paths.json(formattedFolder + '/' + formattedSong);
+
 			#if sys
-			rawJson = File.getContent(backend.utils.Paths.json(formattedFolder + '/' + formattedSong)).trim();
-			#else
-			rawJson = Assets.getText(backend.utils.Paths.json(formattedFolder + '/' + formattedSong)).trim();
+			if(FileSystem.exists(path))
+				rawJson = File.getContent(path).trim();
+			else
 			#end
+				rawJson = Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 		}
 
 		while (!rawJson.endsWith("}"))
@@ -144,8 +144,6 @@ class Song
 
 	public static function parseJSONshit(rawJson:String):SwagSong
 	{
-		var swagShit:SwagSong = cast Json.parse(rawJson).song;
-		swagShit.validScore = true;
-		return swagShit;
+		return cast Json.parse(rawJson).song;
 	}
 }

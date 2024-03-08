@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Astro Engine" file="Astro Engine" packageName="com.hackx2.astroengine" package="com.hackx2.astroengine" main="game.Main" version="0.2.8" company="Hackx2" />
+	<app title="Friday Night Funkin': Psych Engine" file="PsychEngine" packageName="com.shadowmario.psychengine" package="com.shadowmario.psychengine" main="Main" version="0.2.8" company="ShadowMario" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -17,6 +17,20 @@
 
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
+	
+	<!-- ______________________ PSYCH ENGINE CUSTOMIZATION ______________________ -->
+
+	<define name="MODS_ALLOWED" if="desktop" />
+	<define name="HSCRIPT_ALLOWED" if="desktop" />
+	<define name="LUA_ALLOWED" if="desktop" />
+	<define name="ACHIEVEMENTS_ALLOWED" />
+	<define name="DISCORD_ALLOWED" />
+	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
+
+	<section if="officialBuild">
+		<define name="TITLE_SCREEN_EASTER_EGG"/>
+		<define name="VIDEOS_ALLOWED" if="windows || linux || android" unless="32bits"/> <!-- IF YOU WANT TO USE VIDEOS ON YOUR SOURCE MOD, GET THIS LINE OUTSIDE OF THE SECTION -->
+	</section>
 
 	<!-- ____________________________ Window Settings ___________________________ -->
 
@@ -42,100 +56,59 @@
 	<set name="BUILD_DIR" value="export/32bit" if="32bits" />
 
 	<classpath name="source" />
+
+	<!-- __________________________ Game Assets & Etc. __________________________ -->
 	
-	<!-- PSYCH ENGINE CUSTOMIZATION -->
-	<define name="MODS_ALLOWED" if="desktop" />
-	<define name="LUA_ALLOWED" if="desktop" />
-	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
-	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
-	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
+	<!-- Turn on Crash Handler -->
 	<define name="CRASH_HANDLER" if="desktop release" />
 
-	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
-	<section if="TITLE_SCREEN_EASTER_EGG">
-		<assets path="assets/secrets" rename="assets" exclude="*.ogg" if="web"/>
-		<assets path="assets/secrets" rename="assets" exclude="*.mp3"  unless="web"/>
-	</section>
-
-	<!-- DONT ENABLE THIS -->
-	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
-
-	<!-- <define name="PRELOAD_ALL" /> -->
-	<define name="PRELOAD_ALL" unless="web" />
-	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
-	
-	<library name="videos"        preload="true" />
-	<section if="PRELOAD_ALL">
-		<library name="songs"         preload="true" />
-		<library name="shared"        preload="true" />
-		<library name="weekAssets"   preload="true" />
-
-	</section>
-	
-	<section if="NO_PRELOAD_ALL">
-		<library name="songs"         preload="false" />
-		<library name="shared"        preload="false" />
-		<library name="weekAssets"   preload="true" />
-	</section>
-	
+	<!-- Assets -->
+	<assets path="assets/fonts" />
+	<assets path="assets/shared"        exclude="*.ogg" if="web"/>
+	<assets path="assets/shared"        exclude="*.mp3" unless="web"/>
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>
-	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
-	<assets path="assets/weekAssets"   library="weekAssets"   rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/weekAssets"   library="weekAssets"   rename="assets" exclude="*.mp3" unless="web"/>
-	
+	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.ogg" if="web"/>
+	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
+	<section if="TITLE_SCREEN_EASTER_EGG">
+		<assets path="assets/secrets" rename="assets/shared" exclude="*.ogg" if="web"/>
+		<assets path="assets/secrets" rename="assets/shared" exclude="*.mp3"  unless="web"/>
+	</section>
+
+	<library name="videos"        preload="true" if="VIDEOS_ALLOWED"/>
+	<library name="songs"         preload="true" />
+	<library name="week_assets"   preload="true" />
+
+	<define name="CHECK_FOR_UPDATES" if="desktop officialBuild"/>
+
 	<section if="MODS_ALLOWED">
-		<assets path='mods' embed='false'/>
+		<assets path='example_mods' rename='mods' embed='false'/>
 	</section>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
-	<!-- <template path='mods' /> -->
-	
-	<!-- assets path="CHANGELOG.md" rename='changelog.txt' -->
 
-	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
-		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
-		THEN UHHH I USED THE NAME OF THE FONT WITH SETFORMAT() ON THE TEXT!!!
-		NOT USING A DIRECT THING TO THE ASSET!!!
-	-->
-	<assets path="assets/fonts" />
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxedev set='webgl' />
-	<!-- TODO: go to new flixel (5.5.0) -->
-	
-	<haxelib name="lime" version="8.1.1"/>
-	<haxelib name="openfl" version="9.3.2"/>
-	
-	<haxelib name="flixel"/>
+	<haxelib name="flixel" />
 	<haxelib name="flixel-ui" />
-	<haxelib name="flixel-addons"/>
-
-	<!--In case you want to use the addons package-->
 	<haxelib name="flixel-addons" />
-	<haxelib name="hscript" />
-	<define name="hscriptPos" />
+	<haxelib name="tjson" />
 
-	<!--In case you want to use the ui package-->
-	<haxelib name="flixel-ui" />
+	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
+	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
-	<haxelib name="faxe" if='switch'/>
-	<!--<haxelib name="polymod"/> -->
-	<haxelib name="discord_rpc" if="desktop"/>
+	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
+	<haxelib name="flxanimate"/>
+
+	<!-- Disable Discord IO Thread -->
+	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
+	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
 
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
-
-	<!-- <haxelib name="markdown" /> -->
-	<!-- <haxelib name="HtmlParser" /> -->
-
-	<!--In case you want to use nape with flixel-->
-	<!--<haxelib name="nape-haxe4" />-->
-
+	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
+	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
 	<!--Enable the Flixel core recording system-->
@@ -161,9 +134,6 @@
 
 	<!--Disable the Flixel core focus lost screen-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
-
-	<!--Allow working memory greater than 1 Gig-->
-	<!--haxedef name="HXCPP_GC_BIG_BLOCKS"-->
 	
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
@@ -177,13 +147,23 @@
 	<!--Used for Izzy Engine's crash handler-->
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
+	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
+	
+	<!--Disable deprecated warnings-->
+	<haxedef name='no-deprecation-warnings' />
+
+	<!--Macro fixes-->
+	<haxeflag name="--macro" value="allowPackage('flash')" />
+	<haxeflag name="--macro" value="include('my.pack')" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
+
+	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
 	
-	<icon path="art/icon/icon16.png" size='16'/>
-	<icon path="art/icon/icon32.png" size='32'/>
-	<icon path="art/icon/icon64.png" size='64'/>
-	<icon path="art/icon/iconOG.png" />
+	<icon path="art/icon16.png" size='16'/>
+	<icon path="art/icon32.png" size='32'/>
+	<icon path="art/icon64.png" size='64'/>
+	<icon path="art/iconOG.png" />
 </project>

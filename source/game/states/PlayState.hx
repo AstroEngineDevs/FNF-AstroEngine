@@ -48,7 +48,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -1591,20 +1591,32 @@ class PlayState extends MusicBeatState
 		return value;
 	}
 
+	
+
 	function set_playbackRate(value:Float):Float
-	{
-		if(generatedMusic)
 		{
-			if(vocals != null) vocals.pitch = value;
-			FlxG.sound.music.pitch = value;
+			#if FLX_PITCH
+			if(generatedMusic)
+			{
+				vocals.pitch = value;
+				FlxG.sound.music.pitch = value;
+	
+				var ratio:Float = playbackRate / value; //funny word huh
+				if(ratio != 1)
+				{
+					for (note in notes.members) note.resizeByRatio(ratio);
+					for (note in unspawnNotes) note.resizeByRatio(ratio);
+				}
+			}
+			playbackRate = value;
+			FlxG.animationTimeScale = value;
+			Conductor.safeZoneOffset = (backend.utils.ClientPrefs.safeFrames / 60) * 1000 * value;
+			setOnLuas('playbackRate', playbackRate);
+			#else
+			playbackRate = 1.0; // ensuring -Crow
+			#end
+			return playbackRate;
 		}
-		playbackRate = value;
-		FlxAnimationController.globalSpeed = value;
-		trace('Anim speed: ' + FlxAnimationController.globalSpeed);
-		Conductor.safeZoneOffset = (backend.utils.ClientPrefs.safeFrames / 60) * 1000 * value;
-		setOnLuas('playbackRate', playbackRate);
-		return value;
-	}
 
 	public function addTextToDebug(text:String, color:FlxColor) {
 		#if LUA_ALLOWED
@@ -1935,7 +1947,7 @@ class PlayState extends MusicBeatState
 				precacheList.set('killYou', 'sound');
 				precacheList.set('bfBeep', 'sound');
 
-				var wellWellWell:FlxSound = new FlxSound().loadEmbedded(backend.utils.Paths.sound('wellWellWell'));
+				var wellWellWell:FlxSound = new FlxSound().loadEmbedded(Paths.sound('wellWellWell'));
 				FlxG.sound.list.add(wellWellWell);
 
 				tankman.animation.addByPrefix('wellWell', 'TANK TALK 1 P1', 24, false);
@@ -5209,7 +5221,7 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
-		FlxAnimationController.globalSpeed = 1;
+		//FlxAnimationController.globalSpeed = 1;
 		FlxG.sound.music.pitch = 1;
 		super.destroy();
 	}

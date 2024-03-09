@@ -79,9 +79,12 @@ import animateatlas.AtlasFrameMaker;
 import game.objects.Achievements;
 import backend.StageData;
 import game.objects.playstateBG.*;
-import backend.FunkinLua;
+//LuaShit fr
+import backend.funkinLua.FunkinLua;
+import backend.funkinLua.luaStuff.*;
+//
 import backend.Hscript;
-import backend.Conductor.Rating;
+import backend.Rating;
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;

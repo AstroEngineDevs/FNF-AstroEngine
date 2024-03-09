@@ -22,7 +22,7 @@ import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
-import backend.FunkinLua;
+import backend.funkinLua.FunkinLua;
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
 

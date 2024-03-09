@@ -1,10 +1,21 @@
 package backend;
 
+import flixel.FlxG;
+
+using StringTools;
+
 class Highscore
 {
+	#if (haxe >= "4.0.0")
+	public static var weekScores:Map<String, Int> = new Map();
+	public static var songScores:Map<String, Int> = new Map();
+	public static var songRating:Map<String, Float> = new Map();
+	#else
 	public static var weekScores:Map<String, Int> = new Map();
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
 	public static var songRating:Map<String, Float> = new Map<String, Float>();
+	#end
+
 
 	public static function resetSong(song:String, diff:Int = 0):Void
 	{
@@ -17,6 +28,22 @@ class Highscore
 	{
 		var daWeek:String = formatSong(week, diff);
 		setWeekScore(daWeek, 0);
+	}
+
+	public static function floorDecimal(value:Float, decimals:Int):Float
+	{
+		if(decimals < 1)
+		{
+			return Math.floor(value);
+		}
+
+		var tempMult:Float = 1;
+		for (i in 0...decimals)
+		{
+			tempMult *= 10;
+		}
+		var newValue:Float = Math.floor(value * tempMult);
+		return newValue / tempMult;
 	}
 
 	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0, ?rating:Float = -1):Void
@@ -76,7 +103,7 @@ class Highscore
 
 	public static function formatSong(song:String, diff:Int):String
 	{
-		return Paths.formatToSongPath(song) + Difficulty.getFilePath(diff);
+		return backend.utils.Paths.formatToSongPath(song) + CoolUtil.getDifficultyFilePath(diff);
 	}
 
 	public static function getScore(song:String, diff:Int):Int

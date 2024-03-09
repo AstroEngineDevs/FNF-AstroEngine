@@ -1,62 +1,33 @@
 #if !macro
-//Discord API
-#if DISCORD_ALLOWED
-import backend.Discord;
-#end
-
-//Psych
-#if LUA_ALLOWED
-import llua.*;
-import llua.Lua;
-#end
-
-#if ACHIEVEMENTS_ALLOWED
-import backend.Achievements;
-#end
-
-#if sys
-import sys.*;
-import sys.io.*;
-#elseif js
-import js.html.*;
-#end
-
-import backend.Paths;
-import backend.Controls;
-import backend.CoolUtil;
-import backend.MusicBeatState;
-import backend.MusicBeatSubstate;
-import backend.CustomFadeTransition;
-import backend.ClientPrefs;
-import backend.Conductor;
-import backend.BaseStage;
-import backend.Difficulty;
-import backend.Mods;
-
-import objects.Alphabet;
-import objects.BGSprite;
-
-import states.PlayState;
-import states.LoadingState;
-
-#if flxanimate
-import flxanimate.*;
-#end
-
-//Flixel
-import flixel.sound.FlxSound;
 import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxCamera;
-import flixel.math.FlxMath;
-import flixel.math.FlxPoint;
-import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
-import flixel.text.FlxText;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.group.FlxSpriteGroup;
-import flixel.group.FlxGroup.FlxTypedGroup;
+import game.*;
+import game.objects.*;
+import backend.system.*;
+import backend.data.*;
 
-using StringTools;
+import backend.data.WeekData.WeekFile;
+import backend.data.WeekData.WeekData;
+
+import game.objects.characters.*;
+import game.objects.characters.MenuCharacter;
+
+import game.objects.MenuItem;
+import game.objects.TypedAlphabet;
+
+import backend.PlayerSettings;
+
+import backend.CoolUtil;
+
+import game.states.LoadingState;
+import game.objects.FlxUIDropDownMenuCustom;
+
+import backend.utils.Paths;
+
+#if desktop
+import backend.client.Discord.DiscordClient;
+#end
+
+import backend.system.MusicBeatSubstate;
+import backend.system.MusicBeatState;
+
 #end

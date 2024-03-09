@@ -1,8 +1,12 @@
 package backend;
 
-import backend.Song;
-import backend.Section;
-import objects.Note;
+import backend.Song.SwagSong;
+import game.objects.Note;
+import game.states.PlayState;
+/**
+ * ...
+ * @author
+ */
 
 typedef BPMChangeEvent =
 {
@@ -14,24 +18,32 @@ typedef BPMChangeEvent =
 
 class Conductor
 {
-	public static var bpm(default, set):Float = 100;
+	public static var bpm:Float = 100;
 	public static var crochet:Float = ((60 / bpm) * 1000); // beats in milliseconds
 	public static var stepCrochet:Float = crochet / 4; // steps in milliseconds
-	public static var songPosition:Float = 0;
+	public static var songPosition:Float=0;
+	public static var lastSongPos:Float;
 	public static var offset:Float = 0;
 
 	//public static var safeFrames:Int = 10;
-	public static var safeZoneOffset:Float = 0; // is calculated in create(), is safeFrames in milliseconds
+	public static var safeZoneOffset:Float = (backend.utils.ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
-	public static function judgeNote(arr:Array<Rating>, diff:Float=0):Rating // die
+	public function new()
 	{
-		var data:Array<Rating> = arr;
-		for(i in 0...data.length-1) //skips last window (Shit)
-			if (diff <= data[i].hitWindow)
-				return data[i];
+	}
 
+	public static function judgeNote(note:Note, diff:Float=0):Rating // die
+	{
+		var data:Array<Rating> = PlayState.instance.ratingsData; //shortening cuz fuck u
+		for(i in 0...data.length-1) //skips last window (Shit)
+		{
+			if (diff <= data[i].hitWindow)
+			{
+				return data[i];
+			}
+		}
 		return data[data.length - 1];
 	}
 
@@ -135,11 +147,39 @@ class Conductor
 		return (60/bpm)*1000;
 	}
 
-	public static function set_bpm(newBPM:Float):Float {
-		bpm = newBPM;
+	public static function changeBPM(newBpm:Float)
+	{
+		bpm = newBpm;
+
 		crochet = calculateCrochet(bpm);
 		stepCrochet = crochet / 4;
+	}
+}
 
-		return bpm = newBPM;
+class Rating
+{
+	public var name:String = '';
+	public var image:String = '';
+	public var counter:String = '';
+	public var hitWindow:Null<Int> = 0; //ms
+	public var ratingMod:Float = 1;
+	public var score:Int = 350;
+	public var noteSplash:Bool = true;
+
+	public function new(name:String)
+	{
+		this.name = name;
+		this.image = name;
+		this.counter = name + 's';
+		this.hitWindow = Reflect.field(backend.utils.ClientPrefs, name + 'Window');
+		if(hitWindow == null)
+		{
+			hitWindow = 0;
+		}
+	}
+
+	public function increase(blah:Int = 1)
+	{
+		Reflect.setField(PlayState.instance, counter, Reflect.field(PlayState.instance, counter) + blah);
 	}
 }

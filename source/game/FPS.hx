@@ -29,9 +29,6 @@ import openfl.system.System;
 #end
 class FPS extends TextField
 {
-	/**
-		The current frame rate, expressed using frames-per-second
-	**/
 	public var currentFPS(default, null):Int;
 
 	@:noCompletion private var cacheCount:Int;

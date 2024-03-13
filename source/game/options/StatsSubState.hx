@@ -28,8 +28,8 @@ class StatsSubState extends MusicBeatSubstate
 	private var curSelected:Int = 0;
 
 	var stats:Array<Array<Dynamic>> = [
-        ["Best Score", StatChangeables.MAX_SCORE],
-		["Most Misses", StatChangeables.MOST_MISSES],
+        ["Best Score", StatChangeables.stats[0]],
+		["Most Misses", StatChangeables.stats[1]],
     ];
 	public function new() {
 		super();

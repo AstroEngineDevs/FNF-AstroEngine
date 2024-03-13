@@ -9,7 +9,7 @@ class StatChangeables {
     public static var MOST_MISSES:Int;
 
     // Score | Misses | Other(Maybe)
-    public static var stats:Array<Int>;
+    public static var stats:Array<Int> = [0,0];
 
     public static function saveStats() {
         FlxG.save.data.stats = stats;

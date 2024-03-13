@@ -1,5 +1,6 @@
 package game.states;
 
+import backend.funkinLua.LuaUtils;
 import backend.data.EngineData;
 import backend.data.WeekData;
 import backend.CoolUtil;
@@ -83,7 +84,7 @@ import game.objects.playstateBG.*;
 import backend.funkinLua.FunkinLua;
 import backend.funkinLua.luaStuff.*;
 //
-import backend.Hscript;
+import backend.funkinLua.HScript;
 import backend.Rating;
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -2221,7 +2222,7 @@ class PlayState extends MusicBeatState
 
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
-		if(ret != FunkinLua.Function_Stop) {
+		if(ret != LuaUtils.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
 			generateStaticArrows(0);
@@ -2878,7 +2879,7 @@ class PlayState extends MusicBeatState
 
 	function eventNoteEarlyTrigger(event:EventNote):Float {
 		var returnedValue:Null<Float> = callOnLuas('eventEarlyTrigger', [event.event, event.value1, event.value2, event.strumTime], [], [0]);
-		if(returnedValue != null && returnedValue != 0 && returnedValue != FunkinLua.Function_Continue) {
+		if(returnedValue != null && returnedValue != 0 && returnedValue != LuaUtils.Function_Continue) {
 			return returnedValue;
 		}
 
@@ -3252,7 +3253,7 @@ class PlayState extends MusicBeatState
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnLuas('onPause', [], false);
-			if(ret != FunkinLua.Function_Stop) {
+			if(ret != LuaUtils.Function_Stop) {
 				openPauseMenu();
 			}
 		}
@@ -3552,14 +3553,6 @@ class PlayState extends MusicBeatState
 		persistentDraw = true;
 		paused = true;
 
-		// 1 / 1000 chance for Gitaroo Man easter egg
-		/*if (FlxG.random.bool(0.1))
-		{
-			// gitaroo man easter egg
-			cancelMusicFadeTween();
-			MusicBeatState.switchState(new GitarooPause());
-		}
-		else {*/
 		if(FlxG.sound.music != null) {
 			FlxG.sound.music.pause();
 			vocals.pause();
@@ -3590,7 +3583,7 @@ class PlayState extends MusicBeatState
 		if (((skipHealthCheck && instakillOnMiss) || health <= 0) && !practiceMode && !isDead)
 		{
 			var ret:Dynamic = callOnLuas('onGameOver', [], false);
-			if(ret != FunkinLua.Function_Stop) {
+			if(ret != LuaUtils.Function_Stop) {
 				boyfriend.stunned = true;
 				deathCounter++;
 
@@ -4022,9 +4015,9 @@ class PlayState extends MusicBeatState
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
 				if(killMe.length > 1) {
-					FunkinLua.setVarInArray(FunkinLua.getPropertyLoopThingWhatever(killMe, true, true), killMe[killMe.length-1], value2);
+					LuaUtils.setVarInArray(LuaUtils.getPropertyLoopThingWhatever(killMe, true, true), killMe[killMe.length-1], value2);
 				} else {
-					FunkinLua.setVarInArray(this, value1, value2);
+					LuaUtils.setVarInArray(this, value1, value2);
 				}
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
@@ -4165,25 +4158,27 @@ class PlayState extends MusicBeatState
 		#end
 
 		var ret:Dynamic = callOnLuas('onEndSong', [], false);
-		if(ret != FunkinLua.Function_Stop && !transitioning) {
+		if(ret != LuaUtils.Function_Stop && !transitioning) {
 			if (SONG.validScore)
 			{
 				#if !switch
 				var percent:Float = ratingPercent;
 				if(Math.isNaN(percent)) percent = 0;
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
+
+				// Stats
+				if (StatChangeables.stats[0] < songScore)
+					{
+						StatChangeables.stats[0] = songScore;
+						StatChangeables.saveStats();
+					}
+					if (StatChangeables.stats[1] < songMisses)
+					{
+						StatChangeables.stats[1] = songMisses;
+						StatChangeables.saveStats();
+					}
+
 				#end
-				//Stat
-				if (StatChangeables.MAX_SCORE < songScore)
-				{
-					StatChangeables.MAX_SCORE = songScore;
-					StatChangeables.saveStats();
-				}
-				if (StatChangeables.MOST_MISSES < songMisses)
-				{
-					StatChangeables.MOST_MISSES = songMisses;
-					StatChangeables.saveStats();
-				}
 			
 			}
 			playbackRate = 1;
@@ -5441,7 +5436,7 @@ class PlayState extends MusicBeatState
 	#end
 
 	public function callOnLuas(event:String, args:Array<Dynamic>, ignoreStops = true, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic {
-		var returnVal = FunkinLua.Function_Continue;
+		var returnVal = LuaUtils.Function_Continue;
 		#if LUA_ALLOWED
 		if(exclusions == null) exclusions = [];
 		if(excludeValues == null) excludeValues = [];
@@ -5451,10 +5446,10 @@ class PlayState extends MusicBeatState
 				continue;
 
 			var myValue = script.call(event, args);
-			if(myValue == FunkinLua.Function_StopLua && !ignoreStops)
+			if(myValue == LuaUtils.Function_StopLua && !ignoreStops)
 				break;
 			
-			if(myValue != null && myValue != FunkinLua.Function_Continue) {
+			if(myValue != null && myValue != LuaUtils.Function_Continue) {
 				returnVal = myValue;
 			}
 		}
@@ -5493,7 +5488,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('hits', songHits);
 
 		var ret:Dynamic = callOnLuas('onRecalculateRating', [], false);
-		if(ret != FunkinLua.Function_Stop)
+		if(ret != LuaUtils.Function_Stop)
 		{
 			if(totalPlayed < 1) //Prevent divide by 0
 				ratingName = '?';

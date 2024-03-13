@@ -99,8 +99,7 @@ class StatsSubState extends MusicBeatSubstate
 			{
 				FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
 				StatChangeables.resetStats();
-				//MusicBeatSubState.switchState(FlxG.state);
-				openSubState(new StatsSubState());
+				close();
 			}
 
 		super.update(elapsed);

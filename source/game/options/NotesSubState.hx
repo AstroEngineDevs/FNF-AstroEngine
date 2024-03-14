@@ -51,7 +51,7 @@ class NotesSubState extends MusicBeatSubstate
 		var bg:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
 		bg.color = EngineData.mainCoreShit.colorMenuImage;
 		bg.screenCenter();
-		bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(bg);
 		
 		blackBG = new FlxSprite(posX - 25).makeGraphic(870, 200, FlxColor.BLACK);
@@ -63,10 +63,10 @@ class NotesSubState extends MusicBeatSubstate
 		grpNumbers = new FlxTypedGroup<game.objects.Alphabet>();
 		add(grpNumbers);
 
-		for (i in 0...backend.utils.ClientPrefs.arrowHSV.length) {
+		for (i in 0...backend.utils.ClientPrefs.data.arrowHSV.length) {
 			var yPos:Float = (165 * i) + 35;
 			for (j in 0...3) {
-				var optionText:game.objects.Alphabet = new game.objects.Alphabet(posX + (225 * j) + 250, yPos + 60, Std.string(backend.utils.ClientPrefs.arrowHSV[i][j]), true);
+				var optionText:game.objects.Alphabet = new game.objects.Alphabet(posX + (225 * j) + 250, yPos + 60, Std.string(backend.utils.ClientPrefs.data.arrowHSV[i][j]), true);
 				grpNumbers.add(optionText);
 			}
 
@@ -75,14 +75,14 @@ class NotesSubState extends MusicBeatSubstate
 			var animations:Array<String> = ['purple0', 'blue0', 'green0', 'red0'];
 			note.animation.addByPrefix('idle', animations[i]);
 			note.animation.play('idle');
-			note.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+			note.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 			grpNotes.add(note);
 
 			var newShader:ColorSwap = new ColorSwap();
 			note.shader = newShader.shader;
-			newShader.hue = backend.utils.ClientPrefs.arrowHSV[i][0] / 360;
-			newShader.saturation = backend.utils.ClientPrefs.arrowHSV[i][1] / 100;
-			newShader.brightness = backend.utils.ClientPrefs.arrowHSV[i][2] / 100;
+			newShader.hue = backend.utils.ClientPrefs.data.arrowHSV[i][0] / 360;
+			newShader.saturation = backend.utils.ClientPrefs.data.arrowHSV[i][1] / 100;
+			newShader.brightness = backend.utils.ClientPrefs.data.arrowHSV[i][2] / 100;
 			shaderArray.push(newShader);
 		}
 
@@ -193,11 +193,11 @@ class NotesSubState extends MusicBeatSubstate
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)
-			curSelected = backend.utils.ClientPrefs.arrowHSV.length-1;
-		if (curSelected >= backend.utils.ClientPrefs.arrowHSV.length)
+			curSelected = backend.utils.ClientPrefs.data.arrowHSV.length-1;
+		if (curSelected >= backend.utils.ClientPrefs.data.arrowHSV.length)
 			curSelected = 0;
 
-		curValue = backend.utils.ClientPrefs.arrowHSV[curSelected][typeSelected];
+		curValue = backend.utils.ClientPrefs.data.arrowHSV[curSelected][typeSelected];
 		updateValue();
 
 		for (i in 0...grpNumbers.length) {
@@ -228,7 +228,7 @@ class NotesSubState extends MusicBeatSubstate
 		if (typeSelected > 2)
 			typeSelected = 0;
 
-		curValue = backend.utils.ClientPrefs.arrowHSV[curSelected][typeSelected];
+		curValue = backend.utils.ClientPrefs.data.arrowHSV[curSelected][typeSelected];
 		updateValue();
 
 		for (i in 0...grpNumbers.length) {
@@ -242,7 +242,7 @@ class NotesSubState extends MusicBeatSubstate
 
 	function resetValue(selected:Int, type:Int) {
 		curValue = 0;
-		backend.utils.ClientPrefs.arrowHSV[selected][type] = 0;
+		backend.utils.ClientPrefs.data.arrowHSV[selected][type] = 0;
 		switch(type) {
 			case 0: shaderArray[selected].hue = 0;
 			case 1: shaderArray[selected].saturation = 0;
@@ -272,7 +272,7 @@ class NotesSubState extends MusicBeatSubstate
 			curValue = max;
 		}
 		roundedValue = Math.round(curValue);
-		backend.utils.ClientPrefs.arrowHSV[curSelected][typeSelected] = roundedValue;
+		backend.utils.ClientPrefs.data.arrowHSV[curSelected][typeSelected] = roundedValue;
 
 		switch(typeSelected) {
 			case 0: shaderArray[curSelected].hue = roundedValue / 360;

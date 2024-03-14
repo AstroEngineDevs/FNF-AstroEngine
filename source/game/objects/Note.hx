@@ -125,11 +125,11 @@ class Note extends FlxSprite
 
 	private function set_noteType(value:String):String {
 		noteSplashTexture = PlayState.SONG.splashSkin;
-		if (noteData > -1 && noteData < backend.utils.ClientPrefs.arrowHSV.length)
+		if (noteData > -1 && noteData < backend.utils.ClientPrefs.data.arrowHSV.length)
 		{
-			colorSwap.hue = backend.utils.ClientPrefs.arrowHSV[noteData][0] / 360;
-			colorSwap.saturation = backend.utils.ClientPrefs.arrowHSV[noteData][1] / 100;
-			colorSwap.brightness = backend.utils.ClientPrefs.arrowHSV[noteData][2] / 100;
+			colorSwap.hue = backend.utils.ClientPrefs.data.arrowHSV[noteData][0] / 360;
+			colorSwap.saturation = backend.utils.ClientPrefs.data.arrowHSV[noteData][1] / 100;
+			colorSwap.brightness = backend.utils.ClientPrefs.data.arrowHSV[noteData][2] / 100;
 		}
 
 		if(noteData > -1 && noteType != value) {
@@ -176,11 +176,11 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
 
-		x += (backend.utils.ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
+		x += (backend.utils.ClientPrefs.data.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
-		if(!inEditor) this.strumTime += backend.utils.ClientPrefs.noteOffset;
+		if(!inEditor) this.strumTime += backend.utils.ClientPrefs.data.noteOffset;
 
 		this.noteData = noteData;
 
@@ -208,7 +208,7 @@ class Note extends FlxSprite
 			multAlpha = 0.6;
 			hitsoundDisabled = true;
 			
-			if(backend.utils.ClientPrefs.downScroll) flipY = true;
+			if(backend.utils.ClientPrefs.data.downScroll) flipY = true;
 
 			offsetX += width / 2;
 			copyAngle = false;
@@ -308,7 +308,7 @@ class Note extends FlxSprite
 		} else {
 			frames = backend.utils.Paths.getSparrowAtlas(blahblah);
 			loadNoteAnims();
-			antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+			antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		}
 		if(isSustainNote) {
 			scale.y = lastScaleY;

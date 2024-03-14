@@ -17,12 +17,12 @@ import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
-import backend.FunkinLua;
+import backend.funkinLua.FunkinLua;
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
 
@@ -85,8 +85,8 @@ class EditorPlayState extends MusicBeatState
 			backend.utils.ClientPrefs.copyKey(backend.utils.ClientPrefs.keyBinds.get('note_right'))
 		];
 		
-		strumLine = new FlxSprite(backend.utils.ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
-		if(backend.utils.ClientPrefs.downScroll) strumLine.y = FlxG.height - 150;
+		strumLine = new FlxSprite(backend.utils.ClientPrefs.data.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, 50).makeGraphic(FlxG.width, 10);
+		if(backend.utils.ClientPrefs.data.downScroll) strumLine.y = FlxG.height - 150;
 		strumLine.scrollFactor.set();
 		
 		comboGroup = new FlxTypedGroup<FlxSprite>();
@@ -99,7 +99,7 @@ class EditorPlayState extends MusicBeatState
 
 		generateStaticArrows(0);
 		generateStaticArrows(1);
-		/*if(backend.utils.ClientPrefs.middleScroll) {
+		/*if(backend.utils.ClientPrefs.data.middleScroll) {
 			opponentStrums.forEachAlive(function (note:game.objects.StrumNote) {
 				note.visible = false;
 			});
@@ -137,7 +137,7 @@ class EditorPlayState extends MusicBeatState
 		scoreTxt.setFormat(backend.utils.Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
-		scoreTxt.visible = !backend.utils.ClientPrefs.hideHud || !backend.utils.ClientPrefs.hideFullHUD;
+		scoreTxt.visible = !backend.utils.ClientPrefs.data.hideHud || !backend.utils.ClientPrefs.data.hideFullHUD;
 		add(scoreTxt);
 		
 		sectionTxt = new FlxText(10, 580, FlxG.width - 20, "Section: 0", 20);
@@ -166,7 +166,7 @@ class EditorPlayState extends MusicBeatState
 		FlxG.mouse.visible = false;
 
 		//sayGo();
-		if(!backend.utils.ClientPrefs.controllerMode)
+		if(!backend.utils.ClientPrefs.data.controllerMode)
 		{
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
@@ -181,7 +181,7 @@ class EditorPlayState extends MusicBeatState
 		go.updateHitbox();
 
 		go.screenCenter();
-		go.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		go.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(go);
 		FlxTween.tween(go, {y: go.y += 100, alpha: 0}, Conductor.crochet / 1000, {
 			ease: FlxEase.cubeInOut,
@@ -270,7 +270,7 @@ class EditorPlayState extends MusicBeatState
 								{
 									sustainNote.x += FlxG.width / 2; // general offset
 								}
-								else if(backend.utils.ClientPrefs.middleScroll)
+								else if(backend.utils.ClientPrefs.data.middleScroll)
 								{
 									sustainNote.x += 310;
 									if(daNoteData > 1)
@@ -285,7 +285,7 @@ class EditorPlayState extends MusicBeatState
 						{
 							swagNote.x += FlxG.width / 2; // general offset
 						}
-						else if(backend.utils.ClientPrefs.middleScroll)
+						else if(backend.utils.ClientPrefs.data.middleScroll)
 						{
 							swagNote.x += 310;
 							if(daNoteData > 1) //Up and Right
@@ -405,7 +405,7 @@ class EditorPlayState extends MusicBeatState
 					daNote.x = strumX;
 				}
 				if(daNote.copyY) {
-					if (backend.utils.ClientPrefs.downScroll) {
+					if (backend.utils.ClientPrefs.data.downScroll) {
 						daNote.y = (strumY + 0.45 * (Conductor.songPosition - daNote.strumTime) * PlayState.SONG.speed);
 						if (daNote.isSustainNote) {
 							//Jesus fuck this took me so much mother fucking time AAAAAAAAAA
@@ -533,7 +533,7 @@ class EditorPlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
-			notes.sort(FlxSort.byY, backend.utils.ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
+			notes.sort(FlxSort.byY, backend.utils.ClientPrefs.data.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
 	}
 
@@ -561,7 +561,7 @@ class EditorPlayState extends MusicBeatState
 		var key:Int = getKeyFromEvent(eventKey);
 		//trace('Pressed: ' + eventKey);
 
-		if (key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || backend.utils.ClientPrefs.controllerMode))
+		if (key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || backend.utils.ClientPrefs.data.controllerMode))
 		{
 			if(generatedMusic)
 			{
@@ -569,7 +569,7 @@ class EditorPlayState extends MusicBeatState
 				var lastTime:Float = Conductor.songPosition;
 				Conductor.songPosition = FlxG.sound.music.time;
 
-				var canMiss:Bool = !backend.utils.ClientPrefs.ghostTapping;
+				var canMiss:Bool = !backend.utils.ClientPrefs.data.ghostTapping;
 
 				// heavily based on my own code LOL if it aint broke dont fix it
 				var pressNotes:Array<Note> = [];
@@ -612,7 +612,7 @@ class EditorPlayState extends MusicBeatState
 
 					}
 				}
-				else if (canMiss && backend.utils.ClientPrefs.ghostTapping) {
+				else if (canMiss && backend.utils.ClientPrefs.data.ghostTapping) {
 					noteMiss();
 				}
 
@@ -683,7 +683,7 @@ class EditorPlayState extends MusicBeatState
 		var controlHoldArray:Array<Bool> = [left, down, up, right];
 		
 		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(backend.utils.ClientPrefs.controllerMode)
+		if(backend.utils.ClientPrefs.data.controllerMode)
 		{
 			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
 			if(controlArray.contains(true))
@@ -711,7 +711,7 @@ class EditorPlayState extends MusicBeatState
 		}
 
 		// TO DO: Find a better way to handle controller inputs, this should work for now
-		if(backend.utils.ClientPrefs.controllerMode)
+		if(backend.utils.ClientPrefs.data.controllerMode)
 		{
 			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
 			if(controlArray.contains(true))
@@ -795,7 +795,7 @@ class EditorPlayState extends MusicBeatState
 	var COMBO_Y:Float = 340;
 	private function popUpScore(note:Note = null):Void
 	{
-		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + backend.utils.ClientPrefs.ratingOffset);
+		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + backend.utils.ClientPrefs.data.ratingOffset);
 
 		vocals.volume = 1;
 
@@ -857,18 +857,18 @@ class EditorPlayState extends MusicBeatState
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
-		rating.visible = !backend.utils.ClientPrefs.hideHud || !backend.utils.ClientPrefs.hideFullHUD;
-		rating.x += backend.utils.ClientPrefs.comboOffset[0];
-		rating.y -= backend.utils.ClientPrefs.comboOffset[1];
+		rating.visible = !backend.utils.ClientPrefs.data.hideHud || !backend.utils.ClientPrefs.data.hideFullHUD;
+		rating.x += backend.utils.ClientPrefs.data.comboOffset[0];
+		rating.y -= backend.utils.ClientPrefs.data.comboOffset[1];
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
-		comboSpr.visible = !backend.utils.ClientPrefs.hideHud || !backend.utils.ClientPrefs.hideFullHUD;
-		comboSpr.x += backend.utils.ClientPrefs.comboOffset[0];
-		comboSpr.y -= backend.utils.ClientPrefs.comboOffset[1];
+		comboSpr.visible = !backend.utils.ClientPrefs.data.hideHud || !backend.utils.ClientPrefs.data.hideFullHUD;
+		comboSpr.x += backend.utils.ClientPrefs.data.comboOffset[0];
+		comboSpr.y -= backend.utils.ClientPrefs.data.comboOffset[1];
 
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 		comboGroup.add(rating);
@@ -876,9 +876,9 @@ class EditorPlayState extends MusicBeatState
 		if (!PlayState.isPixelStage)
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
-			rating.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+			rating.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
-			comboSpr.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+			comboSpr.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		}
 		else
 		{
@@ -906,12 +906,12 @@ class EditorPlayState extends MusicBeatState
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
 
-			numScore.x += backend.utils.ClientPrefs.comboOffset[2];
-			numScore.y -= backend.utils.ClientPrefs.comboOffset[3];
+			numScore.x += backend.utils.ClientPrefs.data.comboOffset[2];
+			numScore.y -= backend.utils.ClientPrefs.data.comboOffset[3];
 
 			if (!PlayState.isPixelStage)
 			{
-				numScore.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+				numScore.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 			}
 			else
@@ -923,7 +923,7 @@ class EditorPlayState extends MusicBeatState
 			numScore.acceleration.y = FlxG.random.int(200, 300);
 			numScore.velocity.y -= FlxG.random.int(140, 160);
 			numScore.velocity.x = FlxG.random.float(-5, 5);
-			numScore.visible = !backend.utils.ClientPrefs.hideHud || !backend.utils.ClientPrefs.hideFullHUD;
+			numScore.visible = !backend.utils.ClientPrefs.data.hideHud || !backend.utils.ClientPrefs.data.hideFullHUD;
 
 			insert(members.indexOf(strumLineNotes), numScore);
 
@@ -969,11 +969,11 @@ class EditorPlayState extends MusicBeatState
 			var targetAlpha:Float = 1;
 			if (player < 1)
 			{
-				if(!backend.utils.ClientPrefs.opponentStrums) targetAlpha = 0;
-				else if(backend.utils.ClientPrefs.middleScroll) targetAlpha = 0.35;
+				if(!backend.utils.ClientPrefs.data.opponentStrums) targetAlpha = 0;
+				else if(backend.utils.ClientPrefs.data.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:game.objects.StrumNote = new game.objects.StrumNote(backend.utils.ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
+			var babyArrow:game.objects.StrumNote = new game.objects.StrumNote(backend.utils.ClientPrefs.data.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X, strumLine.y, i, player);
 			babyArrow.alpha = targetAlpha;
 
 			if (player == 1)
@@ -982,7 +982,7 @@ class EditorPlayState extends MusicBeatState
 			}
 			else
 			{
-				if(backend.utils.ClientPrefs.middleScroll)
+				if(backend.utils.ClientPrefs.data.middleScroll)
 				{
 					babyArrow.x += 310;
 					if(i > 1) { //Up and Right
@@ -1016,7 +1016,7 @@ class EditorPlayState extends MusicBeatState
 
 	// Note splash shit, duh
 	function spawnNoteSplashOnNote(note:Note) {
-		if(backend.utils.ClientPrefs.noteSplashes && note != null) {
+		if(backend.utils.ClientPrefs.data.noteSplashes && note != null) {
 			var strum:game.objects.StrumNote = playerStrums.members[note.noteData];
 			if(strum != null) {
 				spawnNoteSplash(strum.x, strum.y, note.noteData, note);
@@ -1028,9 +1028,9 @@ class EditorPlayState extends MusicBeatState
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 		
-		var hue:Float = backend.utils.ClientPrefs.arrowHSV[data % 4][0] / 360;
-		var sat:Float = backend.utils.ClientPrefs.arrowHSV[data % 4][1] / 100;
-		var brt:Float = backend.utils.ClientPrefs.arrowHSV[data % 4][2] / 100;
+		var hue:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][0] / 360;
+		var sat:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][1] / 100;
+		var brt:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][2] / 100;
 		if(note != null) {
 			skin = note.noteSplashTexture;
 			hue = note.noteSplashHue;
@@ -1048,7 +1048,7 @@ class EditorPlayState extends MusicBeatState
 		vocals.stop();
 		vocals.destroy();
 
-		if(!backend.utils.ClientPrefs.controllerMode)
+		if(!backend.utils.ClientPrefs.data.controllerMode)
 		{
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);

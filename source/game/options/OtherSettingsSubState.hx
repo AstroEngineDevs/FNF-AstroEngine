@@ -1,5 +1,6 @@
 package game.options;
 
+import backend.utils.ClientPrefs;
 #if desktop
 import backend.client.Discord.DiscordClient;
 #end
@@ -30,12 +31,22 @@ import game.options.*;
 
 using StringTools;
 
-class StudioSettingsSubState extends BaseOptionsMenu
+class OtherSettingsSubState extends BaseOptionsMenu
 {
 	public function new()
 	{
-		title = 'Recording Studio';
-		rpcTitle = 'Recording Settings'; //for Discord Rich Presence
+		title = 'Other';
+		rpcTitle = 'Other Settings'; //for Discord Rich Presence
+
+		#if DISCORD_ALLOWED
+		var option:Option = new Option('Discord Rich Presence',
+			"Uncheck this to prevent accidental leaks, it will hide the Application from your \"Playing\" box on Discord",
+			'discordRPC',
+			'bool');
+		addOption(option);
+		option.onChange = onChangediscord;
+		#end
+		
 
 		var option:Option = new Option('Hide HUD',
 			'Hide\'s all HUD elements\nimproves performance.',
@@ -55,15 +66,23 @@ class StudioSettingsSubState extends BaseOptionsMenu
 		super();
 	}
 
+	function onChangediscord() {
+		var fr = ClientPrefs.data.discordRPC;
+		if (fr)
+			DiscordClient.initialize();
+		else
+			DiscordClient.shutdown();
+	}
+
 	function onChangefuckmedaddy()
 	{
-		if (backend.utils.ClientPrefs.hideFullHUD){
-			backend.utils.ClientPrefs.showFPS = false;
+		if (ClientPrefs.data.hideFullHUD){
+			ClientPrefs.data.showFPS = false;
 		}else{
-			backend.utils.ClientPrefs.showFPS = true;
+			ClientPrefs.data.showFPS = true;
 		}
 
 		if(game.Main.fpsVar != null)
-			game.Main.fpsVar.visible = backend.utils.ClientPrefs.showFPS;
+			game.Main.fpsVar.visible = ClientPrefs.data.showFPS;
 	}
 }

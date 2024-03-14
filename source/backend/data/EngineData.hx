@@ -12,7 +12,7 @@ using StringTools;
 
     //** Other Shit **/
 	public static var mainCoreShit = {
-		coreVersion: '1.6',
+		coreVersion: '0.2',
 		colorMenuImage: 0xff525252,
 		mainRepo: "https://github.com/Hackx2/FNF-AstroEngine",
 	}
@@ -21,7 +21,7 @@ using StringTools;
 	public function new()
 	{
         super();
-		if (backend.utils.ClientPrefs.lowQuality)
-			backend.utils.ClientPrefs.mouseEvents = false;
+		if (backend.utils.ClientPrefs.data.lowQuality)
+			backend.utils.ClientPrefs.data.mouseEvents = false;
 	}
 }

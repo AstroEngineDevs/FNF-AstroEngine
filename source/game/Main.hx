@@ -106,7 +106,7 @@ class Main extends Sprite
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		if(fpsVar != null) {
-			fpsVar.visible = backend.utils.ClientPrefs.showFPS;
+			fpsVar.visible = backend.utils.ClientPrefs.data.showFPS;
 		}
 		#end
 
@@ -119,13 +119,8 @@ class Main extends Sprite
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 
-		#if desktop
-		if (!DiscordClient.isInitialized) {
-			DiscordClient.initialize();
-			Application.current.window.onClose.add(function() {
-				DiscordClient.shutdown();
-			});
-		}
+		#if DISCORD_ALLOWED
+		DiscordClient.prepare();
 		#end
 	}
 
@@ -166,7 +161,9 @@ class Main extends Sprite
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
 		Application.current.window.alert(errMsg, "Error!");
+		#if DISCORD_ALLOWED
 		DiscordClient.shutdown();
+		#end
 		Sys.exit(1);
 	}
 	#end

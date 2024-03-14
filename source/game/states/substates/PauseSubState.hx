@@ -13,7 +13,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
 import backend.Conductor;
 import backend.Highscore;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -75,7 +75,7 @@ class PauseSubState extends MusicBeatSubstate
 		if(songName != null) {
 			pauseMusic.loadEmbedded(backend.utils.Paths.music(songName), true, true);
 		} else if (songName != 'None') {
-			pauseMusic.loadEmbedded(backend.utils.Paths.music(backend.utils.Paths.formatToSongPath(backend.utils.ClientPrefs.pauseMusic)), true, true);
+			pauseMusic.loadEmbedded(backend.utils.Paths.music(backend.utils.Paths.formatToSongPath(backend.utils.ClientPrefs.data.pauseMusic)), true, true);
 		}
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -200,7 +200,7 @@ class PauseSubState extends MusicBeatSubstate
 				}
 		}
 
-		if (accepted && (cantUnpause <= 0 || !backend.utils.ClientPrefs.controllerMode))
+		if (accepted && (cantUnpause <= 0 || !backend.utils.ClientPrefs.data.controllerMode))
 		{
 			if (menuItems == difficultyChoices)
 			{
@@ -260,7 +260,7 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Toggle Botplay':
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 					PlayState.changedDifficulty = true;
-					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled && !backend.utils.ClientPrefs.hideFullHUD;
+					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled && !backend.utils.ClientPrefs.data.hideFullHUD;
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case "Exit to menu":

@@ -29,9 +29,6 @@ import openfl.system.System;
 #end
 class FPS extends TextField
 {
-	/**
-		The current frame rate, expressed using frames-per-second
-	**/
 	public var currentFPS(default, null):Int;
 
 	@:noCompletion private var cacheCount:Int;
@@ -80,7 +77,7 @@ class FPS extends TextField
 
 		var currentCount = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
-		if (currentFPS > backend.utils.ClientPrefs.framerate) currentFPS = backend.utils.ClientPrefs.framerate;
+		if (currentFPS > backend.utils.ClientPrefs.data.framerate) currentFPS = backend.utils.ClientPrefs.data.framerate;
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
@@ -95,7 +92,7 @@ class FPS extends TextField
             text += '\nAstro Engine: '+EngineData.mainCoreShit.coreVersion;
 
 			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= backend.utils.ClientPrefs.framerate / 2)
+			if (memoryMegas > 3000 || currentFPS <= backend.utils.ClientPrefs.data.framerate / 2)
 			{
 				textColor = 0xFFFF0000;
 			}

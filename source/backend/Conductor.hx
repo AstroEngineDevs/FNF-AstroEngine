@@ -26,7 +26,7 @@ class Conductor
 	public static var offset:Float = 0;
 
 	//public static var safeFrames:Int = 10;
-	public static var safeZoneOffset:Float = (backend.utils.ClientPrefs.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
+	public static var safeZoneOffset:Float = (backend.utils.ClientPrefs.data.safeFrames / 60) * 1000; // is calculated in create(), is safeFrames in milliseconds
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
@@ -156,30 +156,3 @@ class Conductor
 	}
 }
 
-class Rating
-{
-	public var name:String = '';
-	public var image:String = '';
-	public var counter:String = '';
-	public var hitWindow:Null<Int> = 0; //ms
-	public var ratingMod:Float = 1;
-	public var score:Int = 350;
-	public var noteSplash:Bool = true;
-
-	public function new(name:String)
-	{
-		this.name = name;
-		this.image = name;
-		this.counter = name + 's';
-		this.hitWindow = Reflect.field(backend.utils.ClientPrefs, name + 'Window');
-		if(hitWindow == null)
-		{
-			hitWindow = 0;
-		}
-	}
-
-	public function increase(blah:Int = 1)
-	{
-		Reflect.setField(PlayState.instance, counter, Reflect.field(PlayState.instance, counter) + blah);
-	}
-}

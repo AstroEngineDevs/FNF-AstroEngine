@@ -22,7 +22,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import lime.utils.Assets;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
 
 import backend.data.WeekData.WeekFile;
@@ -64,9 +64,6 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		//backend.utils.Paths.clearStoredMemory();
-		//backend.utils.Paths.clearUnusedMemory();
-		
 		persistentUpdate = true;
 		PlayState.isStoryMode = false;
 		WeekData.reloadWeekFiles(false);
@@ -114,7 +111,7 @@ class FreeplayState extends MusicBeatState
 		}*/
 
 		bg = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
-		bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(bg);
 		bg.screenCenter();
 

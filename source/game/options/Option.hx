@@ -1,5 +1,6 @@
 package game.options;
 
+import backend.utils.ClientPrefs;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -109,11 +110,11 @@ class Option
 
 	public function getValue():Dynamic
 	{
-		return Reflect.getProperty(backend.utils.ClientPrefs, variable);
+		return Reflect.getProperty(ClientPrefs.data, variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		Reflect.setProperty(backend.utils.ClientPrefs, variable, value);
+		Reflect.setProperty(ClientPrefs.data, variable, value);
 	}
 
 	public function setChild(child:game.objects.Alphabet)

@@ -85,22 +85,22 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			var sprite:Dynamic = sprite; //Make it check for FlxSprite instead of FlxBasic
 			var sprite:FlxSprite = sprite; //Don't judge me ok
 			if(sprite != null && (sprite is FlxSprite) && !(sprite is FlxText)) {
-				sprite.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+				sprite.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 			}
 		}
 	}
 
 	function onChangeFramerate()
 	{
-		if(backend.utils.ClientPrefs.framerate > FlxG.drawFramerate)
+		if(backend.utils.ClientPrefs.data.framerate > FlxG.drawFramerate)
 		{
-			FlxG.updateFramerate = backend.utils.ClientPrefs.framerate;
-			FlxG.drawFramerate = backend.utils.ClientPrefs.framerate;
+			FlxG.updateFramerate = backend.utils.ClientPrefs.data.framerate;
+			FlxG.drawFramerate = backend.utils.ClientPrefs.data.framerate;
 		}
 		else
 		{
-			FlxG.drawFramerate = backend.utils.ClientPrefs.framerate;
-			FlxG.updateFramerate = backend.utils.ClientPrefs.framerate;
+			FlxG.drawFramerate = backend.utils.ClientPrefs.data.framerate;
+			FlxG.updateFramerate = backend.utils.ClientPrefs.data.framerate;
 		}
 	}
 }

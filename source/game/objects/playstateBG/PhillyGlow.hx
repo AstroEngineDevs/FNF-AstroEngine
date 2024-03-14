@@ -16,10 +16,10 @@ class PhillyGlowParticle extends FlxSprite
 		this.color = color;
 
 		loadGraphic(backend.utils.Paths.image('philly/particle'));
-		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		lifeTime = FlxG.random.float(0.6, 0.9);
 		decay = FlxG.random.float(0.8, 1);
-		if(!backend.utils.ClientPrefs.flashing)
+		if(!backend.utils.ClientPrefs.data.flashing)
 		{
 			decay *= 0.5;
 			alpha = 0.5;
@@ -60,7 +60,7 @@ class PhillyGlowGradient extends FlxSprite
 		originalY = y;
 
 		loadGraphic(backend.utils.Paths.image('philly/gradient'));
-		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		scrollFactor.set(0, 0.75);
 		setGraphicSize(2000, originalHeight);
 		updateHitbox();

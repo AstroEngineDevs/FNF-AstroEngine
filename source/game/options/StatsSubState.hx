@@ -27,10 +27,8 @@ class StatsSubState extends MusicBeatSubstate
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var curSelected:Int = 0;
 
-	var stats:Array<Array<Dynamic>> = [
-        ["Best Score", StatChangeables.MAX_SCORE],
-		["Most Misses", StatChangeables.MOST_MISSES],
-    ];
+	var stats:Array<String> = ["Best Score", "Most Misses"];
+
 	public function new() {
 		super();
 
@@ -44,7 +42,7 @@ class StatsSubState extends MusicBeatSubstate
 		bg.color = EngineData.mainCoreShit.colorMenuImage;
 		bg.updateHitbox();
 		bg.screenCenter();
-		bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(bg);
 
 		grpTexts = new FlxTypedGroup<Alphabet>();
@@ -54,7 +52,7 @@ class StatsSubState extends MusicBeatSubstate
 		{
 			statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
 			statsTxt.screenCenter();
-			statsTxt.text = stats[i][0] + ": " + stats[i][1];
+			statsTxt.text = stats[i] + ": " + StatChangeables.stats[i];
 			statsTxt.isMenuItemCenter = true;
 			statsTxt.targetY = i;
 			statsTxt.ID = i;
@@ -99,8 +97,7 @@ class StatsSubState extends MusicBeatSubstate
 			{
 				FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
 				StatChangeables.resetStats();
-				//MusicBeatSubState.switchState(FlxG.state);
-				openSubState(new StatsSubState());
+				close();
 			}
 
 		super.update(elapsed);

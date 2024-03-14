@@ -119,7 +119,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		box = new FlxSprite(70, 370);
 		box.frames = backend.utils.Paths.getSparrowAtlas('speech_bubble');
 		box.scrollFactor.set();
-		box.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		box.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		box.animation.addByPrefix('normal', 'speech bubble normal', 24);
 		box.animation.addByPrefix('center', 'speech bubble middle', 24);
 		box.animation.play('normal', true);

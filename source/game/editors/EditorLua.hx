@@ -85,8 +85,8 @@ class EditorLua {
 			set('defaultOpponentStrumY' + i, 0);
 		}
 
-		set('downscroll', backend.utils.ClientPrefs.downScroll);
-		set('middlescroll', backend.utils.ClientPrefs.middleScroll);
+		set('downscroll', backend.utils.ClientPrefs.data.downScroll);
+		set('middlescroll', backend.utils.ClientPrefs.data.middleScroll);
 
 		//stuff 4 noobz like you B)
 		Lua_helper.add_callback(lua, "getProperty", function(variable:String) {

@@ -94,7 +94,7 @@ class Character extends FlxSprite
 		#end
 		curCharacter = character;
 		this.isPlayer = isPlayer;
-		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		var library:String = null;
 		switch (curCharacter)
 		{
@@ -193,7 +193,7 @@ class Character extends FlxSprite
 					healthColorArray = json.healthbar_colors;
 
 				antialiasing = !noAntialiasing;
-				if(!backend.utils.ClientPrefs.globalAntialiasing) antialiasing = false;
+				if(!backend.utils.ClientPrefs.data.globalAntialiasing) antialiasing = false;
 
 				animationsArray = json.animations;
 				if(animationsArray != null && animationsArray.length > 0) {

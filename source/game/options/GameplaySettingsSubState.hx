@@ -159,10 +159,10 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(backend.utils.Paths.sound('hitsound'), backend.utils.ClientPrefs.hitsoundVolume);
+		FlxG.sound.play(backend.utils.Paths.sound('hitsound'), backend.utils.ClientPrefs.data.hitsoundVolume);
 	}
 
 	function onChangeEnableDisableMouse(){
-		FlxG.mouse.visible = backend.utils.ClientPrefs.mouseEvents;
+		FlxG.mouse.visible = backend.utils.ClientPrefs.data.mouseEvents;
 	}
 }

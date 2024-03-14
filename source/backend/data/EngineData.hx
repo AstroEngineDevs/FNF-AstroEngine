@@ -21,7 +21,7 @@ using StringTools;
 	public function new()
 	{
         super();
-		if (backend.utils.ClientPrefs.lowQuality)
-			backend.utils.ClientPrefs.mouseEvents = false;
+		if (backend.utils.ClientPrefs.data.lowQuality)
+			backend.utils.ClientPrefs.data.mouseEvents = false;
 	}
 }

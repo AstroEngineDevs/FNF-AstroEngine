@@ -119,7 +119,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		#end
-
+		
 		var option:Option = new Option('Combo Stacking',
 			"If unchecked, Ratings and Combo won't stack, saving on System Memory and making them easier to read",
 			'comboStacking',
@@ -133,10 +133,10 @@ class VisualsUISubState extends BaseOptionsMenu
 	var changedMusic:Bool = false;
 	function onChangePauseMusic()
 	{
-		if(backend.utils.ClientPrefs.pauseMusic == 'None')
+		if(backend.utils.ClientPrefs.data.pauseMusic == 'None')
 			FlxG.sound.music.volume = 0;
 		else
-			FlxG.sound.playMusic(backend.utils.Paths.music(backend.utils.Paths.formatToSongPath(backend.utils.ClientPrefs.pauseMusic)));
+			FlxG.sound.playMusic(backend.utils.Paths.music(backend.utils.Paths.formatToSongPath(backend.utils.ClientPrefs.data.pauseMusic)));
 
 		changedMusic = true;
 	}
@@ -150,14 +150,14 @@ class VisualsUISubState extends BaseOptionsMenu
 	#if !mobile
 	function onChangeFPSCounter()
 	{
-		if(backend.utils.ClientPrefs.showFPS){
-			backend.utils.ClientPrefs.hideFullHUD = false;
+		if(backend.utils.ClientPrefs.data.showFPS){
+			backend.utils.ClientPrefs.data.hideFullHUD = false;
 		} else {
-			backend.utils.ClientPrefs.hideFullHUD = true;
+			backend.utils.ClientPrefs.data.hideFullHUD = true;
 		}
 		
 		if(game.Main.fpsVar != null)
-			game.Main.fpsVar.visible = backend.utils.ClientPrefs.showFPS;
+			game.Main.fpsVar.visible = backend.utils.ClientPrefs.data.showFPS;
 		
 	}
 	#end

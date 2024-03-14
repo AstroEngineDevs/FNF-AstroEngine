@@ -33,7 +33,7 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Recording Studio', 'Graphics', 'Gameplay','Stats', 'Visuals and UI', 'Adjust Delay and Combo'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Graphics', 'Gameplay','Stats', 'Visuals and UI', 'Adjust Delay and Combo', 'Other'];
 	private var grpOptions:FlxTypedGroup<game.objects.Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -54,8 +54,8 @@ class OptionsState extends MusicBeatState
 				openSubState(new StatsSubState());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new NoteOffsetState());
-			case 'Recording Studio':
-				openSubState(new StudioSettingsSubState());
+			case 'Other':
+				openSubState(new OtherSettingsSubState());
 		}
 	}
 
@@ -75,7 +75,7 @@ class OptionsState extends MusicBeatState
 		bg.color = 0xff525252;
 		bg.updateHitbox();
 		bg.screenCenter();
-		bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(bg);
 
 		grpOptions = new FlxTypedGroup<game.objects.Alphabet>();

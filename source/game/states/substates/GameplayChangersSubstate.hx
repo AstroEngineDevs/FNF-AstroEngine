@@ -395,7 +395,7 @@ class GameplayOption
 	public var showBoyfriend:Bool = false;
 	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
 
-	private var variable:String = null; //Variable from backend.utils.ClientPrefs.hx's gameplaySettings
+	private var variable:String = null;
 	public var defaultValue:Dynamic = null;
 
 	public var curOption:Int = 0; //Don't change this
@@ -466,11 +466,11 @@ class GameplayOption
 
 	public function getValue():Dynamic
 	{
-		return backend.utils.ClientPrefs.gameplaySettings.get(variable);
+		return backend.utils.ClientPrefs.data.gameplaySettings.get(variable);
 	}
 	public function setValue(value:Dynamic)
 	{
-		backend.utils.ClientPrefs.gameplaySettings.set(variable, value);
+		backend.utils.ClientPrefs.data.gameplaySettings.set(variable, value);
 	}
 
 	public function setChild(child:game.objects.Alphabet)

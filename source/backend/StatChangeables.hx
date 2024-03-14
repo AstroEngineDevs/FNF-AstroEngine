@@ -5,9 +5,6 @@ import flixel.FlxG;
 using StringTools;
 
 class StatChangeables {
-    public static var MAX_SCORE:Int;
-    public static var MOST_MISSES:Int;
-
     // Score | Misses | Other(Maybe)
     public static var stats:Array<Int> = [0,0];
 
@@ -18,7 +15,7 @@ class StatChangeables {
     }
     
     public static function loadStats() {
-        if(FlxG.save.data.stats != null) stats = [FlxG.save.data.maxScore];
+        if(FlxG.save.data.stats != null) stats = FlxG.save.data.stats;
         trace("Loaded Stats");
     }
 

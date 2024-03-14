@@ -208,21 +208,21 @@ class FunkinLua {
 		set('gfName', PlayState.SONG.gfVersion);
 
 		// Some settings, no jokes
-		set('downscroll', backend.utils.ClientPrefs.downScroll);
-		set('middlescroll', backend.utils.ClientPrefs.middleScroll);
-		set('framerate', backend.utils.ClientPrefs.framerate);
-		set('ghostTapping', backend.utils.ClientPrefs.ghostTapping);
-		set('hideHud', backend.utils.ClientPrefs.hideHud);
-		set('timeBarType', backend.utils.ClientPrefs.timeBarType);
-		set('scoreZoom', backend.utils.ClientPrefs.scoreZoom);
-		set('cameraZoomOnBeat', backend.utils.ClientPrefs.camZooms);
-		set('flashingLights', backend.utils.ClientPrefs.flashing);
-		set('noteOffset', backend.utils.ClientPrefs.noteOffset);
-		set('healthBarAlpha', backend.utils.ClientPrefs.healthBarAlpha);
-		set('noResetButton', backend.utils.ClientPrefs.noReset);
-		set('lowQuality', backend.utils.ClientPrefs.lowQuality);
-		set('hideFullHUD', backend.utils.ClientPrefs.hideFullHUD);
-		set('shadersEnabled', backend.utils.ClientPrefs.shaders);
+		set('downscroll', backend.utils.ClientPrefs.data.downScroll);
+		set('middlescroll', backend.utils.ClientPrefs.data.middleScroll);
+		set('framerate', backend.utils.ClientPrefs.data.framerate);
+		set('ghostTapping', backend.utils.ClientPrefs.data.ghostTapping);
+		set('hideHud', backend.utils.ClientPrefs.data.hideHud);
+		set('timeBarType', backend.utils.ClientPrefs.data.timeBarType);
+		set('scoreZoom', backend.utils.ClientPrefs.data.scoreZoom);
+		set('cameraZoomOnBeat', backend.utils.ClientPrefs.data.camZooms);
+		set('flashingLights', backend.utils.ClientPrefs.data.flashing);
+		set('noteOffset', backend.utils.ClientPrefs.data.noteOffset);
+		set('healthBarAlpha', backend.utils.ClientPrefs.data.healthBarAlpha);
+		set('noResetButton', backend.utils.ClientPrefs.data.noReset);
+		set('lowQuality', backend.utils.ClientPrefs.data.lowQuality);
+		set('hideFullHUD', backend.utils.ClientPrefs.data.hideFullHUD);
+		set('shadersEnabled', backend.utils.ClientPrefs.data.shaders);
 		set('scriptName', scriptName);
 		set('currentModDirectory', backend.utils.Paths.currentModDirectory);
 
@@ -256,7 +256,7 @@ class FunkinLua {
 
 		// shader shit
 		Lua_helper.add_callback(lua, "initLuaShader", function(name:String, glslVersion:Int = 120) {
-			if(!backend.utils.ClientPrefs.shaders) return false;
+			if(!backend.utils.ClientPrefs.data.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			return initLuaShader(name, glslVersion);
@@ -267,7 +267,7 @@ class FunkinLua {
 		});
 		
 		Lua_helper.add_callback(lua, "setSpriteShader", function(obj:String, shader:String) {
-			if(!backend.utils.ClientPrefs.shaders) return false;
+			if(!backend.utils.ClientPrefs.data.shaders) return false;
 
 			#if (!flash && MODS_ALLOWED && sys)
 			if(!PlayState.instance.runtimeShaders.exists(shader) && !initLuaShader(shader))
@@ -1718,7 +1718,7 @@ class FunkinLua {
 			{
 				leSprite.loadGraphic(backend.utils.Paths.image(image));
 			}
-			leSprite.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
@@ -1728,7 +1728,7 @@ class FunkinLua {
 			var leSprite:ModchartSprite = new ModchartSprite(x, y);
 
 			LuaUtils.loadFrames(leSprite, image, spriteType);
-			leSprite.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+			leSprite.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 		});
 
@@ -2781,7 +2781,7 @@ class FunkinLua {
 	
 	function initLuaShader(name:String, ?glslVersion:Int = 120)
 	{
-		if(!backend.utils.ClientPrefs.shaders) return false;
+		if(!backend.utils.ClientPrefs.data.shaders) return false;
 
 		#if (!flash && sys)
 		if(PlayState.instance.runtimeShaders.exists(name))

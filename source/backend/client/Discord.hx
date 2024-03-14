@@ -1,5 +1,6 @@
 package backend.client;
 
+import backend.utils.ClientPrefs;
 import Sys.sleep;
 import lime.app.Application;
 import hxdiscord_rpc.Discord;
@@ -11,7 +12,7 @@ import llua.Lua;
 
 using StringTools;
 
-class DiscordClient// stolen from psych
+class DiscordClient
 {
 	public static var isInitialized:Bool = false;
 	private static final _defaultID:String = EngineData.coreGame.coreDiscordID;
@@ -19,19 +20,19 @@ class DiscordClient// stolen from psych
 	private static var presence:DiscordRichPresence = DiscordRichPresence.create();
 
 	public static function check()
-	{
-		initialize();
-	}
-	
-	public static function prepare()
-	{
-		if (!isInitialized)
-			initialize();
-
-		Application.current.window.onClose.add(function() {
-			if(isInitialized) shutdown();
-		});
-	}
+		{
+			if(ClientPrefs.data.discordRPC) initialize();
+			else if(isInitialized) shutdown();
+		}
+		public static function prepare()
+			{
+				if (!isInitialized && ClientPrefs.data.discordRPC)
+					initialize();
+		
+				Application.current.window.onClose.add(function() {
+					if(isInitialized) shutdown();
+				});
+			}
 
 	public dynamic static function shutdown() {
 		Discord.Shutdown();
@@ -72,11 +73,12 @@ class DiscordClient// stolen from psych
 			var localID:String = clientID;
 			while (localID == clientID)
 			{
-				// #if DISCORD_DISABLE_IO_THREAD
-				// Discord.UpdateConnection();
-				// #end
+				#if DISCORD_DISABLE_IO_THREAD
+				Discord.UpdateConnection();
+				#end
 				Discord.RunCallbacks();
 
+				// Wait 0.5 seconds until the next loop...
 				Sys.sleep(0.5);
 			}
 		});

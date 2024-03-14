@@ -24,7 +24,7 @@ class NoteSplash extends FlxSprite
 		shader = colorSwap.shader;
 
 		setupNoteSplash(x, y, note);
-		antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 	}
 
 	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {

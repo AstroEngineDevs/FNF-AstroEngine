@@ -39,7 +39,7 @@ class AnimatedImageState extends MusicBeatState
 
 		index = new FlxSprite();
 		index.frames = backend.utils.Paths.getSparrowAtlas(image);
-		index.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		index.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		index.animation.addByPrefix('instance', animPrefix, framerate, true);
 		if (center) index.screenCenter();
 		index.animation.play('instance');

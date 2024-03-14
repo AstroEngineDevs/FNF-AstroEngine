@@ -37,7 +37,7 @@ class AchievementsMenuState extends MusicBeatState
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
-		menuBG.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		menuBG.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(menuBG);
 
 		grpOptions = new FlxTypedGroup<game.objects.Alphabet>();

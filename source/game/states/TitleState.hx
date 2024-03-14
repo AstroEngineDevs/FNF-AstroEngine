@@ -96,7 +96,7 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		FlxG.mouse.visible = false;
-		if(backend.utils.ClientPrefs.mouseEvents && !backend.utils.ClientPrefs.lowQuality) FlxG.mouse.visible = true;
+		if(backend.utils.ClientPrefs.data.mouseEvents && !backend.utils.ClientPrefs.data.lowQuality) FlxG.mouse.visible = true;
 		
 		backend.utils.Paths.clearStoredMemory();
 		backend.utils.Paths.clearUnusedMemory();
@@ -156,7 +156,7 @@ class TitleState extends MusicBeatState
 		backend.utils.ClientPrefs.loadPrefs();
 
 		#if CHECK_FOR_UPDATES
-		if(backend.utils.ClientPrefs.checkForUpdates && !closedState) {
+		if(backend.utils.ClientPrefs.data.checkForUpdates && !closedState) {
 			trace('checking for update');
 			//var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
 			var http = new haxe.Http("https://raw.githubusercontent.com/Hackx2/FNF-AstroEngine/main/gitVersion.txt");
@@ -293,7 +293,7 @@ class TitleState extends MusicBeatState
 			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		}
 
-		// bg.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		// bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		// bg.setGraphicSize(Std.int(bg.width * 0.6));
 		// bg.updateHitbox();
 		add(bg);
@@ -301,7 +301,7 @@ class TitleState extends MusicBeatState
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);
 		logoBl.frames = backend.utils.Paths.getSparrowAtlas('logoBumpin');
 
-		logoBl.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		logoBl.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
@@ -343,7 +343,7 @@ class TitleState extends MusicBeatState
 				gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 		}
-		gfDance.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		gfDance.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 
 		add(gfDance);
 		gfDance.shader = swagShader.shader;
@@ -377,7 +377,7 @@ class TitleState extends MusicBeatState
 			newTitle = true;
 			
 			titleText.animation.addByPrefix('idle', "ENTER IDLE", 24);
-			titleText.animation.addByPrefix('press', backend.utils.ClientPrefs.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
+			titleText.animation.addByPrefix('press', backend.utils.ClientPrefs.data.flashing ? "ENTER PRESSED" : "ENTER FREEZE", 24);
 		}
 		else {
 			newTitle = false;
@@ -386,7 +386,7 @@ class TitleState extends MusicBeatState
 			titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		}
 		
-		titleText.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		titleText.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		//titleText.screenCenter(X);
@@ -394,7 +394,7 @@ class TitleState extends MusicBeatState
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image('logo'));
 		logo.screenCenter();
-		logo.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		logo.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		// add(logo);
 
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
@@ -420,7 +420,7 @@ class TitleState extends MusicBeatState
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = backend.utils.ClientPrefs.globalAntialiasing;
+		ngSpr.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -512,7 +512,7 @@ class TitleState extends MusicBeatState
 				
 				if(titleText != null) titleText.animation.play('press');
 
-				FlxG.camera.flash(backend.utils.ClientPrefs.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
+				FlxG.camera.flash(backend.utils.ClientPrefs.data.flashing ? FlxColor.WHITE : 0x4CFFFFFF, 1);
 				FlxG.sound.play(backend.utils.Paths.sound('confirmMenu'), 0.7);
 
 				transitioning = true;

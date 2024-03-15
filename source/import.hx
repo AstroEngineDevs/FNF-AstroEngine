@@ -1,12 +1,24 @@
-#if !macro
-import flixel.FlxG;
-import game.*;
-import game.objects.*;
-import backend.system.*;
-import backend.data.*;
+#if !macro 
 
-import backend.data.WeekData.WeekFile;
-import backend.data.WeekData.WeekData;
+//Discord API
+#if DISCORD_ALLOWED
+import backend.client.Discord;
+#end
+
+//Psych
+#if LUA_ALLOWED
+import llua.*;
+import llua.Lua;
+#end
+
+#if sys
+import sys.*;
+import sys.io.*;
+#elseif js
+import js.html.*;
+#end
+
+import backend.data.WeekData.*;
 
 import game.objects.characters.*;
 import game.objects.characters.MenuCharacter;
@@ -23,11 +35,39 @@ import game.objects.FlxUIDropDownMenuCustom;
 
 import backend.utils.Paths;
 
-#if desktop
-import backend.client.Discord.DiscordClient;
-#end
-
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
 
+import backend.utils.Paths;
+import backend.utils.Controls;
+import backend.CoolUtil;
+import backend.system.MusicBeatState;
+import backend.system.MusicBeatSubstate;
+import game.transitions.CustomFadeTransition;
+import backend.utils.ClientPrefs;
+import backend.Conductor;
+
+import game.objects.Alphabet;
+import game.objects.BGSprite;
+
+import game.states.PlayState;
+import game.states.LoadingState;
+
+
+//Flixel
+import flixel.sound.FlxSound;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.FlxCamera;
+import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
+import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
+import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.group.FlxSpriteGroup;
+import flixel.group.FlxGroup.FlxTypedGroup;
+
+using StringTools;
 #end

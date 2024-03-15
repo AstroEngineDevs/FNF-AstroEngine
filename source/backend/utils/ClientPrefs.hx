@@ -2,9 +2,7 @@ package backend.utils;
 
 import flixel.FlxG;
 import flixel.util.FlxSave;
-import backend.Conductor;
 import flixel.input.keyboard.FlxKey;
-import flixel.graphics.FlxGraphic;
 import backend.utils.Controls;
 
 

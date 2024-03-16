@@ -12,7 +12,7 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 
-#if desktop
+#if DISCORD_ALLOWED
 import backend.client.Discord.DiscordClient;
 #end
 

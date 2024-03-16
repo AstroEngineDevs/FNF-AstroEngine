@@ -1,5 +1,6 @@
 package backend.client;
 
+import backend.data.EngineData;
 import backend.utils.ClientPrefs;
 import Sys.sleep;
 import lime.app.Application;

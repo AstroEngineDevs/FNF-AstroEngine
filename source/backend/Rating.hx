@@ -17,7 +17,7 @@ class Rating
 		this.name = name;
 		this.image = name;
 		this.counter = name + 's';
-		this.hitWindow = Reflect.field(backend.utils.ClientPrefs, name + 'Window');
+		this.hitWindow = Reflect.field(backend.utils.ClientPrefs.data, name + 'Window');
 		if(hitWindow == null)
 		{
 			hitWindow = 0;

@@ -1,5 +1,6 @@
 package game.states;
 
+import flixel.util.FlxSpriteUtil;
 import backend.funkinLua.LuaUtils;
 import backend.data.EngineData;
 import backend.data.WeekData;
@@ -113,7 +114,8 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	var sexyUhmTxt:FlxTypedGroup<flixel.FlxSprite>;
+	var sexyUhmTxt:FlxTypedGroup<FlxSprite>;
+	var statBGGroup:FlxTypedGroup<FlxSprite>;
 
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
@@ -304,7 +306,6 @@ class PlayState extends MusicBeatState
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
-	public var scoreTxtBG:FlxSprite;
 	var timeTxt:FlxText;
 	var versionTxtSmth:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -1099,7 +1100,7 @@ class PlayState extends MusicBeatState
 		timeBarBG.yAdd = -5;
 		add(timeBarBG);
 
-		versionTxtSmth = new FlxText(FlxG.width - 300, 10, 400, "Astro Engine: v"+EngineData.mainCoreShit.coreVersion, 32);
+		versionTxtSmth = new FlxText(FlxG.width - 320, 10, 400, "Astro Engine: v"+EngineData.mainCoreShit.coreVersion, 32);
 		versionTxtSmth.setFormat(backend.utils.Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionTxtSmth.scrollFactor.set();
 		versionTxtSmth.alpha = 0;
@@ -1214,8 +1215,11 @@ class PlayState extends MusicBeatState
 		var main_y:Int = 264;
 		var x:Int = 120;
 		var y:Int = 40;
+
 		sexyUhmTxt = new FlxTypedGroup<FlxSprite>();
 		add(sexyUhmTxt);
+		statBGGroup = new FlxTypedGroup<FlxSprite>();
+		add(statBGGroup);
 
 		var MAIN_SIZE:Int = 24;
 		
@@ -1278,16 +1282,23 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.data.hideFullHUD;
 
-		scoreTxtBG = new FlxSprite(0,scoreTxt.y).makeGraphic(FlxG.width, 50, FlxColor.BLACK);
-		scoreTxtBG.alpha = 0;
-		scoreTxtBG.visible = false;
+		// scoreTxtBG = new FlxSprite(0,scoreTxt.y).makeGraphic(FlxG.width, 50, FlxColor.BLACK);
+		// scoreTxtBG.alpha = 0;
+		// scoreTxtBG.visible = false;
+//15//250
 
-		if(!ClientPrefs.data.downScroll)
-			scoreTxtBG.visible = true;
-		if(ClientPrefs.data.hideFullHUD)
-			scoreTxtBG.visible = false;
+		var curve:Int = 35;
+		// WaterMark
+		addCurveBG(scoreTxt.x+20, scoreTxt.y + 4.5, 225, 35, curve, curve, statBGGroup, 0);
+		// ScoreBar
+		addCurveBG(healthBarBG.x, scoreTxt.y + 4.5, 600, 35, curve, curve, statBGGroup, 0);
+		// TimeBar (Alt)
+		addCurveBG(songLeft.x - 12.5, scoreTxt.y + 4.5, 125, 35, curve, curve, statBGGroup, 0);
+		if (!ClientPrefs.data.downScroll)
+			statBGGroup.visible = true;
+		if (ClientPrefs.data.hideFullHUD)
+			statBGGroup.visible = false;
 
-		add(scoreTxtBG);
 		add(versionTxtSmth);
 		scoreTxt.y += 10;
 		add(psyWatermark);
@@ -1319,7 +1330,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 		psyWatermark.cameras = [camHUD];
 		songLeft.cameras = [camHUD];
-		scoreTxtBG.cameras = [camHUD];
+		statBGGroup.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -1581,6 +1592,13 @@ class PlayState extends MusicBeatState
 		return false;
 	}
 	#end
+
+	function addCurveBG(x:Float = 0, y:Float = 0, width:Int = 0, height:Int = 0, ellipseWidth:Int = 0, ellipseHeight:Int = 0, ?group:FlxTypedGroup<Dynamic>, startAlpha:Int = 0) {
+		var shit = new FlxSprite(x,y).makeGraphic(width, height, FlxColor.TRANSPARENT, true);
+		FlxSpriteUtil.drawRoundRect(shit, 0, 0, width, height, ellipseWidth, ellipseHeight, FlxColor.BLACK);
+		shit.alpha = startAlpha;
+		group.add(shit);
+	}
 
 	function set_songSpeed(value:Float):Float
 	{
@@ -2595,8 +2613,11 @@ class PlayState extends MusicBeatState
 		FlxTween.tween(songLeft, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(psyWatermark, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(scoreTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(scoreTxtBG, {alpha: 0.6}, 0.5, {ease: FlxEase.circOut});
-
+		
+		statBGGroup.forEach(function(spr:FlxSprite)
+			{
+				FlxTween.tween(spr, {alpha: 0.6}, 0.5, {ease: FlxEase.circOut});
+			});
 		/*
 		sickTxt.text = 'Sick: ${sicks}';
 		goodsTxt.text = 'Good: ${goods}';

@@ -42,6 +42,21 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Note Splashes Type:',
+			"Dude",
+			'noteSplashesType',
+			'string',
+			'normal',
+			['normal', 'diamond']);
+		addOption(option);
+
+		var option:Option = new Option('Force Splashes',
+		"Dude",
+		'forceNoteSplashes',
+		'bool',
+		false);
+		addOption(option);
+
 		var option:Option = new Option('Opponent Note Splashes',
 			"Dude.",
 			'opnoteSplashes',
@@ -57,6 +72,15 @@ class VisualsUISubState extends BaseOptionsMenu
 			'string',
 			'Time Left',
 			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
+		addOption(option);
+
+			
+		var option:Option = new Option('Score Bar:',
+			"What should the Score Bar display?",
+			'scoreBarType',
+			'string',
+			'Astro',
+			['Astro', 'Psych', 'Legacy']);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',

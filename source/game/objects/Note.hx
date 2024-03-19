@@ -137,7 +137,7 @@ class Note extends FlxSprite
 				case 'Hurt Note':
 					ignoreNote = mustPress;
 					reloadNote('HURT');
-					noteSplashTexture = 'HURTnoteSplashes';
+					noteSplashTexture = 'hurt';
 					colorSwap.hue = 0;
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;
@@ -329,7 +329,7 @@ class Note extends FlxSprite
 
 		if (isSustainNote)
 		{
-			animation.addByPrefix('purpleholdend', 'pruple end hold'); // ?????
+			animation.addByPrefix('purpleholdend', 'purple end hold'); // ?????
 			animation.addByPrefix(colArray[noteData] + 'holdend', colArray[noteData] + ' hold end');
 			animation.addByPrefix(colArray[noteData] + 'hold', colArray[noteData] + ' hold piece');
 		}

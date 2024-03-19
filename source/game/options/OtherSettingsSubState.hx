@@ -46,7 +46,6 @@ class OtherSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangediscord;
 		#end
-		
 
 		var option:Option = new Option('Hide HUD',
 			'Hide\'s all HUD elements\nimproves performance.',

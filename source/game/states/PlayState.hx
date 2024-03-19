@@ -1,5 +1,6 @@
 package game.states;
 
+import game.objects.Scorebar;
 import flixel.util.FlxSpriteUtil;
 import backend.funkinLua.LuaUtils;
 import backend.data.EngineData;
@@ -111,7 +112,22 @@ import backend.system.MusicBeatState;
 #end
 
 using StringTools;
-
+/**
+ * This is where all the Gameplay stuff happens and is managed
+ *
+ * here's some useful tips if you are making a mod in source:
+ *
+ * If you want to add your stage to the game, copy states/stages/Template.hx,
+ * and put your stage code there, then, on PlayState, search for
+ * "switch (curStage)", and add your stage to that list.
+ *
+ * If you want to code Events, you can either code it on a Stage file or on PlayState, if you're doing the latter, search for:
+ *
+ * "function eventPushed" - Only called *one time* when the game loads, use it for precaching events that use the same assets, no matter the values
+ * "function eventPushedUnique" - Called one time per event, use it for precaching events that uses different assets based on its values
+ * "function eventEarlyTrigger" - Used for making your event start a few MILLISECONDS earlier
+ * "function triggerEvent" - Called when the song hits your event's timestamp, this is probably what you were looking for
+**/
 class PlayState extends MusicBeatState
 {
 	var sexyUhmTxt:FlxTypedGroup<FlxSprite>;
@@ -219,7 +235,7 @@ class PlayState extends MusicBeatState
 	public var health:Float = 1;
 	public var combo:Int = 0;
 
-	private var healthBarBG:AttachedSprite;
+	public var healthBarBG:AttachedSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
 
@@ -305,7 +321,7 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
-	public var scoreTxt:FlxText;
+	public var scoreTxt:Scorebar;
 	var timeTxt:FlxText;
 	var versionTxtSmth:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -1221,8 +1237,8 @@ class PlayState extends MusicBeatState
 		statBGGroup = new FlxTypedGroup<FlxSprite>();
 		add(statBGGroup);
 
+
 		var MAIN_SIZE:Int = 24;
-		
 		sickTxt = new FlxText(x, main_y, 0, "SICKS: 000", MAIN_SIZE).setFormat(backend.utils.Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		sickTxt.visible = !ClientPrefs.data.hideFullHUD;
 		sickTxt.alpha = 0;
@@ -1257,6 +1273,10 @@ class PlayState extends MusicBeatState
 		missTxt.alpha = 0;
 		sexyUhmTxt.add(missTxt);
 
+		if (ClientPrefs.data.scoreBarType == 'Astro')
+			sexyUhmTxt.visible = true;
+		else 
+			sexyUhmTxt.visible = false;
 		//if (ClientPrefs.data.downScroll) psyWatermark.y = FlxG.height * 0.9 + 45;
 		//if (ClientPrefs.data.downScroll) scoreTxtBG.y = FlxG.height * 0.9 + 45;
 
@@ -1275,25 +1295,20 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		reloadHealthBarColors();
 
-		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
-		scoreTxt.setFormat(backend.utils.Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		scoreTxt.scrollFactor.set();
-		scoreTxt.alpha = 0;
-		scoreTxt.borderSize = 1.25;
-		scoreTxt.visible = !ClientPrefs.data.hideFullHUD;
-
-		// scoreTxtBG = new FlxSprite(0,scoreTxt.y).makeGraphic(FlxG.width, 50, FlxColor.BLACK);
-		// scoreTxtBG.alpha = 0;
-		// scoreTxtBG.visible = false;
-//15//250
-
-		var curve:Int = 35;
-		// WaterMark
-		addCurveBG(scoreTxt.x+20, scoreTxt.y + 4.5, 225, 35, curve, curve, statBGGroup, 0);
-		// ScoreBar
-		addCurveBG(healthBarBG.x, scoreTxt.y + 4.5, 600, 35, curve, curve, statBGGroup, 0);
-		// TimeBar (Alt)
-		addCurveBG(songLeft.x - 12.5, scoreTxt.y + 4.5, 125, 35, curve, curve, statBGGroup, 0);
+		scoreTxt = new Scorebar();
+		add(scoreTxt);
+		
+		if (ClientPrefs.data.scoreBarType == 'Astro')
+		{
+			var curve:Int = 35;
+			// WaterMark
+			addCurveBG(scoreTxt.x + 25, scoreTxt.y + 4.5, 212.5, 35, curve, curve, statBGGroup, 0);
+			// ScoreBar
+			addCurveBG(healthBarBG.x, scoreTxt.y + 4.5, 600, 35, curve, curve, statBGGroup, 0);
+			// TimeBar (Alt)
+			addCurveBG(songLeft.x - 12.5, scoreTxt.y + 4.5, 125, 35, curve, curve, statBGGroup, 0);
+		}
+		
 		if (!ClientPrefs.data.downScroll)
 			statBGGroup.visible = true;
 		if (ClientPrefs.data.hideFullHUD)
@@ -1301,8 +1316,11 @@ class PlayState extends MusicBeatState
 
 		add(versionTxtSmth);
 		scoreTxt.y += 10;
-		add(psyWatermark);
-		add(songLeft);
+
+		if (ClientPrefs.data.scoreBarType == 'Astro'){
+			add(psyWatermark);
+			add(songLeft);
+		}
 		add(scoreTxt);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
@@ -1593,11 +1611,17 @@ class PlayState extends MusicBeatState
 	}
 	#end
 
-	function addCurveBG(x:Float = 0, y:Float = 0, width:Int = 0, height:Int = 0, ellipseWidth:Int = 0, ellipseHeight:Int = 0, ?group:FlxTypedGroup<Dynamic>, startAlpha:Int = 0) {
-		var shit = new FlxSprite(x,y).makeGraphic(width, height, FlxColor.TRANSPARENT, true);
-		FlxSpriteUtil.drawRoundRect(shit, 0, 0, width, height, ellipseWidth, ellipseHeight, FlxColor.BLACK);
-		shit.alpha = startAlpha;
-		group.add(shit);
+	function addCurveBG(x:Float = 0, y:Float = 0, width:Float = 0, height:Float = 0, ellipseWidth:Int = 0, ellipseHeight:Int = 0, ?group:FlxTypedGroup<Dynamic>, startAlpha:Int = 0) {
+		var width = Std.int(width);
+		var height = Std.int(height);
+		
+		var helloLmao = new FlxSprite(x,y).makeGraphic(width, height, FlxColor.TRANSPARENT, false);
+		FlxSpriteUtil.drawRoundRect(helloLmao, 0, 0, width, height, ellipseWidth, ellipseHeight, FlxColor.BLACK);
+		helloLmao.alpha = startAlpha;
+		if(group != null)
+			group.add(helloLmao);
+		else
+			add(helloLmao);
 	}
 
 	function set_songSpeed(value:Float):Float
@@ -2451,26 +2475,17 @@ class PlayState extends MusicBeatState
 	}
 
 	public function updateScore(miss:Bool = false)
-	{
-		if (scoreTxt.font == "PhantomMuff 1.5"){
-			scoreTxt.text = 'Score: ' + songScore
-			+ ' • Misses: ' + songMisses
-			+ ' • Rating: ' + ratingName
-			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');	
-			} else {
-			scoreTxt.text = 'Score: ' + songScore
-			+ ' | Misses: ' + songMisses
-			+ ' | Rating: ' + ratingName
-			+ (ratingName != '?' ? ' (${Highscore.floorDecimal(ratingPercent * 100, 2)}%) - $ratingFC' : '');
-		}
-
+	{	
+		Scorebar.instance.updateShit();
 		psyWatermark.text = SONG.song + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
 	
-		sickTxt.text = 'Sick: ${sicks}';
-		goodsTxt.text = 'Good: ${goods}';
-		badTxt.text = 'Bad: ${bads}';
-		shitsTxt.text = 'Shit: ${shits}';
-		missTxt.text = 'Miss: ${songMisses}';
+		if (ClientPrefs.data.scoreBarType == 'Astro'){
+			sickTxt.text = 'Sick: ${sicks}';
+			goodsTxt.text = 'Good: ${goods}';
+			badTxt.text = 'Bad: ${bads}';
+			shitsTxt.text = 'Shit: ${shits}';
+			missTxt.text = 'Miss: ${songMisses}';
+		}
 /*
 		if (sicks > 0) ratingFC = "SFC";
 		if (goods > 0) ratingFC = "GFC";
@@ -2618,14 +2633,6 @@ class PlayState extends MusicBeatState
 			{
 				FlxTween.tween(spr, {alpha: 0.6}, 0.5, {ease: FlxEase.circOut});
 			});
-		/*
-		sickTxt.text = 'Sick: ${sicks}';
-		goodsTxt.text = 'Good: ${goods}';
-		badTxt.text = 'Bad: ${bads}';
-		shitsTxt.text = 'Shit: ${shits}';
-		missTxt.text = 'Miss: ${songMisses}';
-
-		*/
 
 		switch(curStage)
 		{
@@ -4389,7 +4396,6 @@ class PlayState extends MusicBeatState
 		if(ClientPrefs.data.opnoteSplashes && note.hitByOpponent)
 				spawnNoteSplashOnNote(note);
 
-
 		if(!practiceMode && !cpuControlled) {
 			songScore += score;
 			if(!note.ratingDisabled)
@@ -5024,9 +5030,12 @@ class PlayState extends MusicBeatState
 	}
 
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
-		var skin:String = 'noteSplashes';
-		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
-
+		var skin:String = 'normal';
+		if(ClientPrefs.data.noteSplashesType != 'normal')
+			skin = ClientPrefs.data.noteSplashesType;
+		else 
+			skin = SONG.splashSkin;
+		trace(skin);
 		var hue:Float = 0;
 		var sat:Float = 0;
 		var brt:Float = 0;

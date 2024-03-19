@@ -226,6 +226,8 @@ class FunkinLua {
 		set('scriptName', scriptName);
 		set('currentModDirectory', backend.utils.Paths.currentModDirectory);
 
+		set('scoreBarType', backend.utils.ClientPrefs.data.scoreBarType);
+
 
 		set('buildTarget', LuaUtils.getBuildTarget());
 

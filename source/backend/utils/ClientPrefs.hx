@@ -14,6 +14,8 @@ import backend.utils.Controls;
 	public var showFPS:Bool = true;
 	public var flashing:Bool = true;
 	public var noteSplashes:Bool = true;
+	public var noteSplashesType:String = 'normal';
+	public var forceNoteSplashes:Bool = false;
 	public var opnoteSplashes:Bool = true;
 	public var lowQuality:Bool = false;
 	public var hideFullHUD:Bool = false;
@@ -56,7 +58,10 @@ import backend.utils.Controls;
 	public var goodWindow:Int = 90;
 	public var badWindow:Int = 135;
 	public var safeFrames:Float = 10;
+
+	// Astro Engine
 	public var discordRPC:Bool = true;
+	public var scoreBarType:String = 'Astro';
 }
 
 class ClientPrefs {

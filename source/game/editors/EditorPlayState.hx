@@ -1026,10 +1026,12 @@ class EditorPlayState extends MusicBeatState
 
 	function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var skin:String = 'normal';
-		if(ClientPrefs.data.noteSplashesType != 'normal')
+		if(PlayState.SONG.splashSkin == 'normal' || ClientPrefs.data.forceNoteSplashes)
 			skin = ClientPrefs.data.noteSplashesType;
 		else 
 			skin = PlayState.SONG.splashSkin;
+		if(PlayState.SONG.splashSkin == null)
+			skin = 'normal';
 		
 		var hue:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][0] / 360;
 		var sat:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][1] / 100;

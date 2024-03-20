@@ -16,10 +16,12 @@ class NoteSplash extends FlxSprite
 		super(x, y);
 
 		var skin:String = 'normal';
-		if(ClientPrefs.data.noteSplashesType != 'normal')
+		if(PlayState.SONG.splashSkin == 'normal' || ClientPrefs.data.forceNoteSplashes)
 			skin = ClientPrefs.data.noteSplashesType;
 		else 
 			skin = PlayState.SONG.splashSkin;
+		if(PlayState.SONG.splashSkin == null)
+			skin = 'normal';
 
 		trace(skin);
 
@@ -36,11 +38,9 @@ class NoteSplash extends FlxSprite
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
 
-		trace(texture);
-
 		if(texture == null) {
 			texture = 'normal';
-			if(ClientPrefs.data.noteSplashesType != 'normal')
+			if(ClientPrefs.data.noteSplashesType != 'normal' || ClientPrefs.data.forceNoteSplashes)
 				texture = ClientPrefs.data.noteSplashesType;
 			else 
 				texture = PlayState.SONG.splashSkin;

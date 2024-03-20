@@ -1,10 +1,11 @@
-package game.objects;
+package game.objects.notes;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import game.objects.shaders.ColorSwap;
 import game.states.PlayState;
+import game.objects.notes.NoteUtils;
 
 class NoteSplash extends FlxSprite
 {
@@ -15,13 +16,7 @@ class NoteSplash extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0, ?note:Int = 0) {
 		super(x, y);
 
-		var skin:String = 'normal';
-		if(PlayState.SONG.splashSkin == 'normal' || ClientPrefs.data.forceNoteSplashes)
-			skin = ClientPrefs.data.noteSplashesType;
-		else 
-			skin = PlayState.SONG.splashSkin;
-		if(PlayState.SONG.splashSkin == null)
-			skin = 'normal';
+		var skin:String = NoteUtils.checkSplash();
 
 		trace(skin);
 

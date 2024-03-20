@@ -1,4 +1,5 @@
 package game.editors;
+import game.objects.notes.NoteUtils;
 import game.states.LoadingState;
 import game.objects.Note;
 import backend.utils.Section.SwagSection;
@@ -9,7 +10,7 @@ import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.text.FlxText;
-import game.objects.NoteSplash;
+import game.objects.notes.NoteSplash;
 import flixel.tweens.FlxEase;
 import game.states.PlayState;
 import backend.Conductor;
@@ -1025,14 +1026,8 @@ class EditorPlayState extends MusicBeatState
 	}
 
 	function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
-		var skin:String = 'normal';
-		if(PlayState.SONG.splashSkin == 'normal' || ClientPrefs.data.forceNoteSplashes)
-			skin = ClientPrefs.data.noteSplashesType;
-		else 
-			skin = PlayState.SONG.splashSkin;
-		if(PlayState.SONG.splashSkin == null)
-			skin = 'normal';
-		
+		var skin:String = NoteUtils.checkSplash();
+
 		var hue:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][0] / 360;
 		var sat:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][1] / 100;
 		var brt:Float = backend.utils.ClientPrefs.data.arrowHSV[data % 4][2] / 100;

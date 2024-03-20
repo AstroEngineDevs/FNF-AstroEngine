@@ -1,5 +1,6 @@
 package game.states;
 
+import game.objects.notes.NoteUtils;
 import game.objects.Scorebar;
 import flixel.util.FlxSpriteUtil;
 import backend.funkinLua.LuaUtils;
@@ -32,7 +33,7 @@ import backend.Conductor;
 import game.objects.DialogueBox;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
-import game.objects.NoteSplash;
+import game.objects.notes.NoteSplash;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
@@ -5030,13 +5031,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
-		var skin:String = 'normal';
-		if(PlayState.SONG.splashSkin == 'normal' || ClientPrefs.data.forceNoteSplashes)
-			skin = ClientPrefs.data.noteSplashesType;
-		else 
-			skin = PlayState.SONG.splashSkin;
-		if(PlayState.SONG.splashSkin == null)
-			skin = 'normal';
+		var skin:String = NoteUtils.checkSplash();
 		trace(skin);
 		var hue:Float = 0;
 		var sat:Float = 0;

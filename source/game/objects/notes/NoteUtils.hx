@@ -16,6 +16,7 @@ class NoteUtils extends FlxSprite
 	public static function checkSplash()
 	{
         var skin:String = 'normal';
+        
         if(PlayState.SONG.splashSkin == 'normal' || ClientPrefs.data.forceNoteSplashes)
 			skin = ClientPrefs.data.noteSplashesType;
 		else 

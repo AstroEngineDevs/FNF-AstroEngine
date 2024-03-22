@@ -7,6 +7,8 @@ art/test_x64-debug-officialrelease.bat
 
 ### VS Code
 export/*
+exportUpdater/*
+exportUpdater
 .vscode/*
 .haxelib/
 *.code-workspace

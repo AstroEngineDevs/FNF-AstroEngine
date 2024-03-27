@@ -52,7 +52,7 @@ import game.objects.BGSprite;
 
 import game.states.PlayState;
 import game.states.LoadingState;
-
+import backend.utils.Controls;
 
 //Flixel
 import flixel.sound.FlxSound;

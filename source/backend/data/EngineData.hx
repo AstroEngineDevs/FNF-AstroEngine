@@ -12,7 +12,7 @@ using StringTools;
 
     //** Other Shit **/
 	public static var mainCoreShit = {
-		coreVersion: '0.2.1',
+		coreVersion: '0.2.2',
 		colorMenuImage: 0xff525252,
 		mainRepo: "https://github.com/Hackx2/FNF-AstroEngine",
 	}

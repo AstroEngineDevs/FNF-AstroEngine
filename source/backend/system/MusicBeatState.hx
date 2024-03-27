@@ -44,6 +44,11 @@ class MusicBeatState extends FlxUIState
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}
+	
+	public function addBehindObject(obj:FlxBasic, obj2:FlxBasic) 
+		return insert(members.indexOf(obj2), obj);
+	public function addAheadObject(obj:FlxBasic, obj2:FlxBasic) 
+		return insert(members.indexOf(obj2) + 1, obj);
 
 	override function update(elapsed:Float)
 	{

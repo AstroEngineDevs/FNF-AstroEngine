@@ -133,11 +133,14 @@ class Main extends Sprite
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
+		var currentName = Application.current.meta.get('file');
 
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "./crash/" + "AstroEngine_" + dateNow + ".txt";
+		//path = "./crash/" + "AstroEngine_" + dateNow + ".txt";
+		path = './crash/${currentName}_$dateNow.txt';
+		trace(path);
 
 		for (stackItem in callStack)
 		{

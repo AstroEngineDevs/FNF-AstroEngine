@@ -6,9 +6,9 @@ import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
-
 import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
+
 using StringTools;
 
 class AnimatedImageState extends MusicBeatState
@@ -18,8 +18,8 @@ class AnimatedImageState extends MusicBeatState
 	var index:FlxSprite;
 	var stateReturn:FlxState;
 
-
-	public function new(text:String, image:String, animPrefix:String, center:Bool, framerate:Int = 24, returnState:FlxState, color:FlxColor = FlxColorPastel.PASTELPINK)
+	public function new(text:String, image:String, animPrefix:String, center:Bool, framerate:Int = 24, returnState:FlxState,
+			color:FlxColor = FlxColorPastel.PASTELPINK)
 	{
 		super();
 		FlxG.sound.music.stop();
@@ -41,11 +41,12 @@ class AnimatedImageState extends MusicBeatState
 		index.frames = backend.utils.Paths.getSparrowAtlas(image);
 		index.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		index.animation.addByPrefix('instance', animPrefix, framerate, true);
-		if (center) index.screenCenter();
+		if (center)
+			index.screenCenter();
 		index.animation.play('instance');
 		index.updateHitbox();
 		add(index);
-	};
+	}
 
 	override function update(elapsed:Float)
 	{

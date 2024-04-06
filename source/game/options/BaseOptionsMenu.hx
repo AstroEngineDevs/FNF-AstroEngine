@@ -30,6 +30,7 @@ import backend.system.MusicBeatSubstate;
 import backend.system.MusicBeatState;
 import game.objects.AttachedText;
 import game.objects.*;
+import game.options.objects.CheckboxThingie;
 
 using StringTools;
 

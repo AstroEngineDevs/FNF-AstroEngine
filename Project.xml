@@ -131,7 +131,7 @@
 	<!-- TODO: go to new flixel (5.5.0) -->
 	
 	<haxelib name="lime" version="8.1.1"/>
-	<haxelib name="openfl" version="9.3.2"/>
+	<haxelib name="openfl" version="9.3.3"/>
 	
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-ui" />

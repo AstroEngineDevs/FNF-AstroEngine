@@ -124,10 +124,10 @@
 
 	<haxedev set='webgl' />
 
-	<haxelib name="lime" version="8.1.2"/>
+	<haxelib name="lime" version="8.1.2"/> <!--i have multiple versions :sob: -->
 	<haxelib name="openfl" version="9.3.3"/>
 	
-	<haxelib name="flixel" version="5.5.0"/>
+	<haxelib name="flixel"/>
 	<haxelib name="flixel-ui" />
 	<haxelib name="flixel-addons"/>
 

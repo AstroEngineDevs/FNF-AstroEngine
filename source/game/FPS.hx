@@ -84,13 +84,14 @@ class FPS extends TextField
 		{
 			text = "FPS: " + currentFPS;
 			var memoryMegas:Float = 0;
-			
+		
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 
             text += '\nAstro Engine: '+EngineData.mainCoreShit.coreVersion;
+
 			//text += '\nGit: '+Git.commitNumber;
 
 			textColor = 0xFFFFFFFF;

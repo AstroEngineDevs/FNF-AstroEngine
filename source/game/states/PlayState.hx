@@ -371,6 +371,8 @@ class PlayState extends MusicBeatState
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 	private var controlArray:Array<String>;
+	// Stage callbacks
+	public var finishCallback:Void->Void = null;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
 	
@@ -396,8 +398,8 @@ class PlayState extends MusicBeatState
 		//trace('Playback Rate: ' + playbackRate);
 		backend.utils.Paths.clearStoredMemory();
 
-		// for lua
 		instance = this;
+		finishCallback = endSong;
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
@@ -4123,10 +4125,9 @@ class PlayState extends MusicBeatState
 
 	public function finishSong(?ignoreNoteOffset:Bool = false):Void
 	{
-		var finishCallback:Void->Void = endSong; //In case you want to change it in a specific song.
-
 		updateTime = false;
 		FlxG.sound.music.volume = 0;
+
 		vocals.volume = 0;
 		vocals.pause();
 		if(ClientPrefs.data.noteOffset <= 0 || ignoreNoteOffset) {

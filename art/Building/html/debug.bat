@@ -1,6 +1,6 @@
 @echo off
 color 0a
-cd ..
+cd ../../..
 @echo on
 echo BUILDING GAME
 haxelib run lime test html5 -debug

@@ -2597,11 +2597,10 @@ class PlayState extends MusicBeatState
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
 
-		@:privateAccess
-		FlxG.sound.playMusic(inst._sound, 1, false);
-		#if FLX_PITCH FlxG.sound.music.pitch = playbackRate; #end
+		FlxG.sound.playMusic(backend.utils.Paths.inst(PlayState.SONG.song), 1, false);
+		FlxG.sound.music.pitch = playbackRate;
 		FlxG.sound.music.onComplete = finishSong.bind();
-		vocals.play();
+		
 		vocals.play();
 
 		if(startOnTime > 0)

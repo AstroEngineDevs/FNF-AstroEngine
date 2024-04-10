@@ -1,6 +1,7 @@
 
 package game;
 
+import backend.system.Git;
 import backend.data.EngineData;
 import haxe.Timer;
 import openfl.events.Event;
@@ -90,6 +91,7 @@ class FPS extends TextField
 			#end
 
             text += '\nAstro Engine: '+EngineData.mainCoreShit.coreVersion;
+			text += '\nGit: '+Git.commitNumber;
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= backend.utils.ClientPrefs.data.framerate / 2)

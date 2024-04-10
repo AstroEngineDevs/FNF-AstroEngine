@@ -4123,7 +4123,7 @@ class PlayState extends MusicBeatState
 		camFollowPos.setPosition(x, y);
 	}
 
-	public function finishSong(?ignoreNoteOffset:Bool = false):Void
+	public function finishSong(?ignoreNoteOffset:Null<Bool> = false):Void
 	{
 		updateTime = false;
 		FlxG.sound.music.volume = 0;

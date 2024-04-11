@@ -36,7 +36,6 @@ import flixel.sound.FlxSound;
 import flixel.system.ui.FlxSoundTray;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
-import backend.StatChangeables;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
@@ -100,11 +99,9 @@ class TitleState extends MusicBeatState
 		#end
 		var maxS = FlxG.save.data.maxScore;
 		var mostM = FlxG.save.data.mostMisses;
-		if (maxS != null)
-			trace(FlxG.save.data.maxScore);
-		if (mostM != null)
-			trace(FlxG.save.data.mostMisses);
-		StatChangeables.loadStats();
+		if(mostM != null && maxS != null)
+			trace('Max Score: $maxS\nMax Misses: $mostM');
+		
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
 		WeekData.loadTheFirstEnabledMod();
 

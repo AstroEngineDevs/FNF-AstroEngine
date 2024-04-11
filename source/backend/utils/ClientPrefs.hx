@@ -14,8 +14,6 @@ import backend.utils.Controls;
 	public var showFPS:Bool = true;
 	public var flashing:Bool = true;
 	public var noteSplashes:Bool = true;
-	public var noteSplashesType:String = 'normal';
-	public var forceNoteSplashes:Bool = false;
 	public var opnoteSplashes:Bool = true;
 	public var lowQuality:Bool = false;
 	public var hideFullHUD:Bool = false;
@@ -62,6 +60,9 @@ import backend.utils.Controls;
 	// Astro Engine
 	public var discordRPC:Bool = true;
 	public var scoreBarType:String = 'Astro';
+	public var noteSplashesType:String = 'normal';
+	public var forceNoteSplashes:Bool = false;
+	public var stats:Array<Int> = [0,0];
 }
 
 class ClientPrefs {
@@ -111,7 +112,13 @@ class ClientPrefs {
 		save.data.customControls = keyBinds;
 		save.flush();
 		FlxG.log.add("Settings saved!");
-	}
+	}    
+
+    public static function resetStats() {
+        ClientPrefs.data.stats = [0, 0];
+        saveSettings();
+        trace("Reset Stats");
+    }
 
 	public static function loadPrefs() {
 		for (key in Reflect.fields(data))

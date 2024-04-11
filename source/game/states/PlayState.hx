@@ -28,7 +28,6 @@ import backend.Song.SwagSong;
 import game.states.substates.PauseSubState;
 import game.objects.shaders.WiggleEffect;
 import game.objects.DialogueBoxPsych;
-import backend.StatChangeables;
 import backend.Conductor;
 import game.objects.DialogueBox;
 import flixel.FlxBasic;
@@ -4198,16 +4197,18 @@ class PlayState extends MusicBeatState
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 
 				// Stats
-				if (StatChangeables.stats[0] < songScore)
+				if (ClientPrefs.data.stats[0] < songScore)
 					{
-						StatChangeables.stats[0] = songScore;
-						StatChangeables.saveStats();
+						ClientPrefs.data.stats[0] = songScore;
+						ClientPrefs.saveSettings();
 					}
-					if (StatChangeables.stats[1] < songMisses)
+					if (ClientPrefs.data.stats[1] < songMisses)
 					{
-						StatChangeables.stats[1] = songMisses;
-						StatChangeables.saveStats();
+						ClientPrefs.data.stats[1] = songMisses;
+						ClientPrefs.saveSettings();
 					}
+
+					
 
 				#end
 			

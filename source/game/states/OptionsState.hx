@@ -24,7 +24,6 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import backend.utils.Controls;
-import backend.StatChangeables;
 import game.options.*;
 
 import backend.system.MusicBeatSubstate;
@@ -69,7 +68,7 @@ class OptionsState extends MusicBeatState
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
-		StatChangeables.loadStats();
+		ClientPrefs.loadPrefs();
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
 		bg.color = 0xff525252;
@@ -152,14 +151,6 @@ class OptionsState extends MusicBeatState
 				selectorLeft.y = item.y;
 				selectorRight.x = item.x + item.width + 15;
 				selectorRight.y = item.y;
-
-				/* 
-				item.alpha = 1;
-				selectorLeft.x = item.x - 63;
-				selectorLeft.y = item.y - 170;
-				selectorRight.x = item.x + item.width + 15;
-				selectorRight.y = item.y - 170;
-				*/
 			}
 		}
 		FlxG.sound.play(backend.utils.Paths.sound('scrollMenu'));

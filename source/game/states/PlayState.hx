@@ -552,6 +552,7 @@ class PlayState extends MusicBeatState
 			};
 		}
 
+		// if u wanna hardcode stage json files
 		defaultCamZoom = stageData.defaultZoom;
 		isPixelStage = stageData.isPixelStage;
 		BF_X = stageData.boyfriend[0];

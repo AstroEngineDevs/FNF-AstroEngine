@@ -1,6 +1,7 @@
 
 package game;
 
+import haxegithub.utils.*;
 import backend.data.EngineData;
 import haxe.Timer;
 import openfl.events.Event;
@@ -83,13 +84,15 @@ class FPS extends TextField
 		{
 			text = "FPS: " + currentFPS;
 			var memoryMegas:Float = 0;
-			
+		
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 
             text += '\nAstro Engine: '+EngineData.mainCoreShit.coreVersion;
+
+			//text += '\nGit: '+Git.commitNumber;
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= backend.utils.ClientPrefs.data.framerate / 2)

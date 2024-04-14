@@ -56,7 +56,13 @@ import backend.utils.Controls;
 	public var goodWindow:Int = 90;
 	public var badWindow:Int = 135;
 	public var safeFrames:Float = 10;
+
+	// Astro Engine
 	public var discordRPC:Bool = true;
+	public var scoreBarType:String = 'Astro';
+	public var noteSplashesType:String = 'normal';
+	public var forceNoteSplashes:Bool = false;
+	public var stats:Array<Int> = [0,0];
 }
 
 class ClientPrefs {
@@ -106,13 +112,26 @@ class ClientPrefs {
 		save.data.customControls = keyBinds;
 		save.flush();
 		FlxG.log.add("Settings saved!");
-	}
+	}    
+
+    public static function resetStats() {
+        ClientPrefs.data.stats = [0, 0];
+        saveSettings();
+        trace("Reset Stats");
+    }
 
 	public static function loadPrefs() {
 		for (key in Reflect.fields(data))
 			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key))
 				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
 		
+
+		#if (!html5 && !switch)
+		if(FlxG.save.data.framerate == null) {
+			final refreshRate:Int = FlxG.stage.application.window.displayMode.refreshRate;
+			data.framerate = Std.int(FlxMath.bound(refreshRate, 60, 240));
+		}
+		#end
 
 		if(data.framerate > FlxG.drawFramerate)
 			{

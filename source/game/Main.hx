@@ -133,11 +133,14 @@ class Main extends Sprite
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
+		var currentName = Application.current.meta.get('file');
 
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		path = "./crash/" + "PsychEngine_" + dateNow + ".txt";
+		//path = "./crash/" + "AstroEngine_" + dateNow + ".txt";
+		path = './crash/${currentName}_$dateNow.txt';
+		trace(path);
 
 		for (stackItem in callStack)
 		{
@@ -150,7 +153,7 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page:" + EngineData.mainCoreShit.mainRepo + "\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page:" + EngineData.mainCoreShit.mainRepo + "\n\n---------------------------------------------------------\n> Crash Handler written by: sqirra-rng";
 
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");

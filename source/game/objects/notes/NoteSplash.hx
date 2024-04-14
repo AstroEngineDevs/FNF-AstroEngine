@@ -1,10 +1,11 @@
-package game.objects;
+package game.objects.notes;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 import game.objects.shaders.ColorSwap;
 import game.states.PlayState;
+import game.objects.notes.NoteUtils;
 
 class NoteSplash extends FlxSprite
 {
@@ -15,8 +16,9 @@ class NoteSplash extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0, ?note:Int = 0) {
 		super(x, y);
 
-		var skin:String = 'noteSplashes';
-		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
+		var skin:String = NoteUtils.checkSplash();
+
+		trace(skin);
 
 		loadAnims(skin);
 		
@@ -32,8 +34,11 @@ class NoteSplash extends FlxSprite
 		alpha = 0.6;
 
 		if(texture == null) {
-			texture = 'noteSplashes';
-			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
+			texture = 'normal';
+			if(ClientPrefs.data.noteSplashesType != 'normal' || ClientPrefs.data.forceNoteSplashes)
+				texture = ClientPrefs.data.noteSplashesType;
+			else 
+				texture = PlayState.SONG.splashSkin;
 		}
 
 		if(textureLoaded != texture) {
@@ -50,7 +55,7 @@ class NoteSplash extends FlxSprite
 	}
 
 	function loadAnims(skin:String) {
-		frames = backend.utils.Paths.getSparrowAtlas(skin);
+		frames = backend.utils.Paths.getSparrowAtlas('splashes/${skin}');
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
 			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);

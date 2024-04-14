@@ -231,7 +231,7 @@ class ChartingState extends MusicBeatState
 				bpm: 150.0,
 				needsVoices: true,
 				arrowSkin: '',
-				splashSkin: 'noteSplashes',//idk it would crash if i didn't
+				splashSkin: 'normal',//idk it would crash if i didn't
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
@@ -1370,15 +1370,13 @@ class ChartingState extends MusicBeatState
 	function loadSong():Void
 	{
 		if (FlxG.sound.music != null)
-		{
 			FlxG.sound.music.stop();
-			// vocals.stop();
-		}
 
-		var file:Dynamic = backend.utils.Paths.voices(currentSongName);
+		var file = Paths.voices(currentSongName);
 		vocals = new FlxSound();
-		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file)) {
+		if (Std.isOfType(file, Sound) || OpenFlAssets.exists(file) && file != null) {
 			vocals.loadEmbedded(file);
+			vocals.autoDestroy = false;
 			FlxG.sound.list.add(vocals);
 		}
 		generateSong();

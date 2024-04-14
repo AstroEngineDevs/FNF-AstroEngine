@@ -9,7 +9,6 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 
 import game.objects.Alphabet;
 import backend.data.*;
-import backend.StatChangeables;
 import backend.system.MusicBeatSubstate;
 import backend.utils.Paths;
 #if desktop
@@ -32,7 +31,7 @@ class StatsSubState extends MusicBeatSubstate
 	public function new() {
 		super();
 
-		StatChangeables.loadStats();
+		ClientPrefs.loadPrefs();
 
 		#if desktop
 		DiscordClient.changePresence("Viewing Stats", null);
@@ -52,7 +51,7 @@ class StatsSubState extends MusicBeatSubstate
 		{
 			statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
 			statsTxt.screenCenter();
-			statsTxt.text = stats[i] + ": " + StatChangeables.stats[i];
+			statsTxt.text = stats[i] + ": " + ClientPrefs.data.stats[i];
 			statsTxt.isMenuItemCenter = true;
 			statsTxt.targetY = i;
 			statsTxt.ID = i;
@@ -90,13 +89,13 @@ class StatsSubState extends MusicBeatSubstate
 		{
 			close();
 			FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
-			StatChangeables.saveStats();
+			ClientPrefs.saveSettings();
 		}
 
 		if(controls.RESET)
 			{
 				FlxG.sound.play(backend.utils.Paths.sound('cancelMenu'));
-				StatChangeables.resetStats();
+				ClientPrefs.resetStats();
 				close();
 			}
 

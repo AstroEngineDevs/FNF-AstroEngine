@@ -38,6 +38,35 @@ class OtherSettingsSubState extends BaseOptionsMenu
 		title = 'Other';
 		rpcTitle = 'Other Settings'; //for Discord Rich Presence
 
+		var option:Option = new Option('Note Splashes',
+			"If unchecked, hitting \"Sick!\" notes won't show particles.",
+			'noteSplashes',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Note Splashes Type:',
+			"Different Note Splashes",
+			'noteSplashesType',
+			'string',
+			'normal',
+			['normal', 'diamond']);
+		addOption(option);
+
+		var option:Option = new Option('Force Splashes',
+		"Override current notesplash",
+		'forceNoteSplashes',
+		'bool',
+		false);
+		addOption(option);
+
+		var option:Option = new Option('Opponent Note Splashes',
+			"It's in the fucking name nerd",
+			'opnoteSplashes',
+			'bool',
+			true);
+		addOption(option);
+
 		#if DISCORD_ALLOWED
 		var option:Option = new Option('Discord Rich Presence',
 			"Uncheck this to prevent accidental leaks, it will hide the Application from your \"Playing\" box on Discord",
@@ -46,7 +75,6 @@ class OtherSettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangediscord;
 		#end
-		
 
 		var option:Option = new Option('Hide HUD',
 			'Hide\'s all HUD elements\nimproves performance.',

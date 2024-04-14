@@ -3,17 +3,17 @@
     {
       "name": "lime",
       "type": "haxelib",
-      "version": "8.1.1"
+      "version": null
     },
     {
       "name": "openfl",
       "type": "haxelib",
-      "version": "9.3.2"
+      "version": null
     },
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": "5.5.0"
+      "version": null
     },
     {
       "name": "flixel-addons",
@@ -33,7 +33,7 @@
     {
       "name": "hxcpp",
       "type": "haxelib",
-      "version": "4.3.2"
+      "version": null
     },
     {
       "name": "tjson",
@@ -48,7 +48,7 @@
     {
       "name": "hxCodec",
       "type": "haxelib",
-      "version": "2.5.1"
+      "version": null
     },
     {
       "name": "hscript",
@@ -80,6 +80,11 @@
       "dir": null,
       "ref": "master",
       "url": "https://github.com/superpowers04/linc_luajit"
+    },
+    {
+      "name": "haxe-github",
+      "type": "haxelib",
+      "version": null
     }
   ]
 }

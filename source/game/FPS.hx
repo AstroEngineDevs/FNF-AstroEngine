@@ -90,6 +90,8 @@ class FPS extends TextField
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 
+			text += '\nCommit: ${CommitData.commitNumber} [${CommitData.commitHash}]';
+
             text += '\nAstro Engine: '+EngineData.mainCoreShit.coreVersion;
 
 			//text += '\nGit: '+Git.commitNumber;

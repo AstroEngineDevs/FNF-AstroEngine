@@ -30,6 +30,8 @@ import backend.PlayerSettings;
 
 import backend.CoolUtil;
 
+import backend.macro.*;
+
 import game.states.LoadingState;
 import game.objects.FlxUIDropDownMenuCustom;
 

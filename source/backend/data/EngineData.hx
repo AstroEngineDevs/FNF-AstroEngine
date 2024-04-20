@@ -16,8 +16,7 @@ using StringTools;
 	public static final mainCoreShit = {
 		coreVersion: '0.2.2',
 		colorMenuImage: 0xff525252,
-		mainRepo: "https://github.com/Hackx2/FNF-AstroEngine",
-		commits: Repository.get('hackx2', 'FNF-AstroEngine/commits'),
+		mainRepo: "https://github.com/Hackx2/FNF-AstroEngine"
 	}
 
 	//** ignore this **/

@@ -94,16 +94,11 @@ class TitleState extends MusicBeatState
 		backend.utils.Paths.clearStoredMemory();
 		backend.utils.Paths.clearUnusedMemory();
 
-		#if LUA_ALLOWED
-		backend.utils.Paths.pushGlobalMods();
-		#end
 		var maxS = FlxG.save.data.maxScore;
 		var mostM = FlxG.save.data.mostMisses;
 		if(mostM != null && maxS != null)
-			trace('Max Score: $maxS\nMax Misses: $mostM');
-		
-		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
-		WeekData.loadTheFirstEnabledMod();
+			trace('Max Score: $maxS | Max Misses: $mostM');
+	
 
 		// trace(path, FileSystem.exists(path));
 
@@ -133,8 +128,6 @@ class TitleState extends MusicBeatState
 		FlxG.sound.volumeUpKeys = volumeUpKeys;
 		FlxG.keys.preventDefaultKeys = [TAB];
 
-		PlayerSettings.init();
-
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		// DEBUG BULLSHIT
@@ -142,9 +135,6 @@ class TitleState extends MusicBeatState
 		swagShader = new ColorSwap();
 		super.create();
 
-		FlxG.save.bind('funkin', CoolUtil.getSavePath());
-
-		backend.utils.ClientPrefs.loadPrefs();
 
 		#if CHECK_FOR_UPDATES
 		if (backend.utils.ClientPrefs.data.checkForUpdates && !closedState)
@@ -176,7 +166,6 @@ class TitleState extends MusicBeatState
 		}
 		#end
 
-		Highscore.load();
 
 		// IGNORE THIS!!!
 		titleJSON = Json.parse(backend.utils.Paths.getTextFromFile('images/gfDanceTitle.json'));

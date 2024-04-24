@@ -98,7 +98,7 @@ class Main extends Sprite
 		}
 	
 		backend.utils.ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(game.width, game.height, TitleState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		addChild(new FlxGame(game.width, game.height, Init, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);

@@ -4,7 +4,7 @@ import flixel.FlxSprite;
 
 using StringTools;
 
-@:final class EngineData extends FlxSprite
+@:final class EngineData
 {
     //** Customization **/
 	public static final coreGame = {
@@ -21,8 +21,6 @@ using StringTools;
 	//** ignore this **/
 	public function new()
 	{
-        super();
-
 		if (backend.utils.ClientPrefs.data.lowQuality)
 			backend.utils.ClientPrefs.data.mouseEvents = false;
 	}

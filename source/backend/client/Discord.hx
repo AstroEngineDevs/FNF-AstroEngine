@@ -21,42 +21,51 @@ class DiscordClient
 	private static var presence:DiscordRichPresence = DiscordRichPresence.create();
 
 	public static function check()
-		{
-			if(ClientPrefs.data.discordRPC) initialize();
-			else if(isInitialized) shutdown();
-		}
-		public static function prepare()
-			{
-				if (!isInitialized && ClientPrefs.data.discordRPC)
-					initialize();
-		
-				Application.current.window.onClose.add(function() {
-					if(isInitialized) shutdown();
-				});
-			}
+	{
+		if (ClientPrefs.data.discordRPC)
+			initialize();
+		else if (isInitialized)
+			shutdown();
+	}
 
-	public dynamic static function shutdown() {
+	public static function prepare()
+	{
+		if (!isInitialized && ClientPrefs.data.discordRPC)
+			initialize();
+
+		Application.current.window.onClose.add(function()
+		{
+			if (isInitialized)
+				shutdown();
+		});
+	}
+
+	public dynamic static function shutdown()
+	{
 		Discord.Shutdown();
 		isInitialized = false;
 	}
-	
-	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void {
+
+	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void
+	{
 		var requestPtr:cpp.Star<DiscordUser> = cpp.ConstPointer.fromRaw(request).ptr;
 
-		if (Std.parseInt(cast(requestPtr.discriminator, String)) != 0) //New Discord IDs/Discriminator system
-			traceFr('Connected to User (${cast(requestPtr.username, String)}#${cast(requestPtr.discriminator, String)})');
-		else //Old discriminators
-			traceFr('Connected to User (${cast(requestPtr.username, String)})');
+		if (Std.parseInt(cast(requestPtr.discriminator, String)) != 0) // New Discord IDs/Discriminator system
+			traceFr('Connected to User (${cast (requestPtr.username, String)}#${cast (requestPtr.discriminator, String)})');
+		else // Old discriminators
+			traceFr('Connected to User (${cast (requestPtr.username, String)})');
 
 		changePresence();
 	}
 
-	private static function onError(errorCode:Int, message:cpp.ConstCharStar):Void {
-		traceFr('Error ($errorCode: ${cast(message, String)})');
+	private static function onError(errorCode:Int, message:cpp.ConstCharStar):Void
+	{
+		traceFr('Error ($errorCode: ${cast (message, String)})');
 	}
 
-	private static function onDisconnected(errorCode:Int, message:cpp.ConstCharStar):Void {
-		traceFr('Disconnected ($errorCode: ${cast(message, String)})');
+	private static function onDisconnected(errorCode:Int, message:cpp.ConstCharStar):Void
+	{
+		traceFr('Disconnected ($errorCode: ${cast (message, String)})');
 	}
 
 	public static function initialize()
@@ -67,7 +76,8 @@ class DiscordClient
 		discordHandlers.errored = cpp.Function.fromStaticFunction(onError);
 		Discord.Initialize(clientID, cpp.RawPointer.addressOf(discordHandlers), 1, null);
 
-		if(!isInitialized) traceFr("Client initialized");
+		if (!isInitialized)
+			traceFr("Initialized");
 
 		sys.thread.Thread.create(() ->
 		{
@@ -86,11 +96,14 @@ class DiscordClient
 		isInitialized = true;
 	}
 
-	public static function changePresence(?details:String = 'In the Menus', ?state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float, largeImageKey:String = 'icon')
+	public static function changePresence(?details:String = 'In the Menus', ?state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool,
+			?endTimestamp:Float, largeImageKey:String = 'icon')
 	{
 		var startTimestamp:Float = 0;
-		if (hasStartTimestamp) startTimestamp = Date.now().getTime();
-		if (endTimestamp > 0) endTimestamp = startTimestamp + endTimestamp;
+		if (hasStartTimestamp)
+			startTimestamp = Date.now().getTime();
+		if (endTimestamp > 0)
+			endTimestamp = startTimestamp + endTimestamp;
 
 		presence.details = details;
 		presence.state = state;
@@ -105,7 +118,7 @@ class DiscordClient
 
 	public static function updatePresence()
 		Discord.UpdatePresence(cpp.RawConstPointer.addressOf(presence));
-	
+
 	public static function resetClientID()
 		clientID = _defaultID;
 
@@ -114,7 +127,7 @@ class DiscordClient
 		var change:Bool = (clientID != newID);
 		clientID = newID;
 
-		if(change && isInitialized)
+		if (change && isInitialized)
 		{
 			shutdown();
 			initialize();
@@ -124,20 +137,25 @@ class DiscordClient
 	}
 
 	#if LUA_ALLOWED
-	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
-			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
-		});
+	public static function addLuaCallbacks(lua:State)
+	{
+		Lua_helper.add_callback(lua, "changePresence",
+			function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float)
+			{
+				changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
+			});
 
-		Lua_helper.add_callback(lua, "changeClientID", function(?newID:String = null) {
-			if(newID == null) newID = _defaultID;
+		Lua_helper.add_callback(lua, "changeClientID", function(?newID:String = null)
+		{
+			if (newID == null)
+				newID = _defaultID;
 			clientID = newID;
 		});
 	}
 	#end
 
-	static function traceFr(fr:String) {
-		trace('Discord: ${fr}');
+	static function traceFr(fr:String)
+	{
+		trace('RPC ${fr}');
 	}
 }
-

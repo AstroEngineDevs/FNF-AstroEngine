@@ -449,9 +449,9 @@ class WeekEditorState extends MusicBeatState
 		}
 
 		if(!blockInput) {
-			FlxG.sound.muteKeys = game.states.TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = game.states.TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = game.states.TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = game.Init.Volume.muteKeys;
+			FlxG.sound.volumeDownKeys = game.Init.Volume.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = game.Init.Volume.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
 				MusicBeatState.switchState(new game.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(backend.utils.Paths.music('freakyMenu'));
@@ -812,9 +812,9 @@ class WeekEditorFreeplayState extends MusicBeatState
 				iconInputText.hasFocus = false;
 			}
 		} else {
-			FlxG.sound.muteKeys = game.states.TitleState.muteKeys;
-			FlxG.sound.volumeDownKeys = game.states.TitleState.volumeDownKeys;
-			FlxG.sound.volumeUpKeys = game.states.TitleState.volumeUpKeys;
+			FlxG.sound.muteKeys = game.Init.Volume.muteKeys;
+			FlxG.sound.volumeDownKeys = game.Init.Volume.volumeDownKeys;
+			FlxG.sound.volumeUpKeys = game.Init.Volume.volumeUpKeys;
 			if(FlxG.keys.justPressed.ESCAPE) {
 				MusicBeatState.switchState(new game.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(backend.utils.Paths.music('freakyMenu'));

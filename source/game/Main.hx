@@ -33,7 +33,7 @@ using StringTools;
 
 class Main extends Sprite
 {
-	var game = {
+	final game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
 		zoom: -1.0, // game state bounds

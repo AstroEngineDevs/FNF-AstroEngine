@@ -5,7 +5,7 @@
 import backend.client.Discord;
 #end
 
-//Psych
+// Astro
 #if LUA_ALLOWED
 import llua.*;
 import llua.Lua;
@@ -25,6 +25,7 @@ import game.objects.characters.MenuCharacter;
 
 import game.objects.MenuItem;
 import game.objects.TypedAlphabet;
+import game.options.objects.Option;
 
 import backend.PlayerSettings;
 

@@ -43,7 +43,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Mouse Support',
-		'mouse',
+		'mouse [Beta]',
 		'mouseEvents',
 		'bool',
 		false);

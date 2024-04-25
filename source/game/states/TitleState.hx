@@ -91,14 +91,10 @@ class TitleState extends MusicBeatState
 		if (backend.utils.ClientPrefs.data.mouseEvents && !backend.utils.ClientPrefs.data.lowQuality)
 			FlxG.mouse.visible = true;
 
-		backend.utils.Paths.clearStoredMemory();
-		backend.utils.Paths.clearUnusedMemory();
-
 		var maxS = FlxG.save.data.maxScore;
 		var mostM = FlxG.save.data.mostMisses;
-		if(mostM != null && maxS != null)
+		if (mostM != null && maxS != null)
 			trace('Max Score: $maxS | Max Misses: $mostM');
-	
 
 		// trace(path, FileSystem.exists(path));
 
@@ -122,19 +118,12 @@ class TitleState extends MusicBeatState
 		DiscordClient.changePresence("Viewing The Title", null);
 		#end
 
-		FlxG.game.focusLostFramerate = 60;
-		FlxG.sound.muteKeys = muteKeys;
-		FlxG.sound.volumeDownKeys = volumeDownKeys;
-		FlxG.sound.volumeUpKeys = volumeUpKeys;
-		FlxG.keys.preventDefaultKeys = [TAB];
-
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		// DEBUG BULLSHIT
 
 		swagShader = new ColorSwap();
 		super.create();
-
 
 		#if CHECK_FOR_UPDATES
 		if (backend.utils.ClientPrefs.data.checkForUpdates && !closedState)
@@ -165,7 +154,6 @@ class TitleState extends MusicBeatState
 			http.request();
 		}
 		#end
-
 
 		// IGNORE THIS!!!
 		titleJSON = Json.parse(backend.utils.Paths.getTextFromFile('images/gfDanceTitle.json'));
@@ -223,27 +211,6 @@ class TitleState extends MusicBeatState
 	{
 		if (!initialized)
 		{
-			/*var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
-				diamond.persist = true;
-				diamond.destroyOnNoUse = false;
-
-				FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, new FlxPoint(0, -1), {asset: diamond, width: 32, height: 32},
-					new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
-				FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
-					{asset: diamond, width: 32, height: 32}, new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
-
-				transIn = FlxTransitionableState.defaultTransIn;
-				transOut = FlxTransitionableState.defaultTransOut; */
-
-			// HAD TO MODIFY SOME BACKEND SHIT
-			// IF THIS PR IS HERE IF ITS ACCEPTED UR GOOD TO GO
-			// https://github.com/HaxeFlixel/flixel-addons/pull/348
-
-			// var music:FlxSound = new FlxSound();
-			// music.loadStream(backend.utils.Paths.music('freakyMenu'));
-			// FlxG.sound.list.add(music);
-			// music.play();
-
 			if (FlxG.sound.music == null)
 			{
 				FlxG.sound.playMusic(backend.utils.Paths.music('freakyMenu'), 0);
@@ -284,7 +251,7 @@ class TitleState extends MusicBeatState
 
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
 		if (easterEgg == null)
-			easterEgg = ''; 
+			easterEgg = '';
 
 		gfDance.frames = backend.utils.Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);

@@ -1,4 +1,4 @@
-package game.options;
+package game.options.objects;
 
 import backend.utils.ClientPrefs;
 import flash.text.TextField;

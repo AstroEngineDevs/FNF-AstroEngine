@@ -170,6 +170,17 @@ class ClientPrefs {
 			reloadControls();
 		}
 	}
+	public static function init(){
+		try{
+			backend.PlayerSettings.init();
+			loadPrefs();
+			
+			trace("Initialization Successful");
+		} catch (e){
+			trace("Initialization Unsuccessful" + e);
+		}
+	}
+
 
 	
 	inline public static function getGameplaySetting(name:String, defaultValue:Dynamic = null, ?customDefaultValue:Bool = false):Dynamic
@@ -181,12 +192,12 @@ class ClientPrefs {
 	public static function reloadControls() {
 		PlayerSettings.player1.controls.setKeyboardScheme(KeyboardScheme.Solo);
 
-		game.states.TitleState.muteKeys = copyKey(keyBinds.get('volume_mute'));
-		game.states.TitleState.volumeDownKeys = copyKey(keyBinds.get('volume_down'));
-		game.states.TitleState.volumeUpKeys = copyKey(keyBinds.get('volume_up'));
-		FlxG.sound.muteKeys = game.states.TitleState.muteKeys;
-		FlxG.sound.volumeDownKeys = game.states.TitleState.volumeDownKeys;
-		FlxG.sound.volumeUpKeys = game.states.TitleState.volumeUpKeys;
+		game.Init.Volume.muteKeys = copyKey(keyBinds.get('volume_mute'));
+		game.Init.Volume.volumeDownKeys = copyKey(keyBinds.get('volume_down'));
+		game.Init.Volume.volumeUpKeys = copyKey(keyBinds.get('volume_up'));
+		FlxG.sound.muteKeys = game.Init.Volume.muteKeys;
+		FlxG.sound.volumeDownKeys = game.Init.Volume.volumeDownKeys;
+		FlxG.sound.volumeUpKeys = game.Init.Volume.volumeUpKeys;
 	}
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey> {
 		var copiedArray:Array<FlxKey> = arrayToCopy.copy();

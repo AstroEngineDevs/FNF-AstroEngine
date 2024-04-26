@@ -63,7 +63,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
-		bg.color = EngineData.mainCoreShit.colorMenuImage;
+		bg.color = EngineData.coreGame.menuColor;
 		bg.screenCenter();
 		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(bg);

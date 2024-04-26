@@ -3,11 +3,9 @@ package game;
 import flixel.input.keyboard.FlxKey;
 
 class Init extends MusicBeatState
-
 {
 	override function create()
 	{
-
 		backend.utils.Paths.clearStoredMemory();
 		backend.utils.Paths.clearUnusedMemory();
 
@@ -29,13 +27,14 @@ class Init extends MusicBeatState
 	}
 }
 
-class Volume {
+class Volume
+{
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
-	public static function init(){
-		FlxG.game.focusLostFramerate = 60;
+	public static function init()
+	{
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
 		FlxG.sound.volumeUpKeys = volumeUpKeys;
@@ -45,6 +44,8 @@ class Volume {
 
 class Logs // Modded trace func
 {
+	static final fuckbaby:String = "[Astro]"; // prefix i guess
+
 	public static function init()
 	{
 		haxe.Log.trace = tracev2;
@@ -59,16 +60,16 @@ class Logs // Modded trace func
 			for (v in infos.customParams)
 				extra += "," + v;
 			#if debug
-				Sys.println('[Astro Engine]: ${v + extra} : $ddd');
+			Sys.println('$fuckbaby: ${v + extra} : $ddd');
 			#else
-				Sys.println('[Astro Engine]: ${v + extra}');
+			Sys.println('$fuckbaby: ${v + extra}');
 			#end
 		}
 		else
 			#if debug
-				Sys.println('[Astro Engine]: $v : $ddd');
+			Sys.println('$fuckbaby: $v : $ddd');
 			#else
-			Sys.println('[Astro Engine]: $v');
+			Sys.println('$fuckbaby: $v');
 			#end
 	}
 }

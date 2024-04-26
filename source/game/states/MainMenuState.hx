@@ -53,7 +53,7 @@ class MainMenuState extends MusicBeatState
 
 	private var versionShitInt:Int = 1;
 	private var versionShitArray:Array<Array<Dynamic>> = [// Name, Version, X, Y
-		["Astro Engine v", EngineData.mainCoreShit.coreVersion, null, null],
+		["Astro Engine v", EngineData.engineData.coreVersion, null, null],
 		["Psych Engine v", PsychData.psychVersion, null, null],
 		["Friday Night Funkin' v", Application.current.meta.get('version'), null, null]
 	];
@@ -93,9 +93,10 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(backend.utils.Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(backend.utils.Paths.image('menuDesat'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
+		bg.color = EngineData.coreGame.menuColor;
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;

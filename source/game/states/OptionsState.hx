@@ -71,7 +71,7 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.loadPrefs();
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(backend.utils.Paths.image('menuDesat'));
-		bg.color = 0xff525252;
+		bg.color = EngineData.coreGame.menuColor;
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;

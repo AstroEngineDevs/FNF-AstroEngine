@@ -1,24 +1,20 @@
 package backend.data;
 
-import flixel.FlxSprite;
-
-using StringTools;
-
 @:final class EngineData
 {
-    //** Customization **/
+	//** Customization (Source Code Only) **/
 	public static final coreGame = {
 		coreDiscordID: "1095422496473358356",
-	}
-
-    //** Other Shit **/
-	public static final mainCoreShit = {
-		coreVersion: '0.2.2',
-		colorMenuImage: 0xff525252,
-		mainRepo: "https://github.com/Hackx2/FNF-AstroEngine"
+		menuColor: 0xff525252,
 	}
 
 	//** ignore this **/
+
+	public static final engineData = {
+		coreVersion: '0.2.3',
+		repository: "https://github.com/Hackx2/FNF-AstroEngine"
+	}
+
 	public function new()
 	{
 		if (backend.utils.ClientPrefs.data.lowQuality)

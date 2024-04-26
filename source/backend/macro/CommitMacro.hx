@@ -6,7 +6,7 @@ import sys.io.Process;
 
 using StringTools;
 
-class CommitData
+class CommitMacro
 {
 	// idea stolen from codename engine
 	public static var commitNumber(get, null):Int;

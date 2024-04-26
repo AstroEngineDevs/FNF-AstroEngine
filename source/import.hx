@@ -18,7 +18,7 @@ import sys.io.*;
 import js.html.*;
 #end
 
-import backend.data.WeekData.*;
+import backend.data.*;
 
 import game.objects.characters.*;
 import game.objects.characters.MenuCharacter;

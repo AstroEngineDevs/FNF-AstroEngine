@@ -31,7 +31,7 @@ class OutdatedState extends MusicBeatState
 
 		warnText = new FlxText(0, 0, FlxG.width, "Sup bro, looks like you're running an   \n
 			outdated version of Astro Engine ["
-			+ EngineData.mainCoreShit.coreVersion
+			+ EngineData.engineData.coreVersion
 			+ "],\n
 			please update to "
 			+ game.states.TitleState.updateVersion

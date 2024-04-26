@@ -38,7 +38,7 @@ class StatsSubState extends MusicBeatSubstate
 		#end
 		
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = EngineData.mainCoreShit.colorMenuImage;
+		bg.color = EngineData.coreGame.menuColor;
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;

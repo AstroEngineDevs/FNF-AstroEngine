@@ -1,4 +1,3 @@
-
 package game;
 
 import haxegithub.utils.*;
@@ -15,7 +14,6 @@ import openfl.display._internal.stats.DrawCallContext;
 #if flash
 import openfl.Lib;
 #end
-
 #if openfl
 import openfl.system.System;
 #end
@@ -50,18 +48,12 @@ class FPS extends TextField
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";
+		border = true;
+		borderColor = FlxColor.BLACK;
 
 		cacheCount = 0;
 		currentTime = 0;
 		times = [];
-
-		#if flash
-		addEventListener(Event.ENTER_FRAME, function(e)
-		{
-			var time = Lib.getTimer();
-			__enterFrame(time - currentTime);
-		});
-		#end
 	}
 
 	// Event Handlers
@@ -78,23 +70,23 @@ class FPS extends TextField
 
 		var currentCount = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
-		if (currentFPS > backend.utils.ClientPrefs.data.framerate) currentFPS = backend.utils.ClientPrefs.data.framerate;
+		if (currentFPS > backend.utils.ClientPrefs.data.framerate)
+			currentFPS = backend.utils.ClientPrefs.data.framerate;
 
-		if (currentCount != cacheCount /*&& visible*/)
+		if (currentCount != cacheCount)
 		{
 			text = "FPS: " + currentFPS;
 			var memoryMegas:Float = 0;
-		
+
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 
-			text += '\nCommit: ${CommitData.commitNumber} [${CommitData.commitHash}]';
+			text += '\nAstro Engine: ' + EngineData.engineData.coreVersion;
+			text += '\nCommit: ${CommitMacro.commitNumber} [${CommitMacro.commitHash}]';
 
-            text += '\nAstro Engine: '+EngineData.mainCoreShit.coreVersion;
-
-			//text += '\nGit: '+Git.commitNumber;
+			// text += '\nGit: '+Git.commitNumber;
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= backend.utils.ClientPrefs.data.framerate / 2)
@@ -107,8 +99,6 @@ class FPS extends TextField
 			text += "\nstageDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE);
 			text += "\nstage3DDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE3D);
 			#end
-
-			text += "\n";
 		}
 
 		cacheCount = currentCount;

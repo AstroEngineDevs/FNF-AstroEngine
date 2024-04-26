@@ -1119,7 +1119,7 @@ class PlayState extends MusicBeatState
 		timeBarBG.yAdd = -5;
 		add(timeBarBG);
 
-		versionTxtSmth = new FlxText(FlxG.width - 320, 10, 400, "Astro Engine: v"+EngineData.mainCoreShit.coreVersion, 32);
+		versionTxtSmth = new FlxText(FlxG.width - 320, 10, 400, "Astro Engine: v"+EngineData.engineData.coreVersion, 32);
 		versionTxtSmth.setFormat(backend.utils.Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		versionTxtSmth.scrollFactor.set();
 		versionTxtSmth.alpha = 0;

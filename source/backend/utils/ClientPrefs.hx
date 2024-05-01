@@ -159,7 +159,7 @@ class ClientPrefs {
 		#if DISCORD_ALLOWED
 		DiscordClient.check();
 		#end
-
+		
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', CoolUtil.getSavePath());
 		if(save != null && save.data.customControls != null) {
@@ -174,6 +174,7 @@ class ClientPrefs {
 		try{
 			backend.PlayerSettings.init();
 			loadPrefs();
+			saveSettings();
 			
 			trace("Initialization Successful");
 		} catch (e){

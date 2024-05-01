@@ -1,13 +1,16 @@
 package game;
 
 import flixel.input.keyboard.FlxKey;
+import backend.utils.Paths;
 
 class Init extends MusicBeatState
 {
-	override function create()
+	override public function create():Void
 	{
-		backend.utils.Paths.clearStoredMemory();
-		backend.utils.Paths.clearUnusedMemory();
+		FlxG.save.bind('funkin', backend.CoolUtil.getSavePath());
+
+		Paths.clearStoredMemory();
+		Paths.clearUnusedMemory();
 
 		#if LUA_ALLOWED
 		backend.utils.Paths.pushGlobalMods();
@@ -21,8 +24,6 @@ class Init extends MusicBeatState
 		super.create();
 
 		backend.utils.ClientPrefs.init();
-
-		FlxG.save.bind('funkin', backend.CoolUtil.getSavePath());
 
 		MusicBeatState.switchState(new game.states.TitleState());
 	}
@@ -45,7 +46,7 @@ class Volume
 
 class Logs // Modded trace func
 {
-	static final fuckbaby:String = "[Astro]"; // prefix i guess
+	static final fuckbaby:String = "[Astro System]"; // prefix i guess
 
 	public static function init()
 	{

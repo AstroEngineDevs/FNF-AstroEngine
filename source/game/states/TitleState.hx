@@ -87,31 +87,15 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		FlxG.mouse.visible = false;
 		if (backend.utils.ClientPrefs.data.mouseEvents && !backend.utils.ClientPrefs.data.lowQuality)
 			FlxG.mouse.visible = true;
+		else
+			FlxG.mouse.visible = false;
 
 		var maxS = FlxG.save.data.maxScore;
 		var mostM = FlxG.save.data.mostMisses;
 		if (mostM != null && maxS != null)
 			trace('Max Score: $maxS | Max Misses: $mostM');
-
-		// trace(path, FileSystem.exists(path));
-
-		/*#if (polymod && !html5)
-			if (sys.FileSystem.exists('mods/')) {
-				var folders:Array<String> = [];
-				for (file in sys.FileSystem.readDirectory('mods/')) {
-					var path = haxe.io.Path.join(['mods/', file]);
-					if (sys.FileSystem.isDirectory(path)) {
-						folders.push(file);
-					}
-				}
-				if(folders.length > 0) {
-					polymod.Polymod.init({modRoot: "mods", dirs: folders});
-				}
-			}
-			#end */
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -231,9 +215,6 @@ class TitleState extends MusicBeatState
 			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		}
 
-		// bg.antialiasing = backend.utils.ClientPrefs.data.globalAntialiasing;
-		// bg.setGraphicSize(Std.int(bg.width * 0.6));
-		// bg.updateHitbox();
 		add(bg);
 
 		logoBl = new FlxSprite(titleJSON.titlex, titleJSON.titley);

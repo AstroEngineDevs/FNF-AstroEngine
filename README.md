@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="art/astroshit/512-modified.png" width="250" height="250"/>
+    <img src="art/astro/512-modified.png" width="250" height="250"/>
     <br>
     <h1>Friday Night Funkin' • <code>Astro Engine</code> (<strong>Beta</strong>)</h1>
     <br>    

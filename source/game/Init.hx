@@ -16,10 +16,11 @@ class Init extends MusicBeatState
 
 		Logs.init();
 		Volume.init();
-		backend.utils.ClientPrefs.init();
 		backend.Highscore.load();
 
 		super.create();
+
+		backend.utils.ClientPrefs.init();
 
 		FlxG.save.bind('funkin', backend.CoolUtil.getSavePath());
 
@@ -51,7 +52,7 @@ class Logs // Modded trace func
 		haxe.Log.trace = tracev2;
 	}
 
-	static function tracev2(v:Dynamic, ?infos:haxe.PosInfos):Void
+	private static function tracev2(v:Dynamic, ?infos:haxe.PosInfos):Void
 	{
 		final ddd = infos.fileName + ":" + infos.lineNumber;
 		if (infos != null && infos.customParams != null)

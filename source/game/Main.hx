@@ -138,7 +138,6 @@ class Main extends Sprite
 		dateNow = dateNow.replace(" ", "_");
 		dateNow = dateNow.replace(":", "'");
 
-		//path = "./crash/" + "AstroEngine_" + dateNow + ".txt";
 		path = './crash/${currentName}_$dateNow.txt';
 		trace(path);
 

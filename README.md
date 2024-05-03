@@ -28,7 +28,7 @@ after it finishes, simply type `haxelib run hmm install` in order to install all
 
 **Shadow Mario** - Main **Programmer**<br>
 **RiverOaken** - Artist<br>
-**Yoshubs** - Assistant **Programmer**<br>
+**Yoshubs** - Ex-**Programmer**<br>
 **bbpanzu** - Ex-**Programmer**<br>
 
 ---

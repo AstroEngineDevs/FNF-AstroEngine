@@ -20,7 +20,7 @@ after it finishes, simply type `haxelib run hmm install` in order to install all
 
 <h2>Credits:</h2>
 
-**[HackTheAir](https://twitter.com/AnimatesHack)** - Main **Programmer**
+**[Hackx2](https://twitter.com/AnimatesHack)** - Main **Programmer**
 
 ---
 

@@ -9,8 +9,8 @@ using StringTools;
 class CommitMacro
 {
 	// idea stolen from codename engine
-	public static var commitNumber(get, null):Int;
-	public static var commitHash(get, null):String;
+	public static var commitNumber(get, never):Int;
+	public static var commitHash(get, never):String;
 
 	static function get_commitNumber()
 	{
@@ -21,7 +21,6 @@ class CommitMacro
 	{
 		return _commitHash();
 	}
-
 
 	// Other Shitzz
 

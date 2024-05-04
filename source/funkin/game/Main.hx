@@ -12,12 +12,10 @@ import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
 import funkin.backend.utils.ClientPrefs;
-
 #if DISCORD_ALLOWED
 import funkin.backend.client.Discord.DiscordClient;
 #end
-
-//crash handler stuff
+// crash handler stuff
 #if CRASH_HANDLER
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
@@ -32,11 +30,9 @@ import funkin.game.FPS;
 using StringTools;
 
 /*
-
-No need to change anything here unless you know what your doin' :3c
-
-*/
-
+	No need to change anything here unless you know what your doin' :3c
+	If you want to add something that will run once the game has started, edit Init.hx
+ */
 class Main extends Sprite
 {
 	final game = {
@@ -58,12 +54,12 @@ class Main extends Sprite
 	}
 
 	public static function exitOn(?type:Int = 0, ?traceE:Bool = false)
-		{
-			if (traceE)
-				trace("Exit at " + Date.now().toString());
-	
-			Sys.exit(type);
-		}
+	{
+		if (traceE)
+			trace("Exit at " + Date.now().toString());
+
+		Sys.exit(type);
+	}
 
 	public function new()
 	{
@@ -102,25 +98,25 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
-	
+
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(game.width, game.height, Init, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		addChild(new FlxGame(game.width, game.height, Init, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash,
+			game.startFullscreen));
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-		if(fpsVar != null) {
+		if (fpsVar != null)
 			fpsVar.visible = ClientPrefs.data.showFPS;
-		}
 		#end
 
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
-		
+
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
@@ -137,12 +133,9 @@ class Main extends Sprite
 	{
 		var errMsg:String = "";
 		var path:String;
-		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toString();
-		var currentName = Application.current.meta.get('file');
-
-		dateNow = dateNow.replace(" ", "_");
-		dateNow = dateNow.replace(":", "'");
+		final callStack:Array<StackItem> = CallStack.exceptionStack(true);
+		final dateNow:String = Date.now().toString().replace(" ", "_").replace(":", "'");
+		final currentName = Application.current.meta.get('file');
 
 		path = './crash/${currentName}_$dateNow.txt';
 		trace(path);
@@ -158,7 +151,11 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page:" + EngineData.engineData.repository + "\n\n---------------------------------------------------------\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: "
+			+ e.error
+			+ "\nPlease report this error to the GitHub page:"
+			+ EngineData.engineData.repository
+			+ "\n\n---------------------------------------------------------\n> Crash Handler written by: sqirra-rng";
 
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");

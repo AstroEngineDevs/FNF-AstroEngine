@@ -1,4 +1,4 @@
-package funkin.backend.system;
+package funkin.backend.utils.native;
 
 import lime.app.Application;
 

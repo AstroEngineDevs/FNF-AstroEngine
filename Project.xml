@@ -47,7 +47,6 @@
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="DISCORD_ALLOWED" />
 	<define name="CRASH_HANDLER" if="desktop release" />
 
@@ -203,8 +202,10 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
-	<icon path="art/icons/icon16.png" size='16'/>
-	<icon path="art/icons/icon32.png" size='32'/>
-	<icon path="art/icons/icon64.png" size='64'/>
-	<icon path="art/icons/iconOG.png" />
+	<section embed="true">
+		<icon path="art/icons/icon16.png" size='16'/>
+		<icon path="art/icons/icon32.png" size='32'/>
+		<icon path="art/icons/icon64.png" size='64'/>
+		<icon path="art/icons/iconOG.png"/>
+	</section>
 </project>

@@ -1,5 +1,6 @@
 package funkin.backend.funkinLua;
 
+import funkin.backend.utils.native.WindowUtil;
 import funkin.backend.funkinLua.luaStuff.ModchartText;
 import funkin.backend.funkinLua.luaStuff.ModchartSprite;
 import funkin.game.states.LoadingState;
@@ -189,6 +190,7 @@ class FunkinLua {
 		set('instakillOnMiss', PlayState.instance.instakillOnMiss);
 		set('botPlay', PlayState.instance.cpuControlled);
 		set('practice', PlayState.instance.practiceMode);
+		set('darkmode', WindowUtil.darkMode);
 
 		for (i in 0...4) {
 			set('defaultPlayerStrumX' + i, 0);

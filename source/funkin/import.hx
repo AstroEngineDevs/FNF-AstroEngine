@@ -1,16 +1,31 @@
 #if !macro 
 
+// game
+import funkin.game.objects.characters.*;
+import funkin.game.objects.*;
+import funkin.game.options.objects.*;
+import funkin.game.states.*;
+import funkin.game.transitions.*;
+
+// backend
+import funkin.backend.macro.*;
+import funkin.backend.system.*;
+import funkin.backend.utils.*;
+import funkin.backend.data.*;
+import funkin.backend.*;
+
 //Discord API
 #if DISCORD_ALLOWED
 import funkin.backend.client.Discord;
 #end
 
-// Astro
+// Lua
 #if LUA_ALLOWED
 import llua.*;
 import llua.Lua;
 #end
 
+// System
 #if sys
 import sys.*;
 import sys.io.*;
@@ -18,41 +33,7 @@ import sys.io.*;
 import js.html.*;
 #end
 
-import funkin.backend.data.*;
-
-import funkin.game.objects.characters.*;
-import funkin.game.objects.characters.MenuCharacter;
-
-import funkin.game.objects.MenuItem;
-import funkin.game.objects.TypedAlphabet;
-import funkin.game.options.objects.Option;
-
-import funkin.backend.PlayerSettings;
-
-import funkin.backend.CoolUtil;
-
-import funkin.backend.macro.*;
-
-import funkin.game.states.LoadingState;
-import funkin.game.objects.FlxUIDropDownMenuCustom;
-
-import funkin.backend.utils.Paths;
-import funkin.backend.utils.Controls;
-import funkin.backend.CoolUtil;
-import funkin.backend.system.MusicBeatState;
-import funkin.backend.system.MusicBeatSubstate;
-import funkin.game.transitions.CustomFadeTransition;
-import funkin.backend.utils.ClientPrefs;
-import funkin.backend.Conductor;
-
-import funkin.game.objects.Alphabet;
-import funkin.game.objects.BGSprite;
-
-import funkin.game.states.PlayState;
-import funkin.game.states.LoadingState;
-import funkin.backend.utils.Controls;
-
-//Flixel
+// Flixel
 import flixel.sound.FlxSound;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -67,5 +48,6 @@ import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-using StringTools;
 #end
+
+using StringTools;

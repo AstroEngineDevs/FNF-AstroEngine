@@ -154,7 +154,7 @@ class DiscordClient
 	}
 	#end
 
-	static function traceFr(fr:String)
+	private static function traceFr(fr:String)
 	{
 		trace('RPC ${fr}');
 	}

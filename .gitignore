@@ -10,6 +10,7 @@ export/*
 exportUpdater/*
 .vscode/*
 .haxelib/
+dump/*
 *.code-workspace
 # Local history which shouldn't be shared.
 .history

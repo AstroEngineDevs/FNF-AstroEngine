@@ -14,7 +14,11 @@ class Init extends MusicBeatState
 
 		#if LUA_ALLOWED
 		Paths.pushGlobalMods();
+		#end
 		funkin.backend.data.WeekData.loadTheFirstEnabledMod();
+
+		#if DISCORD_ALLOWED
+		DiscordClient.prepare();
 		#end
 
 		Logs.init();
@@ -45,7 +49,7 @@ class Volume
 
 @:private class Logs // Modded trace func
 {
-	static final fuckbaby:String = "[Astro System]"; // prefix i guess
+	private static final fuckbaby:String = "[Astro System]"; // prefix i guess
 
 	public static function init()
 	{

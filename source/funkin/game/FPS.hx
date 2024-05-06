@@ -81,19 +81,12 @@ class FPS extends TextField
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
-
 			text += '\nAstro Engine: ' + EngineData.engineData.coreVersion;
-			
-			#if debug
-			text += '\nCommit: ${CommitMacro.commitNumber} [${CommitMacro.commitHash}]';
-			#end
-			// text += '\nGit: '+Git.commitNumber;
+			#if debug text += '\nCommit: ${CommitMacro.commitNumber} [${CommitMacro.commitHash}]'; #end
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.data.framerate / 2)
-			{
 				textColor = 0xFFFF0000;
-			}
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
 			text += "\ntotalDC: " + Context3DStats.totalDrawCalls();

@@ -96,8 +96,8 @@ class TitleState extends MusicBeatState
 		else
 			FlxG.mouse.visible = false;
 
-		var maxS = FlxG.save.data.maxScore;
-		var mostM = FlxG.save.data.mostMisses;
+		final maxS = FlxG.save.data.stats.get('Max Score');
+		final mostM = FlxG.save.data.stats.get('Max Misses');
 		if (mostM != null && maxS != null)
 			trace('Max Score: $maxS | Max Misses: $mostM');
 

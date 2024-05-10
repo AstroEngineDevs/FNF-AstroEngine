@@ -63,7 +63,12 @@ import funkin.game.Init.Volume;
 	public var scoreBarType:String = 'Astro';
 	public var noteSplashesType:String = 'normal';
 	public var forceNoteSplashes:Bool = false;
-	public var stats:Array<Int> = [0, 0];
+	//public var stats:Array<Int> = [0, 0];
+
+	public var stats:Map<String, Float> = [
+		'Max Misses' => 0,
+		'Max Score' => 0
+	];
 }
 
 class ClientPrefs
@@ -117,15 +122,16 @@ class ClientPrefs
 
 	public static function resetStats()
 	{
-		ClientPrefs.data.stats = [0, 0];
+		for(i in ClientPrefs.data.stats.keys())
+			ClientPrefs.data.stats.set(i, 0);
 		saveSettings();
-		trace("Reset Stats");
+		trace("Stats Resetted");
 	}
 
 	public static function loadPrefs()
 	{
 		for (key in Reflect.fields(data))
-			if (key != 'gameplaySettings' && Reflect.hasField(FlxG.save.data, key))
+			if (key != 'gameplaySettings' && key != 'stats' && Reflect.hasField(FlxG.save.data, key))
 				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
 
 		#if (!html5 && !switch)
@@ -152,6 +158,13 @@ class ClientPrefs
 			for (name => value in savedMap)
 				data.gameplaySettings.set(name, value);
 		}
+
+		if (FlxG.save.data.stats != null)
+			{
+				final savedMap:Map<String, Int> = FlxG.save.data.stats;
+				for (name => value in savedMap)
+					data.stats.set(name, value);
+			}
 
 		// flixel automatically saves your volume!
 		if (FlxG.save.data.volume != null)

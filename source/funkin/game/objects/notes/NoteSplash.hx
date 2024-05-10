@@ -18,8 +18,6 @@ class NoteSplash extends FlxSprite
 
 		var skin:String = NoteUtils.checkSplash();
 
-		trace(skin);
-
 		loadAnims(skin);
 		
 		colorSwap = new ColorSwap();

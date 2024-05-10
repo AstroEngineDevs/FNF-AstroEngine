@@ -12,7 +12,7 @@ package funkin.backend.data;
 
 	public static final engineData = {
 		coreVersion: '0.2.3',
-		repository: "https://github.com/Hackx2/FNF-AstroEngine"
+		repository: "https://github.com/AstroEngineDevs/FNF-AstroEngine"
 	}
 
 	public function new()

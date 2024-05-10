@@ -6,7 +6,6 @@ import flixel.FlxSubState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup.FlxTypedGroup;
-
 import funkin.game.objects.Alphabet;
 import funkin.backend.data.*;
 import funkin.backend.system.MusicBeatSubstate;
@@ -14,6 +13,7 @@ import funkin.backend.utils.Paths;
 #if desktop
 import funkin.backend.client.Discord.DiscordClient;
 #end
+
 using StringTools;
 
 class StatsSubState extends MusicBeatSubstate
@@ -26,9 +26,11 @@ class StatsSubState extends MusicBeatSubstate
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var curSelected:Int = 0;
 
-	var stats:Array<String> = ["Best Score", "Most Misses"];
+	// dont ask questions :3c
+	private final statID:Array<String> = [for (i in ClientPrefs.data.stats.keys()) i];
 
-	public function new() {
+	public function new()
+	{
 		super();
 
 		ClientPrefs.loadPrefs();
@@ -36,7 +38,7 @@ class StatsSubState extends MusicBeatSubstate
 		#if desktop
 		DiscordClient.changePresence("Viewing Stats", null);
 		#end
-		
+
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = EngineData.coreGame.menuColor;
 		bg.updateHitbox();
@@ -47,11 +49,11 @@ class StatsSubState extends MusicBeatSubstate
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
 
-		for (i in 0...stats.length)
+		for (i in 0...statID.length)
 		{
 			statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
 			statsTxt.screenCenter();
-			statsTxt.text = stats[i] + ": " + ClientPrefs.data.stats[i];
+			statsTxt.text = statID[i] + ": " + ClientPrefs.data.stats.get(statID[i]);
 			statsTxt.isMenuItemCenter = true;
 			statsTxt.targetY = i;
 			statsTxt.ID = i;
@@ -69,13 +71,11 @@ class StatsSubState extends MusicBeatSubstate
 		text.scrollFactor.set(0, 0);
 		add(text);
 
-		
 		changeSelection();
 	}
 
 	override function update(elapsed:Float)
 	{
-
 		if (controls.UI_UP_P)
 		{
 			changeSelection(-1);
@@ -92,12 +92,12 @@ class StatsSubState extends MusicBeatSubstate
 			ClientPrefs.saveSettings();
 		}
 
-		if(controls.RESET)
-			{
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				ClientPrefs.resetStats();
-				close();
-			}
+		if (controls.RESET)
+		{
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+			ClientPrefs.resetStats();
+			close();
+		}
 
 		super.update(elapsed);
 	}
@@ -106,8 +106,8 @@ class StatsSubState extends MusicBeatSubstate
 	{
 		curSelected += change;
 		if (curSelected < 0)
-			curSelected = stats.length - 1;
-		if (curSelected >= stats.length)
+			curSelected = statID.length - 1;
+		if (curSelected >= statID.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
@@ -119,7 +119,8 @@ class StatsSubState extends MusicBeatSubstate
 
 			item.alpha = 0.6;
 
-			if (item.ID == curSelected){
+			if (item.ID == curSelected)
+			{
 				item.alpha = 1;
 			}
 		}

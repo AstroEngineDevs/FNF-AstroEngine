@@ -4200,21 +4200,15 @@ class PlayState extends MusicBeatState
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 
 				// Stats
-				if (ClientPrefs.data.stats[0] < songScore)
-					{
-						ClientPrefs.data.stats[0] = songScore;
-						ClientPrefs.saveSettings();
-					}
-					if (ClientPrefs.data.stats[1] < songMisses)
-					{
-						ClientPrefs.data.stats[1] = songMisses;
-						ClientPrefs.saveSettings();
-					}
 
-					
+				// i'll make more sexy later ;3c
+				if (ClientPrefs.data.stats.get('Max Score') < songScore)
+					ClientPrefs.data.stats.set('Max Score', songScore);
+				if (ClientPrefs.data.stats.get('Max Misses') < songMisses)
+					ClientPrefs.data.stats.set('Max Misses', songMisses);
 
+				ClientPrefs.saveSettings();
 				#end
-			
 			}
 			playbackRate = 1;
 

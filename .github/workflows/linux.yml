@@ -23,6 +23,8 @@ jobs:
         run: |
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
+      - name: Install Packages (Needed)
+        run: |
           haxelib install hmm --quiet
           haxelib run hmm install
       - name: Skip SScript setup mode

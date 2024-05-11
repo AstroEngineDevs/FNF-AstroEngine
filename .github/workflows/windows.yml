@@ -22,6 +22,7 @@ jobs:
           haxelib install hxcpp > /dev/null --quiet
       - name: Install Packages (Needed)
         run: |
+          haxelib setup ~/haxelib
           haxelib install hmm --quiet
           haxelib run hmm install
         shell: cmd

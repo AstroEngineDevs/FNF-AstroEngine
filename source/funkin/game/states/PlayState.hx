@@ -1,5 +1,6 @@
 package funkin.game.states;
 
+import funkin.game.objects.scorebars.*;
 import funkin.game.objects.notes.NoteUtils;
 import funkin.game.objects.Scorebar;
 import flixel.util.FlxSpriteUtil;
@@ -323,7 +324,7 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
-	public var scoreTxt:Scorebar;
+	public var scoreTxt:FlxSprite;
 	var timeTxt:FlxText;
 	var versionTxtSmth:FlxText;
 	var scoreTxtTween:FlxTween;
@@ -386,13 +387,15 @@ class PlayState extends MusicBeatState
 
 
 	// kys 
-	var songLeft:FlxText;
-	var psyWatermark:FlxText;
-	var sickTxt:FlxText;
-	var goodsTxt:FlxText;
-	var badTxt:FlxText;
-	var shitsTxt:FlxText;
-	var missTxt:FlxText;
+	public var songLeft:FlxText;
+	public var psyWatermark:FlxText;
+	public var sickTxt:FlxText;
+	public var goodsTxt:FlxText;
+	public var badTxt:FlxText;
+	public var shitsTxt:FlxText;
+	public var missTxt:FlxText;
+
+	public var scoreUpdateFunc:Void->Void;
 
 	override public function create()
 	{
@@ -1300,19 +1303,26 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		reloadHealthBarColors();
 
-		scoreTxt = new Scorebar();
-		add(scoreTxt);
 		
-		if (ClientPrefs.data.scoreBarType == 'Astro')
-		{
-			var curve:Int = 35;
-			// WaterMark
-			addCurveBG(scoreTxt.x + 25, scoreTxt.y + 4.5, 212.5, 35, curve, curve, statBGGroup, 0);
-			// ScoreBar
-			addCurveBG(healthBarBG.x, scoreTxt.y + 4.5, 600, 35, curve, curve, statBGGroup, 0);
-			// TimeBar (Alt)
-			addCurveBG(songLeft.x - 12.5, scoreTxt.y + 4.5, 125, 35, curve, curve, statBGGroup, 0);
-		}
+		switch(ClientPrefs.data.scoreBarType){
+			case 'Astro':
+				scoreTxt = new AstroScore();
+				scoreUpdateFunc = AstroScore.instance.updateShit;
+				var curve:Int = 35;
+				// WaterMark
+				addCurveBG(scoreTxt.x + 25, scoreTxt.y + 4.5, 212.5, 35, curve, curve, statBGGroup, 0);
+				// ScoreBar
+				addCurveBG(healthBarBG.x, scoreTxt.y + 4.5, 600, 35, curve, curve, statBGGroup, 0);
+				// TimeBar (Alt)
+				addCurveBG(songLeft.x - 12.5, scoreTxt.y + 4.5, 125, 35, curve, curve, statBGGroup, 0);
+			
+			case 'Psych':
+				scoreTxt = new PsychScore();
+				scoreUpdateFunc = PsychScore.instance.updateShit;
+			default:
+				scoreTxt = new NormalScore();
+				scoreUpdateFunc = NormalScore.instance.updateShit;
+		}	
 		
 		if (!ClientPrefs.data.downScroll)
 			statBGGroup.visible = true;
@@ -2481,7 +2491,7 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{	
-		Scorebar.instance.updateShit();
+		scoreUpdateFunc();
 		psyWatermark.text = SONG.song + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
 	
 		if (ClientPrefs.data.scoreBarType == 'Astro'){

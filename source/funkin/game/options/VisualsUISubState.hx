@@ -51,7 +51,7 @@ class VisualsUISubState extends BaseOptionsMenu
 			'scoreBarType',
 			'string',
 			'Astro',
-			['Astro', 'Psych', 'Legacy']);
+			['Astro', 'Psych', 'V-Slice']);
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',

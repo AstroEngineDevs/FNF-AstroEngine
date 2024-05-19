@@ -4,6 +4,8 @@ import funkin.backend.Highscore;
 
 using StringTools;
 
+// USED FOR REF OK DUDE WILL BE DELETE LATER ONCE I GET A BRAIN AND FIX EVERYTHING LMAO
+
 class Scorebar extends FlxText {
 
 	public static var instance:Scorebar;
@@ -33,7 +35,7 @@ class Scorebar extends FlxText {
     }
 
     public function updateShit() {
-		if(ClientPrefs.data.scoreBarType != 'Legacy'){
+		if(ClientPrefs.data.scoreBarType != 'V-Slice'){
 			text = 'Score: '
 			+ PlayState.instance.songScore
 			+ ' $inShit Misses: '

@@ -6,6 +6,7 @@ import flixel.util.FlxSpriteUtil;
 using StringTools;
 
 class AstroScore extends FlxText
+// TODO: Turn into FlxBasic Objects
 {
 	public static var instance:AstroScore;
 

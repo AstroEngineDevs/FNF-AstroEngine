@@ -373,8 +373,6 @@ class PlayState extends MusicBeatState
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 	private var controlArray:Array<String>;
-	// Stage callbacks
-	public var finishCallback:Void->Void = null;
 
 	var precacheList:Map<String, String> = new Map<String, String>();
 	
@@ -397,13 +395,20 @@ class PlayState extends MusicBeatState
 
 	public var scoreUpdateFunc:Void->Void;
 
+	// Callbacks for stages
+	public var startCallback:Void->Void = null;
+	public var endCallback:Void->Void = null;
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
 		Paths.clearStoredMemory();
 
+		startCallback = startCountdown;
+		endCallback = endSong;
+
+		// Lua
 		instance = this;
-		finishCallback = endSong;
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
@@ -1501,7 +1506,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			startCountdown();
+			startCallback();
 		}
 		RecalculateRating();
 
@@ -1805,7 +1810,7 @@ class PlayState extends MusicBeatState
 
 		var video:MP4Handler = new MP4Handler();
 		video.playVideo(filepath);
-		video.finishCallback = function()
+		video.endCallback = function()
 		{
 			startAndEnd();
 			return;
@@ -4143,10 +4148,10 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 		vocals.pause();
 		if(ClientPrefs.data.noteOffset <= 0 || ignoreNoteOffset) {
-			finishCallback();
+			endCallback();
 		} else {
 			finishTimer = new FlxTimer().start(ClientPrefs.data.noteOffset / 1000, function(tmr:FlxTimer) {
-				finishCallback();
+				endCallback();
 			});
 		}
 	}

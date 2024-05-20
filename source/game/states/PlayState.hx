@@ -1,7 +1,6 @@
 package game.states;
 
 import game.objects.notes.NoteUtils;
-import game.objects.Scorebar;
 import flixel.util.FlxSpriteUtil;
 import backend.funkinLua.LuaUtils;
 import backend.data.EngineData;

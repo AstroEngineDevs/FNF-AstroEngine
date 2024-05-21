@@ -14,7 +14,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
-import funkin.backend.InputFormatter;
+import funkin.backend.client.InputFormatter;
 import flixel.FlxSubState;
 import flash.text.TextField;
 import flixel.FlxG;

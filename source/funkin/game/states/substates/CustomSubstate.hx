@@ -1,4 +1,4 @@
-package funkin.backend;
+package funkin.game.states.substates;
 
 import funkin.game.states.PlayState;
 import funkin.backend.system.MusicBeatSubstate;

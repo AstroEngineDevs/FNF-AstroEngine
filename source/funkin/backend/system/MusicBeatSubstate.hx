@@ -27,15 +27,16 @@ class MusicBeatSubstate extends FlxSubState
 
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
-	
-	public function addBehindObject(obj:FlxBasic, obj2:FlxBasic) 
+
+	public function addBehindObject(obj:FlxBasic, obj2:FlxBasic)
 		return insert(members.indexOf(obj2), obj);
-	public function addAheadObject(obj:FlxBasic, obj2:FlxBasic) 
+
+	public function addAheadObject(obj:FlxBasic, obj2:FlxBasic)
 		return insert(members.indexOf(obj2) + 1, obj);
 
 	override function update(elapsed:Float)
 	{
-		//everyStep();
+		// everyStep();
 		var oldStep:Int = curStep;
 
 		updateCurStep();
@@ -44,14 +45,13 @@ class MusicBeatSubstate extends FlxSubState
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
 
-
 		super.update(elapsed);
 	}
 
 	private function updateBeat():Void
 	{
 		curBeat = Math.floor(curStep / 4);
-		curDecBeat = curDecStep/4;
+		curDecBeat = curDecStep / 4;
 	}
 
 	private function updateCurStep():Void
@@ -71,6 +71,6 @@ class MusicBeatSubstate extends FlxSubState
 
 	public function beatHit():Void
 	{
-		//do literally nothing dumbass
+		// do literally nothing dumbass
 	}
 }

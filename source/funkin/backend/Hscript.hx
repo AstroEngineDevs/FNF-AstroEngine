@@ -17,7 +17,7 @@ import llua.State;
 import llua.Convert;
 #end
 
-import funkin.backend.CustomSubstate;
+import funkin.game.states.substates;
 import funkin.backend.Conductor;
 import haxe.Exception;
 import funkin.game.objects.characters.Character;

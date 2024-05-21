@@ -2,7 +2,6 @@ package funkin.game.states;
 
 import funkin.game.objects.scorebars.*;
 import funkin.game.objects.notes.NoteUtils;
-import funkin.game.objects.Scorebar;
 import flixel.util.FlxSpriteUtil;
 import funkin.backend.funkinLua.LuaUtils;
 import funkin.backend.data.EngineData;
@@ -83,7 +82,7 @@ import flixel.util.FlxSave;
 import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
 import funkin.game.objects.Achievements;
-import funkin.backend.StageData;
+import funkin.backend.data.StageData;
 import funkin.game.objects.playstateBG.*;
 //LuaShit fr
 import funkin.backend.funkinLua.FunkinLua;

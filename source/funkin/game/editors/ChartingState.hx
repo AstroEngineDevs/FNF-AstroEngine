@@ -10,7 +10,7 @@ import funkin.game.objects.StrumNote;
 import haxe.Json;
 import funkin.backend.utils.Paths;
 import funkin.game.states.PlayState;
-import funkin.backend.StageData;
+import funkin.backend.data.StageData;
 import funkin.backend.Song;
 import haxe.format.JsonParser;
 import funkin.game.objects.AttachedSprite;

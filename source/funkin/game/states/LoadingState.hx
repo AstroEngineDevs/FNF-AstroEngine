@@ -2,7 +2,7 @@ package funkin.game.states;
 
 import lime.app.Promise;
 import lime.app.Future;
-import funkin.backend.StageData;
+import funkin.backend.data.StageData;
 import flixel.FlxG;
 import funkin.game.states.PlayState;
 import flixel.FlxState;

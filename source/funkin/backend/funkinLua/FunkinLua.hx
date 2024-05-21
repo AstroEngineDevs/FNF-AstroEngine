@@ -10,7 +10,7 @@ import llua.LuaL;
 import llua.State;
 import llua.Convert;
 #end
-import funkin.backend.CustomSubstate;
+import funkin.game.states.substates.*;
 import funkin.backend.utils.ClientPrefs;
 import funkin.game.objects.characters.Character;
 import funkin.game.objects.StrumNote;
@@ -68,8 +68,6 @@ import hscript.Parser;
 import hscript.Interp;
 import hscript.Expr;
 #end
-
-import funkin.backend.CustomSubstate;
 
 #if desktop
 import funkin.backend.client.Discord;

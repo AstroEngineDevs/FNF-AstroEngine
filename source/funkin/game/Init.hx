@@ -16,19 +16,19 @@ class Init extends MusicBeatState
 		Paths.pushGlobalMods();
 		#end
 		funkin.backend.data.WeekData.loadTheFirstEnabledMod();
-
-		#if DISCORD_ALLOWED
-		DiscordClient.prepare();
-		#end
-
+ 
 		Logs.init();
 		Volume.init();
 		funkin.backend.Highscore.load();
 		funkin.backend.utils.ClientPrefs.init();
 
+		#if DISCORD_ALLOWED
+		DiscordClient.prepare();
+		#end
+
 		super.create();
 
-		MusicBeatState.switchState(new funkin.game.states.TitleState());
+		MusicBeatState.switchState(new TitleState());
 	}
 }
 
@@ -47,7 +47,7 @@ class Volume
 	}
 }
 
-@:private class Logs // Modded trace func
+class Logs // Modded trace func
 {
 	private static final fuckbaby:String = "[Astro System]"; // prefix i guess
 

@@ -5,7 +5,7 @@ import funkin.backend.utils.Section.SwagSection;
 import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
-import funkin.backend.StageData;
+import funkin.backend.data.StageData;
 #if sys
 import sys.io.File;
 import sys.FileSystem;

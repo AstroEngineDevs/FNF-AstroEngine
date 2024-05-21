@@ -1,4 +1,4 @@
-package funkin.backend;
+package funkin.backend.data;
 
 #if MODS_ALLOWED
 import sys.io.File;

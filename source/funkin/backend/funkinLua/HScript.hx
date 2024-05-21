@@ -17,7 +17,7 @@ import llua.State;
 import llua.Convert;
 #end
 
-import funkin.backend.CustomSubstate;
+import funkin.game.states.substates.*;
 import funkin.backend.Conductor;
 import haxe.Exception;
 import funkin.game.objects.characters.Character;
@@ -53,7 +53,7 @@ class HScript
 		interp.variables.set('backend.utils.ClientPrefs', funkin.backend.utils.ClientPrefs);
 		interp.variables.set('Character', Character);
 		interp.variables.set('Alphabet', funkin.game.objects.Alphabet);
-		interp.variables.set('CustomSubstate', funkin.backend.CustomSubstate);
+		interp.variables.set('CustomSubstate', funkin.game.states.substates.CustomSubstate);
 		#if (!flash && sys)
 		interp.variables.set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
 		#end

@@ -26,7 +26,14 @@ class Init extends MusicBeatState
 		DiscordClient.prepare();
 		#end
 
+		if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
+			FlxG.mouse.visible = true;
+		else
+			FlxG.mouse.visible = false;
+
 		super.create();
+
+		// Extra stuff goes here :3
 
 		MusicBeatState.switchState(new TitleState());
 	}

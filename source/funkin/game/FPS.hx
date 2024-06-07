@@ -55,7 +55,6 @@ class FPS extends TextField
 		times = [];
 	}
 
-	// Event Handlers
 	@:noCompletion
 	private #if !flash override #end function __enterFrame(deltaTime:Float):Void
 	{
@@ -75,6 +74,7 @@ class FPS extends TextField
 		if (currentCount != cacheCount)
 		{
 			text = "FPS: " + currentFPS;
+			
 			var memoryMegas:Float = 0;
 
 			#if openfl
@@ -82,7 +82,9 @@ class FPS extends TextField
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
 			text += '\nAstro Engine: ' + EngineData.engineData.coreVersion;
-			#if debug text += '\nCommit: ${CommitMacro.commitNumber} [${CommitMacro.commitHash}]'; #end
+			#if debug 
+			text += '\nCommit: ${CommitMacro.commitNumber} [${CommitMacro.commitHash}]'; 
+			#end
 
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.data.framerate / 2)

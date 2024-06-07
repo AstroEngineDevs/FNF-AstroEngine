@@ -133,7 +133,7 @@ class TitleState extends MusicBeatState
 		#end
 
 		// IGNORE THIS!!!
-		titleJSON = Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
+		titleJSON = Json.parse(Paths.getTextFromFile('data/titleJson.json'));
 
 		if (!initialized)
 		{
@@ -489,58 +489,40 @@ class TitleState extends MusicBeatState
 
 		if (!closedState)
 		{
+
+			// basically controls the fnf intro
 			sickBeats++;
 			switch (sickBeats)
 			{
 				case 1:
-					// FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-				// credTextShit.visible = true;
 				case 4:
 					addMoreText('present');
-				// credTextShit.text += '\npresent...';
-				// credTextShit.addText();
 				case 5:
 					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = 'In association \nwith';
-				// credTextShit.screenCenter();
 				case 6:
 					createCoolText(['In association', 'with'], -40);
 				case 8:
 					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
-				// credTextShit.text += '\nNewgrounds';
 				case 9:
 					deleteCoolText();
 					ngSpr.visible = false;
-				// credTextShit.visible = false;
-
-				// credTextShit.text = 'Shoutouts Tom Fulp';
-				// credTextShit.screenCenter();
 				case 10:
 					createCoolText([curWacky[0]]);
-				// credTextShit.visible = true;
 				case 12:
 					addMoreText(curWacky[1]);
-				// credTextShit.text += '\nlmao';
 				case 13:
 					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = "Friday";
-				// credTextShit.screenCenter();
 				case 14:
 					addMoreText('Friday');
-				// credTextShit.visible = true;
 				case 15:
 					addMoreText('Night');
-				// credTextShit.text += '\nNight';
 				case 16:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
+					addMoreText('Funkin');
 				case 17:
 					skipIntro();
 			}

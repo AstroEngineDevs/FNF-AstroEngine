@@ -1307,14 +1307,14 @@ class PlayState extends MusicBeatState
 		add(iconP2);
 		reloadHealthBarColors();
 
-		
+		updateScore();
 		switch(ClientPrefs.data.scoreBarType){
 			case 'Astro':
 				scoreTxt = new AstroScore();
 				scoreUpdateFunc = AstroScore.instance.updateShit;
 				var curve:Int = 35;
 				// WaterMark
-				addCurveBG(scoreTxt.x + 25, scoreTxt.y + 4.5, 212.5, 35, curve, curve, statBGGroup, 0);
+				addCurveBG(psyWatermark.x - 10, scoreTxt.y + 4.5, psyWatermark.fieldWidth+20, 35, curve, curve, statBGGroup, 0);
 				// ScoreBar
 				addCurveBG(healthBarBG.x, scoreTxt.y + 4.5, 600, 35, curve, curve, statBGGroup, 0);
 				// TimeBar (Alt)

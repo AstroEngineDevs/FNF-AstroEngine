@@ -93,8 +93,15 @@ class CreditsState extends MusicBeatState
 				'Hackx2',
 				'hackx2',
 				'Main Programmer of Astro Engine',
-				'https://twitter.com/AnimatesHack',
+				'https://github.com/Hackx2',
 				'BA7EFF'
+			],
+			[
+				'GuineaPigUuhh',
+				'guineapig',
+				'Assistant Programmer of Astro Engine',
+				'https://github.com/GuineaPigUuhh',
+				'FFFFFF'
 			],
 			[''],
 			['Psych Engine Team'],

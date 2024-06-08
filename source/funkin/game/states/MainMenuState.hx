@@ -231,14 +231,14 @@ class MainMenuState extends MusicBeatState
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
-				susOWO();
+				selectedSomethinAnal = false;
 			}
 
 			if (controls.UI_DOWN_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
-				susOWO();
+				selectedSomethinAnal = false;
 			}
 
 			if (controls.BACK)
@@ -267,10 +267,6 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.screenCenter(X);
 		});
-	}
-
-	function susOWO() {
-		selectedSomethinAnal = false;
 	}
 
 	function stateChangeThing(){

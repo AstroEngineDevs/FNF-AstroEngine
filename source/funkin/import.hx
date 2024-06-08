@@ -50,3 +50,4 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 #end
 
 using StringTools;
+using funkin.backend.utils.StringUtils;

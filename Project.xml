@@ -3,11 +3,10 @@
 	<!-- _________________________ Application Settings _________________________ -->
 
 	<app
-		version="0.2.8" 
-		title="Friday Night Funkin': Astro Engine" 
+		title="Friday Night Funkin' Astro Engine" 
 		file="Astro Engine" 
-		packageName="com.hackx2.astroengine" 
-		package="com.hackx2.astroengine" 
+		version="0.2.8" 
+		packageName="com.astro" 
 		main="funkin.game.Main" 
 		company="Hackx2" 
 	/>

@@ -138,8 +138,8 @@
 
 	<haxedev set='webgl' />
 
-	<haxelib name="lime" version="8.1.1"/>
-	<haxelib name="openfl" version="9.3.2"/>
+	<haxelib name="lime" />
+	<haxelib name="openfl" />
 	<haxelib name="flixel" version="5.5.0"/>
 
 	<!--In case you want to use the addons package-->

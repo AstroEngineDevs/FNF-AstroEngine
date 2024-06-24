@@ -22,7 +22,7 @@ after it finishes, simply type `haxelib run hmm install` in order to install all
 
 **[Hackx2](https://twitter.com/AnimatesHack)** - Main **Programmer**
 
-**[GuineaPigUuhh](https://github.com/GuineaPigUuhh)** - Main **Programmer**
+**[GuineaPigUuhh](https://github.com/GuineaPigUuhh)** - Ex-**Programmer**
 
 ---
 

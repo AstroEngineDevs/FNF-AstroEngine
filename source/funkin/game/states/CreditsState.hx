@@ -99,7 +99,7 @@ class CreditsState extends MusicBeatState
 			[
 				'GuineaPigUuhh',
 				'guineapig',
-				'Assistant Programmer of Astro Engine',
+				'Ex-Programmer of Astro Engine',
 				'https://github.com/GuineaPigUuhh',
 				'FFFFFF'
 			],

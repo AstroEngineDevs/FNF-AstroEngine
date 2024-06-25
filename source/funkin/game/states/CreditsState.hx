@@ -96,13 +96,6 @@ class CreditsState extends MusicBeatState
 				'https://github.com/Hackx2',
 				'BA7EFF'
 			],
-			[
-				'GuineaPigUuhh',
-				'guineapig',
-				'Ex-Programmer of Astro Engine',
-				'https://github.com/GuineaPigUuhh',
-				'FFFFFF'
-			],
 			[''],
 			['Psych Engine Team'],
 			[
@@ -130,7 +123,7 @@ class CreditsState extends MusicBeatState
 			],
 			[
 				'shubs',
-				'',
+				'icon',
 				'Ex-Programmer of Psych Engine\nI don\'t support them.',
 				'',
 				'A1A1A1'
@@ -254,14 +247,10 @@ class CreditsState extends MusicBeatState
 					Paths.currentModDirectory = creditsStuff[i][5];
 				}
 
-				// var icon:AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
-
-				// i stole from shadowmario
 				var str:String = 'credits/nullObj';
-				if (creditsStuff[i][1] == "face")
-					str = 'credits/nullObj';
-				if (Paths.image('credits/' + creditsStuff[i][1]) != null)
+				if (creditsStuff[i][1] != 'face' && Paths.image('credits/' + creditsStuff[i][1]) != null)
 					str = 'credits/' + creditsStuff[i][1];
+
 
 				var icon:AttachedSprite = new AttachedSprite(str);
 				icon.xAdd = optionText.width + 10;

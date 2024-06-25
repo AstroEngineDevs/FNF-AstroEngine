@@ -22,7 +22,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
+          haxelib install hxcpp 4.3.2 > /dev/null --quiet
           haxelib install hmm --quiet
           haxelib run hmm install
       - name: Skip SScript setup mode

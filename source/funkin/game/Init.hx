@@ -19,9 +19,10 @@ class Init extends flixel.FlxState
 
 		Logs.init();
 		Volume.init();
-		funkin.backend.Highscore.load();
+		funkin.backend.Highscore.init();
 		funkin.backend.utils.ClientPrefs.init();
 		MusicBeatState.init();
+		init();
 
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
@@ -30,10 +31,15 @@ class Init extends flixel.FlxState
 		super.create();
 
 		// Extra stuff goes here :3
-		if (FlxG.save.data != null && FlxG.save.data.fullscreen)
-			FlxG.fullscreen = FlxG.save.data.fullscreen;
 
 		FlxG.switchState(new TitleState());
+	}
+
+	private inline function init():Void {
+		if (FlxG.save.data != null && FlxG.save.data.fullscreen)
+			FlxG.fullscreen = FlxG.save.data.fullscreen;
+		if (FlxG.save.data.weekCompleted != null)
+			funkin.game.states.StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
 	}
 }
 

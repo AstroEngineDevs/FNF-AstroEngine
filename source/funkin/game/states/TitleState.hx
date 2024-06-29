@@ -136,15 +136,7 @@ class TitleState extends MusicBeatState
 		titleJSON = Json.parse(Paths.getTextFromFile('data/titleJson.json'));
 
 		if (!initialized)
-		{
-			persistentUpdate = true;
-			persistentDraw = true;
-		}
-
-		if (FlxG.save.data.weekCompleted != null)
-		{
-			funkin.game.states.StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
-		}
+			persistentUpdate = persistentDraw = true;
 
 		#if FREEPLAY
 		MusicBeatState.switchState(new game.states.FreeplayState());

@@ -3307,12 +3307,7 @@ class PlayState extends MusicBeatState
 		}
 
 		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene)
-		{
 			openChartEditor();
-		}
-
-		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
-		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
 		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9 * playbackRate), 0, 1));
 		iconP1.scale.set(mult, mult);
@@ -3335,10 +3330,9 @@ class PlayState extends MusicBeatState
 		else
 			iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80){
+		if (healthBar.percent > 80)
 			iconP2.animation.curAnim.curFrame = 1;
-			iconP1.animation.curAnim.curFrame = 2;
-		} else
+		else
 			iconP2.animation.curAnim.curFrame = 0;
 
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
@@ -3349,9 +3343,7 @@ class PlayState extends MusicBeatState
 		}
 		
 		if (startedCountdown)
-		{
 			Conductor.songPosition += FlxG.elapsed * 1000 * playbackRate;
-		}
 
 		if (startingSong)
 		{

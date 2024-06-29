@@ -133,7 +133,7 @@ class Highscore
 		return weekScores.get(daWeek);
 	}
 
-	public static function load():Void
+	public static function init():Void
 	{
 		if (FlxG.save.data.weekScores != null)
 		{

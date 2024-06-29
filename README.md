@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="art/astroshit/512-modified.png" width="250" height="250"/>
+    <img src="art/astro/512-modified.png" width="250" height="250"/>
     <br>
     <h1>Friday Night Funkin' • <code>Astro Engine</code> (<strong>Beta</strong>)</h1>
     <br>    
@@ -20,7 +20,9 @@ after it finishes, simply type `haxelib run hmm install` in order to install all
 
 <h2>Credits:</h2>
 
-**[HackTheAir](https://twitter.com/AnimatesHack)** - Main **Programmer**
+**[Hackx2](https://twitter.com/AnimatesHack)** - Main **Programmer**
+
+**[GuineaPigUuhh](https://github.com/GuineaPigUuhh)** - Ex-**Programmer**
 
 ---
 
@@ -28,7 +30,7 @@ after it finishes, simply type `haxelib run hmm install` in order to install all
 
 **Shadow Mario** - Main **Programmer**<br>
 **RiverOaken** - Artist<br>
-**Yoshubs** - Assistant **Programmer**<br>
+**Yoshubs** - Ex-**Programmer**<br>
 **bbpanzu** - Ex-**Programmer**<br>
 
 ---

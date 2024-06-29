@@ -5,7 +5,8 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import openfl.Assets;
 import haxe.Json;
-import game.states.PlayState;
+import funkin.backend.utils.Paths;
+import funkin.game.states.PlayState;
 import openfl.display.BitmapData;
 import animateatlas.JSONData.AtlasData;
 import animateatlas.JSONData.AnimationData;
@@ -46,17 +47,17 @@ class AtlasFrameMaker extends FlxFramesCollection
 		var frameCollection:FlxFramesCollection;
 		var frameArray:Array<Array<FlxFrame>> = [];
 
-		if (backend.utils.Paths.fileExists('images/$key/spritemap1.json', TEXT))
+		if (Paths.fileExists('images/$key/spritemap1.json', TEXT))
 		{
 			PlayState.instance.addTextToDebug("Only Spritemaps made with Adobe Animate 2018 are supported", FlxColor.RED);
 			trace("Only Spritemaps made with Adobe Animate 2018 are supported");
 			return null;
 		}
 
-		var animationData:AnimationData = Json.parse(backend.utils.Paths.getTextFromFile('images/$key/Animation.json'));
-		var atlasData:AtlasData = Json.parse(backend.utils.Paths.getTextFromFile('images/$key/spritemap.json').replace("\uFEFF", ""));
+		var animationData:AnimationData = Json.parse(Paths.getTextFromFile('images/$key/Animation.json'));
+		var atlasData:AtlasData = Json.parse(Paths.getTextFromFile('images/$key/spritemap.json').replace("\uFEFF", ""));
 
-		var graphic:FlxGraphic = backend.utils.Paths.image('$key/spritemap');
+		var graphic:FlxGraphic = Paths.image('$key/spritemap');
 		var ss:SpriteAnimationLibrary = new SpriteAnimationLibrary(animationData, atlasData, graphic.bitmap);
 		var t:SpriteMovieClip = ss.createAnimation(noAntialiasing);
 		if(_excludeArray == null)

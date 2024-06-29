@@ -1,8 +1,8 @@
 # ```TODO```
 
-* Make a macro to change the current version from github.com
-* finish Init State.
-* add bg to FPS (so it readable frfr)
+* ~~finish Init State.~~
+* Finsh Video Handler State
+* add winning icon support :3c
 
 OLD:
 * Might add winning icons (only if i can get the icons for them :3)

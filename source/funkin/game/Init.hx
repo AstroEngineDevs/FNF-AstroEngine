@@ -3,7 +3,7 @@ package funkin.game;
 import flixel.input.keyboard.FlxKey;
 import funkin.backend.utils.Paths;
 
-class Init extends MusicBeatState
+class Init extends flixel.FlxState
 {
 	override public function create():Void
 	{
@@ -16,26 +16,24 @@ class Init extends MusicBeatState
 		Paths.pushGlobalMods();
 		#end
 		funkin.backend.data.WeekData.loadTheFirstEnabledMod();
- 
+
 		Logs.init();
 		Volume.init();
 		funkin.backend.Highscore.load();
 		funkin.backend.utils.ClientPrefs.init();
+		MusicBeatState.init();
 
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
 		#end
 
-		if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
-			FlxG.mouse.visible = true;
-		else
-			FlxG.mouse.visible = false;
-
 		super.create();
 
 		// Extra stuff goes here :3
+		if (FlxG.save.data != null && FlxG.save.data.fullscreen)
+			FlxG.fullscreen = FlxG.save.data.fullscreen;
 
-		MusicBeatState.switchState(new TitleState());
+		FlxG.switchState(new TitleState());
 	}
 }
 
@@ -45,7 +43,7 @@ class Volume
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
 
-	public static function init()
+	public static function init():Void
 	{
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
@@ -58,7 +56,7 @@ class Logs // Modded trace func
 {
 	private static final fuckbaby:String = "[Astro System]"; // prefix i guess
 
-	public static function init()
+	public static function init():Void
 	{
 		haxe.Log.trace = tracev2;
 	}

@@ -41,6 +41,10 @@ class MusicBeatState extends FlxUIState
 		FlxTransitionableState.skipNextTransOut = false;
 	}
 
+	public static function init() {
+		trace('Init Complete'); // Makes Sure MusicBeatState isnt null fr
+	}
+
 	public function addBehindObject(obj:FlxBasic, obj2:FlxBasic)
 		return insert(members.indexOf(obj2), obj);
 

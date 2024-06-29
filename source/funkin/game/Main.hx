@@ -50,9 +50,7 @@ class Main extends Sprite
 
 	public static function exitOn(?type:Int = 0, ?traceE:Bool = false)
 	{
-		if (traceE)
-			trace('Exited at ${Date.now().toString()}');
-
+		if (traceE) trace('Exited at ${Date.now().toString()}');
 		Sys.exit(type);
 	}
 
@@ -108,15 +106,11 @@ class Main extends Sprite
 		#end
 
 		#if html5
-		FlxG.autoPause = false;
-		FlxG.mouse.visible = false;
+		FlxG.autoPause = FlxG.mouse.visible = false;
 		#end
 
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, CrashHandler.onCrash);
 		#end
 	}
-
-	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
-	// very cool person for real they don't get enough credit for their work
 }

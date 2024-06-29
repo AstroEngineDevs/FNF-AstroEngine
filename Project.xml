@@ -44,7 +44,7 @@
 	<define name="DEBUG_SERVER_ALLOWED" if="debug desktop"/>
 
 	<!-- Remove "officialBuild" to use videos on source mod -->
-	<define name="VIDEOS_ALLOWED" if="(windows || linux || android) officialBuild" unless="32bits"/>
+	<define name="VIDEOS_ALLOWED" if="(windows || linux || android) officialBuild || debug" unless="32bits"/>
 
 	<!-- Crash handler -->
 	<define name="CRASH_HANDLER" if="desktop release" />
@@ -56,12 +56,10 @@
 	<define name="message.reporting" value="pretty"/>
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
-	<section embed="true">
-		<icon path="art/icons/icon16.png" size='16'/>
-		<icon path="art/icons/icon32.png" size='32'/>
-		<icon path="art/icons/icon64.png" size='64'/>
-		<icon path="art/icons/iconOG.png"/>
-	</section>
+	<icon path="art/icons/icon16.png" size='16'/>
+	<icon path="art/icons/icon32.png" size='32'/>
+	<icon path="art/icons/icon64.png" size='64'/>
+	<icon path="art/icons/iconOG.png"/>
 	
 	<!-- ____________________________ Window Settings ___________________________ -->
 

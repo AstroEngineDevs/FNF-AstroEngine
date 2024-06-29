@@ -1,7 +1,7 @@
 # ```TODO```
 
 * ~~finish Init State.~~
-* Finsh Video Handler State
+* ~~Finsh Video Handler State~~
 * 
 OLD:
 * Might add winning icons (only if i can get the icons for them :3)

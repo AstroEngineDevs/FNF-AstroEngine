@@ -51,9 +51,9 @@ class DiscordClient
 		var requestPtr:cpp.Star<DiscordUser> = cpp.ConstPointer.fromRaw(request).ptr;
 
 		if (Std.parseInt(cast(requestPtr.discriminator, String)) != 0) // New Discord IDs/Discriminator system
-			traceFr('Connected to User [${cast (requestPtr.username, String)}#${cast (requestPtr.discriminator, String)}]');
+			traceFr('Connected to User (${cast (requestPtr.username, String)}#${cast (requestPtr.discriminator, String)})');
 		else // Old discriminators
-			traceFr('Connected to User [${cast (requestPtr.username, String)}]');
+			traceFr('Connected to User (${cast (requestPtr.username, String)})');
 
 		changePresence();
 	}

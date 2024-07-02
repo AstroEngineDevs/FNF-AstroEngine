@@ -150,10 +150,11 @@ class Paths
 			return getSharedPath(file);
 		}
 
-	static public function getLibraryPath(file:String, library = "preload")
-	{
-		return if (library == "preload" || library == "default") getSharedPath(file); else getLibraryPathForce(file, library);
-	}
+		static public function getLibraryPath(file:String, library = "shared")
+			{
+				return if (library == "shared") getSharedPath(file); else getLibraryPathForce(file, library);
+			}
+		
 
 	inline static function getLibraryPathForce(file:String, library:String, ?level:String)
 		{

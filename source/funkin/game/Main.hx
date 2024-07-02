@@ -31,12 +31,8 @@ using StringTools;
 class Main extends Sprite
 {
 	final game = {
-		width: 1280, // WINDOW width
-		height: 720, // WINDOW height
 		zoom: -1.0, // game state bounds
 		framerate: 144, // default framerate
-		skipSplash: false, // if the default flixel splash screen should be skipped
-		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
 	public static var fpsVar:FPS;
@@ -85,16 +81,16 @@ class Main extends Sprite
 
 		if (game.zoom == -1.0)
 		{
-			var ratioX:Float = stageWidth / game.width;
-			var ratioY:Float = stageHeight / game.height;
+			var ratioX:Float = stageWidth / Config.gameSize[0];
+			var ratioY:Float = stageHeight / Config.gameSize[1];
 			game.zoom = Math.min(ratioX, ratioY);
-			game.width = Math.ceil(stageWidth / game.zoom);
-			game.height = Math.ceil(stageHeight / game.zoom);
+			Config.gameSize[0] = Math.ceil(stageWidth / game.zoom);
+			Config.gameSize[1] = Math.ceil(stageHeight / game.zoom);
 		}
 
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(game.width, game.height, Init, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash,
-			game.startFullscreen));
+		addChild(new FlxGame(Config.gameSize[0], Config.gameSize[1], Init, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, Config.skipSplash,
+			Config.startFullscreen));
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);

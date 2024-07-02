@@ -527,13 +527,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = Paths.getSharedPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = Paths.getSharedPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -580,13 +580,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = Paths.getSharedPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = Paths.getSharedPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -632,13 +632,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = Paths.getSharedPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = Paths.getSharedPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -670,13 +670,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = Paths.getSharedPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = Paths.getSharedPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -752,13 +752,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = Paths.getSharedPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = Paths.getSharedPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -792,13 +792,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = Paths.getSharedPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = Paths.getSharedPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}
@@ -837,13 +837,13 @@ class FunkinLua {
 				doPush = true;
 			}
 			else {
-				cervix = Paths.getPreloadPath(cervix);
+				cervix = Paths.getSharedPath(cervix);
 				if(FileSystem.exists(cervix)) {
 					doPush = true;
 				}
 			}
 			#else
-			cervix = Paths.getPreloadPath(cervix);
+			cervix = Paths.getSharedPath(cervix);
 			if(Assets.exists(cervix)) {
 				doPush = true;
 			}

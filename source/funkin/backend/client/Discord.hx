@@ -1,5 +1,6 @@
 package funkin.backend.client;
 
+import funkin.game.Config;
 import funkin.backend.data.EngineData;
 import funkin.backend.utils.ClientPrefs;
 import Sys.sleep;
@@ -16,12 +17,17 @@ using StringTools;
 class DiscordClient
 {
 	public static var isInitialized:Bool = false;
-	private static final _defaultID:String = EngineData.coreGame.coreDiscordID;
-	public static var clientID(default, set):String = _defaultID;
+	private static final _defaultID:String = Config.discordID;
+	public static var clientID(default, set):String;
 	private static var presence:DiscordRichPresence = DiscordRichPresence.create();
 
 	public static function check()
 	{
+		if(Config.discordID == '')
+			clientID = cast('1095422496473358356', String); // uhm astro engine shiz
+		else
+			clientID = _defaultID;
+
 		if (ClientPrefs.data.discordRPC)
 			initialize();
 		else if (isInitialized)
@@ -110,6 +116,11 @@ class DiscordClient
 		presence.largeImageKey = largeImageKey;
 		presence.largeImageText = "Engine Version: " + cast(EngineData.engineData.coreVersion, String);
 		presence.smallImageKey = smallImageKey;
+
+		// if(Config.discordButton){
+		// 	presence.button1Label = 'Github Page';
+		// 	presence.button1Url = cast(EngineData.engineData.repository, String);
+		// }
 		// Obtained times are in milliseconds so they are divided so Discord can use it
 		presence.startTimestamp = Std.int(startTimestamp / 1000);
 		presence.endTimestamp = Std.int(endTimestamp / 1000);

@@ -1,6 +1,6 @@
 package funkin.game.states;
 
-import funkin.backend.utils.FlxColorPastel;
+import flixel.util.FlxColorPastel;
 import flixel.FlxState;
 import flixel.FlxG;
 import flixel.text.FlxText;

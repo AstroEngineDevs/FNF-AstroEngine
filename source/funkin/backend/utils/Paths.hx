@@ -320,10 +320,9 @@ class Paths
 
 		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(modsXml(key)) : file('images/$key.xml', library)));
 		#else
-		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
+		return FlxAtlasFrames.fromSparrow(image(key, library), getPath('images/$key.xml', library));
 		#end
 	}
-
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
 	{

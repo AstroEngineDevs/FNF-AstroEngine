@@ -225,23 +225,7 @@ class TitleState extends MusicBeatState
 		logoBl.shader = swagShader.shader;
 
 		titleText = new FlxSprite((titleJSON.startx + 30), titleJSON.starty);
-		#if (desktop && MODS_ALLOWED)
-		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
-		// trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path))
-		{
-			path = "mods/images/titleEnter.png";
-		}
-		// trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path))
-		{
-			path = "assets/images/titleEnter.png";
-		}
-		// trace(path, FileSystem.exists(path));
-		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path), File.getContent(StringTools.replace(path, ".png", ".xml")));
-		#else
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
-		#end
 		var animFrames:Array<FlxFrame> = [];
 		@:privateAccess {
 			titleText.animation.findByPrefix(animFrames, "ENTER IDLE");

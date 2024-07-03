@@ -98,7 +98,7 @@
 	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
 	<assets path='mods' if="MODS_ALLOWED" embed='false'/>
-	<assets path='art/iconOG.png' rename='icon.png' if="linux" />
+	<assets path='art/icons/iconOG.png' rename='icon.png' if="linux" />
 
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 

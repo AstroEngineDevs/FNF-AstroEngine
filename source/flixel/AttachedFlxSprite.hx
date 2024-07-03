@@ -1,11 +1,11 @@
-package funkin.game.objects;
+package flixel;
 
+import funkin.backend.utils.Paths;
 import flixel.FlxSprite;
-import funkin.game.objects.AttachedText;
 
 using StringTools;
 
-class AttachedSprite extends FlxSprite
+class AttachedFlxSprite extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
 	public var xAdd:Float = 0;

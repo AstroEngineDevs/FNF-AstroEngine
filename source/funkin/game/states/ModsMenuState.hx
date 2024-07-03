@@ -2,7 +2,7 @@ package funkin.game.states;
 
 import funkin.backend.data.WeekData;
 import funkin.backend.CoolUtil;
-import funkin.game.objects.AttachedSprite;
+import flixel.AttachedFlxSprite;
 #if desktop
 import funkin.backend.client.Discord.DiscordClient;
 #end
@@ -29,7 +29,7 @@ import flash.geom.Rectangle;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import sys.io.File;
-import funkin.game.objects.AttachedText;
+import flixel.AttachedFlxText;
 /*import haxe.zip.Reader;
 	import haxe.zip.Entry;
 	import haxe.zip.Uncompress;
@@ -50,7 +50,7 @@ class ModsMenuState extends MusicBeatState
 	var colorTween:FlxTween;
 
 	var noModsTxt:FlxText;
-	var selector:AttachedSprite;
+	var selector:AttachedFlxSprite;
 	var descriptionTxt:FlxText;
 	var needaReset = false;
 
@@ -131,7 +131,7 @@ class ModsMenuState extends MusicBeatState
 		}
 		saveTxt();
 
-		selector = new AttachedSprite();
+		selector = new AttachedFlxSprite();
 		selector.xAdd = -205;
 		selector.yAdd = -68;
 		selector.alphaMult = 0.5;
@@ -356,7 +356,7 @@ class ModsMenuState extends MusicBeatState
 				loadedIcon = BitmapData.fromFile(iconToUse);
 			}
 
-			newMod.icon = new AttachedSprite();
+			newMod.icon = new AttachedFlxSprite();
 			if (loadedIcon != null)
 			{
 				newMod.icon.loadGraphic(loadedIcon, true, 150, 150); // animated icon support
@@ -688,7 +688,7 @@ class ModMetadata
 	public var color:FlxColor;
 	public var restart:Bool; // trust me. this is very important
 	public var alphabet:funkin.game.objects.Alphabet;
-	public var icon:AttachedSprite;
+	public var icon:AttachedFlxSprite;
 
 	public function new(folder:String)
 	{

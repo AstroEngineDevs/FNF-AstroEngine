@@ -1,6 +1,6 @@
 package funkin.game.states.substates; 
 
-import funkin.game.objects.AttachedText;
+import flixel.AttachedFlxText;
 #if desktop
 import funkin.backend.client.Discord.DiscordClient;
 #end
@@ -39,7 +39,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
-	private var grpTexts:FlxTypedGroup<AttachedText>;
+	private var grpTexts:FlxTypedGroup<AttachedFlxText>;
 
 	function getOptions()
 	{
@@ -123,7 +123,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		grpTexts = new FlxTypedGroup<AttachedText>();
+		grpTexts = new FlxTypedGroup<AttachedFlxText>();
 		add(grpTexts);
 
 		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
@@ -152,7 +152,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				checkboxGroup.add(checkbox);
 			} else {
 				optionText.snapToPosition();
-				var valueText:AttachedText = new AttachedText(Std.string(optionsArray[i].getValue()), optionText.width, -72, true, 0.8);
+				var valueText:AttachedFlxText = new AttachedFlxText(Std.string(optionsArray[i].getValue()), optionText.width, -72, true, 0.8);
 				valueText.sprTracker = optionText;
 				valueText.copyAlpha = true;
 				valueText.ID = i;

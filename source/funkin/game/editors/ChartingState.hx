@@ -13,7 +13,7 @@ import funkin.game.states.PlayState;
 import funkin.backend.data.StageData;
 import funkin.backend.Song;
 import haxe.format.JsonParser;
-import funkin.game.objects.AttachedSprite;
+import flixel.AttachedFlxSprite;
 import haxe.io.Bytes;
 import funkin.game.objects.characters.Character;
 import funkin.backend.Conductor.BPMChangeEvent;
@@ -58,7 +58,7 @@ import openfl.net.FileReference;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 import funkin.game.objects.HealthIcon;
-import funkin.game.objects.AttachedText;
+import flixel.AttachedFlxText;
 import funkin.game.objects.Note;
 
 import funkin.backend.system.MusicBeatSubstate;
@@ -127,7 +127,7 @@ class ChartingState extends MusicBeatState
 
 	var camPos:FlxObject;
 	var strumLine:FlxSprite;
-	var quant:AttachedSprite;
+	var quant:AttachedFlxSprite;
 	var strumLineNotes:FlxTypedGroup<StrumNote>;
 	var curSong:String = 'Test';
 	var amountSteps:Int = 0;
@@ -315,7 +315,7 @@ class ChartingState extends MusicBeatState
 		strumLine = new FlxSprite(0, 50).makeGraphic(Std.int(GRID_SIZE * 9), 4);
 		add(strumLine);
 
-		quant = new AttachedSprite('chart_quant','chart_quant');
+		quant = new AttachedFlxSprite('chart_quant','chart_quant');
 		quant.animation.addByPrefix('q','chart_quant',0,false);
 		quant.animation.play('q', true, false, 0);
 		quant.sprTracker = strumLine;

@@ -1,7 +1,7 @@
 package funkin.game.states;
 
 import funkin.backend.CoolUtil;
-import funkin.game.objects.AttachedSprite;
+import flixel.AttachedFlxSprite;
 #if desktop
 import funkin.backend.client.Discord.DiscordClient;
 #end
@@ -20,7 +20,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 import lime.utils.Assets;
-import funkin.game.objects.AttachedText;
+import flixel.AttachedFlxText;
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 
@@ -31,14 +31,14 @@ class CreditsState extends MusicBeatState
 	var curSelected:Int = -1;
 
 	private var grpOptions:FlxTypedGroup<funkin.game.objects.Alphabet>;
-	private var iconArray:Array<AttachedSprite> = [];
+	private var iconArray:Array<AttachedFlxSprite> = [];
 	private var creditsStuff:Array<Array<String>> = [];
 
 	var bg:FlxSprite;
 	var descText:FlxText;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
-	var descBox:AttachedSprite;
+	var descBox:AttachedFlxSprite;
 
 	var offsetThing:Float = -75;
 
@@ -248,11 +248,10 @@ class CreditsState extends MusicBeatState
 				}
 
 				var str:String = 'credits/nullObj';
-				if (creditsStuff[i][1] != 'face' && Paths.image('credits/' + creditsStuff[i][1]) != null)
+				if ((creditsStuff[i][1] != 'face') && Paths.image('credits/' + creditsStuff[i][1]) != null)
 					str = 'credits/' + creditsStuff[i][1];
 
-
-				var icon:AttachedSprite = new AttachedSprite(str);
+				var icon:AttachedFlxSprite = new AttachedFlxSprite(str);
 				icon.xAdd = optionText.width + 10;
 				icon.sprTracker = optionText;
 
@@ -268,7 +267,7 @@ class CreditsState extends MusicBeatState
 				optionText.alignment = CENTERED;
 		}
 
-		descBox = new AttachedSprite();
+		descBox = new AttachedFlxSprite();
 		descBox.makeGraphic(1, 1, FlxColor.BLACK);
 		descBox.xAdd = -10;
 		descBox.yAdd = -10;

@@ -12,7 +12,7 @@ import funkin.game.objects.Note;
 import funkin.backend.utils.ClientPrefs;
 import funkin.game.objects.characters.Character;
 import funkin.game.objects.HealthIcon;
-import funkin.game.objects.AttachedSprite;
+import flixel.AttachedFlxSprite;
 import flixel.graphics.FlxGraphic;
 import funkin.backend.Highscore;
 import funkin.game.objects.StrumNote;
@@ -237,11 +237,11 @@ class PlayState extends MusicBeatState
 	public var health:Float = 1;
 	public var combo:Int = 0;
 
-	public var healthBarBG:AttachedSprite;
+	public var healthBarBG:AttachedFlxSprite;
 	public var healthBar:FlxBar;
 	var songPercent:Float = 0;
 
-	private var timeBarBG:AttachedSprite;
+	private var timeBarBG:AttachedFlxSprite;
 	public var timeBar:FlxBar;
 
 	public var ratingsData:Array<Rating> = [];
@@ -1117,7 +1117,7 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;
 
-		timeBarBG = new AttachedSprite('UI/timeBar'); 
+		timeBarBG = new AttachedFlxSprite('UI/timeBar'); 
 		timeBarBG.x = timeTxt.x;
 		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
 		timeBarBG.scrollFactor.set();
@@ -1204,7 +1204,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection();
 
-		healthBarBG = new AttachedSprite('UI/healthBar');
+		healthBarBG = new AttachedFlxSprite('UI/healthBar');
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();

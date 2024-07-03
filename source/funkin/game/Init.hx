@@ -35,7 +35,7 @@ class Init extends flixel.FlxState
 		FlxG.switchState(new TitleState());
 	}
 
-	private inline function init():Void {
+	private function init():Void {
 		if (FlxG.save.data != null && FlxG.save.data.fullscreen)
 			FlxG.fullscreen = FlxG.save.data.fullscreen;
 		if (FlxG.save.data.weekCompleted != null)

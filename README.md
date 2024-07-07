@@ -14,7 +14,7 @@ Hello, this is a modified version of the **Psych Engine** that includes events a
 
 open up a Command Prompt/PowerShell or Terminal, type `haxelib install hmm`
 
-after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for _Psych Engine!_
+after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for _Astro Engine!_
 
 ---
 

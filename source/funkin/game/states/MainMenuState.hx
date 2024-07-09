@@ -145,25 +145,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = ClientPrefs.data.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
-			if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
-			{
-				
-				#if (flixel >= "5.0.0") // update your fucking flixel
-					FlxMouseEvent.add(menuItem, null, function(e) stateChangeThing(), function(e)
-					{
-						new FlxTimer().start(0.01, function (tmr:FlxTimer) {
-							selectedSomethinAnal = true;
-						});
-
-						if (!selectedSomethin && selectedSomethinAnal)
-						{
-							curSelected = i;
-							changeItem();
-							FlxG.sound.play(Paths.sound('scrollMenu'));
-						}
-					});
-				#end
-			}
+			mousesupportlmaoo(menuItem, i);
 		}
 
 		FlxG.camera.follow(camFollowPos, null, 1);
@@ -202,6 +184,31 @@ class MainMenuState extends MusicBeatState
 
 		super.create();
 	}
+
+	private function mousesupportlmaoo(sus:FlxSprite, ?eee:Int = 0)
+		{
+			if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
+			{
+				#if (flixel >= "5.0.0") // update your fucking flixel
+				FlxMouseEvent.add(sus, null, function(e) stateChangeThing(), function(e)
+				{
+					new FlxTimer().start(0.01, function(tmr:FlxTimer)
+					{
+						selectedSomethinAnal = true;
+					});
+	
+					if (!selectedSomethin && selectedSomethinAnal)
+					{
+						if(curSelected == eee)
+							return;
+						FlxG.sound.play(Paths.sound('scrollMenu'));
+						curSelected = eee;
+						changeItem();
+					}
+				});
+				#end
+			}
+		}
 
 	#if ACHIEVEMENTS_ALLOWED
 	// Unlocks "Freaky on a Friday Night" achievement

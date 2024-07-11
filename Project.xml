@@ -36,6 +36,9 @@
 	<!-- Enables Achievements -->
 	<define name="ACHIEVEMENTS_ALLOWED" />
 
+	<!-- Crisp Visuals -->
+	<define name="CRISP_VISUALS" if="windows" />
+
 	<!-- Preload Assets -->
 	<define name="PRELOAD_ALL" unless="web" />
 

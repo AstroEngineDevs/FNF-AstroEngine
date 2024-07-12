@@ -247,8 +247,8 @@ class CreditsState extends MusicBeatState
 					Paths.currentModDirectory = creditsStuff[i][5];
 				}
 
-				var str:String = 'credits/nullObj';
-				if ((creditsStuff[i][1] != 'face') && Paths.image('credits/' + creditsStuff[i][1]) != null)
+				var str:String = 'credits/face';
+				if (Paths.image('credits/' + creditsStuff[i][1]) != null)
 					str = 'credits/' + creditsStuff[i][1];
 
 				var icon:AttachedFlxSprite = new AttachedFlxSprite(str);

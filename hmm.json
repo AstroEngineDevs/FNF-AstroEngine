@@ -13,7 +13,7 @@
     {
       "name": "flixel",
       "type": "haxelib",
-      "version": "5.5.0"
+      "version": null
     },
     {
       "name": "flixel-addons",
@@ -43,7 +43,7 @@
     {
       "name": "hxCodec",
       "type": "haxelib",
-      "version": "2.5.1"
+      "version": null
     },
     {
       "name": "hscript",
@@ -52,8 +52,10 @@
     },
     {
       "name": "hxcpp-debug-server",
-      "type": "haxelib",
-      "version": null
+      "type": "git",
+      "dir": null,
+      "ref": "master",
+      "url": "https://github.com/AstroEngineDevs/hxcpp-debugger"
     },
     {
       "name": "hxdiscord_rpc",

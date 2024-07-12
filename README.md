@@ -16,6 +16,9 @@ open up a Command Prompt/PowerShell or Terminal, type `haxelib install hmm`
 
 after it finishes, simply type `haxelib run hmm install` in order to install all the needed libraries for _Astro Engine!_
 
+ERROR FIX:
+Could not parse frame number of: `haxelib install flixel 5.6.1`
+
 ---
 
 <h2>Credits:</h2>

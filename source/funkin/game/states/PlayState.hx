@@ -76,10 +76,7 @@ import funkin.game.editors.CharacterEditorState;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
-import flixel.effects.particles.FlxEmitter;
-import flixel.effects.particles.FlxParticle;
 import flixel.util.FlxSave;
-import flixel.animation.FlxAnimationController;
 import animateatlas.AtlasFrameMaker;
 import funkin.game.objects.Achievements;
 import funkin.backend.data.StageData;
@@ -5240,7 +5237,7 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
-		//FlxAnimationController.globalSpeed = 1;
+
 		FlxG.sound.music.pitch = 1;
 		super.destroy();
 	}

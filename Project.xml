@@ -37,7 +37,7 @@
 	<define name="ACHIEVEMENTS_ALLOWED" />
 
 	<!-- Crisp Visuals -->
-	<define name="CRISP_VISUALS" if="windows" />
+	<define name="CRISP_VISUALS" if="windows" unless="32bits"/>
 
 	<!-- Preload Assets -->
 	<define name="PRELOAD_ALL" unless="web" />
@@ -114,7 +114,7 @@
 
 	<haxelib name="lime" />
 	<haxelib name="openfl" />
-	<haxelib name="flixel" version="5.5.0"/>
+	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons"/>
 	<haxelib name="flixel-ui" />
 

@@ -2496,7 +2496,7 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{	
 		scoreUpdateFunc();
-		psyWatermark.text = SONG.song.formatShit() + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
+		psyWatermark.text = SONG.song.formatText() + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
 	
 		if (ClientPrefs.data.scoreBarType == 'Astro'){
 			sickTxt.text = 'Sick: ${sicks}';

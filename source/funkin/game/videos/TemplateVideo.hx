@@ -7,7 +7,7 @@ class TemplateVideo extends VidHandler
 	{
 		super.create();
 
-		VidHandler.startVideo('HEWWO');
+		VidHandler.startVideo('owo');
 	}
 }
 #end

@@ -104,13 +104,7 @@ import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 
 #if VIDEOS_ALLOWED
-	#if (hxCodec >= "2.6.1")
-		import hxcodec.VideoHandler as MP4Handler;
-	#elseif (hxCodec == "2.6.0")
-		import VideoHandler as MP4Handler;
-	#else
-		import vlc.MP4Handler;
-	#end
+import hxcodec.flixel.FlxVideo;
 #end
 
 using StringTools;
@@ -1806,13 +1800,12 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		var video:MP4Handler = new MP4Handler();
-		video.playVideo(filepath);
-		video.finishCallback = function()
-		{
+		var video:FlxVideo = new FlxVideo();
+		video.play(filepath);
+		video.onEndReached.add(function() {
 			startAndEnd();
 			return;
-		}
+		});
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();

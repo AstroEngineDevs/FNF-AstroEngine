@@ -49,5 +49,11 @@ class VidHandler extends MusicBeatState{
 			video.onEndReached.dispatch();
 		}
 	}
+
+	override function destroy() {
+		super.destroy();
+
+		video.dispose();
+	}
 }
 #end

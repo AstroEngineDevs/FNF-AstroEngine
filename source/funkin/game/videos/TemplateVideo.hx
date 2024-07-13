@@ -1,13 +1,13 @@
 package funkin.game.videos;
 
 #if VIDEOS_ALLOWED
-class TemplateVideo extends VidHandler
+class TemplateVideo extends MusicBeatState
 {
 	override function create()
 	{
 		super.create();
 
-		VidHandler.startVideo('owo');
+		VidHandler.startVideo('owo', new MainMenuState());
 	}
 }
 #end

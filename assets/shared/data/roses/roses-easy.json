@@ -5,6 +5,7 @@
     "needsVoices": true,
     "player1": "bf-pixel",
     "songColor": "0xFF63CE",
+    "stage": "school",
     "player2": "senpai-angry",
     "speed": 1.2,
     "notes": [

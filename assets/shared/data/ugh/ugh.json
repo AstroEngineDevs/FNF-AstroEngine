@@ -5,6 +5,7 @@
     "needsVoices": true,
     "player1": "bf",
     "songColor": "0xFF7300",
+    "stage": "tank",
     "player2": "tankman",
     "speed": 1.8,
     "notes": [

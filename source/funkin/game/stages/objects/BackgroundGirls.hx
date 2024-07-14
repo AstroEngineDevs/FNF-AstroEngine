@@ -1,4 +1,4 @@
-package funkin.game.objects.playstateBG;
+package funkin.game.stages.objects;
 
 
 import funkin.backend.CoolUtil;
@@ -14,9 +14,11 @@ class BackgroundGirls extends FlxSprite
 
 		// BG fangirls dissuaded
 		frames = Paths.getSparrowAtlas('weeb/bgFreaks');
-
+		antialiasing = false;
 		swapDanceType();
 
+		setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+		updateHitbox();
 		animation.play('danceLeft');
 	}
 

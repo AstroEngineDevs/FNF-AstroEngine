@@ -41,7 +41,8 @@ class MusicBeatState extends FlxUIState
 		FlxTransitionableState.skipNextTransOut = false;
 	}
 
-	public static function init() {
+	public static function init()
+	{
 		trace('Init Complete'); // Makes Sure MusicBeatState isnt null fr
 	}
 
@@ -168,25 +169,50 @@ class MusicBeatState extends FlxUIState
 
 	public static function getState():MusicBeatState
 	{
-		var curState:Dynamic = FlxG.state;
-		var leState:MusicBeatState = curState;
-		return leState;
+		return cast (FlxG.state, MusicBeatState);
 	}
 
 	public function stepHit():Void
 	{
+		stagesFunc(function(stage:BaseStage)
+		{
+			stage.curStep = curStep;
+			stage.curDecStep = curDecStep;
+			stage.stepHit();
+		});
+
 		if (curStep % 4 == 0)
 			beatHit();
 	}
 
+	public var stages:Array<BaseStage> = [];
+
 	public function beatHit():Void
 	{
 		// trace('Beat: ' + curBeat);
+		stagesFunc(function(stage:BaseStage)
+		{
+			stage.curBeat = curBeat;
+			stage.curDecBeat = curDecBeat;
+			stage.beatHit();
+		});
 	}
 
 	public function sectionHit():Void
 	{
 		// trace('Section: ' + curSection + ', Beat: ' + curBeat + ', Step: ' + curStep);
+		stagesFunc(function(stage:BaseStage)
+		{
+			stage.curSection = curSection;
+			stage.sectionHit();
+		});
+	}
+
+	function stagesFunc(func:BaseStage->Void)
+	{
+		for (stage in stages)
+			if (stage != null && stage.exists && stage.active)
+				func(stage);
 	}
 
 	function getBeatsOnSection()

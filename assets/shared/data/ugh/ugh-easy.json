@@ -6,6 +6,7 @@
     "needsVoices": true,
     "player1": "bf",
     "player2": "tankman",
+    "stage": "tank",
     "speed": 1.25,
     "notes": [
       {

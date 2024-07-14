@@ -5,6 +5,7 @@
     "needsVoices": true,
     "player1": "bf-pixel",
     "player2": "spirit",
+    "stage": "schoolEvil",
     "songColor": "0xFF0026",
     "speed": 1.5,
     "notes": [

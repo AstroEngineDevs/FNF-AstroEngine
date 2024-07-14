@@ -1,4 +1,4 @@
-package funkin.game.objects.playstateBG;
+package funkin.game.stages.objects;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

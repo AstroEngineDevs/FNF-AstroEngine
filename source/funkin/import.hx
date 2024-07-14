@@ -6,6 +6,14 @@ import funkin.game.objects.*;
 import funkin.game.options.objects.*;
 import funkin.game.states.*;
 import funkin.game.transitions.*;
+import funkin.game.objects.Note.EventNote;
+import funkin.game.stages.objects.*;
+import funkin.backend.BaseStage.Countdown;
+
+// FlxAnimate
+#if flxanimate
+import flxanimate.*;
+#end
 
 // backend
 import funkin.backend.macro.*;

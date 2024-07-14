@@ -6,6 +6,7 @@
     "player1": "bf",
     "player2": "tankman",
     "songColor": "0xFF8020",
+    "stage": "tank",
     "speed": 1.4,
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

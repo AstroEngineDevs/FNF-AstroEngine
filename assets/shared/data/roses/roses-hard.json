@@ -4,6 +4,7 @@
     "bpm": 120.0,
     "needsVoices": true,
     "player1": "bf-pixel",
+    "stage": "school",
     "player2": "senpai-angry",
     "songColor": "0xFF63CE",
     "speed": 1.5,

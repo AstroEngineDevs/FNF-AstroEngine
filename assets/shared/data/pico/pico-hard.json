@@ -7,6 +7,7 @@
     "player2": "pico",
     "songColor": "0x00C100",
     "speed": 1.6,
+    "stage": "philly",
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

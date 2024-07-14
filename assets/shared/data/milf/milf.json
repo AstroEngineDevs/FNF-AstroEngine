@@ -5,6 +5,7 @@
     "needsVoices": true,
     "player1": "bf-car",
     "songColor": "0xFF4DC9",
+    "stage": "limo",
     "player2": "mom-car",
     "speed": 1.7,
     "notes": [

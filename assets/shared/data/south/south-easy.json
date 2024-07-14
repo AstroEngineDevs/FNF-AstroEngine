@@ -6,6 +6,7 @@
     "needsVoices": true,
     "player1": "bf",
     "player2": "spooky",
+    "stage": "spooky",
     "speed": 1.1,
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

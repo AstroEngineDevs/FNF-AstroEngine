@@ -6,6 +6,7 @@
     "player1": "bf-car",
     "songColor": "0xD30090",
     "player2": "mom-car",
+    "stage": "limo",
     "speed": 1.8,
     "notes": [
       {

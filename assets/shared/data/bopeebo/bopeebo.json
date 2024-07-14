@@ -3,6 +3,7 @@
 		"player1": "bf",
 		"songColor": "0x6807B2",
 		"player2": "dad",
+		"stage": "stage",
 		"notes": [
 			{
 				"lengthInSteps": 16,

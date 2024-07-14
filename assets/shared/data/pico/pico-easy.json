@@ -6,6 +6,7 @@
     "player1": "bf",
     "songColor": "0x00C100",
     "player2": "pico",
+    "stage": "philly",
     "speed": 1.2,
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

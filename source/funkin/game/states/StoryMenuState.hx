@@ -87,6 +87,7 @@ class StoryMenuState extends MusicBeatState
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 		bgSprite = new FlxSprite(0, 56);
 		bgSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
+		bgSprite.setGraphicSize(1280, 386);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);

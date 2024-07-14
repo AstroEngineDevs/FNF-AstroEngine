@@ -6,6 +6,7 @@
     "songColor": "0xFF0000",
     "player1": "bf",
     "player2": "monster",
+    "stage": "spooky",
     "speed": 1.3,
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

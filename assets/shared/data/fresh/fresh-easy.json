@@ -5,6 +5,7 @@
     "needsVoices": true,
     "player1": "bf",
     "player2": "dad",
+    "stage": "stage",
     "songColor": "0x6807B2",
     "speed": 1.0,
     "notes": [

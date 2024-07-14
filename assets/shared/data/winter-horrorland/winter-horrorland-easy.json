@@ -6,6 +6,7 @@
     "player1": "bf-christmas",
     "songColor": "0x7847FF",
     "player2": "monster-christmas",
+    "stage": "mallEvil",
     "speed": 1.0,
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

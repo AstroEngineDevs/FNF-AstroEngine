@@ -108,7 +108,10 @@ class School extends BaseStage
 		var dialogue:Array<String> = CoolUtil.coolTextFile(Paths.txt(songName + '/' + songName + 'Dialogue'));
 		doof = new DialogueBox(false, dialogue);
 		doof.scrollFactor.set();
-		doof.finishThing = startCountdown;
+		doof.finishThing = () -> {
+			camHUD.visible = true;
+			startCountdown();
+		};
 		doof.nextDialogueThing = game.startNextDialogue;
 		doof.skipDialogueThing = game.skipDialogue;
 	}
@@ -116,6 +119,7 @@ class School extends BaseStage
 	function schoolIntro():Void
 	{
 		inCutscene = true;
+		camHUD.visible = false;
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 		black.scrollFactor.set();
 		add(black);

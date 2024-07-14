@@ -4,6 +4,7 @@
     "bpm": 95,
     "needsVoices": true,
     "player1": "bf",
+    "stage": "spooky",
     "player2": "monster",
     "songColor": "0xFF0000",
     "speed": 1.6,

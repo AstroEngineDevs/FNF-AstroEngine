@@ -71,6 +71,7 @@ class MainMenuState extends MusicBeatState
 		Paths.pushGlobalMods();
 		#end
 		WeekData.loadTheFirstEnabledMod();
+		persistentUpdate = persistentDraw = true;
 
 		#if desktop
 		// Updating Discord Rich Presence

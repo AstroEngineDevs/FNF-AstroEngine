@@ -5,6 +5,7 @@
     "needsVoices": true,
     "player1": "bf",
     "songColor": "0xFF0000",
+    "stage": "spooky",
     "player2": "monster",
     "speed": 1.3,
     "notes": [

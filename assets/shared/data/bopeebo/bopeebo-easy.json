@@ -2,6 +2,7 @@
 	"song": {
 		"player1": "bf",
 		"songColor": "0x6807B2",
+		"stage": "stage",
 		"notes": [
 			{
 				"sectionNotes": [

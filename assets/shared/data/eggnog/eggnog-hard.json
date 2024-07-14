@@ -6,6 +6,7 @@
     "player1": "bf-christmas",
     "songColor": "0xB2075F",
     "player2": "parents-christmas",
+    "stage": "mall",
     "speed": 1.9,
     "notes": [
       { "lengthInSteps": 16, "mustHitSection": true, "sectionNotes": [] },

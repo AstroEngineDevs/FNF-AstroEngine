@@ -4,6 +4,7 @@
     "songColor": "0xFF8020",
     "bpm": 165.0,
     "needsVoices": true,
+    "stage": "spooky",
     "player1": "bf",
     "player2": "spooky",
     "speed": 1.5,

@@ -2,6 +2,7 @@
   "song": {
     "player1": "bf",
     "songColor": "0xFF8020",
+    "stage": "spooky",
     "notes": [
       { "sectionNotes": [], "lengthInSteps": 16, "mustHitSection": true },
       { "sectionNotes": [], "lengthInSteps": 16, "mustHitSection": true },

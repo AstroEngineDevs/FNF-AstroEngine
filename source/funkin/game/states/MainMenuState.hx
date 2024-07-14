@@ -63,6 +63,7 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+	var versionTextGroup:FlxTypedGroup<FlxSprite>;
 
 	override function create()
 	{
@@ -147,6 +148,8 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
+		versionTextGroup = new FlxTypedGroup();
+		add(versionTextGroup);
 		versionShitArray.reverse();
 		for (i in 0...versionShitArray.length)
 		{ // ngl it looks ugly, with all the [i]s
@@ -156,9 +159,9 @@ class MainMenuState extends MusicBeatState
 			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 * versionShitInt, 0, versionShitArray[i][0] + versionShitArray[i][1]);
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			versionShit.x += versionShitArray[i][2];
-			versionShit.y -= versionShitArray[i][3];
+			versionShit.y += versionShitArray[i][3];
 			versionShit.scrollFactor.set();
-			add(versionShit);
+			versionTextGroup.add(versionShit);
 
 			versionShitInt++;
 		}

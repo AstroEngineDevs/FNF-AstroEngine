@@ -40,7 +40,7 @@ class Mall extends BaseStage
 		setDefaultGF('gf-christmas');
 
 		if(isStoryMode && !seenCutscene)
-			setEndCallback(eggnogEndCutscene);
+			endCallback = eggnogEndCutscene;
 	}
 
 	override function countdownTick(count:Countdown, num:Int) everyoneDance();
@@ -74,6 +74,7 @@ class Mall extends BaseStage
 		if(PlayState.storyPlaylist[1] == null)
 		{
 			endSong();
+			trace('ending song');
 			return;
 		}
 

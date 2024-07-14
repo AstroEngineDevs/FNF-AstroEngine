@@ -123,7 +123,7 @@ class CreditsState extends MusicBeatState
 			],
 			[
 				'shubs',
-				'icon',
+				'face',
 				'Ex-Programmer of Psych Engine\nI don\'t support them.',
 				'',
 				'A1A1A1'

@@ -77,11 +77,11 @@ class Tank extends BaseStage
 			switch (songName)
 			{
 				case 'ugh':
-					setStartCallback(ughIntro);
+					startCallback = ughIntro;
 				case 'guns':
-					setStartCallback(gunsIntro);
+					startCallback = gunsIntro;
 				case 'stress':
-					setStartCallback(stressIntro);
+					startCallback = stressIntro;
 			}
 		}
 	}

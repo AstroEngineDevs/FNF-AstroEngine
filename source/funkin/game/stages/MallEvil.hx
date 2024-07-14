@@ -22,7 +22,7 @@ class MallEvil extends BaseStage
 			switch(songName)
 			{
 				case 'winter-horrorland':
-					setStartCallback(winterHorrorlandCutscene);
+					startCallback = winterHorrorlandCutscene;
 			}
 		}
 	}

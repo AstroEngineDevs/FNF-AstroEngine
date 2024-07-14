@@ -32,7 +32,7 @@ class SchoolEvil extends BaseStage
 		if(isStoryMode && !seenCutscene)
 		{
 			initDoof();
-			setStartCallback(schoolIntro);
+			startCallback = schoolIntro;
 		}
 	}
 	override function createPost()

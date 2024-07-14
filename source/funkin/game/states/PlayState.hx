@@ -427,8 +427,7 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 		funkin.game.transitions.CustomFadeTransition.nextCamera = camOther;
 
-		persistentUpdate = true;
-		persistentDraw = true;
+		persistentUpdate = persistentDraw = true;
 
 		if (SONG == null)
 			SONG = Song.loadFromJson('tutorial');
@@ -515,30 +514,15 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
-			case 'stage': // Week 1
-				new Stage();
-
-			case 'spooky': // Week 2
-				new Spooky();
-
-			case 'philly': // Week 3
-				new Philly();
-			case 'limo': // Week 4
-				new Limo();
-
-			case 'mall': // Week 5 - Cocoa, Eggnog
-				new Mall();
-
-			case 'mallEvil': // Week 5 - Winter Horrorland
-				new MallEvil();
-
-			case 'school': // Week 6 - Senpai, Roses
-				new School();
-
-			case 'schoolEvil': // Week 6 - Thorns
-				new SchoolEvil();
-			case 'tank':
-				new Tank();
+			case 'stage': new Stage();
+			case 'spooky': new Spooky();
+			case 'philly': new Philly();
+			case 'limo': new Limo();
+			case 'mall': new Mall();
+			case 'mallEvil': new MallEvil();
+			case 'school': new School();
+			case 'schoolEvil': new SchoolEvil();
+			case 'tank': new Tank();
 		}
 
 		if(isPixelStage) {
@@ -988,7 +972,7 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
-		startCallback();
+		startCallback();		
 		RecalculateRating();
 
 		//PRECACHING MISS SOUNDS BECAUSE I THINK THEY CAN LAG PEOPLE AND FUCK THEM UP IDK HOW HAXE WORKS
@@ -1379,7 +1363,7 @@ class PlayState extends MusicBeatState
 			return false;
 		}
 		
-		seenCutscene = true;
+		//seenCutscene = true;
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
 		if(ret != LuaUtils.Function_Stop) {
@@ -1666,10 +1650,12 @@ class PlayState extends MusicBeatState
 
 	public function startNextDialogue() {
 		dialogueCount++;
+		trace('Next Dialogue');
 		callOnLuas('onNextDialogue', [dialogueCount]);
 	}
 
 	public function skipDialogue() {
+		trace('Skipped Dialogue');
 		callOnLuas('onSkipDialogue', [dialogueCount]);
 	}
 

@@ -22,7 +22,7 @@ class Spooky extends BaseStage {
 			switch(songName)
 			{
 				case 'monster':
-					setStartCallback(monsterCutscene);
+					startCallback = monsterCutscene;
 			}
 		}
 	}

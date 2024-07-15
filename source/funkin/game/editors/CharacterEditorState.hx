@@ -228,7 +228,9 @@ class CharacterEditorState extends MusicBeatState
 		var playerXDifference = 0;
 		if(char.isPlayer) playerXDifference = 670;
 
+		final lastLvl = Paths.currentLevel;
 		if(onPixelBG) {
+			Paths.setCurrentLevel('week6');
 			var playerYDifference:Float = 0;
 			if(char.isPlayer) {
 				playerXDifference += 200;
@@ -269,6 +271,7 @@ class CharacterEditorState extends MusicBeatState
 			bgTrees.updateHitbox();
 			changeBGbutton.text = "Regular BG";
 		} else {
+			Paths.setCurrentLevel('week1');
 			var bg:BGSprite = new BGSprite('stageback', -600 + OFFSET_X - playerXDifference, -300, 0.9, 0.9);
 			bgLayer.add(bg);
 
@@ -278,6 +281,7 @@ class CharacterEditorState extends MusicBeatState
 			bgLayer.add(stageFront);
 			changeBGbutton.text = "Pixel BG";
 		}
+		Paths.setCurrentLevel(lastLvl);
 	}
 
 	/*var animationInputText:FlxUIInputText;

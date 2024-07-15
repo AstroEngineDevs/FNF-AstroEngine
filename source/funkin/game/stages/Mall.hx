@@ -71,6 +71,7 @@ class Mall extends BaseStage
 
 	function eggnogEndCutscene()
 	{
+		trace('eggnog end cutscene');
 		if(PlayState.storyPlaylist[1] == null)
 		{
 			endSong();

@@ -117,7 +117,7 @@
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons"/>
 	<haxelib name="flixel-ui" />
-	<haxelib name="flxanimate" />
+	<haxelib name="flxanimate" version="git"/>
 
 	<define name="hscriptPos" />
 	<haxelib name="hscript" />

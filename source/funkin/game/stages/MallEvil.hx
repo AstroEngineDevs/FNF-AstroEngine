@@ -17,13 +17,9 @@ class MallEvil extends BaseStage
 		setDefaultGF('gf-christmas');
 
 		// Winter Horrorland cutscene
-		if (isStoryMode && !seenCutscene)
+		if ((isStoryMode && !seenCutscene) && songName == 'winter-horrowland')
 		{
-			switch (songName)
-			{
-				case 'winter-horrorland':
-					startCallback = winterHorrorlandCutscene;
-			}
+			startCallback = winterHorrorlandCutscene;
 		}
 	}
 
@@ -43,18 +39,19 @@ class MallEvil extends BaseStage
 			}
 		});
 		FlxG.sound.play(Paths.sound('Lights_Turn_On'));
-		game.snapCamFollowToPos(400, -2050);
+		camFollow.set(400, -2050);
+		game.camFollowPos.setPosition(400, -2050);
 		FlxG.camera.focusOn(camFollow);
 		FlxG.camera.zoom = 1.5;
 
 		new FlxTimer().start(0.8, function(tmr:FlxTimer)
 		{
-			camHUD.visible = true;
 			remove(blackScreen);
 			FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
 				ease: FlxEase.quadInOut,
 				onComplete: function(twn:FlxTween)
 				{
+					camHUD.visible = true;
 					startCountdown();
 				}
 			});

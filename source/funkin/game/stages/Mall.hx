@@ -13,7 +13,8 @@ class Mall extends BaseStage
 		bg.updateHitbox();
 		add(bg);
 
-		if(!ClientPrefs.data.lowQuality) {
+		if (!ClientPrefs.data.lowQuality)
+		{
 			upperBoppers = new BGSprite('christmas/upperBop', -240, -90, 0.33, 0.33, ['Upper Crowd Bob']);
 			upperBoppers.setGraphicSize(Std.int(upperBoppers.width * 0.85));
 			upperBoppers.updateHitbox();
@@ -39,19 +40,24 @@ class Mall extends BaseStage
 		Paths.sound('Lights_Shut_off');
 		setDefaultGF('gf-christmas');
 
-		if(isStoryMode && !seenCutscene)
+		if (isStoryMode && !seenCutscene){
 			endCallback = eggnogEndCutscene;
+		}
 	}
 
-	override function countdownTick(count:Countdown, num:Int) everyoneDance();
-	override function beatHit() everyoneDance();
+	override function countdownTick(count:Countdown, num:Int)
+		everyoneDance();
+
+	override function beatHit()
+		everyoneDance();
 
 	override function eventCalled(eventName:String, value1:String, value2:String, flValue1:Null<Float>, flValue2:Null<Float>, strumTime:Float)
 	{
-		switch(eventName)
+		switch (eventName)
 		{
 			case "Hey!":
-				switch(value1.toLowerCase().trim()) {
+				switch (value1.toLowerCase().trim())
+				{
 					case 'bf' | 'boyfriend' | '0':
 						return;
 				}
@@ -62,7 +68,7 @@ class Mall extends BaseStage
 
 	function everyoneDance()
 	{
-		if(!ClientPrefs.data.lowQuality)
+		if (!ClientPrefs.data.lowQuality)
 			upperBoppers.dance(true);
 
 		bottomBoppers.dance(true);
@@ -70,33 +76,31 @@ class Mall extends BaseStage
 	}
 
 	function eggnogEndCutscene()
-	{
-		trace('eggnog end cutscene');
-		if(PlayState.storyPlaylist[1] == null)
 		{
-			endSong();
-			trace('ending song');
-			return;
-		}
-
-		var nextSong:String = Paths.formatToSongPath(PlayState.storyPlaylist[1]);
-		if(nextSong == 'winter-horrorland')
-		{
-			FlxG.sound.play(Paths.sound('Lights_Shut_off'));
-
-			var blackShit:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
-				-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
-			blackShit.scrollFactor.set();
-			add(blackShit);
-			camHUD.visible = false;
-
-			inCutscene = true;
-			canPause = false;
-
-			new FlxTimer().start(1.5, function(tmr:FlxTimer) {
+			if(PlayState.storyPlaylist[1] == null)
+			{
 				endSong();
-			});
+				return;
+			}
+	
+			var nextSong:String = Paths.formatToSongPath(PlayState.storyPlaylist[1]);
+			if(nextSong == 'winter-horrorland')
+			{
+				FlxG.sound.play(Paths.sound('Lights_Shut_off'));
+	
+				var blackShit:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom,
+					-FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
+				blackShit.scrollFactor.set();
+				add(blackShit);
+				camHUD.visible = false;
+	
+				inCutscene = true;
+				canPause = false;
+	
+				new FlxTimer().start(1.5, function(tmr:FlxTimer) {
+					endSong();
+				});
+			}
+			else endSong();
 		}
-		else endSong();
-	}
 }

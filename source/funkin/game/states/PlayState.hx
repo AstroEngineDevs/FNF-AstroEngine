@@ -634,8 +634,12 @@ class PlayState extends MusicBeatState
 
 		stagesFunc(function(stage:BaseStage) stage.createPost());
 
+		comboGroup = new FlxSpriteGroup();
+		add(comboGroup);
 		noteGroup = new FlxTypedGroup<FlxBasic>();
 		add(noteGroup);
+		uiGroup = new FlxSpriteGroup();
+		add(uiGroup);
 
 		Conductor.songPosition = -5000 / Conductor.songPosition;
 
@@ -897,6 +901,9 @@ class PlayState extends MusicBeatState
 		}
 
 		noteGroup.cameras = [camHUD];
+		uiGroup.cameras = [camHUD];
+		comboGroup.cameras = [camHUD];
+		
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
@@ -2841,6 +2848,8 @@ class PlayState extends MusicBeatState
 
 		vocals.volume = 0;
 		vocals.pause();
+		trace(startCallback);
+		trace(endCallback);
 		if(ClientPrefs.data.noteOffset <= 0 || ignoreNoteOffset) {
 			endCallback();
 		} else {
@@ -2911,10 +2920,8 @@ class PlayState extends MusicBeatState
 				// Stats
 
 				// i'll make more sexy later ;3c
-				if (ClientPrefs.data.stats.get('Max Score') < songScore)
-					ClientPrefs.data.stats.set('Max Score', songScore);
-				if (ClientPrefs.data.stats.get('Max Misses') < songMisses)
-					ClientPrefs.data.stats.set('Max Misses', songMisses);
+				if (ClientPrefs.data.stats.get('Max Score') < songScore) ClientPrefs.data.stats.set('Max Score', songScore);
+				if (ClientPrefs.data.stats.get('Max Misses') < songMisses) ClientPrefs.data.stats.set('Max Misses', songMisses);
 
 				ClientPrefs.saveSettings();
 				#end
@@ -2974,6 +2981,7 @@ class PlayState extends MusicBeatState
 
 					PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0] + difficulty, PlayState.storyPlaylist[0]);
 					FlxG.sound.music.stop();
+					LoadingState.loadAndSwitchState(new PlayState());
 				}
 			}
 			else
@@ -3034,12 +3042,11 @@ class PlayState extends MusicBeatState
 
 	// Stores Ratings and Combo Sprites in a group
 	public var comboGroup:FlxSpriteGroup;
-
 	// Stores HUD Objects in a Group
 	public var uiGroup:FlxSpriteGroup;
-
 	// Stores Note Objects in a Group
 	public var noteGroup:FlxTypedGroup<FlxBasic>;
+	
 
 	private function cachePopUpScore()
 	{
@@ -3132,13 +3139,15 @@ class PlayState extends MusicBeatState
 		comboSpr.y -= ClientPrefs.data.comboOffset[1];
 		comboSpr.y += 60;
 		comboSpr.velocity.x += FlxG.random.int(1, 10) * playbackRate;
+		comboGroup.add(rating);
 
 		insert(members.indexOf(strumLineNotes), rating);
-		
-		if (!ClientPrefs.data.comboStacking)
-		{
-			if (lastRating != null) lastRating.kill();
-			lastRating = rating;
+
+		if (!ClientPrefs.data.comboStacking && comboGroup.members.length > 0) {
+			for (spr in comboGroup) {
+				spr.destroy();
+				comboGroup.remove(spr);
+			}
 		}
 
 		if (!PlayState.isPixelStage)
@@ -3170,7 +3179,7 @@ class PlayState extends MusicBeatState
 		var xThing:Float = 0;
 		if (showCombo)
 		{
-			insert(members.indexOf(strumLineNotes), comboSpr);
+			comboGroup.add(comboSpr);
 		}
 		if (!ClientPrefs.data.comboStacking)
 		{
@@ -3218,7 +3227,7 @@ class PlayState extends MusicBeatState
 
 			//if (combo >= 10 || combo == 0)
 			if(showComboNum)
-				insert(members.indexOf(strumLineNotes), numScore);
+				comboGroup.add(numScore);
 
 			FlxTween.tween(numScore, {alpha: 0}, 0.2 / playbackRate, {
 				onComplete: function(tween:FlxTween)

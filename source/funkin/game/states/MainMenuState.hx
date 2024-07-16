@@ -35,10 +35,10 @@ using StringTools;
 class MainMenuState extends MusicBeatState
 {
 	public static var curSelected:Int = 0;
-	private static var versionShitInt:Int = 1;
+	private var versionShitInt:Int = 1;
 	private static var selectedSomethinMouse:Bool = true;
 
-	var menuItems:FlxTypedGroup<FlxSprite>;
+	private var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
 

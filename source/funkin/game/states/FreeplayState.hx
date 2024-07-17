@@ -213,7 +213,7 @@ class FreeplayState extends MusicBeatState
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter, color));
+		songs.push(new SongMetadata(songName.formatText(), weekNum, songCharacter, color));
 	}
 
 	function weekIsLocked(name:String):Bool {

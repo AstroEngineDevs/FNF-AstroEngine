@@ -78,7 +78,7 @@ class StoryMenuState extends MusicBeatState
 		txtWeekTitle.alpha = 0.7;
 
 		var rankText:FlxText = new FlxText(0, 10);
-		rankText.text = 'RANK: GREAT';
+		rankText.text = 'RANK: ASS';
 		rankText.setFormat(Paths.font("vcr.ttf"), 32);
 		rankText.size = scoreText.size;
 		rankText.screenCenter(X);
@@ -87,7 +87,6 @@ class StoryMenuState extends MusicBeatState
 		var bgYellow:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51);
 		bgSprite = new FlxSprite(0, 56);
 		bgSprite.antialiasing = ClientPrefs.data.globalAntialiasing;
-		bgSprite.setGraphicSize(1280, 386);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);

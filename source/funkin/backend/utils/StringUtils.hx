@@ -1,5 +1,4 @@
 package funkin.backend.utils;
-
 class StringUtils
 {
 	/**

@@ -19,9 +19,6 @@ import flixel.graphics.FlxGraphic;
 import funkin.backend.Highscore;
 import funkin.game.objects.StrumNote;
 import funkin.game.states.StoryMenuState;
-#if desktop
-import funkin.backend.client.Discord.DiscordClient;
-#end
 import funkin.backend.utils.Section.SwagSection;
 import funkin.backend.Song;
 import funkin.game.objects.BGSprite;
@@ -98,12 +95,6 @@ import funkin.game.objects.characters.Boyfriend;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
-#end
-import funkin.backend.system.MusicBeatSubstate;
-import funkin.backend.system.MusicBeatState;
-
-#if VIDEOS_ALLOWED
-import hxcodec.flixel.FlxVideo;
 #end
 
 using StringTools;

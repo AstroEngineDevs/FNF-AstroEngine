@@ -65,13 +65,6 @@
       "url": "https://github.com/MAJigsaw77/hxdiscord_rpc"
     },
     {
-      "name": "flxanimate",
-      "type": "git",
-      "dir": null,
-      "ref": "dev",
-      "url": "https://github.com/ShadowMario/flxanimate"
-    },
-    {
       "name": "hscript-ex",
       "type": "git",
       "dir": null,

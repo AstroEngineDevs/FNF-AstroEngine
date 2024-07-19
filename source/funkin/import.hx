@@ -1,6 +1,6 @@
 #if !macro 
 
-// game
+// Game
 import funkin.game.objects.characters.*;
 import funkin.game.objects.*;
 import funkin.game.options.objects.*;
@@ -10,11 +10,6 @@ import funkin.game.objects.Note.EventNote;
 import funkin.game.stages.objects.*;
 import funkin.backend.BaseStage.Countdown;
 import funkin.backend.BaseScorebar;
-
-// FlxAnimate
-#if flxanimate
-import flxanimate.*;
-#end
 
 // backend
 import funkin.backend.macro.*;
@@ -40,6 +35,11 @@ import sys.*;
 import sys.io.*;
 #elseif js
 import js.html.*;
+#end
+
+// Video Allowed
+#if VIDEOS_ALLOWED
+import hxcodec.flixel.FlxVideo;
 #end
 
 // Flixel

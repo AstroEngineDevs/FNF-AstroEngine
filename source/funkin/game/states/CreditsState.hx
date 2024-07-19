@@ -186,13 +186,6 @@ class CreditsState extends MusicBeatState
 				'https://twitter.com/superpowers04',
 				'B957ED'
 			],
-			[
-				'CheemsAndFriends',
-				'face',
-				'Creator of FlxAnimate\n(Icon will be added later, merry christmas!)',
-				'https://twitter.com/CheemsnFriendos',
-				'A1A1A1'
-			],
 			[''],
 			["Funkin' Crew"],
 			[

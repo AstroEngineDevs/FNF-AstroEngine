@@ -138,7 +138,7 @@ class AstroScore extends BaseScorebar
 	}
 
 	private function addCurveBG(x:Float = 0, y:Float = 0, width:Float = 0, height:Float = 0, ellipseWidthAndHeight:Int = 0, startAlpha:Int = 0,
-			?group:FlxTypedGroup<Dynamic>,)
+			?group:FlxTypedGroup<Dynamic>)
 	{
 		final width = Std.int(width);
 		final height = Std.int(height);

@@ -9,6 +9,7 @@ import funkin.game.transitions.*;
 import funkin.game.objects.Note.EventNote;
 import funkin.game.stages.objects.*;
 import funkin.backend.BaseStage.Countdown;
+import funkin.backend.BaseScorebar;
 
 // FlxAnimate
 #if flxanimate
@@ -55,6 +56,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.FlxBasic;
 #end
 
 using StringTools;

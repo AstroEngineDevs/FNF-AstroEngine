@@ -2,6 +2,7 @@
   "song": {
     "song": "Tutorial",
     "songColor": "0xBD1111",
+    "stage": "stage",
     "notes": [
       {
         "mustHitSection": true,

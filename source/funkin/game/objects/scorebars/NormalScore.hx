@@ -1,30 +1,25 @@
 package funkin.game.objects.scorebars;
-
-import funkin.backend.Highscore;
-import flixel.util.FlxSpriteUtil;
-
-using StringTools;
-
-class NormalScore extends FlxText
-// TODO: Turn into FlxBasic Objects
+class NormalScore extends BaseScorebar
 {
-	public static var instance:NormalScore;
+	private final yVal:Float = game.healthBarBG.y;
+	private var scoreText:FlxText;
 
-	public function new()
+	override function create()
 	{
-		instance = this;
+		super.create();
 
-		super(0, PlayState.instance.healthBarBG.y + 36, FlxG.width, "", 20);
-
-		scrollFactor.set();
-		alpha = 0;
-		borderSize = 1.25;
-		visible = !ClientPrefs.data.hideFullHUD;
-		setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreText = new FlxText(0, yVal + 36, FlxG.width, "", 20);
+		scoreText.scrollFactor.set();
+		scoreText.borderSize = 1.25;
+		scoreText.visible = !ClientPrefs.data.hideFullHUD;
+		scoreText.alpha = 0;
+		scoreText.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(scoreText);
 	}
 
-	public function updateShit()
+	override function updateShit()
 	{
-		text = 'Score: ' + PlayState.instance.songScore;
+		super.updateShit();
+		scoreText.text = 'Score: ' + PlayState.instance.songScore;
 	}
 }

@@ -125,8 +125,6 @@ using StringTools;
 **/
 class PlayState extends MusicBeatState
 {
-	var sexyUhmTxt:FlxTypedGroup<FlxSprite>;
-	var statBGGroup:FlxTypedGroup<FlxSprite>;
 
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
@@ -270,9 +268,7 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
-	public var scoreTxt:FlxSprite;
-	var timeTxt:FlxText;
-	var versionTxtSmth:FlxText;
+	public var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
@@ -329,17 +325,8 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
-
-	// kys 
-	public var songLeft:FlxText;
-	public var psyWatermark:FlxText;
-	public var sickTxt:FlxText;
-	public var goodsTxt:FlxText;
-	public var badTxt:FlxText;
-	public var shitsTxt:FlxText;
-	public var missTxt:FlxText;
-
 	public var scoreUpdateFunc:Void->Void;
+	public var updateFunc:Void->Void;
 
 	// Callbacks for stages
 	public var startCallback:Void->Void = null;
@@ -634,10 +621,13 @@ class PlayState extends MusicBeatState
 
 		stagesFunc(function(stage:BaseStage) stage.createPost());
 
+
 		comboGroup = new FlxSpriteGroup();
 		add(comboGroup);
 		noteGroup = new FlxTypedGroup<FlxBasic>();
 		add(noteGroup);
+		uiBackgroundGroup= new FlxTypedGroup<FlxSprite>();
+		add(uiBackgroundGroup);
 		uiGroup = new FlxSpriteGroup();
 		add(uiGroup);
 
@@ -650,7 +640,6 @@ class PlayState extends MusicBeatState
 
 		var showTime:Bool = (ClientPrefs.data.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 14, 400, "", 32);
-		//timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.setFormat(Paths.font("PhantomMuff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
@@ -676,14 +665,7 @@ class PlayState extends MusicBeatState
 		timeBarBG.color = FlxColor.BLACK;
 		timeBarBG.xAdd = -4;
 		timeBarBG.yAdd = -5;
-		add(timeBarBG);
-
-		versionTxtSmth = new FlxText(FlxG.width - 320, 10, 400, "Astro Engine: v"+EngineData.engineData.coreVersion, 32);
-		versionTxtSmth.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		versionTxtSmth.scrollFactor.set();
-		versionTxtSmth.alpha = 0;
-		versionTxtSmth.updateHitbox();
-		versionTxtSmth.visible = !ClientPrefs.data.hideFullHUD;
+		uiGroup.add(timeBarBG);
 
 		if (ClientPrefs.data.hideFullHUD)
 			timeBarBG.visible = false;
@@ -700,8 +682,8 @@ class PlayState extends MusicBeatState
 			timeBar.visible = false;
 		else
 			timeBar.visible = showTime;
-		add(timeBar);
-		add(timeTxt);
+		uiGroup.add(timeBar);
+		uiGroup.add(timeTxt);
 		timeBarBG.sprTracker = timeBar;
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
@@ -760,7 +742,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.visible = !ClientPrefs.data.hideFullHUD;
 		healthBarBG.xAdd = -4;
 		healthBarBG.yAdd = -4;
-		add(healthBarBG);
+		uiGroup.add(healthBarBG);
 		if(ClientPrefs.data.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
@@ -769,76 +751,8 @@ class PlayState extends MusicBeatState
 		// healthBar
 		healthBar.visible = !ClientPrefs.data.hideFullHUD;
 		healthBar.alpha = ClientPrefs.data.healthBarAlpha;
-		add(healthBar);
+		uiGroup.add(healthBar);
 		healthBarBG.sprTracker = healthBar;
-
-		psyWatermark = new FlxText(40, healthBarBG.y + 37, 0, "", 16);
-		psyWatermark.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		psyWatermark.scrollFactor.set();
-		psyWatermark.y += 10;
-		psyWatermark.borderSize = 1.25;
-		psyWatermark.alpha = 0;
-		psyWatermark.visible = !ClientPrefs.data.hideFullHUD;
-
-		songLeft = new FlxText(1140, healthBarBG.y + 37, 0, "", 16);
-		songLeft.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		songLeft.scrollFactor.set();
-		songLeft.y += 10;
-		songLeft.alpha = 0;
-		songLeft.borderSize = 1.25;
-		songLeft.visible = !ClientPrefs.data.hideFullHUD;
-	
-		var main_y:Int = 264;
-		var x:Int = 120;
-		var y:Int = 40;
-
-		sexyUhmTxt = new FlxTypedGroup<FlxSprite>();
-		add(sexyUhmTxt);
-		statBGGroup = new FlxTypedGroup<FlxSprite>();
-		add(statBGGroup);
-
-
-		var MAIN_SIZE:Int = 24;
-		sickTxt = new FlxText(x, main_y, 0, "SICKS: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		sickTxt.visible = !ClientPrefs.data.hideFullHUD;
-		sickTxt.alpha = 0;
-		sickTxt.x = FlxG.width - (sickTxt.width + 55);
-		sexyUhmTxt.add(sickTxt);
-
-		goodsTxt = new FlxText(x, main_y, 0, "GOODS: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		goodsTxt.visible = !ClientPrefs.data.hideFullHUD;
-		goodsTxt.x = FlxG.width - (sickTxt.width + 55);
-		goodsTxt.y += y;
-		goodsTxt.alpha = 0;
-		sexyUhmTxt.add(goodsTxt);
-
-		badTxt = new FlxText(x, main_y, 0, "BAD: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		badTxt.visible = !ClientPrefs.data.hideFullHUD;
-		badTxt.x = FlxG.width - (sickTxt.width + 55);
-		badTxt.alpha = 0;
-		badTxt.y = goodsTxt.y + y;
-		sexyUhmTxt.add(badTxt);
-
-		shitsTxt = new FlxText(x, main_y, 0, "SHIT: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		shitsTxt.visible = !ClientPrefs.data.hideFullHUD;
-		shitsTxt.x = FlxG.width - (sickTxt.width + 55);
-		shitsTxt.y = badTxt.y + y;
-		shitsTxt.alpha = 0;
-		sexyUhmTxt.add(shitsTxt);
-
-		missTxt = new FlxText(x, main_y, 0, "MISS: 000", MAIN_SIZE).setFormat(Paths.font("PhantomMuff.ttf"), MAIN_SIZE,FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		missTxt.visible = !ClientPrefs.data.hideFullHUD;
-		missTxt.x = FlxG.width - (sickTxt.width + 55);
-		missTxt.y = shitsTxt.y + y;
-		missTxt.alpha = 0;
-		sexyUhmTxt.add(missTxt);
-
-		if (ClientPrefs.data.scoreBarType == 'Astro')
-			sexyUhmTxt.visible = true;
-		else 
-			sexyUhmTxt.visible = false;
-		//if (ClientPrefs.data.downScroll) psyWatermark.y = FlxG.height * 0.9 + 45;
-		//if (ClientPrefs.data.downScroll) scoreTxtBG.y = FlxG.height * 0.9 + 45;
 
 		//furry
 
@@ -846,56 +760,35 @@ class PlayState extends MusicBeatState
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.data.hideFullHUD;
 		iconP1.alpha = ClientPrefs.data.healthBarAlpha;
-		add(iconP1);
+		uiGroup.add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.y = healthBar.y - 75;
 		iconP2.visible = !ClientPrefs.data.hideFullHUD;
 		iconP2.alpha = ClientPrefs.data.healthBarAlpha;
-		add(iconP2);
+		uiGroup.add(iconP2);
 		reloadHealthBarColors();
 
 		switch(ClientPrefs.data.scoreBarType){
 			case 'Astro':
-				scoreTxt = new AstroScore();
-				scoreUpdateFunc = AstroScore.instance.updateShit;
-				var curve:Int = 35;
-				updateScore();
-				// WaterMark
-				addCurveBG(psyWatermark.x - 10, scoreTxt.y + 4.5, psyWatermark.fieldWidth+20, 35, curve, curve, statBGGroup, 0);
-				// ScoreBar
-				addCurveBG(healthBarBG.x, scoreTxt.y + 4.5, 600, 35, curve, curve, statBGGroup, 0);
-				// TimeBar (Alt)
-				addCurveBG(songLeft.x - 12.5, scoreTxt.y + 4.5, 125, 35, curve, curve, statBGGroup, 0);
-			
+				new AstroScore();
 			case 'Psych':
-				scoreTxt = new PsychScore();
-				scoreUpdateFunc = PsychScore.instance.updateShit;
+				new PsychScore();
 			default:
-				scoreTxt = new NormalScore();
-				scoreUpdateFunc = NormalScore.instance.updateShit;
+				new NormalScore();
 		}	
 		
 		if (!ClientPrefs.data.downScroll)
-			statBGGroup.visible = true;
+			uiBackgroundGroup.visible = true;
 		if (ClientPrefs.data.hideFullHUD)
-			statBGGroup.visible = false;
-
-		add(versionTxtSmth);
-		scoreTxt.y += 10;
-
-		if (ClientPrefs.data.scoreBarType == 'Astro'){
-			add(psyWatermark);
-			add(songLeft);
-		}
-		add(scoreTxt);
+			uiBackgroundGroup.visible = false;
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("PhantomMuff.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled && !ClientPrefs.data.hideFullHUD;
-		add(botplayTxt);
+		uiGroup.add(botplayTxt);
 		if(ClientPrefs.data.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
 		}
@@ -903,31 +796,8 @@ class PlayState extends MusicBeatState
 		noteGroup.cameras = [camHUD];
 		uiGroup.cameras = [camHUD];
 		comboGroup.cameras = [camHUD];
-		
-		healthBar.cameras = [camHUD];
-		healthBarBG.cameras = [camHUD];
-		iconP1.cameras = [camHUD];
-		iconP2.cameras = [camHUD];
-		sickTxt.cameras = [camHUD];
-		goodsTxt.cameras = [camHUD];
-		badTxt.cameras = [camHUD];
-		shitsTxt.cameras = [camHUD];
-		missTxt.cameras = [camHUD];
-		scoreTxt.cameras = [camHUD];
-		psyWatermark.cameras = [camHUD];
-		songLeft.cameras = [camHUD];
-		statBGGroup.cameras = [camHUD];
-		botplayTxt.cameras = [camHUD];
-		timeBar.cameras = [camHUD];
-		timeBarBG.cameras = [camHUD];
-		timeTxt.cameras = [camHUD];
-		versionTxtSmth.cameras = [camHUD];
+		uiBackgroundGroup.cameras = [camHUD];
 
-		// if (SONG.song == 'South')
-		// FlxG.camera.alpha = 0.7;
-		// UI_camera.zoom = 1;
-
-		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 		
 		#if LUA_ALLOWED
@@ -1505,19 +1375,6 @@ class PlayState extends MusicBeatState
 			return spr;
 		}
 
-	public function addBehindGF(obj:FlxObject)
-	{
-		insert(members.indexOf(gfGroup), obj);
-	}
-	public function addBehindBF(obj:FlxObject)
-	{
-		insert(members.indexOf(boyfriendGroup), obj);
-	}
-	public function addBehindDad (obj:FlxObject)
-	{
-		insert(members.indexOf(dadGroup), obj);
-	}
-
 	public function clearNotesBefore(time:Float)
 	{
 		var i:Int = unspawnNotes.length - 1;
@@ -1556,79 +1413,20 @@ class PlayState extends MusicBeatState
 	public function updateScore(miss:Bool = false)
 	{	
 		scoreUpdateFunc();
-		psyWatermark.text = SONG.song.formatText() + " • " + CoolUtil.difficulties[PlayState.storyDifficulty];
-	
-		if (ClientPrefs.data.scoreBarType == 'Astro'){
-			sickTxt.text = 'Sick: ${sicks}';
-			goodsTxt.text = 'Good: ${goods}';
-			badTxt.text = 'Bad: ${bads}';
-			shitsTxt.text = 'Shit: ${shits}';
-			missTxt.text = 'Miss: ${songMisses}';
-		}
-/*
-		if (sicks > 0) ratingFC = "SFC";
-		if (goods > 0) ratingFC = "GFC";
-		if (bads > 0 || shits > 0) ratingFC = "FC"; */
 
 		if(ClientPrefs.data.scoreZoom && !miss && !cpuControlled)
 		{
 			if(scoreTxtTween != null) {
 				scoreTxtTween.cancel();
 			}// sexy
-			scoreTxt.scale.x = 1.075;
-			scoreTxt.scale.y = 1.075;
-			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween) {
-					scoreTxtTween = null;
-				}
-			});
 
-			psyWatermark.scale.set(1.075, 1.075);
-			scoreTxtTween = FlxTween.tween(psyWatermark.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween)
-				{
-					scoreTxtTween = null;
-				}
-			});
-
-			sickTxt.scale.set(1.075, 1.075);
-			scoreTxtTween = FlxTween.tween(sickTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween)
-				{
-					scoreTxtTween = null;
-				}
-			});
-
-			goodsTxt.scale.set(1.075, 1.075);
-			scoreTxtTween = FlxTween.tween(goodsTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween)
-				{
-					scoreTxtTween = null;
-				}
-			});
-
-			badTxt.scale.set(1.075, 1.075);
-			scoreTxtTween = FlxTween.tween(badTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween)
-				{
-					scoreTxtTween = null;
-				}
-			});
-
-			shitsTxt.scale.set(1.075, 1.075);
-			scoreTxtTween = FlxTween.tween(shitsTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween)
-				{
-					scoreTxtTween = null;
-				}
-			});
-
-			missTxt.scale.set(1.075, 1.075);
-			scoreTxtTween = FlxTween.tween(missTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween)
-				{
-					scoreTxtTween = null;
-				}
+			uiGroup.forEach((spr:FlxSprite) -> {
+				spr.scale.set(1.075, 1.075);
+				scoreTxtTween = FlxTween.tween(spr.scale, {x: 1, y: 1}, 0.2, {
+					onComplete: function(twn:FlxTween) {
+						scoreTxtTween = null;
+					}
+				});
 			});
 		}
 		callOnLuas('onUpdateScore', [miss]);
@@ -1699,19 +1497,13 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(versionTxtSmth, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		/* rate counter */
-		FlxTween.tween(sickTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(goodsTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(badTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(shitsTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(missTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		/* Background & Shit */
-		FlxTween.tween(songLeft, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(psyWatermark, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(scoreTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+
+		uiGroup.forEach((spr:FlxSprite) -> {
+			FlxTween.tween(spr, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		});
+
 		
-		statBGGroup.forEach(function(spr:FlxSprite)
+		uiBackgroundGroup.forEach(function(spr:FlxSprite)
 			{
 				FlxTween.tween(spr, {alpha: 0.6}, 0.5, {ease: FlxEase.circOut});
 			});
@@ -2124,7 +1916,7 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
-
+		updateFunc();
 		if(cpuControlled){
 			ClientPrefs.data.botplayStudio = true;
 		} else {
@@ -2240,7 +2032,6 @@ class PlayState extends MusicBeatState
 					if(ClientPrefs.data.timeBarType != 'Song Name')
 						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
 
-					songLeft.text = FlxStringUtil.formatTime(Math.max(0, Math.floor(curTime / 1000)), false) + " • " + FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
 				}
 			}
 
@@ -3043,6 +2834,7 @@ class PlayState extends MusicBeatState
 	// Stores Ratings and Combo Sprites in a group
 	public var comboGroup:FlxSpriteGroup;
 	// Stores HUD Objects in a Group
+	public var uiBackgroundGroup:FlxTypedGroup<FlxSprite>;
 	public var uiGroup:FlxSpriteGroup;
 	// Stores Note Objects in a Group
 	public var noteGroup:FlxTypedGroup<FlxBasic>;

@@ -13,7 +13,7 @@ class NormalScore extends BaseScorebar
 		scoreText.borderSize = 1.25;
 		scoreText.visible = !ClientPrefs.data.hideFullHUD;
 		scoreText.alpha = 0;
-		scoreText.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreText.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER214356, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(scoreText);
 	}
 

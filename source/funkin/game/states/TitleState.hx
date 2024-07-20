@@ -5,9 +5,7 @@ import funkin.backend.CoolUtil;
 #if desktop
 import sys.thread.Thread;
 #end
-import funkin.game.states.FlashingState;
-import flixel.FlxG;
-import flixel.FlxSprite;
+
 import funkin.game.objects.shaders.ColorSwap;
 import funkin.backend.Highscore;
 import flixel.FlxState;
@@ -145,8 +143,7 @@ class TitleState extends MusicBeatState
 		#else
 		if (FlxG.save.data.flashing == null && !FlashingState.leftState)
 		{
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
+			FlxTransitionableState.skipNextTransIn = FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new FlashingState());
 		}
 		else

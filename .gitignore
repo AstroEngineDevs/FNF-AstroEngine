@@ -1,6 +1,5 @@
 ### Haxe
 export/*
-exportUpdater/*
 dump/*
 
 ### VS Code

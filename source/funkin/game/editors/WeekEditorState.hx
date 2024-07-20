@@ -798,8 +798,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 	override function update(elapsed:Float) {
 		if(WeekEditorState.loadedWeek != null) {
 			super.update(elapsed);
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
+			FlxTransitionableState.skipNextTransIn = FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new WeekEditorFreeplayState(WeekEditorState.loadedWeek));
 			WeekEditorState.loadedWeek = null;
 			return;

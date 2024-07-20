@@ -90,7 +90,7 @@ class TitleState extends MusicBeatState
 		final maxS = FlxG.save.data.stats.get('Max Score');
 		final mostM = FlxG.save.data.stats.get('Max Misses');
 		if (mostM != null && maxS != null)
-			trace('Max Score: $maxS | Max Misses: $mostM');
+			trace('Max Score: $maxS - Max Misses: $mostM');
 
 		#if desktop
 		DiscordClient.changePresence("Viewing The Title", null);

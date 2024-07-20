@@ -403,7 +403,7 @@ class PlayState extends MusicBeatState
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		funkin.game.transitions.CustomFadeTransition.nextCamera = camOther;
+		FadeTransition.nextCamera = camOther;
 
 		persistentUpdate = persistentDraw = true;
 
@@ -888,7 +888,7 @@ class PlayState extends MusicBeatState
 		}
 		Paths.clearUnusedMemory();
 		
-		funkin.game.transitions.CustomFadeTransition.nextCamera = camOther;
+		FadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
 	}
 
@@ -2730,7 +2730,7 @@ class PlayState extends MusicBeatState
 
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
-						funkin.game.transitions.CustomFadeTransition.nextCamera = null;
+						FadeTransition.nextCamera = null;
 					}
 					MusicBeatState.switchState(new StoryMenuState());
 
@@ -2772,7 +2772,7 @@ class PlayState extends MusicBeatState
 				WeekData.loadTheFirstEnabledMod();
 				cancelMusicFadeTween();
 				if(FlxTransitionableState.skipNextTransIn) {
-					funkin.game.transitions.CustomFadeTransition.nextCamera = null;
+					FadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new funkin.game.states.FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));

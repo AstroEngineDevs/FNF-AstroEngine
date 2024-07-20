@@ -16,7 +16,7 @@ import flixel.FlxSprite;
 import flixel.FlxCamera;
 import funkin.backend.system.MusicBeatSubstate;
 
-class CustomFadeTransition extends MusicBeatSubstate {
+class FadeTransition extends MusicBeatSubstate {
 	public static var finishCallback:Void->Void;
 	private var leTween:FlxTween = null;
 	public static var nextCamera:FlxCamera;

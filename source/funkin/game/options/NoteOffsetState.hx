@@ -61,7 +61,7 @@ class NoteOffsetState extends MusicBeatState
 		FlxG.cameras.add(camOther, false);
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		funkin.game.transitions.CustomFadeTransition.nextCamera = camOther;
+		FadeTransition.nextCamera = camOther;
 		FlxG.camera.scroll.set(120, 130);
 
 		persistentUpdate = true;
@@ -337,7 +337,7 @@ class NoteOffsetState extends MusicBeatState
 			if(beatTween != null) beatTween.cancel();
 
 			persistentUpdate = false;
-			funkin.game.transitions.CustomFadeTransition.nextCamera = camOther;
+			FadeTransition.nextCamera = camOther;
 			MusicBeatState.switchState(new funkin.game.states.OptionsState());
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
 			FlxG.mouse.visible = false;

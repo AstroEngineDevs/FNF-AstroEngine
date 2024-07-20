@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
 import funkin.game.states.PlayState;
 import funkin.backend.Conductor;
-import funkin.game.transitions.CustomFadeTransition;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxState;
 import funkin.backend.utils.Controls;
@@ -36,7 +35,7 @@ class MusicBeatState extends FlxUIState
 
 		if (!skip)
 		{
-			openSubState(new CustomFadeTransition(0.5, true));
+			openSubState(new FadeTransition(0.5, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}
@@ -139,10 +138,10 @@ class MusicBeatState extends FlxUIState
 		var leState:MusicBeatState = curState;
 		if (!FlxTransitionableState.skipNextTransIn)
 		{
-			leState.openSubState(new CustomFadeTransition(0.6, false));
+			leState.openSubState(new FadeTransition(0.6, false));
 			if (nextState == FlxG.state)
 			{
-				CustomFadeTransition.finishCallback = function()
+				FadeTransition.finishCallback = function()
 				{
 					FlxG.resetState();
 				};
@@ -150,7 +149,7 @@ class MusicBeatState extends FlxUIState
 			}
 			else
 			{
-				CustomFadeTransition.finishCallback = function()
+				FadeTransition.finishCallback = function()
 				{
 					FlxG.switchState(nextState);
 				};

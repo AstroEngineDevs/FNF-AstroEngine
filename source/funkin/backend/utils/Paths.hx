@@ -24,7 +24,7 @@ import haxe.Json;
 
 import flash.media.Sound;
 
-using StringTools;
+
 
 class Paths
 {

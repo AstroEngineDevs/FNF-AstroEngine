@@ -5,7 +5,7 @@ import flixel.FlxState;
 #if VIDEOS_ALLOWED
 import hxcodec.flixel.FlxVideo;
 
-using StringTools;
+
 
 class VidHandler extends MusicBeatState{
     static var video:FlxVideo;

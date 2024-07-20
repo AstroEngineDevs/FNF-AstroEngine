@@ -63,7 +63,7 @@ import funkin.game.objects.Note;
 
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
-using StringTools;
+
 #if sys
 import flash.media.Sound;
 import sys.FileSystem;

@@ -1,4 +1,4 @@
-package funkin.game.stages;
+package funkin.game.objects.stages;
 
 class MallEvil extends BaseStage
 {

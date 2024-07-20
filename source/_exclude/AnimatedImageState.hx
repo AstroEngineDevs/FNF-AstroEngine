@@ -9,7 +9,7 @@ import flixel.util.FlxColor;
 import funkin.backend.system.MusicBeatState;
 import funkin.backend.utils.Paths;
 
-using StringTools;
+
 
 class AnimatedImageState extends MusicBeatState
 {

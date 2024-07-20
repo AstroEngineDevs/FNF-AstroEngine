@@ -29,7 +29,7 @@ import openfl.Lib;
 import funkin.game.options.*;
 import funkin.backend.utils.ClientPrefs;
 
-using StringTools;
+
 
 class GraphicsSettingsSubState extends BaseOptionsMenu
 {

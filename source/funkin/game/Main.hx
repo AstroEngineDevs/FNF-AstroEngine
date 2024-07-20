@@ -22,7 +22,7 @@ import openfl.events.UncaughtErrorEvent;
 import funkin.backend.data.*;
 import funkin.game.FPS;
 
-using StringTools;
+
 
 /*
 	No need to change anything here unless you know what your doin' :3c

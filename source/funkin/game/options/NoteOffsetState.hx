@@ -20,7 +20,7 @@ import flixel.math.FlxPoint;
 
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
-import funkin.game.stages.Stage;
+import funkin.game.objects.stages.Stage;
 
 class NoteOffsetState extends MusicBeatState
 {

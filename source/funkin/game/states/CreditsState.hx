@@ -24,7 +24,7 @@ import flixel.AttachedFlxText;
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 
-using StringTools;
+
 
 class CreditsState extends MusicBeatState
 {

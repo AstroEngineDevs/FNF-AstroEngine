@@ -74,7 +74,7 @@ import funkin.backend.client.Discord;
 #end
 import funkin.backend.funkinLua.LuaUtils;
 
-using StringTools;
+
 
 class FunkinLua {
 

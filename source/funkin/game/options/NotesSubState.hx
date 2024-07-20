@@ -29,7 +29,7 @@ import flixel.graphics.FlxGraphic;
 import funkin.backend.utils.Controls;
 import funkin.backend.data.*;
 
-using StringTools;
+
 
 class NotesSubState extends MusicBeatSubstate
 {

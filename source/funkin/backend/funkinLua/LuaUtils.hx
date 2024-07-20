@@ -18,7 +18,7 @@ import openfl.display.BlendMode;
 import Type.ValueType;
 import funkin.game.states.substates.GameOverSubstate;
 
-using StringTools;
+
 
 class LuaUtils
 {

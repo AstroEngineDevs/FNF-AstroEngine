@@ -10,7 +10,7 @@ import funkin.backend.data.WeekData;
 import funkin.backend.CoolUtil;
 import funkin.game.objects.Note.EventNote;
 import funkin.game.objects.Note;
-import funkin.game.stages.*;
+import funkin.game.objects.stages.*;
 import funkin.backend.utils.ClientPrefs;
 import funkin.game.objects.characters.Character;
 import funkin.game.objects.HealthIcon;
@@ -97,7 +97,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-using StringTools;
+
 /**
  * This is where all the Gameplay stuff happens and is managed
  *

@@ -14,7 +14,7 @@ import funkin.backend.utils.Paths;
 import funkin.backend.client.Discord.DiscordClient;
 #end
 
-using StringTools;
+
 
 class StatsSubState extends MusicBeatSubstate
 {

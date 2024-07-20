@@ -3,7 +3,7 @@ package flixel;
 import funkin.backend.utils.Paths;
 import flixel.FlxSprite;
 
-using StringTools;
+
 
 class AttachedFlxSprite extends FlxSprite
 {

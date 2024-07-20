@@ -11,7 +11,7 @@ import funkin.game.objects.HealthIcon;
 import funkin.backend.Highscore;
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.game.objects.Alphabet;
-using StringTools;
+
 
 class ResetScoreSubState extends MusicBeatSubstate
 {

@@ -34,7 +34,7 @@ import funkin.backend.system.MusicBeatState;
 import sys.FileSystem;
 #end
 
-using StringTools;
+
 
 class FreeplayState extends MusicBeatState
 {

@@ -12,7 +12,7 @@ import llua.*;
 import llua.Lua;
 #end
 
-using StringTools;
+
 
 class DiscordClient
 {

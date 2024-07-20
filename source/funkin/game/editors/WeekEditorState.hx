@@ -41,7 +41,7 @@ import sys.FileSystem;
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 
-using StringTools;
+
 
 class WeekEditorState extends MusicBeatState
 {

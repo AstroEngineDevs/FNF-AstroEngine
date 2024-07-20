@@ -16,7 +16,7 @@ import sys.FileSystem;
 import openfl.utils.Assets;
 #end
 
-using StringTools;
+
 
 class CoolUtil
 {

@@ -3,7 +3,7 @@ package funkin.backend.client;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
 
-using StringTools;
+
 
 class InputFormatter {
 	public static function getKeyName(key:FlxKey):String {

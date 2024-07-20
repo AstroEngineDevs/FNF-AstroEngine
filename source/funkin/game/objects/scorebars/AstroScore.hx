@@ -6,16 +6,16 @@ import funkin.backend.Highscore;
 class AstroScore extends BaseScorebar
 {
 	private final yVal:Float = game.healthBarBG.y;
-	var scoreText:FlxText;
-	var watermark:FlxText;
-	var songLeft:FlxText;
-	var versionTxtSmth:FlxText;
+	private var scoreText:FlxText;
+	private var watermark:FlxText;
+	private var songLeft:FlxText;
+	private var versionTxtSmth:FlxText;
 	// erm :(c
-	var sickTxt:FlxText;
-	var goodsTxt:FlxText;
-	var badTxt:FlxText;
-	var shitsTxt:FlxText;
-	var missTxt:FlxText;
+	private var sickTxt:FlxText;
+	private var goodsTxt:FlxText;
+	private var badTxt:FlxText;
+	private var shitsTxt:FlxText;
+	private var missTxt:FlxText;
 
 	override function create()
 	{

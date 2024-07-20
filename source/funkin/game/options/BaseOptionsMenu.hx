@@ -33,7 +33,7 @@ import funkin.game.objects.*;
 import funkin.game.options.objects.CheckboxThingie;
 import funkin.game.objects.Alphabet;
 
-using StringTools;
+
 
 class BaseOptionsMenu extends MusicBeatSubstate
 {

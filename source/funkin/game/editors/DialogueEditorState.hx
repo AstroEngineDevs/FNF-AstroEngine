@@ -37,7 +37,7 @@ import sys.io.File;
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 
-using StringTools;
+
 
 class DialogueEditorState extends MusicBeatState
 {

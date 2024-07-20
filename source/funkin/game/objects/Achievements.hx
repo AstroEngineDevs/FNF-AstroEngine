@@ -10,7 +10,7 @@ import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import funkin.backend.utils.ClientPrefs;
 
-using StringTools;
+
 
 class Achievements {
 	public static var achievementsStuff:Array<Dynamic> = [ //Name, Description, Achievement save tag, Hidden achievement

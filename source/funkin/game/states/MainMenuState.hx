@@ -30,7 +30,7 @@ import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 import flixel.input.mouse.FlxMouseEvent;
 
-using StringTools;
+
 
 class MainMenuState extends MusicBeatState
 {

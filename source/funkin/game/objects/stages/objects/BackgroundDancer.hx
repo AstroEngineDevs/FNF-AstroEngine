@@ -1,4 +1,4 @@
-package funkin.game.stages.objects;
+package funkin.game.objects.stages.objects;
 
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;

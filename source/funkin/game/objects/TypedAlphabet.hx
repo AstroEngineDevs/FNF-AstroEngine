@@ -10,7 +10,7 @@ import flixel.util.FlxTimer;
 import flixel.sound.FlxSound;
 import flash.media.Sound;
 
-using StringTools;
+
 
 class TypedAlphabet extends Alphabet
 {

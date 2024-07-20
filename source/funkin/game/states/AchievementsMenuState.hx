@@ -16,7 +16,7 @@ import lime.utils.Assets;
 import flixel.FlxSubState;
 import funkin.game.objects.Achievements;
 
-using StringTools;
+
 
 class AchievementsMenuState extends MusicBeatState
 {

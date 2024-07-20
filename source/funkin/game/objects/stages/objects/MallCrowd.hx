@@ -1,4 +1,4 @@
-package funkin.game.stages.objects;
+package funkin.game.objects.stages.objects;
 
 class MallCrowd extends BGSprite
 {

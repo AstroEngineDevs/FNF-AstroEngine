@@ -1,4 +1,4 @@
-package funkin.game.stages;
+package funkin.game.objects.stages;
 
 typedef PhillyGlowGradient = PhillyGlow.PhillyGlowGradient;
 typedef PhillyGlowParticle = PhillyGlow.PhillyGlowParticle;

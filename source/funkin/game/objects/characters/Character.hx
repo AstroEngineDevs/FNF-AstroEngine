@@ -23,7 +23,7 @@ import haxe.Json;
 import funkin.game.objects.playstateBG.*;
 import haxe.format.JsonParser;
 
-using StringTools;
+
 
 typedef CharacterFile = {
 	var animations:Array<AnimArray>;

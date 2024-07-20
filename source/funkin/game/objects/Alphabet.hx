@@ -12,7 +12,7 @@ import flixel.sound.FlxSound;
 import flash.media.Sound;
 import funkin.game.objects.Alphabet;
 
-using StringTools;
+
 
 enum Alignment
 {

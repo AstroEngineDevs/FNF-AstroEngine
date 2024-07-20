@@ -13,7 +13,7 @@ import funkin.backend.utils.ClientPrefs;
 import funkin.game.editors.ChartingState;
 import funkin.game.objects.shaders.ColorSwap;
 
-using StringTools;
+
 
 typedef EventNote = {
 	strumTime:Float,

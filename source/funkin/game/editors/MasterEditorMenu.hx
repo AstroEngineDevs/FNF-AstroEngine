@@ -23,7 +23,7 @@ import funkin.backend.data.WeekData.WeekFile;
 import funkin.backend.data.WeekData.WeekData;
 
 import funkin.game.states.LoadingState;
-using StringTools;
+
 
 class MasterEditorMenu extends MusicBeatState
 {

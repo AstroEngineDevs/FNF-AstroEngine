@@ -29,7 +29,7 @@ import funkin.backend.utils.Controls;
 import openfl.Lib;
 import funkin.game.options.*;
 
-using StringTools;
+
 
 class OtherSettingsSubState extends BaseOptionsMenu
 {

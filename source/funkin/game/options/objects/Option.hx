@@ -23,7 +23,7 @@ import flixel.graphics.FlxGraphic;
 import funkin.backend.utils.Controls;
 import funkin.game.objects.Alphabet;
 
-using StringTools;
+
 
 class Option
 {

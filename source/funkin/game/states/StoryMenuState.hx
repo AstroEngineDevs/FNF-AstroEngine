@@ -30,7 +30,7 @@ import funkin.backend.Song;
 
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
-using StringTools;
+
 
 class StoryMenuState extends MusicBeatState
 {

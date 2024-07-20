@@ -29,7 +29,7 @@ import funkin.backend.system.MusicBeatState;
 import funkin.game.objects.StrumNote;
 import funkin.backend.utils.ClientPrefs;
 
-using StringTools;
+
 
 class EditorPlayState extends MusicBeatState
 {

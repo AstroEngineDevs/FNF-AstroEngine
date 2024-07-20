@@ -7,7 +7,7 @@ import funkin.game.options.objects.*;
 import funkin.game.states.*;
 import funkin.game.transitions.*;
 import funkin.game.objects.Note.EventNote;
-import funkin.game.stages.objects.*;
+import funkin.game.objects.stages.objects.*;
 import funkin.backend.BaseStage.Countdown;
 import funkin.backend.BaseScorebar;
 

@@ -6,7 +6,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxTimer;
 import funkin.game.objects.characters.Character;
 
-using StringTools;
+
 
 class Boyfriend extends Character
 {

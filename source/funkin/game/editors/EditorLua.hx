@@ -33,7 +33,7 @@ import funkin.game.objects.DialogueBoxPsych;
 import funkin.backend.client.Discord.DiscordClient;
 #end
 
-using StringTools;
+
 
 class EditorLua {
 	public static var Function_Stop = 1;

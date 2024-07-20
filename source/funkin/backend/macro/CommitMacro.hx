@@ -4,7 +4,7 @@ package funkin.backend.macro;
 import sys.io.Process;
 #end
 
-using StringTools;
+
 
 class CommitMacro
 {

@@ -75,17 +75,9 @@ class Logs // Modded trace func
 			var extra:String = "";
 			for (v in infos.customParams)
 				extra += ", " + v;
-			#if debug
 			Sys.println('$fuckbaby: ${v + extra} : $nerddd');
-			#else
-			Sys.println('$fuckbaby: ${v + extra}');
-			#end
 		}
 		else
-			#if debug
 			Sys.println('$fuckbaby: $v : $nerddd');
-			#else
-			Sys.println('$fuckbaby: $v');
-			#end
 	}
 }

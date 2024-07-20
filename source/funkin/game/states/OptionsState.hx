@@ -28,7 +28,7 @@ import funkin.game.options.*;
 
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
-using StringTools;
+
 
 class OptionsState extends MusicBeatState
 {

@@ -2,7 +2,7 @@ package funkin.backend;
 
 import flixel.FlxG;
 
-using StringTools;
+
 
 class Highscore
 {

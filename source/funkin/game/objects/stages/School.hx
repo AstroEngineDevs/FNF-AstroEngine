@@ -1,4 +1,4 @@
-package funkin.game.stages;
+package funkin.game.objects.stages;
 
 import funkin.game.states.substates.GameOverSubstate;
 

@@ -45,7 +45,7 @@ import funkin.backend.system.MusicBeatState;
 import sys.FileSystem;
 #end
 
-using StringTools;
+
 
 /**
 	*DEBUG MODE

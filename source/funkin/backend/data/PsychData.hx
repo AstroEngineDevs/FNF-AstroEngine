@@ -2,7 +2,7 @@ package funkin.backend.data;
 
 import flixel.FlxG;
 
-using StringTools;
+
 
 class PsychData {
     public static final psychVersion:String = "0.6.3";

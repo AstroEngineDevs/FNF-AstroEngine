@@ -2,7 +2,7 @@ package funkin.game.objects;
 
 import funkin.backend.Highscore;
 
-using StringTools;
+
 
 // USED FOR REF OK DUDE WILL BE DELETE LATER ONCE I GET A BRAIN AND FIX EVERYTHING LMAO
 

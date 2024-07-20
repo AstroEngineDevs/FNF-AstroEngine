@@ -29,7 +29,7 @@ import funkin.backend.system.MusicBeatSubstate;
 import funkin.game.options.objects.CheckboxThingie;
 import funkin.game.objects.Alphabet;
 
-using StringTools;
+
 
 class GameplayChangersSubstate extends MusicBeatSubstate
 {

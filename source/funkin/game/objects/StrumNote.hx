@@ -8,7 +8,7 @@ import funkin.game.objects.Note;
 import funkin.game.states.PlayState;
 import funkin.backend.utils.ClientPrefs;
 
-using StringTools;
+
 
 class StrumNote extends FlxSprite
 {

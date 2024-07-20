@@ -23,7 +23,7 @@ import haxe.Exception;
 import funkin.game.objects.characters.Character;
 import funkin.game.states.PlayState;
 
-using StringTools;
+
 
 class HScript
 {

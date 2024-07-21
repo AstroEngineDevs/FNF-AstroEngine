@@ -56,7 +56,7 @@ class BaseStage extends FlxBasic
 		else
 		{
 			this.game.stages.push(this);
-			FlxG.log.add('State Init Done lol');
+			FlxG.log.add('Stage Created');
 			super();
 			create();
 		}

@@ -3,8 +3,6 @@ package funkin.game.states;
 import funkin.backend.BaseStage.Countdown;
 import funkin.game.objects.scorebars.*;
 import flixel.util.FlxSpriteUtil;
-import funkin.backend.funkinLua.LuaUtils;
-import funkin.backend.data.EngineData;
 import funkin.backend.data.WeekData;
 import funkin.backend.CoolUtil;
 import funkin.game.objects.Note.EventNote;
@@ -20,13 +18,11 @@ import funkin.game.objects.StrumNote;
 import funkin.game.states.StoryMenuState;
 import funkin.backend.utils.Section.SwagSection;
 import funkin.backend.Song;
-import funkin.game.objects.BGSprite;
 import funkin.backend.utils.Paths;
 import funkin.game.states.substates.GameOverSubstate;
 import funkin.backend.handlers.CutsceneHandler;
 import funkin.backend.Song.SwagSong;
 import funkin.game.states.substates.PauseSubState;
-import funkin.game.objects.shaders.WiggleEffect;
 import funkin.game.objects.DialogueBoxPsych;
 import funkin.backend.Conductor;
 import funkin.game.objects.DialogueBox;
@@ -40,13 +36,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.effects.FlxTrail;
-import flixel.addons.effects.FlxTrailArea;
-import flixel.addons.effects.chainable.FlxEffectSprite;
-import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.graphics.atlas.FlxAtlas;
-import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
@@ -56,10 +46,8 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
-import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
-import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
 import funkin.backend.system.MusicBeatSubstate;
@@ -79,22 +67,7 @@ import animateatlas.AtlasFrameMaker;
 import funkin.game.objects.Achievements;
 import funkin.backend.data.StageData;
 import funkin.game.objects.playstateBG.*;
-//LuaShit fr
-import funkin.backend.funkinLua.FunkinLua;
-import funkin.backend.funkinLua.luaStuff.*;
-//
-import funkin.backend.funkinLua.HScript;
 import funkin.backend.Rating;
-#if !flash 
-import flixel.addons.display.FlxRuntimeShader;
-import openfl.filters.ShaderFilter;
-#end
-import funkin.game.objects.characters.Boyfriend;
-
-#if sys
-import sys.FileSystem;
-import sys.io.File;
-#end
 
 
 /**
@@ -2020,7 +1993,7 @@ class PlayState extends MusicBeatState
 					if(secondsTotal < 0) secondsTotal = 0;
 
 					if(ClientPrefs.data.timeBarType != 'Song Name')
-						timeTxt.text = FlxStringUtil.formatTime(secondsTotal, false);
+						timeTxt.text = flixel.util.FlxStringUtil.formatTime(secondsTotal, false);
 
 				}
 			}

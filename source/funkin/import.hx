@@ -1,5 +1,4 @@
 #if !macro 
-
 // Game
 import funkin.game.objects.characters.*;
 import funkin.game.objects.*;
@@ -10,6 +9,7 @@ import funkin.game.objects.Note.EventNote;
 import funkin.game.objects.stages.objects.*;
 import funkin.game.transitions.*;
 import funkin.game.objects.notes.NoteUtils;
+import funkin.game.objects.characters.*;
 
 // backend
 import funkin.backend.macro.*;
@@ -26,6 +26,8 @@ import funkin.backend.client.Discord;
 #end
 
 // Lua
+import funkin.backend.funkinLua.*;
+import funkin.backend.funkinLua.luaStuff.*;
 #if LUA_ALLOWED
 import llua.*;
 import llua.Lua;
@@ -39,9 +41,21 @@ import sys.io.*;
 import js.html.*;
 #end
 
-// Video Allowed
+// Videos
 #if VIDEOS_ALLOWED
 import hxcodec.flixel.FlxVideo;
+#end
+
+// Shader
+#if !flash 
+import flixel.addons.display.FlxRuntimeShader;
+import openfl.filters.ShaderFilter;
+#end
+
+// System
+#if sys
+import sys.FileSystem;
+import sys.io.File;
 #end
 
 // Flixel

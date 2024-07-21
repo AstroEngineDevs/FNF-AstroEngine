@@ -111,9 +111,9 @@ class AstroScore extends BaseScorebar
 			+ FlxStringUtil.formatTime(Math.max(0, Math.floor(FlxG.sound.music.length / 1000)), false);
 	}
 
-	override function updateShit()
+	override function updateScore()
 	{
-		super.updateShit();
+		super.updateScore();
 		scoreText.text = 'Score: '
 			+ game.songScore
 			+ ' • Misses: '

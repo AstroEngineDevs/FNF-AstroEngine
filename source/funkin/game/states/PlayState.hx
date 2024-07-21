@@ -1265,7 +1265,7 @@ class PlayState extends MusicBeatState
 		
 				var introAlts:Array<String> = introAssets.get('default');
 				var antialias:Bool = ClientPrefs.data.globalAntialiasing;
-				var tick:Countdown = THREE;
+				var tick:BaseStage.Countdown = THREE;
 
 				if(isPixelStage) {
 					introAlts = introAssets.get('pixel');

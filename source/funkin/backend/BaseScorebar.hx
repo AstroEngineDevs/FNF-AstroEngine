@@ -2,7 +2,7 @@ package funkin.backend;
 
 class BaseScorebar extends FlxBasic {
     private var game(get, never):Dynamic;
-    private var updateScore(default, set):Void->Void;
+    private var scoreUpdate(default, set):Void->Void;
     private var updateFunc(default, set):Void->Void;
 
     public function new() {
@@ -10,7 +10,7 @@ class BaseScorebar extends FlxBasic {
         create();
 
         game.updateFunc = update;
-        updateScore = updateShit;
+        scoreUpdate = updateScore;
 
         PlayState.instance.uiGroup.forEach((spr)->{
             spr.alpha = 0;
@@ -19,7 +19,7 @@ class BaseScorebar extends FlxBasic {
 
     public function create() {}
 
-    public function updateShit() {}
+    public function updateScore() {}
 
     // Gets And Sets Shit
     private inline function set_updateFunc(erm:Void->Void) {
@@ -27,7 +27,7 @@ class BaseScorebar extends FlxBasic {
         erm();
         return erm;
     }
-    private inline function set_updateScore(erm:Void->Void) {
+    private inline function set_scoreUpdate(erm:Void->Void) {
         game.scoreUpdateFunc = erm;
         erm();
         return erm;

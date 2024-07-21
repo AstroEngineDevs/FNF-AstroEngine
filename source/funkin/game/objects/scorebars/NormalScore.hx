@@ -17,9 +17,9 @@ class NormalScore extends BaseScorebar
 		add(scoreText);
 	}
 
-	override function updateShit()
+	override function updateScore()
 	{
-		super.updateShit();
+		super.updateScore();
 		scoreText.text = 'Score: ' + PlayState.instance.songScore;
 	}
 }

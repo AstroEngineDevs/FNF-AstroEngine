@@ -8,11 +8,9 @@ import haxe.io.Path;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
-#end
 
 class CrashHandler
 {
-    #if CRASH_HANDLER
 	public static function onCrash(e:UncaughtErrorEvent):Void
 	{
 		var errMsg:String = "";
@@ -54,5 +52,5 @@ class CrashHandler
 		#end
 		Sys.exit(1);
 	}
-	#end
 }
+#end

@@ -11,6 +11,10 @@ class BaseScorebar extends FlxBasic {
 
         game.updateFunc = update;
         updateScore = updateShit;
+
+        PlayState.instance.uiGroup.forEach((spr)->{
+            spr.alpha = 0;
+        });
     }
 
     public function create() {}

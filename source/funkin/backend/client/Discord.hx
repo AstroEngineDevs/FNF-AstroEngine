@@ -90,9 +90,6 @@ class DiscordClient
 			var localID:String = clientID;
 			while (localID == clientID)
 			{
-				#if DISCORD_DISABLE_IO_THREAD
-				Discord.UpdateConnection();
-				#end
 				Discord.RunCallbacks();
 
 				// Wait 0.5 seconds until the next loop...

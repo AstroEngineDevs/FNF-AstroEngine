@@ -33,22 +33,7 @@ class Paths
 
 	#if MODS_ALLOWED
 	public static var ignoreModFolders:Array<String> = [
-		'characters',
-		'custom_events',
-		'custom_haxe',
-		'custom_notetypes',
-		'data',
-		'songs',
-		'music',
-		'sounds',
-		'shaders',
-		'videos',
-		'images',
-		'stages',
-		'weeks',
-		'fonts',
-		'scripts',
-		'achievements'
+		'default'
 	];
 	#end
 
@@ -467,6 +452,7 @@ class Paths
 	}*/
 
 	static public function modFolders(key:String) {
+		if(currentModDirectory=='') currentModDirectory='default';
 		if(currentModDirectory != null && currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(currentModDirectory + '/' + key);
 			if(FileSystem.exists(fileToCheck)) {

@@ -55,7 +55,7 @@
       "type": "git",
       "dir": null,
       "ref": "master",
-      "url": "https://github.com/AstroEngineDevs/hxcpp-debugger"
+      "url": "https://github.com/vshaxe/hxcpp-debugger"
     },
     {
       "name": "hxdiscord_rpc",
@@ -63,13 +63,6 @@
       "dir": null,
       "ref": "main",
       "url": "https://github.com/MAJigsaw77/hxdiscord_rpc"
-    },
-    {
-      "name": "hscript-ex",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/ianharrigan/hscript-ex"
     },
     {
       "name": "linc_luajit",

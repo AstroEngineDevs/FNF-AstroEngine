@@ -45,7 +45,7 @@ class FPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat("_sans", 14, color, true);
+		defaultTextFormat = new TextFormat("_sans", 14, color, false);
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";

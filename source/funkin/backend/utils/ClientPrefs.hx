@@ -63,9 +63,9 @@ import funkin.game.Init.Volume;
 	public var scoreBarType:String = 'Astro';
 	public var noteSplashesType:String = 'normal';
 	public var forceNoteSplashes:Bool = false;
-	//public var stats:Array<Int> = [0, 0];
+	public var showRatingStats:Bool = true;
 
-	public var stats:Map<String, Float> = [
+	public var stats:Map<String, Dynamic> = [
 		'Max Misses' => 0,
 		'Max Score' => 0
 	];

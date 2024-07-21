@@ -18,6 +18,8 @@
 ██║░░██╗██║░░██║██║░░██║██╔══╝░░
 ╚█████╔╝╚█████╔╝██████╔╝███████╗
 ░╚════╝░░╚════╝░╚═════╝░╚══════╝
+
+maybe...
 */
 
 package;
@@ -37,7 +39,7 @@ typedef Library =
 }
 
 class Main
-{ // stolen from psych source
+{
 	public static function main():Void
 	{
 		Sys.println('

@@ -42,13 +42,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Mouse Support',
-		'mouse [Beta]',
+		var option:Option = new Option('Mouse Controls',
+		'If checked, mouse support will be enabled, simple right?',
 		'mouseEvents',
 		'bool',
 		false);
-	addOption(option);
-	option.onChange = onChangeEnableDisableMouse;
+		addOption(option);
+		option.onChange = onChangeEnableDisableMouse;
 
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
@@ -64,6 +64,36 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
+		
+		var option:Option = new Option('Note Splashes',
+			"If unchecked, hitting \"Sick!\" notes won't show particles.",
+			'noteSplashes',
+			'bool',
+			true);
+		addOption(option);
+		
+		var option:Option = new Option('Opponent Note Splashes',
+			"It's in the fucking name nerd",
+			'opnoteSplashes',
+			'bool',
+			true);
+		addOption(option);
+
+		var option:Option = new Option('Force Splashes',
+		"Override song set notesplash asset.",
+		'forceNoteSplashes',
+		'bool',
+		false);
+		addOption(option);
+
+		if(ClientPrefs.data.scoreBarType == 'Astro'){
+			var option:Option = new Option('Rating Stats',
+			"Override song set notesplash asset.",
+			'showRatingStats',
+			'bool',
+			true);
+			addOption(option);
+		}
 
 		var option:Option = new Option('Opponent Notes',
 			'If unchecked, opponent notes get hidden.',
@@ -85,6 +115,29 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
+
+		var option:Option = new Option('Botplay',
+		'It\'s fucking botplay', 
+		'botplayStudio',
+		'bool',
+		false);
+		addOption(option);
+
+		
+		#if DISCORD_ALLOWED
+		var option:Option = new Option('Discord Rich Presence',
+			"Uncheck this to prevent accidental leaks, it will hide the Application from your \"Playing\" box on Discord",
+			'discordRPC',
+			'bool');
+		addOption(option);
+		option.onChange = () -> {
+			var fr = ClientPrefs.data.discordRPC;
+			if (fr)
+				DiscordClient.initialize();
+			else
+				DiscordClient.shutdown();
+		}
+		#end
 
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',

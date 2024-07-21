@@ -44,15 +44,47 @@ class VisualsUISubState extends BaseOptionsMenu
 			'Time Left',
 			['Time Left', 'Time Elapsed', 'Song Name', 'Disabled']);
 		addOption(option);
-
+		
+		var option:Option = new Option('Note Splashes Type:',
+			"Different Note Splashes",
+			'noteSplashesType',
+			'string',
+			'normal',
+			['normal', 'diamond']);
+		addOption(option);
 			
-		var option:Option = new Option('Score Bar:',
-			"What should the Score Bar display?",
+		var option:Option = new Option('Scorebar:',
+			"Which scorebar do you what?",
 			'scoreBarType',
 			'string',
 			'Astro',
 			['Astro', 'Psych', 'V-Slice']);
 		addOption(option);
+
+		var option:Option = new Option('Note Splashes Type:',
+		"Different Note Splashes",
+		'noteSplashesType',
+		'string',
+		'normal',
+		['normal', 'diamond']);
+		addOption(option);
+
+		var option:Option = new Option('Hide HUD',
+			'Hide\'s all HUD elements\nimproves performance.',
+			'hideFullHUD',
+			'bool',
+			false);
+		addOption(option);
+		option.onChange = () -> {
+			if (ClientPrefs.data.hideFullHUD){
+				ClientPrefs.data.showFPS = false;
+			}else{
+				ClientPrefs.data.showFPS = true;
+			}
+	
+			if(funkin.game.Main.fpsVar != null)
+				funkin.game.Main.fpsVar.visible = ClientPrefs.data.showFPS;
+		};
 
 		var option:Option = new Option('Flashing Lights',
 			"Uncheck this if you're sensitive to flashing lights!",

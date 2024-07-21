@@ -1,17 +1,18 @@
 package funkin.backend.data;
 
+@:publicFields
 @:final class EngineData
 {
 	//** Customization (Source Code Only) **/
-	public static final coreGame = {
+	static final coreGame = {
 		coreDiscordID: "1095422496473358356",
 		menuColor: 0xff525252,
 	}
 
 	//** ignore this **/
 
-	public static final engineData = {
-		coreVersion: '0.2.3',
+	static final engineData = {
+		coreVersion: '0.2.4',
 		repository: "https://github.com/AstroEngineDevs/FNF-AstroEngine"
 	}
 

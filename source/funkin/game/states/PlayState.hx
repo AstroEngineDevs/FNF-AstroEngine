@@ -2,7 +2,6 @@ package funkin.game.states;
 
 import funkin.backend.BaseStage.Countdown;
 import funkin.game.objects.scorebars.*;
-import funkin.game.objects.notes.NoteUtils;
 import flixel.util.FlxSpriteUtil;
 import funkin.backend.funkinLua.LuaUtils;
 import funkin.backend.data.EngineData;

@@ -8,12 +8,13 @@ import funkin.game.states.PlayState;
 
 class NoteUtils extends FlxSprite
 {
-	public function new()
-	{
-		super();
+	public static inline function checkNote():String {
+		var skin:String = 'NOTE_assets';
+
+		return skin;
 	}
 
-	public static function checkSplash()
+	public static inline function checkSplash():String
 	{
         var skin:String = 'normal';
         

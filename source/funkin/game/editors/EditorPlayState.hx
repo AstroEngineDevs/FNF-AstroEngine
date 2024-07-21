@@ -1,5 +1,4 @@
 package funkin.game.editors;
-import funkin.game.objects.notes.NoteUtils;
 import funkin.game.states.LoadingState;
 import funkin.game.objects.Note;
 import funkin.backend.utils.Section.SwagSection;

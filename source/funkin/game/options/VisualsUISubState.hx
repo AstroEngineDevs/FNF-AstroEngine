@@ -61,14 +61,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			['Astro', 'Psych', 'V-Slice']);
 		addOption(option);
 
-		var option:Option = new Option('Note Splashes Type:',
-		"Different Note Splashes",
-		'noteSplashesType',
-		'string',
-		'normal',
-		['normal', 'diamond']);
-		addOption(option);
-
 		var option:Option = new Option('Hide HUD',
 			'Hide\'s all HUD elements\nimproves performance.',
 			'hideFullHUD',

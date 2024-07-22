@@ -1,9 +1,7 @@
-package funkin.backend.client;
+package funkin.backend;
 
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
-
-
 
 class InputFormatter {
 	public static function getKeyName(key:FlxKey):String {

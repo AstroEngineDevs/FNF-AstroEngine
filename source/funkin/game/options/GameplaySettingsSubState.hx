@@ -88,7 +88,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		if(ClientPrefs.data.scoreBarType == 'Astro'){
 			var option:Option = new Option('Rating Stats',
-			"Override song set notesplash asset.",
+			"Show Rating Stats",
 			'showRatingStats',
 			'bool',
 			true);

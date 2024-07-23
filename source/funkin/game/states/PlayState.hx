@@ -1117,6 +1117,7 @@ class PlayState extends MusicBeatState
 		video.play(filepath);
 		video.onEndReached.add(function() {
 			startAndEnd();
+			video.dispose();
 			return;
 		});
 		#else

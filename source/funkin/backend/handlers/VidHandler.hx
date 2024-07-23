@@ -29,6 +29,7 @@ class VidHandler extends MusicBeatState{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 			FlxG.mouse.visible = true;
+			video.dispose();
 			MusicBeatState.switchState(returnState);
 			return;
 		});

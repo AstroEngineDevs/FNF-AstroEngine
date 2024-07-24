@@ -38,7 +38,7 @@ class OutdatedState extends MusicBeatState
 			if (controls.ACCEPT)
 			{
 				leftState = true;
-				CoolUtil.browserLoad("https://github.com/ShadowMario/FNF-PsychEngine/releases");
+				CoolUtil.browserLoad('${EngineData.engineData.repository}/releases');
 			}
 			else if (controls.BACK)
 			{

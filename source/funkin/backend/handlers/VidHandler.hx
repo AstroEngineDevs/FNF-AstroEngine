@@ -1,60 +1,63 @@
 package funkin.backend.handlers;
 
-// TODO: umm make video states easier :3 NEW: DONE I GUESS
-import flixel.FlxState;
 #if VIDEOS_ALLOWED
 import hxcodec.flixel.FlxVideo;
+import flixel.FlxState;
 
+class VidHandler extends MusicBeatState
+{
+	private static var _video:FlxVideo;
+	private static var _videoString:String = '';
+	private static var _returnState:FlxState;
 
-
-class VidHandler extends MusicBeatState{
-    static var video:FlxVideo;
-	static var videoString:String = '';
-	static var returnState:FlxState;
-    
 	override function create()
 	{
 		super.create();
 
-		if(FlxG.sound.music != null)
-		    FlxG.sound.music.fadeOut(1, 0, function(_) FlxG.sound.music.stop());
+		if (FlxG.sound.music != null)
+			FlxG.sound.music.fadeOut(1, 0, function(_) FlxG.sound.music.stop());
 		if (funkin.game.Main.fpsVar != null)
 			funkin.game.Main.fpsVar.visible = false;
 		FlxG.mouse.visible = false;
-		video = new FlxVideo();
-		video.play(Paths.video(videoString));
-		video.onEndReached.add(function(){
+		_video = new FlxVideo();
+		_video.play(Paths.video(_videoString));
+		_video.onEndReached.add(function()
+		{
 			if (funkin.game.Main.fpsVar != null)
 				funkin.game.Main.fpsVar.visible = ClientPrefs.data.showFPS;
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 			FlxG.mouse.visible = true;
-			video.dispose();
-			MusicBeatState.switchState(returnState);
+			_video.dispose();
+			MusicBeatState.switchState(_returnState);
 			return;
 		});
 	}
-    public static function startVideo(videoName:String, returnStateName:Null<flixel.FlxState>) {
-		videoString = videoName;
-		returnState = returnStateName;
+
+	public static function startVideo(videoName:String, returnStateName:Null<flixel.FlxState>)
+	{
+		_videoString = videoName;
+		_returnState = returnStateName;
 		FlxG.switchState(new VidHandler());
 		trace('Current Video Playing: $videoName');
-    }
+	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		if ((FlxG.keys.justPressed.ANY) && video != null){
+		if ((FlxG.keys.justPressed.ANY) && _video != null)
+		{
 			trace('Skipped Video');
-			video.onEndReached.dispatch();
+			_video.onEndReached.dispatch();
 		}
 	}
 
-	override function destroy() {
+	override function destroy()
+	{
 		super.destroy();
 
-		video.dispose();
+		_video.dispose();
 	}
 }
 #end

@@ -11,14 +11,14 @@ import sys.io.Process;
 
 class CrashHandler
 {
-	public static function onCrash(e:UncaughtErrorEvent):Void
+	public static function main(e:UncaughtErrorEvent):Void
 	{
-		var errMsg:String = "";
-		var path:String;
 		final callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		final dateNow:String = Date.now().toString().replace(" ", "_").replace(":", "'");
 
-		path = './crash/${Application.current.meta.get('file')}_$dateNow.txt';
+		var errMsg:String = "";
+		var path:String ='./crash/${Application.current.meta.get('file')}_$dateNow.txt';
+
 		trace(path);
 
 		for (stackItem in callStack)

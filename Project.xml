@@ -121,7 +121,9 @@
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons"/>
 	<haxelib name="flixel-ui" />
-	<!-- HScript -->
+	<!-- HScript -->	
+	<haxelib name="hscript" />
+	<define name="hscriptPos" />
 	<!-- Faxe -->
 	<haxelib name="faxe" if='switch'/>
 	<!-- Lua -->

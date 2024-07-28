@@ -61,7 +61,6 @@ class MainMenuState extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
-	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
 	var versionTextGroup:FlxTypedGroup<FlxSprite>;
 
@@ -103,9 +102,7 @@ class MainMenuState extends MusicBeatState
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
-		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
-		add(camFollowPos);
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.set(0, yScroll);
@@ -147,8 +144,6 @@ class MainMenuState extends MusicBeatState
 			mousesupportlmaoo(menuItem, i);
 		}
 
-		FlxG.camera.follow(camFollowPos, null, 1);
-
 		versionTextGroup = new FlxTypedGroup();
 		add(versionTextGroup);
 		versionShitArray.reverse();
@@ -188,6 +183,8 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		super.create();
+
+		FlxG.camera.follow(camFollow, null, 0.15);
 	}
 
 	private function mousesupportlmaoo(sus:FlxSprite, ?eee:Int = 0)
@@ -230,9 +227,6 @@ class MainMenuState extends MusicBeatState
 			if (funkin.game.states.FreeplayState.vocals != null)
 				funkin.game.states.FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
-
-		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
-		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		if (!selectedSomethin)
 		{

@@ -25,6 +25,7 @@
 
 	<!-- _____________________________ ASTRO ENGINE CUSTOMIZATION ____________________________ -->
 
+	<!-- Enable Mod Support -->
 	<define name="MODS_ALLOWED" if="desktop" />
 
 	<!-- Enables Lua Support -->
@@ -121,8 +122,6 @@
 	<haxelib name="flixel-addons"/>
 	<haxelib name="flixel-ui" />
 	<!-- HScript -->
-	<haxelib name="hscript" />
-	<define name="hscriptPos" />
 	<!-- Faxe -->
 	<haxelib name="faxe" if='switch'/>
 	<!-- Lua -->

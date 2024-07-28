@@ -197,7 +197,7 @@ class Tank extends BaseStage
 			gf.dance();
 		};
 
-		camFollow.set(dad.x + 280, dad.y + 170);
+		camFollow.setPosition(dad.x + 280, dad.y + 170);
 	}
 
 	function ughIntro()
@@ -293,7 +293,7 @@ class Tank extends BaseStage
 		tankman.y -= 14;
 		gfGroup.alpha = 0.00001;
 		boyfriendGroup.alpha = 0.00001;
-		camFollow.set(dad.x + 400, dad.y + 170);
+		camFollow.setPosition(dad.x + 400, dad.y + 170);
 		FlxTween.tween(FlxG.camera, {zoom: 0.9 * 1.2}, 1, {ease: FlxEase.quadInOut});
 		foregroundSprites.forEach(function(spr:BGSprite)
 		{
@@ -345,8 +345,7 @@ class Tank extends BaseStage
 		{
 			var camPosX:Float = 630;
 			var camPosY:Float = 425;
-			camFollow.set(camPosX, camPosY);
-			game.camFollowPos.setPosition(camPosX, camPosY);
+			camFollow.setPosition(camPosX, camPosY);
 			FlxG.camera.zoom = 0.8;
 			game.cameraSpeed = 1;
 
@@ -424,7 +423,7 @@ class Tank extends BaseStage
 
 		cutsceneHandler.timer(20, function()
 		{
-			camFollow.set(dad.x + 500, dad.y + 170);
+			camFollow.setPosition(dad.x + 500, dad.y + 170);
 		});
 
 		cutsceneHandler.timer(31.2, function()
@@ -439,7 +438,7 @@ class Tank extends BaseStage
 				}
 			};
 
-			camFollow.set(boyfriend.x + 280, boyfriend.y + 200);
+			camFollow.setPosition(boyfriend.x + 280, boyfriend.y + 200);
 			game.cameraSpeed = 12;
 			FlxTween.tween(FlxG.camera, {zoom: 0.9 * 1.2 * 1.2}, 0.25, {ease: FlxEase.elasticOut});
 		});

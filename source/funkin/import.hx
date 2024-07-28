@@ -74,6 +74,8 @@ import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxBasic;
 #end
-
 using StringTools;
+#if !macro
 using funkin.backend.utils.StringUtils;
+using funkin.backend.utils.ObjectUtils;
+#end

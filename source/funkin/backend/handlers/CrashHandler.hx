@@ -11,7 +11,7 @@ import sys.io.Process;
 
 class CrashHandler
 {
-	static function main(e:UncaughtErrorEvent):Void
+	public static function main(e:UncaughtErrorEvent):Void
 	{
 		final callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		final dateNow:String = Date.now().toString().replace(" ", "_").replace(":", "'");

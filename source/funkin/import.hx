@@ -18,8 +18,8 @@ import funkin.backend.utils.*;
 import funkin.backend.data.*;
 import funkin.backend.*;
 import funkin.backend.base.*;
-import funkin.backend.base.BaseStage.Countdown;
 import funkin.backend.utils.native.*;
+import funkin.backend.base.BaseStage.Countdown;
 
 //Discord API
 #if DISCORD_ALLOWED
@@ -76,6 +76,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxBasic;
 #end
 using StringTools;
+
 #if !macro
 using funkin.backend.utils.StringUtils;
 using funkin.backend.utils.ObjectUtils;

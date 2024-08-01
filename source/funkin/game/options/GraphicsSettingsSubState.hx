@@ -1,6 +1,5 @@
 package funkin.game.options;
 
-import funkin.backend.utils.native.WindowUtil;
 #if desktop
 import funkin.backend.client.Discord.DiscordClient;
 #end

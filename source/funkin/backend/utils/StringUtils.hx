@@ -2,15 +2,16 @@ package funkin.backend.utils;
 class StringUtils
 {
 	/**
-		Formats first:String by removing "-" & Making every word a Cap
+	* Formats first:String by removing "-" & Making every word a Cap
+	* @param x Input
+	* @param y Will be changed to " " instead of y
+	* @return Converted String 
 	**/
-	public inline static function formatText(first:String, ?toRemove:String = '-'):String
+	public inline static function formatText(x:String, ?y:String = '-'):String
 	{
-		/* Like fuck off dude :3c */
-		/* Let me cook dude :Dc */
-		return StringTools.replace(first, toRemove, " ")
-			.split(" ")
-			.map(s -> s.charAt(0).toUpperCase() + s.substr(1))
-			.join(" ");
+		return StringTools.replace(x, y, " ")
+		.split(" ")
+		.map(s -> s.charAt(0).toUpperCase() + s.substr(1))
+		.join(" ");
 	}
 }

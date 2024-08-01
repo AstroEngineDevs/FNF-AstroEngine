@@ -1,5 +1,6 @@
 package funkin.game.options;
 
+import funkin.backend.utils.native.WindowUtil;
 #if desktop
 import funkin.backend.client.Discord.DiscordClient;
 #end
@@ -53,6 +54,14 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			true);
 		option.showBoyfriend = true;
 		option.onChange = onChangeAntiAliasing; //Changing onChange is only needed if you want to make a special interaction after it changes the value
+		addOption(option);
+
+		var option:Option = new Option('Dark Mode',
+			'Enabled Dark Mode Support.',
+			'darkMode',
+			'bool',
+			false);
+		option.onChange = () -> WindowUtil.darkMode(ClientPrefs.data.darkMode);
 		addOption(option);
 
 		var option:Option = new Option('Shaders', //Name

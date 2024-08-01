@@ -1,6 +1,6 @@
 package funkin.game.states;
 
-import funkin.backend.BaseStage.Countdown;
+import funkin.backend.base.BaseStage.Countdown;
 import funkin.game.objects.scorebars.*;
 import flixel.util.FlxSpriteUtil;
 import funkin.backend.data.WeekData;

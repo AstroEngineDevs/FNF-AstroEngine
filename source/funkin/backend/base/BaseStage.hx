@@ -1,4 +1,4 @@
-package funkin.backend;
+package funkin.backend.base;
 
 import funkin.game.objects.Note.EventNote;
 import flixel.FlxBasic;
@@ -16,11 +16,11 @@ enum Countdown
 
 class BaseStage extends FlxBasic
 {
-	private var game(default, set):Dynamic = PlayState.instance;
+	private var game(get, never):Dynamic;
+	private var playstate(default, never):Dynamic = PlayState;
 
 	public var onPlayState:Bool = true;
 
-	// some variables for convenience
 	public var paused(get, never):Bool;
 	public var songName(get, never):String;
 	public var isStoryMode(get, never):Bool;
@@ -138,11 +138,11 @@ class BaseStage extends FlxBasic
 
 	public function setDefaultGF(name:String) // Fix for the Chart Editor on Base Game stages
 	{
-		var gfVersion:String = PlayState.SONG.gfVersion;
+		var gfVersion:String = playstate.SONG.gfVersion;
 		if (gfVersion == null || gfVersion.length < 1)
 		{
 			gfVersion = name;
-			PlayState.SONG.gfVersion = gfVersion;
+			playstate.SONG.gfVersion = gfVersion;
 		}
 	}
 
@@ -168,13 +168,13 @@ class BaseStage extends FlxBasic
 	// overrides
 	function startCountdown()
 		if (onPlayState)
-			return PlayState.instance.startCountdown();
+			return game.startCountdown();
 		else
 			return false;
 
 	function endSong()
 		if (onPlayState)
-			return PlayState.instance.endSong();
+			return game.endSong();
 		else
 			return false;
 
@@ -187,19 +187,19 @@ class BaseStage extends FlxBasic
 			moveCamera(isDad);
 
 	inline private function get_paused()
-		return PlayState.instance.paused;
+		return game.paused;
 
 	inline private function get_songName()
-		return PlayState.SONG.song.toLowerCase();
+		return playstate.SONG.song.toLowerCase();
 
 	inline private function get_isStoryMode()
-		return PlayState.isStoryMode;
+		return playstate.isStoryMode;
 
 	inline private function get_seenCutscene()
-		return PlayState.seenCutscene;
+		return playstate.seenCutscene;
 
 	inline private function get_inCutscene()
-		return PlayState.instance.inCutscene;
+		return game.inCutscene;
 
 	inline private function set_inCutscene(value:Bool)
 	{
@@ -219,13 +219,8 @@ class BaseStage extends FlxBasic
 	inline private function get_members()
 		return game.members;
 
-	inline private function set_game(value:MusicBeatState)
-	{
-		onPlayState = (Std.isOfType(value, PlayState));
-		game = value;
-		return value;
-	}
-
+	inline private function get_game() return cast FlxG.state;
+	
 	inline private function get_boyfriend():Character
 		return game.boyfriend;
 

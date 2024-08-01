@@ -64,6 +64,7 @@ import funkin.game.Init.Volume;
 	public var noteSplashesType:String = 'normal';
 	public var forceNoteSplashes:Bool = false;
 	public var showRatingStats:Bool = true;
+	public var darkMode:Bool = false;
 
 	public var stats:Map<String, Dynamic> = [
 		'Max Misses' => 0,
@@ -196,6 +197,7 @@ class ClientPrefs
 			funkin.backend.PlayerSettings.init();
 			loadPrefs();
 			saveSettings();
+			funkin.backend.utils.native.WindowUtil.darkMode(data.darkMode);
 
 			trace("Initialization Successful");
 		}

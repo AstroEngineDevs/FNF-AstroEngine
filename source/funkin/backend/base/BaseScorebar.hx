@@ -1,4 +1,4 @@
-package funkin.backend;
+package funkin.backend.base;
 
 class BaseScorebar extends FlxBasic
 {
@@ -8,23 +8,22 @@ class BaseScorebar extends FlxBasic
 
 	public function new()
 	{
-        if(this.game == null){
-            destroy();
-        } else {
-            FlxG.log.add('Scorebar Created');
+		if (this.game == null)
+		{
+			destroy();
+		}
+		else
+		{
+			FlxG.log.add('Scorebar Created');
 
-            super();
-            create();
-            
-            game.updateFunc = update;
-            scoreUpdate = updateScore;
-    
-            PlayState.instance.uiGroup.forEach((spr) ->
-            {
-                spr.alpha = 0;
-            });
+			super();
+			create();
 
-        }
+			game.updateFunc = update;
+			scoreUpdate = updateScore;
+
+			PlayState.instance.uiGroup.forEach((spr) -> spr.alpha = 0);
+		}
 	}
 
 	public function create()

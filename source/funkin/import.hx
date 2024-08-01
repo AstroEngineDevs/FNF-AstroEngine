@@ -17,8 +17,8 @@ import funkin.backend.system.*;
 import funkin.backend.utils.*;
 import funkin.backend.data.*;
 import funkin.backend.*;
-import funkin.backend.BaseStage;
-import funkin.backend.BaseScorebar;
+import funkin.backend.base.*;
+import funkin.backend.base.BaseStage.Countdown;
 
 //Discord API
 #if DISCORD_ALLOWED

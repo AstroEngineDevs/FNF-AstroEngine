@@ -229,7 +229,7 @@ class FunkinLua {
 		set('scriptName', scriptName);
 		set('currentModDirectory', Paths.currentModDirectory);
 		set('scoreBarType', ClientPrefs.data.scoreBarType);
-		#if windows set('darkMode', funkin.backend.utils.native.WindowUtil.darkMode); #end
+		#if windows set('darkMode', WindowUtil.darkMode); #end
 
 
 		set('buildTarget', LuaUtils.getBuildTarget());

@@ -197,7 +197,7 @@ class ClientPrefs
 			funkin.backend.PlayerSettings.init();
 			loadPrefs();
 			saveSettings();
-			funkin.backend.utils.native.WindowUtil.darkMode(data.darkMode);
+			WindowUtil.darkMode(data.darkMode);
 
 			trace("Initialization Successful");
 		}

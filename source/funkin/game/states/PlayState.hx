@@ -1432,8 +1432,8 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
-		FlxG.sound.music.pitch = playbackRate;
-		FlxG.sound.music.onComplete = finishSong.bind();
+		#if FLX_PITCH FlxG.sound.music.pitch = playbackRate; #end
+		FlxG.sound.music.onComplete = finishSong.bind(false);
 		
 		vocals.play();
 
@@ -2581,23 +2581,22 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	public function finishSong(?ignoreNoteOffset:Null<Bool> = false):Void
-	{
-		updateTime = false;
-		FlxG.sound.music.volume = 0;
-
-		vocals.volume = 0;
-		vocals.pause();
-		trace(startCallback);
-		trace(endCallback);
-		if(ClientPrefs.data.noteOffset <= 0 || ignoreNoteOffset) {
-			endCallback();
-		} else {
-			finishTimer = new FlxTimer().start(ClientPrefs.data.noteOffset / 1000, function(tmr:FlxTimer) {
+	public function finishSong(?ignoreNoteOffset:Bool = false):Void
+		{
+			updateTime = false;
+			FlxG.sound.music.volume = 0;
+	
+			vocals.volume = 0;
+			vocals.pause();
+	
+			if(ClientPrefs.data.noteOffset <= 0 || ignoreNoteOffset) {
 				endCallback();
-			});
+			} else {
+				finishTimer = new FlxTimer().start(ClientPrefs.data.noteOffset / 1000, function(tmr:FlxTimer) {
+					endCallback();
+				});
+			}
 		}
-	}
 
 
 	public var transitioning = false;

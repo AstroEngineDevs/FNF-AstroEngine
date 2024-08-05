@@ -263,7 +263,7 @@ class Limo extends BaseStage
 				#if ACHIEVEMENTS_ALLOWED
 				Achievements.henchmenDeath++;
 				FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
-				var achieve:String = game.checkForAchievement(['roadkill_enthusiast']);
+				var achieve:String = AchievementUtils.checkForAchievement(['roadkill_enthusiast']);
 				if (achieve != null) {
 					game.startAchievement(achieve);
 				} else {

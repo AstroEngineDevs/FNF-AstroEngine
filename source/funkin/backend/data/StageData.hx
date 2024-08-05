@@ -86,7 +86,21 @@ class StageData {
 		#end
 		else
 		{
-			return null;
+			return { // default of stage file cannot be found
+				directory: "",
+				defaultZoom: 0.9,
+				isPixelStage: false,
+
+				boyfriend: [770, 100],
+				girlfriend: [400, 130],
+				opponent: [100, 100],
+				hide_girlfriend: false,
+
+				camera_boyfriend: [0, 0],
+				camera_opponent: [0, 0],
+				camera_girlfriend: [0, 0],
+				camera_speed: 1
+			};
 		}
 		return cast Json.parse(rawJson);
 	}

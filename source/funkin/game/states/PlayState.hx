@@ -196,12 +196,6 @@ class PlayState extends MusicBeatState
 	private var timeBarBG:AttachedFlxSprite;
 	public var timeBar:FlxBar;
 
-	public var ratingsData:Array<Rating> = [];
-	public var sicks:Int = 0;
-	public var goods:Int = 0;
-	public var bads:Int = 0;
-	public var shits:Int = 0;
-
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
@@ -219,17 +213,29 @@ class PlayState extends MusicBeatState
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
 
+	// Health Icons
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
+
+	// Cameras
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
+	public var camPause:FlxCamera;
 	public var cameraSpeed:Float = 1;
 
+	// Song Stats
+	public var ratingsData:Array<Rating> = [];
+	public var sicks:Int = 0;
+	public var goods:Int = 0;
+	public var bads:Int = 0;
+	public var shits:Int = 0;
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var timeTxt:FlxText;
+
+	// Tweens
 	var scoreTxtTween:FlxTween;
 
 	public static var campaignScore:Int = 0;
@@ -257,11 +263,6 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 	#end
-
-	//Achievement shit
-	var keysPressed:Array<Bool> = [];
-	var boyfriendIdleTime:Float = 0.0;
-	var boyfriendIdled:Bool = false;
 
 	// Lua shit
 	public static var instance:PlayState;
@@ -347,7 +348,7 @@ class PlayState extends MusicBeatState
 		// For the "Just the Two of Us" achievement
 		for (i in 0...keysArray.length)
 		{
-			keysPressed.push(false);
+			AchievementUtils.keysPressed.push(false);
 		}
 
 		if (FlxG.sound.music != null)
@@ -360,26 +361,31 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 
-		// var gameCam:FlxCamera = FlxG.camera;
+		// Cameras
 		camGame = new FlxCamera();
-		camHUD = new FlxCamera();
-		camOther = new FlxCamera();
-		camHUD.bgColor.alpha = 0;
-		camOther.bgColor.alpha = 0;
-
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD, false);
-		FlxG.cameras.add(camOther, false);
-		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
-
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
+
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
+		FlxG.cameras.add(camHUD, false);
+
+		camOther = new FlxCamera();
+		camOther.bgColor.alpha = 0;
+		FlxG.cameras.add(camOther, false);
+
+		camPause = new FlxCamera();
+		camPause.bgColor.alpha = 0;
+		FlxG.cameras.add(camPause, false);
+		
+		// Init Stuff
+		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 		FadeTransition.nextCamera = camOther;
-
 		persistentUpdate = persistentDraw = true;
+		if(isPixelStage) introSoundsSuffix = '-pixel';
+		if (SONG == null) SONG = Song.loadFromJson('tutorial');
 
-		if (SONG == null)
-			SONG = Song.loadFromJson('tutorial');
-
+		AchievementUtils.resetVars();
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
@@ -413,23 +419,6 @@ class PlayState extends MusicBeatState
 		SONG.stage = curStage;
 
 		var stageData:StageFile = StageData.getStageFile(curStage);
-		if(stageData == null) { //Stage couldn't be found, create a dummy stage for preventing a crash
-			stageData = {
-				directory: "",
-				defaultZoom: 0.9,
-				isPixelStage: false,
-
-				boyfriend: [770, 100],
-				girlfriend: [400, 130],
-				opponent: [100, 100],
-				hide_girlfriend: false,
-
-				camera_boyfriend: [0, 0],
-				camera_opponent: [0, 0],
-				camera_girlfriend: [0, 0],
-				camera_speed: 1
-			};
-		}
 
 		// if u wanna hardcode stage json files
 		defaultCamZoom = stageData.defaultZoom;
@@ -473,10 +462,6 @@ class PlayState extends MusicBeatState
 			case 'tank': new Tank();
 		}
 
-		if(isPixelStage) {
-			introSoundsSuffix = '-pixel';
-		}
-
 		add(gfGroup); //Needed for blammed lights
 
 		add(dadGroup);
@@ -486,10 +471,7 @@ class PlayState extends MusicBeatState
 		luaDebugGroup = new FlxTypedGroup<DebugLuaText>();
 		luaDebugGroup.cameras = [camOther];
 		add(luaDebugGroup);
-		#end
-
 		// "GLOBAL" SCRIPTS
-		#if LUA_ALLOWED
 		var filesPushed:Array<String> = [];
 		var foldersToCheck:Array<String> = [Paths.getSharedPath('scripts/')];
 
@@ -1884,12 +1866,12 @@ class PlayState extends MusicBeatState
 		if(!inCutscene && !paused ) {
 			FlxG.camera.followLerp = 0.04 * cameraSpeed * playbackRate;
 			if(!startingSong && !endingSong && boyfriend.animation.curAnim.name.startsWith('idle')) {
-				boyfriendIdleTime += elapsed;
-				if(boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
-					boyfriendIdled = true;
+				AchievementUtils.boyfriendIdleTime += elapsed;
+				if(AchievementUtils.boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
+					AchievementUtils.boyfriendIdled = true;
 				}
 			} else {
-				boyfriendIdleTime = 0;
+				AchievementUtils.boyfriendIdleTime = 0;
 			}
 		}
 
@@ -2202,7 +2184,7 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.pause();
 			vocals.pause();
 		}
-		openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		openSubState(new PauseSubState());
 		//}
 
 		#if desktop
@@ -2636,9 +2618,7 @@ class PlayState extends MusicBeatState
 		if(achievementObj != null) {
 			return false;
 		} else {
-			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
-				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
-				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
+			var achieve:String = AchievementUtils.checkForAchievement();
 
 			if(achieve != null) {
 				startAchievement(achieve);
@@ -2657,12 +2637,8 @@ class PlayState extends MusicBeatState
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 
 				// Stats
-
-				// i'll make more sexy later ;3c
-				if (ClientPrefs.data.stats.get('Max Score') < songScore) ClientPrefs.data.stats.set('Max Score', songScore);
-				if (ClientPrefs.data.stats.get('Max Misses') < songMisses) ClientPrefs.data.stats.set('Max Misses', songMisses);
-
-				ClientPrefs.saveSettings();
+				StatsUtils.checkStats('Max Score', songScore);
+				StatsUtils.checkStats('Max Misses', songMisses);
 				#end
 			}
 			playbackRate = 1;
@@ -3073,7 +3049,7 @@ class PlayState extends MusicBeatState
 
 				// Shubs, this is for the "Just the Two of Us" achievement lol
 				//									- Shadow Mario
-				keysPressed[key] = true;
+				AchievementUtils.keysPressed[key] = true;
 
 				//more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
 				Conductor.songPosition = lastTime;
@@ -3170,7 +3146,7 @@ class PlayState extends MusicBeatState
 
 			if (parsedHoldArray.contains(true) && !endingSong) {
 				#if ACHIEVEMENTS_ALLOWED
-				var achieve:String = checkForAchievement(['oversinging']);
+				var achieve:String = AchievementUtils.checkForAchievement(['oversinging']);
 				if (achieve != null) {
 					startAchievement(achieve);
 				}
@@ -3546,32 +3522,12 @@ class PlayState extends MusicBeatState
 
 	var lastBeatHit:Int = -1;
 
-	public function fadeout() {
-		FlxTween.tween(camHUD, {alpha: 0}, 2);
-	}
-	public function fadein() { //fades all in
-		FlxTween.tween(camHUD, {alpha: 1}, 2);
-	} 
-
 	override function beatHit()
 	{
 		super.beatHit();
 
-		/*
-		if (SONG.song.toLowerCase() == "stress") {
-			switch (curBeat){
-				case 1:
-					fadein();
-				
-				case 2:
-					fadeout();
-			}
-		} */
-
-		if(lastBeatHit >= curBeat) {
-			//trace('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
+		if(lastBeatHit >= curBeat) 
 			return;
-		}
 
 		if (generatedMusic)
 		{
@@ -3767,75 +3723,7 @@ class PlayState extends MusicBeatState
 		setOnLuas('ratingFC', ratingFC);
 	}
 
-	#if ACHIEVEMENTS_ALLOWED
-	public function checkForAchievement(achievesToCheck:Array<String> = null):String
-	{
-		if(chartingMode) return null;
 
-		var usedPractice:Bool = (ClientPrefs.getGameplaySetting('practice', false) || ClientPrefs.getGameplaySetting('botplay', false));
-		for (i in 0...achievesToCheck.length) {
-			var achievementName:String = achievesToCheck[i];
-			if(!Achievements.isAchievementUnlocked(achievementName) && !cpuControlled) {
-				var unlock:Bool = false;
-				
-				if (achievementName.contains(WeekData.getWeekFileName()) && achievementName.endsWith('nomiss')) // any FC achievements, name should be "weekFileName_nomiss", e.g: "weekd_nomiss";
-				{
-					if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD'
-						&& storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
-						unlock = true;
-				}
-				switch(achievementName)
-				{
-					case 'ur_bad':
-						if(ratingPercent < 0.2 && !practiceMode) {
-							unlock = true;
-						}
-					case 'ur_good':
-						if(ratingPercent >= 1 && !usedPractice) {
-							unlock = true;
-						}
-					case 'roadkill_enthusiast':
-						if(Achievements.henchmenDeath >= 100) {
-							unlock = true;
-						}
-					case 'oversinging':
-						if(boyfriend.holdTimer >= 10 && !usedPractice) {
-							unlock = true;
-						}
-					case 'hype':
-						if(!boyfriendIdled && !usedPractice) {
-							unlock = true;
-						}
-					case 'two_keys':
-						if(!usedPractice) {
-							var howManyPresses:Int = 0;
-							for (j in 0...keysPressed.length) {
-								if(keysPressed[j]) howManyPresses++;
-							}
-
-							if(howManyPresses <= 2) {
-								unlock = true;
-							}
-						}
-					case 'toastie':
-						if(/*ClientPrefs.data.framerate <= 60 &&*/ !ClientPrefs.data.shaders && ClientPrefs.data.lowQuality && !ClientPrefs.data.globalAntialiasing) {
-							unlock = true;
-						}
-					case 'debugger':
-						if(Paths.formatToSongPath(SONG.song) == 'test' && !usedPractice) {
-							unlock = true;
-						}
-				}
-
-				if(unlock) {
-					Achievements.unlockAchievement(achievementName);
-					return achievementName;
-				}
-			}
-		}
-		return null;
-	}
-	#end
 
 	var curLight:Int = -1;
 	var curLightEvent:Int = -1;

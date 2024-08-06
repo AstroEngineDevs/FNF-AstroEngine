@@ -143,7 +143,8 @@ class PauseSubState extends MusicBeatSubstate
 		add(grpMenuShit);
 
 		regenMenu();
-		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+		
+		cameras = [PlayState.instance.camPause];
 	}
 
 	var holdTime:Float = 0;

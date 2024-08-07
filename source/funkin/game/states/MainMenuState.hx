@@ -30,19 +30,27 @@ import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 import flixel.input.mouse.FlxMouseEvent;
 
-
+typedef VersionStructure = {
+	var name:Null<String>;
+	var version:Null<String>;
+	@:optional var offset:FlxPoint;
+}
 
 class MainMenuState extends MusicBeatState
 {
-	public static var curSelected:Int = 0;
-	private var versionShitInt:Int = 1;
+	static var curSelected:Int = 0;
+	var versionShitInt:Int = 1;
 	private static var selectedSomethinMouse:Bool = true;
 
-	private var menuItems:FlxTypedGroup<FlxSprite>;
+	// Group
+	var menuItems:FlxTypedGroup<FlxSprite>;
+	var versionTextGroup:FlxTypedGroup<FlxSprite>;
+
+	// Cameras
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
 
-	private final optionShit:Array<String> = [
+	final optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
 		#if MODS_ALLOWED 'mods', #end
@@ -52,17 +60,23 @@ class MainMenuState extends MusicBeatState
 		'options'
 	];
 
-	private final versionShitArray:Array<Array<Dynamic>> = [
-		// Name, Version, X, Y
-		["Astro Engine v", EngineData.engineData.coreVersion, null, null],
-		["Psych Engine v", PsychData.psychVersion, null, null],
-		["Friday Night Funkin' v", Application.current.meta.get('version'), null, null]
+	final versionShitArray:Array<VersionStructure> = [
+		{
+			name: 'Astro Engine v',
+			version:EngineData.engineData.coreVersion,
+			offset: FlxPoint.get(0,0)
+		},
+		{
+			name: 'Psych Engine v',
+			version:PsychData.psychVersion,
+			offset: FlxPoint.get(0,0)
+		},
+		{
+			name: 'Friday Night Funkin\' v',
+			version:Application.current.meta.get('version'),
+			offset: FlxPoint.get(0,0)
+		},
 	];
-
-	var magenta:FlxSprite;
-	var camFollow:FlxObject;
-	var debugKeys:Array<FlxKey>;
-	var versionTextGroup:FlxTypedGroup<FlxSprite>;
 
 	override function create()
 	{
@@ -148,14 +162,11 @@ class MainMenuState extends MusicBeatState
 		add(versionTextGroup);
 		versionShitArray.reverse();
 		for (i in 0...versionShitArray.length)
-		{ // ngl it looks ugly, with all the [i]s
-			if (versionShitArray[i][1] == null)
-				versionShitArray[i][1] = "";
-
-			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 * versionShitInt, 0, versionShitArray[i][0] + versionShitArray[i][1]);
+		{ 
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 * versionShitInt, 0, versionShitArray[i].name + versionShitArray[i].version);
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			versionShit.x += versionShitArray[i][2];
-			versionShit.y += versionShitArray[i][3];
+			versionShit.x += versionShitArray[i].offset.x;
+			versionShit.y += versionShitArray[i].offset.y;
 			versionShit.scrollFactor.set();
 			versionTextGroup.add(versionShit);
 

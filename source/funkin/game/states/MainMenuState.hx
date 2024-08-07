@@ -30,7 +30,8 @@ import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 import flixel.input.mouse.FlxMouseEvent;
 
-typedef VersionStructure = {
+typedef VersionStructure =
+{
 	var name:Null<String>;
 	var version:Null<String>;
 	@:optional var offset:FlxPoint;
@@ -39,17 +40,23 @@ typedef VersionStructure = {
 class MainMenuState extends MusicBeatState
 {
 	static var curSelected:Int = 0;
+
 	var versionShitInt:Int = 1;
-	private static var selectedSomethinMouse:Bool = true;
 
 	// Group
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var versionTextGroup:FlxTypedGroup<FlxSprite>;
 
 	// Cameras
-	private var camGame:FlxCamera;
-	private var camAchievement:FlxCamera;
+	var camGame:FlxCamera;
+	var camAchievement:FlxCamera;
 
+	// Sprites
+	var bgFlashing:FlxSprite;
+	var camFollow:FlxObject;
+	var debugKeys:Array<FlxKey>;
+
+	// Items
 	final optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
@@ -60,37 +67,37 @@ class MainMenuState extends MusicBeatState
 		'options'
 	];
 
-	final versionShitArray:Array<VersionStructure> = [
+	final engineVersions:Array<VersionStructure> = [
 		{
 			name: 'Astro Engine v',
-			version:EngineData.engineData.coreVersion,
-			offset: FlxPoint.get(0,0)
+			version: EngineData.engineData.coreVersion,
+			offset: FlxPoint.get(0, 0)
 		},
 		{
 			name: 'Psych Engine v',
-			version:PsychData.psychVersion,
-			offset: FlxPoint.get(0,0)
+			version: PsychData.psychVersion,
+			offset: FlxPoint.get(0, 0)
 		},
 		{
 			name: 'Friday Night Funkin\' v',
-			version:Application.current.meta.get('version'),
-			offset: FlxPoint.get(0,0)
+			version: Application.current.meta.get('version'),
+			offset: FlxPoint.get(0, 0)
 		},
 	];
 
 	override function create()
 	{
-		#if MODS_ALLOWED
-		Paths.pushGlobalMods();
-		#end
-		WeekData.loadTheFirstEnabledMod();
 		persistentUpdate = persistentDraw = true;
 
-		#if desktop
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Main Menu", null);
-		#end
+		
+		#if desktop DiscordClient.changePresence("Main Menu", null);#end
+
+		#if MODS_ALLOWED Paths.pushGlobalMods(); #end
+		WeekData.loadTheFirstEnabledMod();
+		
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
+
+		// Camera
 
 		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();
@@ -100,11 +107,15 @@ class MainMenuState extends MusicBeatState
 		FlxG.cameras.add(camAchievement, false);
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
+		camFollow = new FlxObject(0, 0, 1, 1);
+		add(camFollow);
+
+		// Transistions
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
-		persistentUpdate = persistentDraw = true;
-
+		// Background
+		var bgColor:FlxColor = EngineData.coreGame.menuColor;
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set(0, yScroll);
@@ -115,23 +126,23 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(bg);
 
-		camFollow = new FlxObject(0, 0, 1, 1);
-		add(camFollow);
+		if (ClientPrefs.data.flashing){
+			bgFlashing = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+			bgFlashing.scrollFactor.set(0, yScroll);
+			bgFlashing.setGraphicSize(Std.int(bgFlashing.width * 1.175));
+			bgFlashing.updateHitbox();
+			bgFlashing.screenCenter();
+			bgFlashing.visible = false;
+			bgFlashing.antialiasing = ClientPrefs.data.globalAntialiasing;
+			bgFlashing.color = bgColor.getDarkened(.4);
+			add(bgFlashing);
+		}
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.scrollFactor.set(0, yScroll);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.antialiasing = ClientPrefs.data.globalAntialiasing;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
-
-		// magenta.scrollFactor.set();
-
+		// Groups
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
+		versionTextGroup = new FlxTypedGroup();
+		add(versionTextGroup);
 
 		var scale:Float = 1;
 
@@ -158,22 +169,18 @@ class MainMenuState extends MusicBeatState
 			mousesupportlmaoo(menuItem, i);
 		}
 
-		versionTextGroup = new FlxTypedGroup();
-		add(versionTextGroup);
-		versionShitArray.reverse();
-		for (i in 0...versionShitArray.length)
-		{ 
-			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 * versionShitInt, 0, versionShitArray[i].name + versionShitArray[i].version);
+		engineVersions.reverse();
+		for (i in 0...engineVersions.length)
+		{
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 * versionShitInt, 0, engineVersions[i].name + engineVersions[i].version);
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			versionShit.x += versionShitArray[i].offset.x;
-			versionShit.y += versionShitArray[i].offset.y;
+			versionShit.x += engineVersions[i].offset.x;
+			versionShit.y += engineVersions[i].offset.y;
 			versionShit.scrollFactor.set();
 			versionTextGroup.add(versionShit);
 
 			versionShitInt++;
 		}
-
-		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
 
@@ -229,6 +236,7 @@ class MainMenuState extends MusicBeatState
 	#end
 
 	var selectedSomethin:Bool = false;
+	var selectedSomethinMouse:Bool = true;
 
 	override function update(elapsed:Float)
 	{
@@ -290,7 +298,7 @@ class MainMenuState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 
 			if (ClientPrefs.data.flashing)
-				FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+				FlxFlicker.flicker(bgFlashing, 1.1, 0.15, false);
 
 			menuItems.forEach(function(spr:FlxSprite)
 			{

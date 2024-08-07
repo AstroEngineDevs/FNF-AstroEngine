@@ -92,7 +92,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			else
 				MusicBeatState.switchState(new MainMenuState());
 
-			FlxG.sound.playMusic(Paths.music('mainTheme', 'raccoon'));
+			FlxG.sound.playMusic(Paths.music('gameOver'));
 			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
 		}
 

@@ -1,5 +1,6 @@
 package funkin.backend.utils;
 
+import funkin.game.objects.Achievements.AchievementObject;
 #if ACHIEVEMENTS_ALLOWED
 class AchievementUtils
 {
@@ -19,6 +20,13 @@ class AchievementUtils
 		boyfriendIdled = false;
 	}
 
+	public static function checkAndGrantAchievement(name:String, camera:FlxCamera) {
+		trace('Checking Achievement "$name"');
+		final lol = checkForAchievement([name]);
+		if (lol != null)
+			FlxG.state.add(new AchievementObject(name, camera));
+	}
+
 	public static function checkForAchievement(achievesToCheck:Array<String> = null):String
 	{
 		if (achievesToCheck == null)
@@ -31,7 +39,7 @@ class AchievementUtils
 		for (i in 0...achievesToCheck.length)
 		{
 			var achievementName:String = achievesToCheck[i];
-			if (!Achievements.isAchievementUnlocked(achievementName) && !PlayState.instance.cpuControlled)
+			if (!Achievements.isAchievementUnlocked(achievementName) && !PlayState.instance?.cpuControlled)
 			{
 				var unlock:Bool = false;
 
@@ -48,45 +56,41 @@ class AchievementUtils
 				}
 				switch (achievementName)
 				{
+					case 'friday_night_play':
+						final swagDate = Date.now();
+						if (swagDate.getDay() == 5 && swagDate.getHours() >= 18)
+							unlock = true;
+
 					case 'ur_bad':
 						if (PlayState.instance.ratingPercent < 0.2 && !PlayState.instance.practiceMode)
-						{
 							unlock = true;
-						}
+
 					case 'ur_good':
 						if (PlayState.instance.ratingPercent >= 1 && !usedPractice)
-						{
 							unlock = true;
-						}
+
 					case 'roadkill_enthusiast':
 						if (Achievements.henchmenDeath >= 100)
-						{
 							unlock = true;
-						}
+
 					case 'oversinging':
 						if (PlayState.instance.boyfriend.holdTimer >= 10 && !usedPractice)
-						{
 							unlock = true;
-						}
+
 					case 'hype':
 						if (!boyfriendIdled && !usedPractice)
-						{
 							unlock = true;
-						}
+
 					case 'two_keys':
 						if (!usedPractice)
 						{
 							var howManyPresses:Int = 0;
 							for (j in 0...keysPressed.length)
-							{
 								if (keysPressed[j])
 									howManyPresses++;
-							}
 
 							if (howManyPresses <= 2)
-							{
 								unlock = true;
-							}
 						}
 					case 'toastie':
 						if (!ClientPrefs.data.shaders && ClientPrefs.data.lowQuality && !ClientPrefs.data.globalAntialiasing)
@@ -95,6 +99,9 @@ class AchievementUtils
 					case 'debugger':
 						if (Paths.formatToSongPath(PlayState.SONG.song) == 'test' && !usedPractice)
 							unlock = true;
+
+					default:
+						unlock = false;
 				}
 
 				if (unlock)

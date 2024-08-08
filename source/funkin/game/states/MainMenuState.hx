@@ -30,10 +30,20 @@ import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 import flixel.input.mouse.FlxMouseEvent;
 
+/**
+	Structure For Versions
+
+	@param name Name / Astro Engine v
+	@param version Version / 0.0.0
+	@param offset Offsets / FlxPoint.get(X,Y)
+**/
 typedef VersionStructure =
 {
+	// Name
 	var name:Null<String>;
+	// Version
 	var version:Null<String>;
+	// Offsets | XY
 	@:optional var offset:FlxPoint;
 }
 
@@ -87,18 +97,22 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		engineVersions.reverse();
+
+		// Updates
 		persistentUpdate = persistentDraw = true;
 
-		
-		#if desktop DiscordClient.changePresence("Main Menu", null);#end
+		// Discord RPC
+		#if desktop DiscordClient.changePresence("Main Menu", null); #end
 
+		// Mods
 		#if MODS_ALLOWED Paths.pushGlobalMods(); #end
 		WeekData.loadTheFirstEnabledMod();
-		
+
+		// Editor Debug Keys
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 
 		// Camera
-
 		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();
 		camAchievement.bgColor.alpha = 0;
@@ -126,7 +140,8 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.data.globalAntialiasing;
 		add(bg);
 
-		if (ClientPrefs.data.flashing){
+		if (ClientPrefs.data.flashing)
+		{
 			bgFlashing = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 			bgFlashing.scrollFactor.set(0, yScroll);
 			bgFlashing.setGraphicSize(Std.int(bgFlashing.width * 1.175));
@@ -144,14 +159,13 @@ class MainMenuState extends MusicBeatState
 		versionTextGroup = new FlxTypedGroup();
 		add(versionTextGroup);
 
-		var scale:Float = 1;
-
+		// Items Loop
 		for (i in 0...optionShit.length)
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + offset);
-			menuItem.scale.x = scale;
-			menuItem.scale.y = scale;
+			menuItem.scale.x = 1;
+			menuItem.scale.y = 1;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
@@ -164,12 +178,11 @@ class MainMenuState extends MusicBeatState
 				scr = 0;
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.antialiasing = ClientPrefs.data.globalAntialiasing;
-			// menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
-			mousesupportlmaoo(menuItem, i);
+			MOUSESUPPORT(menuItem, i);
 		}
 
-		engineVersions.reverse();
+		// Version Loop
 		for (i in 0...engineVersions.length)
 		{
 			var versionShit:FlxText = new FlxText(12, FlxG.height - 22 * versionShitInt, 0, engineVersions[i].name + engineVersions[i].version);
@@ -184,28 +197,19 @@ class MainMenuState extends MusicBeatState
 
 		changeItem();
 
+		// Achievement Check
 		#if ACHIEVEMENTS_ALLOWED
-		Achievements.loadAchievements();
-
-		var leDate = Date.now();
-		if (leDate.getDay() == 5 && leDate.getHours() >= 18)
-		{
-			var achieveID:Int = Achievements.getAchievementIndex('friday_night_play');
-			if (!Achievements.isAchievementUnlocked(Achievements.achievementsStuff[achieveID][2]))
-			{ // It's a friday night. WEEEEEEEEEEEEEEEEEE
-				Achievements.achievementsMap.set(Achievements.achievementsStuff[achieveID][2], true);
-				giveAchievement();
-				ClientPrefs.saveSettings();
-			}
-		}
+		AchievementUtils.checkAndGrantAchievement('friday_night_play', camAchievement);
 		#end
 
 		super.create();
 
+		// Camera Follow
 		FlxG.camera.follow(camFollow, null, 0.15);
 	}
 
-	private function mousesupportlmaoo(sus:FlxSprite, ?eee:Int = 0)
+	// TODO: make a utils file that houses this function
+	private function MOUSESUPPORT(sus:FlxSprite, ?eee:Int = 0)
 	{
 		if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
 		{
@@ -224,16 +228,6 @@ class MainMenuState extends MusicBeatState
 			});
 		}
 	}
-
-	#if ACHIEVEMENTS_ALLOWED
-	// Unlocks "Freaky on a Friday Night" achievement
-	function giveAchievement()
-	{
-		add(new AchievementObject('friday_night_play', camAchievement));
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-		trace('Giving achievement "friday_night_play"');
-	}
-	#end
 
 	var selectedSomethin:Bool = false;
 	var selectedSomethinMouse:Bool = true;

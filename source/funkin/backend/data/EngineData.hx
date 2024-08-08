@@ -1,7 +1,7 @@
 package funkin.backend.data;
 
 @:publicFields
-@:final class EngineData
+final class EngineData
 {
 	//** Customization (Source Code Only) **/
 	static final coreGame = {

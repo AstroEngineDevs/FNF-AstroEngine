@@ -10,9 +10,9 @@ import lime.app.Application;
 @:cppFileCode('
  #include <dwmapi.h>
  ')
-#if windows
 class WindowUtil
 {
+	#if windows
 	@:functionCode('
     int darkMode = enable ? 1 : 0;
     HWND window = GetActiveWindow();
@@ -23,7 +23,8 @@ class WindowUtil
 	{
 		trace('Darkmode ${enable ? 'Enabled' : 'Disabled'}');
 	}
-
+	#end
+	
 	public static function setTitle(?s:String, ?normal:Bool = true)
 	{
 		if (normal)
@@ -37,4 +38,3 @@ class WindowUtil
 	public static function resetTitle()
 		Application.current.window.title = Application.current.meta.get('name');
 }
-#end

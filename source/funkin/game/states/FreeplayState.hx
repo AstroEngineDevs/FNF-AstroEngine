@@ -471,9 +471,10 @@ class FreeplayState extends MusicBeatState
 		}
 		iconArray[curSelected].alpha = 1;
 
-		if (intendedScore > 1000) 
+		if (intendedScore > 1000) {
 			iconArray[curSelected].animation.curAnim.curFrame = 1;
-		else
+			iconArray[curSelected].updateHitbox();
+		}else
 			iconArray[curSelected].animation.curAnim.curFrame = 0;
 
 		FlxG.watch.addQuick('Current Score:', intendedScore);

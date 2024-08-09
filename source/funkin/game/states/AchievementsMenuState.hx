@@ -33,10 +33,11 @@ class AchievementsMenuState extends MusicBeatState
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
+		menuBG.color = EngineData.coreGame.menuColor;
 		menuBG.antialiasing = funkin.backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(menuBG);
 

@@ -103,8 +103,8 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		// Discord RPC
-		#if desktop 
-		DiscordClient.changePresence("Main Menu", null); 
+		#if desktop
+		DiscordClient.changePresence("Main Menu", null);
 		WindowUtil.setTitle('Main Menu');
 		#end
 
@@ -137,7 +137,7 @@ class MainMenuState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
-		bg.color = EngineData.coreGame.menuColor;
+		bg.color = bgColor;
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.data.globalAntialiasing;
@@ -182,7 +182,18 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.antialiasing = ClientPrefs.data.globalAntialiasing;
 			menuItem.updateHitbox();
-			MOUSESUPPORT(menuItem, i);
+			MouseUtil.MOUSESUPPORT(menuItem, {
+				onClick: (_) -> stateChangeThing(),
+				selectedSomethin: selectedSomethin,
+				selectedSomethinMouse: selectedSomethinMouse,
+				curSelected: curSelected,
+				onHover: () ->
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					curSelected = i;
+					changeItem();
+				}
+			});
 		}
 
 		// Version Loop

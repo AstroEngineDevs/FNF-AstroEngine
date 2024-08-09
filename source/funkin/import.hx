@@ -19,7 +19,6 @@ import funkin.backend.data.*;
 import funkin.backend.*;
 import funkin.backend.base.*;
 import funkin.backend.utils.native.*;
-import funkin.backend.utils.native.WindowUtil;
 import funkin.backend.base.BaseStage.Countdown;
 
 //Discord API

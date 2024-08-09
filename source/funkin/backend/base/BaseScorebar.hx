@@ -4,7 +4,7 @@ class BaseScorebar extends FlxBasic
 {
 	private var game(get, never):Dynamic;
 	private var scoreUpdate(default, set):Void->Void;
-	private var updateFunc(default, set):Void->Void;
+	private var stageUpdate(default, set):Void->Void;
 
 	public function new()
 	{
@@ -19,7 +19,7 @@ class BaseScorebar extends FlxBasic
 			super();
 			create();
 
-			game.updateFunc = update;
+			game.stageUpdate = update;
 			scoreUpdate = updateScore;
 
 			PlayState.instance.uiGroup.forEach((spr) -> spr.alpha = 0);
@@ -35,16 +35,16 @@ class BaseScorebar extends FlxBasic
 	}
 
 	// Gets And Sets Shit
-	private inline function set_updateFunc(erm:Void->Void)
+	private inline function set_stageUpdate(erm:Void->Void)
 	{
-		game.updateFunc = erm;
+		game.stageUpdate = erm;
 		erm();
 		return erm;
 	}
 
 	private inline function set_scoreUpdate(erm:Void->Void)
 	{
-		game.scoreUpdateFunc = erm;
+		game.scoreUpdate = erm;
 		erm();
 		return erm;
 	}

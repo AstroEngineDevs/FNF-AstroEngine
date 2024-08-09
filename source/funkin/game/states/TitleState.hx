@@ -92,6 +92,7 @@ class TitleState extends MusicBeatState
 
 		#if desktop
 		DiscordClient.changePresence("Viewing The Title", null);
+		WindowUtil.setTitle('Title');
 		#end
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());

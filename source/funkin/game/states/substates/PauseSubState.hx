@@ -33,6 +33,7 @@ class PauseSubState extends MusicBeatSubstate
 	var menuItems:Array<String> = [];
 	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Exit', 'Exit to menu'];
 	var difficultyChoices = [];
+	var exitChoices = ['Yes', 'No'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -83,7 +84,9 @@ class PauseSubState extends MusicBeatSubstate
 
 		FlxG.sound.list.add(pauseMusic);
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
+		bg.scale.set(FlxG.width, FlxG.height);
+		bg.updateHitbox();
 		bg.alpha = 0;
 		bg.scrollFactor.set();
 		add(bg);
@@ -222,64 +225,75 @@ class PauseSubState extends MusicBeatSubstate
 				regenMenu();
 			}
 
-			switch (daSelected)
-			{
-				case "Resume":
-					close();
-				case 'Change Difficulty':
-					menuItems = difficultyChoices;
-					deleteSkipTimeText();
-					regenMenu();
-				case 'Exit':
-					Main.exitOn(0, true);
-				case 'Toggle Practice Mode':
-					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
-					PlayState.changedDifficulty = true;
-					practiceText.visible = PlayState.instance.practiceMode;
-				case "Restart Song":
-					restartSong();
-				case "Leave Charting Mode":
-					restartSong();
-					PlayState.chartingMode = false;
-				case 'Skip Time':
-					if(curTime < Conductor.songPosition)
-					{
-						PlayState.startOnTime = curTime;
-						restartSong(true);
-					}
-					else
-					{
-						if (curTime != Conductor.songPosition)
-						{
-							PlayState.instance.clearNotesBefore(curTime);
-							PlayState.instance.setSongTime(curTime);
-						}
+			if(menuItems == exitChoices)
+				switch(daSelected){
+					case 'Yes':
+						Main.exitOn(0, true);
+					case 'No':
+						menuItems = menuItemsOG;
+						regenMenu();
+				}
+			else
+				switch (daSelected)
+				{
+					case "Resume":
 						close();
-					}
-				case "End Song":
-					close();
-					PlayState.instance.finishSong(true);
-				case 'Toggle Botplay':
-					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
-					PlayState.changedDifficulty = true;
-					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled && !funkin.backend.utils.ClientPrefs.data.hideFullHUD;
-					PlayState.instance.botplayTxt.alpha = 1;
-					PlayState.instance.botplaySine = 0;
-				case "Exit to menu":
-					PlayState.deathCounter = 0;
-					PlayState.seenCutscene = false;
+					case 'Change Difficulty':
+						menuItems = difficultyChoices;
+						deleteSkipTimeText();
+						regenMenu();
+					case 'Exit':
+						menuItems = exitChoices;
+						deleteSkipTimeText();
+						regenMenu();
+					case 'Toggle Practice Mode':
+						PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
+						PlayState.changedDifficulty = true;
+						practiceText.visible = PlayState.instance.practiceMode;
+					case "Restart Song":
+						restartSong();
+					case "Leave Charting Mode":
+						restartSong();
+						PlayState.chartingMode = false;
+					case 'Skip Time':
+						if(curTime < Conductor.songPosition)
+						{
+							PlayState.startOnTime = curTime;
+							restartSong(true);
+						}
+						else
+						{
+							if (curTime != Conductor.songPosition)
+							{
+								PlayState.instance.clearNotesBefore(curTime);
+								PlayState.instance.setSongTime(curTime);
+							}
+							close();
+						}
+					case "End Song":
+						close();
+						PlayState.instance.finishSong(true);
+					case 'Toggle Botplay':
+						PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
+						PlayState.changedDifficulty = true;
+						PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled && !funkin.backend.utils.ClientPrefs.data.hideFullHUD;
+						PlayState.instance.botplayTxt.alpha = 1;
+						PlayState.instance.botplaySine = 0;
+					case "Exit to menu":
+						PlayState.deathCounter = 0;
+						PlayState.seenCutscene = false;
 
-					WeekData.loadTheFirstEnabledMod();
-					if(PlayState.isStoryMode) {
-						MusicBeatState.switchState(new funkin.game.states.StoryMenuState());
-					} else {
-						MusicBeatState.switchState(new funkin.game.states.FreeplayState());
-					}
-					PlayState.cancelMusicFadeTween();
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-					PlayState.changedDifficulty = false;
-					PlayState.chartingMode = false;
-			}
+						WeekData.loadTheFirstEnabledMod();
+						if(PlayState.isStoryMode) {
+							MusicBeatState.switchState(new funkin.game.states.StoryMenuState());
+						} else {
+							MusicBeatState.switchState(new funkin.game.states.FreeplayState());
+						}
+						PlayState.cancelMusicFadeTween();
+						FlxG.sound.playMusic(Paths.music('freakyMenu'));
+						PlayState.changedDifficulty = false;
+						PlayState.chartingMode = false;
+				}
 		}
 	}
 

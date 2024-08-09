@@ -28,6 +28,8 @@ class LuaUtils
 	public static final Function_StopHScript:Dynamic = "##PSYCHLUA_FUNCTIONSTOPHSCRIPT";
 	public static final Function_StopAll:Dynamic = "##PSYCHLUA_FUNCTIONSTOPALL";
 
+	var variables = MusicBeatState.getVariables();
+
 	public static function setVarInArray(instance:Dynamic, variable:String, value:Dynamic):Any
 	{
 		var shit:Array<String> = variable.split('[');
@@ -66,6 +68,10 @@ class LuaUtils
 		Reflect.setProperty(instance, variable, value);
 		return true;
 	}
+
+	public static function formatVariable(tag:String)
+		return tag.trim().replace(' ', '_').replace('.', '');
+
 
 	public static function getVarInArray(instance:Dynamic, variable:String):Any
 	{
@@ -165,12 +171,7 @@ class LuaUtils
 
 		return coverMeInPiss;
 	}
-
-	public inline static function getTextObject(name:String):FlxText
-	{
-		return PlayState.instance.modchartTexts.exists(name) ? PlayState.instance.modchartTexts.get(name) : Reflect.getProperty(PlayState.instance, name);
-	}
-
+	
 	public static function isOfTypes(value:Any, types:Array<Dynamic>)
 	{
 		for (type in types)
@@ -237,50 +238,27 @@ class LuaUtils
 		}
 	}
 
-	public static function resetTextTag(tag:String)
-	{
-		if (!PlayState.instance.modchartTexts.exists(tag))
-		{
+	public static function destroyObject(tag:String) {
+		var variables = MusicBeatState.getVariables();
+		var obj:FlxSprite = variables.get(tag);
+		if(obj == null || obj.destroy == null)
 			return;
-		}
 
-		var pee:ModchartText = PlayState.instance.modchartTexts.get(tag);
-		pee.kill();
-		if (pee.wasAdded)
-		{
-			PlayState.instance.remove(pee, true);
-		}
-		pee.destroy();
-		PlayState.instance.modchartTexts.remove(tag);
+		LuaUtils.getInstance().remove(obj, true);
+		obj.destroy();
+		variables.remove(tag);
 	}
 
-	public static function resetSpriteTag(tag:String)
-	{
-		if (!PlayState.instance.modchartSprites.exists(tag))
+	public static function cancelTween(tag:String) {
+		if(!tag.startsWith('tween_')) tag = 'tween_' + LuaUtils.formatVariable(tag);
+		var variables = MusicBeatState.getVariables();
+		var twn:FlxTween = variables.get(tag);
+		if(twn != null)
 		{
-			return;
+			twn.cancel();
+			twn.destroy();
+			variables.remove(tag);
 		}
-
-		var pee:ModchartSprite = PlayState.instance.modchartSprites.get(tag);
-		pee.kill();
-		if (pee.wasAdded)
-		{
-			PlayState.instance.remove(pee, true);
-		}
-		pee.destroy();
-		PlayState.instance.modchartSprites.remove(tag);
-	}
-
-	public static function cancelTween(tag:String)
-	{
-		#if LUA_ALLOWED
-		if (PlayState.instance.modchartTweens.exists(tag))
-		{
-			PlayState.instance.modchartTweens.get(tag).cancel();
-			PlayState.instance.modchartTweens.get(tag).destroy();
-			PlayState.instance.modchartTweens.remove(tag);
-		}
-		#end
 	}
 
 	public static function tweenShit(tag:String, vars:String)
@@ -295,14 +273,14 @@ class LuaUtils
 		return sexyProp;
 	}
 
-	public static function cancelTimer(tag:String)
-	{
-		if (PlayState.instance.modchartTimers.exists(tag))
+	public static function cancelTimer(tag:String) {
+		var variables = MusicBeatState.getVariables();
+		var tmr:FlxTimer = variables.get(tag);
+		if(tmr != null)
 		{
-			var theTimer:FlxTimer = PlayState.instance.modchartTimers.get(tag);
-			theTimer.cancel();
-			theTimer.destroy();
-			PlayState.instance.modchartTimers.remove(tag);
+			tmr.cancel();
+			tmr.destroy();
+			variables.remove(tag);
 		}
 	}
 

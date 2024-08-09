@@ -108,29 +108,9 @@ class PlayState extends MusicBeatState
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
 
-	#if (haxe >= "4.0.0")
-	public var boyfriendMap:Map<String, Boyfriend> = new Map();
-	public var dadMap:Map<String, Character> = new Map();
-	public var gfMap:Map<String, Character> = new Map();
-	public var variables:Map<String, Dynamic> = new Map();
-	public var modchartTweens:Map<String, FlxTween> = new Map<String, FlxTween>();
-	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
-	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
-	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
-	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
-	public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
-	#else
 	public var boyfriendMap:Map<String, Boyfriend> = new Map<String, Boyfriend>();
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
-	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
-	public var modchartTweens:Map<String, FlxTween> = new Map();
-	public var modchartSprites:Map<String, ModchartSprite> = new Map();
-	public var modchartTimers:Map<String, FlxTimer> = new Map();
-	public var modchartSounds:Map<String, FlxSound> = new Map();
-	public var modchartTexts:Map<String, ModchartText> = new Map();
-	public var modchartSaves:Map<String, FlxSave> = new Map();
-	#end
 
 	public var BF_X:Float = 770;
 	public var BF_Y:Float = 100;
@@ -233,7 +213,6 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
-	public var timeTxt:FlxText;
 
 	// Tweens
 	var scoreTxtTween:FlxTween;
@@ -242,15 +221,15 @@ class PlayState extends MusicBeatState
 	public static var campaignMisses:Int = 0;
 	public static var seenCutscene:Bool = false;
 	public static var deathCounter:Int = 0;
+	public var inCutscene:Bool = false;
+	public var skipCountdown:Bool = false;
 
 	public var defaultCamZoom:Float = 1.05;
 
 	// how big to stretch the pixel art assets
-	public static var daPixelZoom:Float = 6;
+	public static final daPixelZoom:Float = 6;
 	private final singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
-	public var inCutscene:Bool = false;
-	public var skipCountdown:Bool = false;
 	var songLength:Float = 0;
 
 	public var boyfriendCameraOffset:Array<Float> = null;
@@ -287,12 +266,15 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
-	public var scoreUpdateFunc:Void->Void;
-	public var updateFunc:Void->Void;
+	// Sprites
+	public var timeTxt:FlxText;
 
-	// Callbacks for stages
+	// CallBacks
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
+	public var scoreUpdate:Void->Void = null;
+	public var stageUpdate:Void->Void = null;
+
 
 	override public function create()
 	{
@@ -396,10 +378,12 @@ class PlayState extends MusicBeatState
 		if (isStoryMode)
 		{
 			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
+			
 		}
 		else
 		{
 			detailsText = "Freeplay";
+			
 		}
 
 		// String for when the game is paused
@@ -806,6 +790,7 @@ class PlayState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence.
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+		WindowUtil.setTitle(detailsText);
 		#end
 
 		if(!ClientPrefs.data.controllerMode)
@@ -1053,12 +1038,8 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
-		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
-		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
-		if(variables.exists(tag)) return variables.get(tag);
-		return null;
-	}
+	public function getLuaObject(tag:String, text:Bool=true):FlxSprite
+		return variables.get(tag);
 
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
@@ -1350,7 +1331,7 @@ class PlayState extends MusicBeatState
 
 	public function updateScore(miss:Bool = false)
 	{	
-		scoreUpdateFunc();
+		scoreUpdate();
 
 		if(ClientPrefs.data.scoreZoom && !miss && !cpuControlled)
 		{
@@ -1449,6 +1430,7 @@ class PlayState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
+		WindowUtil.setTitle(detailsText + '- ${SONG.song} (${storyDifficultyText.toUpperCase()})');
 		#end
 		setOnLuas('songLength', songLength);
 		callOnLuas('onSongStart', []);
@@ -1729,40 +1711,21 @@ class PlayState extends MusicBeatState
 	}
 
 	override function openSubState(SubState:FlxSubState)
-	{
-		stagesFunc(function(stage:BaseStage) stage.openSubState(SubState));
-		if (paused)
+		{
+			stagesFunc(function(stage:BaseStage) stage.openSubState(SubState));
+			if (paused)
 			{
 				if (FlxG.sound.music != null)
 				{
 					FlxG.sound.music.pause();
 					vocals.pause();
 				}
-	
-				if (startTimer != null && !startTimer.finished)
-					startTimer.active = false;
-				if (finishTimer != null && !finishTimer.finished)
-					finishTimer.active = false;
-				if (songSpeedTween != null)
-					songSpeedTween.active = false;
-	
-				var chars:Array<Character> = [boyfriend, gf, dad];
-				for (char in chars) {
-					if(char != null && char.colorTween != null) {
-						char.colorTween.active = false;
-					}
-				}
-	
-				for (tween in modchartTweens) {
-					tween.active = false;
-				}
-				for (timer in modchartTimers) {
-					timer.active = false;
-				}
+				FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = false);
+			//	FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = false);
 			}
 	
 			super.openSubState(SubState);
-		}
+		}	
 
 	override function closeSubState()
 	{
@@ -1807,6 +1770,8 @@ class PlayState extends MusicBeatState
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 			}
+
+			WindowUtil.setTitle(detailsText + '- ${SONG.song} (${storyDifficultyText.toUpperCase()})');
 		}
 		#end
 
@@ -1819,6 +1784,7 @@ class PlayState extends MusicBeatState
 		if (health > 0 && !paused)
 		{
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+			WindowUtil.setTitle('Paused - ${SONG.song}');
 		}
 		#end
 
@@ -1854,7 +1820,7 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
-		updateFunc();
+		stageUpdate();
 		if(cpuControlled){
 			ClientPrefs.data.botplayStudio = true;
 		} else {
@@ -2189,6 +2155,7 @@ class PlayState extends MusicBeatState
 
 		#if desktop
 		DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+		WindowUtil.setTitle('Paused - ${SONG.song}');
 		#end
 	}
 
@@ -2224,12 +2191,8 @@ class PlayState extends MusicBeatState
 
 				persistentUpdate = false;
 				persistentDraw = false;
-				for (tween in modchartTweens) {
-					tween.active = true;
-				}
-				for (timer in modchartTimers) {
-					timer.active = true;
-				}
+				FlxTimer.globalManager.clear();
+				FlxTween.globalManager.clear();
 				//furry
 				openSubState(new GameOverSubstate());
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
@@ -2237,6 +2200,7 @@ class PlayState extends MusicBeatState
 				#if desktop
 				// Game Over doesn't get his own variable because it's only used here
 				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+				WindowUtil.setTitle('Game Over - ${detailsText} - ${SONG.song}');
 				#end
 				isDead = true;
 				return true;

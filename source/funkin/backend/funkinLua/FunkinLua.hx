@@ -233,18 +233,23 @@ class FunkinLua
 		// custom substate
 		Lua_helper.add_callback(lua, "openCustomSubstate", function(name:String, pauseGame:Bool = false)
 		{
-			if (pauseGame)
+			try
 			{
-				game.persistentUpdate = false;
-				game.persistentDraw = true;
-				game.paused = true;
-				if (FlxG.sound.music != null)
+				if (pauseGame)
 				{
-					FlxG.sound.music.pause();
-					game.vocals.pause();
+					game.persistentUpdate = false;
+					game.persistentDraw = true;
+					game.paused = true;
+					if (FlxG.sound.music != null)
+					{
+						FlxG.sound.music.pause();
+						game.vocals.pause();
+					}
 				}
+				game.openSubState(new CustomSubstate(name));
 			}
-			game.openSubState(new CustomSubstate(name));
+			catch (e)
+				trace(e);
 		});
 
 		Lua_helper.add_callback(lua, "closeCustomSubstate", function()
@@ -1980,25 +1985,13 @@ class FunkinLua
 			variables.set(tag, leSprite);
 		});
 
-		Lua_helper.add_callback(lua, "makeGraphic", function(obj:String, width:Int, height:Int, color:String)
+		Lua_helper.add_callback(lua, "makeGraphic", function(obj:String, width:Int = 256, height:Int = 256, color:String = 'FFFFFF')
 		{
-			var colorNum:Int = Std.parseInt(color);
-			if (!color.startsWith('0x'))
-				colorNum = Std.parseInt('0xff' + color);
-
-			var spr:FlxSprite = game.getLuaObject(obj, false);
+			var spr:FlxSprite = LuaUtils.getObjectDirectly(obj);
 			if (spr != null)
-			{
-				game.getLuaObject(obj, false).makeGraphic(width, height, colorNum);
-				return;
-			}
-
-			var object:FlxSprite = Reflect.getProperty(LuaUtils.getInstance(), obj);
-			if (object != null)
-			{
-				object.makeGraphic(width, height, colorNum);
-			}
+				spr.makeGraphic(width, height, CoolUtil.colorFromString(color));
 		});
+
 		Lua_helper.add_callback(lua, "addAnimationByPrefix", function(obj:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true)
 		{
 			if (game.getLuaObject(obj, false) != null)

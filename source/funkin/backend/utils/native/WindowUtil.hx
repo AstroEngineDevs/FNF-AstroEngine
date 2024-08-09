@@ -2,6 +2,8 @@ package funkin.backend.utils.native;
 
 import lime.app.Application;
 
+
+#if windows
 @:buildXml('
 <target id="haxe">
     <lib name="dwmapi.lib" if="windows" />
@@ -10,6 +12,7 @@ import lime.app.Application;
 @:cppFileCode('
  #include <dwmapi.h>
  ')
+#end
 class WindowUtil
 {
 	#if windows
@@ -24,7 +27,7 @@ class WindowUtil
 		trace('Darkmode ${enable ? 'Enabled' : 'Disabled'}');
 	}
 	#end
-	
+
 	public static function setTitle(?s:String, ?normal:Bool = true)
 	{
 		if (normal)

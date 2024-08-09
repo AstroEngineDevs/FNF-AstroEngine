@@ -1430,7 +1430,7 @@ class PlayState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
-		WindowUtil.setTitle(detailsText + '- ${SONG.song} (${storyDifficultyText.toUpperCase()})');
+		WindowUtil.setTitle(detailsText + ' - ${SONG.song} (${storyDifficultyText})');
 		#end
 		setOnLuas('songLength', songLength);
 		callOnLuas('onSongStart', []);
@@ -1752,6 +1752,10 @@ class PlayState extends MusicBeatState
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 			}
 			#end
+
+			#if desktop
+			WindowUtil.setTitle(detailsText + '- ${SONG.song} (${storyDifficultyText})');
+			#end
 		}
 
 		super.closeSubState();
@@ -1771,7 +1775,7 @@ class PlayState extends MusicBeatState
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 			}
 
-			WindowUtil.setTitle(detailsText + '- ${SONG.song} (${storyDifficultyText.toUpperCase()})');
+			WindowUtil.setTitle('${SONG.song} (${storyDifficultyText.toUpperCase()})');
 		}
 		#end
 

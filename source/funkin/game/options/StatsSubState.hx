@@ -36,7 +36,8 @@ class StatsSubState extends MusicBeatSubstate
 		ClientPrefs.loadPrefs();
 
 		#if desktop
-		DiscordClient.changePresence("Viewing Stats", null);
+		DiscordClient.changePresence('Viewing Stats', null);
+		WindowUtil.setTitle('Options - Stats');
 		#end
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));

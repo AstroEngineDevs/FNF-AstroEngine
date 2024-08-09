@@ -48,6 +48,11 @@ class NotesSubState extends MusicBeatSubstate
 	var posX = 230;
 	public function new() {
 		super();
+
+		#if desktop
+		DiscordClient.changePresence('Viewing Note Customization', null);
+		WindowUtil.setTitle('Options - Note Customization');
+		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = EngineData.coreGame.menuColor;

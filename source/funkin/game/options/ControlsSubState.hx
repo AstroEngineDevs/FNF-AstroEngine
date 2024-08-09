@@ -74,6 +74,11 @@ class ControlsSubState extends MusicBeatSubstate {
 
 	public function new() {
 		super();
+		
+		#if desktop
+		DiscordClient.changePresence('Controls', null);
+		WindowUtil.setTitle('Options - Controls');
+		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = EngineData.coreGame.menuColor;

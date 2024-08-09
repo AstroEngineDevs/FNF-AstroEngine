@@ -19,7 +19,8 @@ class WindowUtil
     if (S_OK != DwmSetWindowAttribute(window, 19, &darkMode, sizeof(darkMode)))
         DwmSetWindowAttribute(window, 20, &darkMode, sizeof(darkMode));
     ')
-	public static function darkMode(enable:Bool){
+	public static function darkMode(enable:Bool)
+	{
 		trace('Darkmode ${enable ? 'Enabled' : 'Disabled'}');
 	}
 
@@ -32,5 +33,8 @@ class WindowUtil
 		else
 			Application.current.window.title = s;
 	}
+
+	public static function resetTitle()
+		Application.current.window.title = Application.current.meta.get('name');
 }
 #end

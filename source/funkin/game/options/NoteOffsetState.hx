@@ -49,6 +49,11 @@ class NoteOffsetState extends MusicBeatState
 
 	override public function create()
 	{
+		#if desktop
+		DiscordClient.changePresence('Viewing Note Offsets', null);
+		WindowUtil.setTitle('Options - Note Offsets');
+		#end
+
 		// Cameras
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();

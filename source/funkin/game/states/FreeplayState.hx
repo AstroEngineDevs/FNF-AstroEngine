@@ -71,6 +71,7 @@ class FreeplayState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Freeplay Menu", null);
+		WindowUtil.setTitle('Freeplay');
 		#end
 
 		for (i in 0...WeekData.weeksList.length) {

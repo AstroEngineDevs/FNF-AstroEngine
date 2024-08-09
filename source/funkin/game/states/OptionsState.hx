@@ -74,7 +74,8 @@ class OptionsState extends MusicBeatState
 	override function create()
 	{
 		#if desktop
-		DiscordClient.changePresence("Options Menu", null);
+		DiscordClient.changePresence('Options Menu', null);
+		WindowUtil.setTitle('Options');
 		#end
 
 		ClientPrefs.loadPrefs();
@@ -119,6 +120,10 @@ class OptionsState extends MusicBeatState
 	{
 		super.closeSubState();
 		funkin.backend.utils.ClientPrefs.saveSettings();
+		#if desktop
+		DiscordClient.changePresence('Options Menu', null);
+		WindowUtil.setTitle('Options');
+		#end
 	}
 
 	override function update(elapsed:Float)

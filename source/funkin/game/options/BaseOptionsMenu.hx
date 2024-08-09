@@ -61,7 +61,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		
 		#if desktop
 		DiscordClient.changePresence(rpcTitle, null);
-		WindowUtil.setTitle('Options | $title');
+		WindowUtil.setTitle('Options - $title');
 		#end
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));

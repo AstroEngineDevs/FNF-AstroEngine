@@ -103,7 +103,10 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		// Discord RPC
-		#if desktop DiscordClient.changePresence("Main Menu", null); #end
+		#if desktop 
+		DiscordClient.changePresence("Main Menu", null); 
+		WindowUtil.setTitle('Main Menu');
+		#end
 
 		// Mods
 		#if MODS_ALLOWED Paths.pushGlobalMods(); #end

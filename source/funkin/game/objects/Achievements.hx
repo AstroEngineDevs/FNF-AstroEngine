@@ -31,8 +31,8 @@ class Achievements {
 		["Toaster Gamer",				"Have you tried to run the game on a toaster?",		'toastie',				false],
 		["Debugger",					"Beat the \"Test\" Stage from the Chart Editor.",	'debugger',				 true]
 	];
-	public static var achievementsMap:Map<String, Bool> = new Map<String, Bool>();
 
+	public static var achievementsMap = ClientPrefs.data.achievementsMap;
 	public static var henchmenDeath:Int = 0;
 	public static function unlockAchievement(name:String):Void {
 		final sigmalog = 'Granted Achievement "$name"';
@@ -40,6 +40,7 @@ class Achievements {
 		trace(sigmalog);
 		achievementsMap.set(name, true);
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+		ClientPrefs.saveSettings();
 	}
 
 	public static function manageAchievements(lockUnlock:Bool = false) {
@@ -89,13 +90,14 @@ class Achievements {
 
 	public static function loadAchievements():Void {
 		if(FlxG.save.data != null) {
-			if(FlxG.save.data.achievementsMap != null) {
-				achievementsMap = FlxG.save.data.achievementsMap;
-			}
 			if(henchmenDeath == 0 && FlxG.save.data.henchmenDeath != null) {
 				henchmenDeath = FlxG.save.data.henchmenDeath;
 			}
 		}
+	}
+
+	inline static function set_achievementsMap(value:Map<String, Bool>):Map<String, Bool> {
+		return achievementsMap = ClientPrefs.data.achievementsMap = value;
 	}
 }
 

@@ -14,4 +14,12 @@ class StringUtils
 		.map(s -> s.charAt(0).toUpperCase() + s.substr(1))
 		.join(" ");
 	}
+
+
+	
+	public static function resetMap(map:Map<Dynamic,Dynamic>, ?resetVal:Dynamic = false)
+		{
+			for (i in map.keys())
+				map.set(i, resetVal);
+		}
 }

@@ -23,7 +23,7 @@ class AchievementUtils
 	public static function checkAndGrantAchievement(name:String, camera:FlxCamera) {
 		trace('Checking Achievement "$name"');
 		final lol = checkForAchievement([name]);
-		if (lol != null)
+		if(lol != null && !Achievements.isAchievementUnlocked(name))
 			FlxG.state.add(new AchievementObject(name, camera));
 	}
 
@@ -107,6 +107,7 @@ class AchievementUtils
 				if (unlock)
 				{
 					Achievements.unlockAchievement(achievementName);
+					ClientPrefs.saveSettings();
 					return achievementName;
 				}
 			}

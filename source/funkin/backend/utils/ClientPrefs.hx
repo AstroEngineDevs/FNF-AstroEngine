@@ -66,10 +66,9 @@ import funkin.game.Init.Volume;
 	public var showRatingStats:Bool = true;
 	public var darkMode:Bool = false;
 
-	public var stats:Map<String, Dynamic> = [
-		'Max Misses' => 0,
-		'Max Score' => 0
-	];
+	public var stats:Map<String, Dynamic> = ['Max Misses' => 0, 'Max Score' => 0];
+
+	public var achievementsMap:Map<String, Bool> = new Map<String, Bool>();
 }
 
 class ClientPrefs
@@ -121,18 +120,10 @@ class ClientPrefs
 		FlxG.log.add("Settings saved!");
 	}
 
-	public static function resetStats()
-	{
-		for(i in ClientPrefs.data.stats.keys())
-			ClientPrefs.data.stats.set(i, 0);
-		saveSettings();
-		trace("Stats Resetted");
-	}
-
 	public static function loadPrefs()
 	{
 		for (key in Reflect.fields(data))
-			if (key != 'gameplaySettings' && key != 'stats' && Reflect.hasField(FlxG.save.data, key))
+			if (key != 'gameplaySettings' && key != 'stats' && key != 'achievementsMap'&& Reflect.hasField(FlxG.save.data, key))
 				Reflect.setField(data, key, Reflect.field(FlxG.save.data, key));
 
 		#if (!html5 && !switch)
@@ -161,11 +152,18 @@ class ClientPrefs
 		}
 
 		if (FlxG.save.data.stats != null)
-			{
-				final savedMap:Map<String, Int> = FlxG.save.data.stats;
-				for (name => value in savedMap)
-					data.stats.set(name, value);
-			}
+		{
+			final savedMap:Map<String, Int> = FlxG.save.data.stats;
+			for (name => value in savedMap)
+				data.stats.set(name, value);
+		}
+
+		if (FlxG.save.data.achievementsMap != null)
+		{
+			final savedMap:Map<String, Bool> = FlxG.save.data.achievementsMap;
+			for (name => value in savedMap)
+				data.achievementsMap.set(name, value);
+		}
 
 		// flixel automatically saves your volume!
 		if (FlxG.save.data.volume != null)

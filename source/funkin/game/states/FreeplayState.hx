@@ -427,6 +427,7 @@ class FreeplayState extends MusicBeatState
 
 		PlayState.storyDifficulty = curDifficulty;
 		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
+		checkHealthIcon();
 		positionHighscore();
 	}
 
@@ -463,19 +464,7 @@ class FreeplayState extends MusicBeatState
 
 		var bullShit:Int = 0;
 
-		for (i in 0...iconArray.length)
-		{
-			iconArray[i].alpha = 0.6;
-			//iconArray[i].animation.curAnim.curFrame = 0;
-			iconArray[i].animation.curAnim.curFrame = 0;
-		}
-		iconArray[curSelected].alpha = 1;
-
-		if (intendedScore > 1000) {
-			iconArray[curSelected].animation.curAnim.curFrame = 1;
-			iconArray[curSelected].updateHitbox();
-		}else
-			iconArray[curSelected].animation.curAnim.curFrame = 0;
+		checkHealthIcon();
 
 		FlxG.watch.addQuick('Current Score:', intendedScore);
 		FlxG.watch.addQuick('Current Rating:', intendedRating);
@@ -539,6 +528,21 @@ class FreeplayState extends MusicBeatState
 		{
 			curDifficulty = newPos;
 		}
+	}
+
+	private function checkHealthIcon() {
+		for (i in 0...iconArray.length)
+			{
+				iconArray[i].alpha = 0.6;
+				iconArray[i].animation.curAnim.curFrame = 0;
+			}
+			iconArray[curSelected].alpha = 1;
+
+		if (intendedScore > 1000) {
+			iconArray[curSelected].animation.curAnim.curFrame = 1;
+			iconArray[curSelected].updateHitbox();
+		}else
+			iconArray[curSelected].animation.curAnim.curFrame = 0;
 	}
 
 	private function positionHighscore() {

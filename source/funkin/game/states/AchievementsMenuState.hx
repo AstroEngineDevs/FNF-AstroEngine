@@ -46,7 +46,7 @@ class AchievementsMenuState extends MusicBeatState
 
 		Achievements.loadAchievements();
 		for (i in 0...Achievements.achievementsStuff.length) {
-			if(!Achievements.achievementsStuff[i][3] || Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
+			if(!Achievements.achievementsStuff[i][3] && Achievements.achievementsMap.exists(Achievements.achievementsStuff[i][2])) {
 				options.push(Achievements.achievementsStuff[i]);
 				achievementIndex.push(i);
 			}
@@ -89,6 +89,14 @@ class AchievementsMenuState extends MusicBeatState
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new funkin.game.states.MainMenuState());
+		}
+
+		if(controls.RESET){
+			ClientPrefs.data.achievementsMap.resetMap(false);
+
+			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+			ClientPrefs.saveSettings();
+			MusicBeatState.resetState();
 		}
 	}
 

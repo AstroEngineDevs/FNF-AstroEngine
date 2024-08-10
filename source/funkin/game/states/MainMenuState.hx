@@ -101,6 +101,7 @@ class MainMenuState extends MusicBeatState
 
 		// Updates
 		persistentUpdate = persistentDraw = true;
+		FlxG.mouse.visible = true;
 
 		// Discord RPC
 		#if desktop
@@ -186,9 +187,10 @@ class MainMenuState extends MusicBeatState
 				onClick: (_) -> stateChangeThing(),
 				selectedSomethin: selectedSomethin,
 				selectedSomethinMouse: selectedSomethinMouse,
-				curSelected: curSelected,
 				onHover: () ->
 				{
+					if(curSelected == i) return;
+
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					curSelected = i;
 					changeItem();

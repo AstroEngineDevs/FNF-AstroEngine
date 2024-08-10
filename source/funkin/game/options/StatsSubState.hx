@@ -50,17 +50,7 @@ class StatsSubState extends MusicBeatSubstate
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
 
-		for (i in 0...statID.length)
-		{
-			statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
-			statsTxt.screenCenter();
-			statsTxt.text = statID[i] + ": " + ClientPrefs.data.stats.get(statID[i]);
-			statsTxt.isMenuItemCenter = true;
-			statsTxt.targetY = i;
-			statsTxt.ID = i;
-			statsTxt.changeX = false;
-			grpTexts.add(statsTxt);
-		}
+		regenStats();
 
 		textBG = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.scrollFactor.set(0, 0);
@@ -73,6 +63,21 @@ class StatsSubState extends MusicBeatSubstate
 		add(text);
 
 		changeSelection();
+	}
+	
+	function regenStats() {
+		grpTexts.clear();
+		for (i in 0...statID.length)
+			{
+				statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
+				statsTxt.screenCenter();
+				statsTxt.text = statID[i] + ": " + ClientPrefs.data.stats.get(statID[i]);
+				statsTxt.isMenuItemCenter = true;
+				statsTxt.targetY = i;
+				statsTxt.ID = i;
+				statsTxt.changeX = false;
+				grpTexts.add(statsTxt);
+			}
 	}
 
 	override function update(elapsed:Float)
@@ -96,8 +101,9 @@ class StatsSubState extends MusicBeatSubstate
 		if (controls.RESET)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			ClientPrefs.resetStats();
-			close();
+			ClientPrefs.data.stats.resetMap(0);
+			ClientPrefs.saveSettings();
+			regenStats();
 		}
 
 		super.update(elapsed);

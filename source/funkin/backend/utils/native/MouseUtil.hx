@@ -11,8 +11,6 @@ typedef MouseUtilStruc = {
     // Selected Smth
     var selectedSomethin:Bool;
     var selectedSomethinMouse:Bool;
-
-    var curSelected:Int;
 } 
 
 class MouseUtil {
@@ -26,7 +24,6 @@ class MouseUtil {
     
                     if (!data.selectedSomethin && data.selectedSomethinMouse)
                     {
-                        if(data.curSelected == spr.ID) return;
                         data.onHover();
                     }
                 });

@@ -85,15 +85,12 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		final maxS = FlxG.save.data.stats.get('Max Score');
-		final mostM = FlxG.save.data.stats.get('Max Misses');
-		if (mostM != null && maxS != null)
-			trace('Max Score: $maxS - Max Misses: $mostM');
-
 		#if desktop
 		DiscordClient.changePresence("Viewing The Title", null);
 		WindowUtil.resetTitle();
 		#end
+
+		FlxG.mouse.visible = false;
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
@@ -160,6 +157,11 @@ class TitleState extends MusicBeatState
 			}
 		}
 		#end
+
+		final maxS = FlxG.save.data.stats.get('Max Score');
+		final mostM = FlxG.save.data.stats.get('Max Misses');
+		if (mostM != null && maxS != null)
+			trace('Max Score: $maxS - Max Misses: $mostM');
 	}
 
 	var logoBl:FlxSprite;

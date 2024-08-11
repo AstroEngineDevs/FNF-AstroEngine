@@ -20,6 +20,7 @@ import funkin.backend.*;
 import funkin.backend.base.*;
 import funkin.backend.utils.native.*;
 import funkin.backend.base.BaseStage.Countdown;
+import funkin.backend.Structures;
 
 //Discord API
 #if DISCORD_ALLOWED

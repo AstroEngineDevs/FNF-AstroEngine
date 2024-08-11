@@ -1,5 +1,8 @@
 package funkin.game.states;
 
+import flixel.FlxState;
+import flixel.FlxSubState;
+import haxe.extern.EitherType;
 import funkin.backend.CoolUtil;
 import funkin.backend.data.*;
 #if desktop
@@ -29,23 +32,7 @@ import funkin.backend.data.*;
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
 import flixel.input.mouse.FlxMouseEvent;
-
-/**
-	Structure For Versions
-
-	@param name Name / Astro Engine v
-	@param version Version / 0.0.0
-	@param offset Offsets / FlxPoint.get(X,Y)
-**/
-typedef VersionStructure =
-{
-	// Name
-	var name:Null<String>;
-	// Version
-	var version:Null<String>;
-	// Offsets | XY
-	@:optional var offset:FlxPoint;
-}
+import funkin.game.states.*;
 
 class MainMenuState extends MusicBeatState
 {
@@ -67,17 +54,43 @@ class MainMenuState extends MusicBeatState
 	var debugKeys:Array<FlxKey>;
 
 	// Items
-	final optionShit:Array<String> = [
-		'story_mode',
-		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
-		'credits',
-		#if !switch 'donate', #end
-		'options'
+	final menuButtons:Array<MenuItemsStructure> = [
+		{
+			name: 'story_mode',
+			state: new StoryMenuState()
+		},
+		{
+			name: 'freeplay',
+			state: new FreeplayState()
+		},		
+		#if MODS_ALLOWED
+		{
+			name: 'mods',
+			state: new ModsMenuState()
+		}
+		#end,
+		#if ACHIEVEMENTS_ALLOWED
+		{
+			name: 'awards',
+			state: new AchievementsMenuState()
+		}
+		#end,
+		{
+			name: 'credits',
+			state: new CreditsState()
+		},
+		#if !switch
+		{
+			name: 'donate',
+			link: 'https://ninja-muffin24.itch.io/funkin'
+		}#end,
+		{
+			name: 'options',
+			state: new OptionsState()
+		}
 	];
-
-	final engineVersions:Array<VersionStructure> = [
+	// Versons
+	final engineVersions:Array<MenuVersionStructure> = [
 		{
 			name: 'Astro Engine v',
 			version: EngineData.engineData.coreVersion,
@@ -134,7 +147,7 @@ class MainMenuState extends MusicBeatState
 
 		// Background
 		var bgColor:FlxColor = EngineData.coreGame.menuColor;
-		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
+		var yScroll:Float = Math.max(0.25 - (0.05 * (menuButtons.length - 4)), 0.1);
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
@@ -164,27 +177,27 @@ class MainMenuState extends MusicBeatState
 		add(versionTextGroup);
 
 		// Items Loop
-		for (i in 0...optionShit.length)
+		for (i in 0...menuButtons.length)
 		{
-			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
+			var offset:Float = 108 - (Math.max(menuButtons.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + offset);
 			menuItem.scale.x = 1;
 			menuItem.scale.y = 1;
-			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + menuButtons[i].name);
+			menuItem.animation.addByPrefix('idle', menuButtons[i].name + " basic", 24);
+			menuItem.animation.addByPrefix('selected', menuButtons[i].name + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
-			var scr:Float = (optionShit.length - 4) * 0.135;
-			if (optionShit.length < 6)
+			var scr:Float = (menuButtons.length - 4) * 0.135;
+			if (menuButtons.length < 6)
 				scr = 0;
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.antialiasing = ClientPrefs.data.globalAntialiasing;
 			menuItem.updateHitbox();
 			MouseUtil.MOUSESUPPORT(menuItem, {
-				onClick: (_) -> stateChangeThing(),
+				onClick: (_) -> onStateChange(),
 				selectedSomethin: selectedSomethin,
 				selectedSomethinMouse: selectedSomethinMouse,
 				onHover: () ->
@@ -224,27 +237,6 @@ class MainMenuState extends MusicBeatState
 		FlxG.camera.follow(camFollow, null, 0.15);
 	}
 
-	// TODO: make a utils file that houses this function
-	private function MOUSESUPPORT(sus:FlxSprite, ?eee:Int = 0)
-	{
-		if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
-		{
-			FlxMouseEvent.add(sus, null, function(_) stateChangeThing(), function(_)
-			{
-				new FlxTimer().start(0.01, function(tmr:FlxTimer) selectedSomethinMouse = true);
-
-				if (!selectedSomethin && selectedSomethinMouse)
-				{
-					if (curSelected == eee)
-						return;
-					FlxG.sound.play(Paths.sound('scrollMenu'));
-					curSelected = eee;
-					changeItem();
-				}
-			});
-		}
-	}
-
 	var selectedSomethin:Bool = false;
 	var selectedSomethinMouse:Bool = true;
 
@@ -282,7 +274,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				stateChangeThing();
+				onStateChange();
 			}
 			#if desktop
 			else if (FlxG.keys.anyJustPressed(debugKeys))
@@ -298,10 +290,10 @@ class MainMenuState extends MusicBeatState
 		menuItems.forEach(function(spr:FlxSprite) spr.screenCenter(X));
 	}
 
-	function stateChangeThing():Void
+	function onStateChange():Void
 	{
-		if (optionShit[curSelected] == 'donate')
-			CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+		if (menuButtons[curSelected].link != null)
+			CoolUtil.browserLoad(menuButtons[curSelected].link);
 		else
 		{
 			selectedSomethin = true;
@@ -326,25 +318,12 @@ class MainMenuState extends MusicBeatState
 				{
 					FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 					{
-						var daChoice:String = optionShit[curSelected];
+						var daChoice:EitherType<FlxState,FlxSubState> = menuButtons[curSelected].state;
 
-						switch (daChoice)
-						{
-							case 'story_mode':
-								MusicBeatState.switchState(new funkin.game.states.StoryMenuState());
-							case 'freeplay':
-								MusicBeatState.switchState(new funkin.game.states.FreeplayState());
-							#if MODS_ALLOWED
-							case 'mods':
-								MusicBeatState.switchState(new funkin.game.states.ModsMenuState());
-							#end
-							case 'awards':
-								MusicBeatState.switchState(new funkin.game.states.AchievementsMenuState());
-							case 'credits':
-								MusicBeatState.switchState(new funkin.game.states.CreditsState());
-							case 'options':
-								LoadingState.loadAndSwitchState(new funkin.game.states.OptionsState());
-						}
+						if(Std.is(daChoice, FlxState))
+							MusicBeatState.switchState(daChoice);
+						else 
+							openSubState(daChoice);
 					});
 				}
 			});

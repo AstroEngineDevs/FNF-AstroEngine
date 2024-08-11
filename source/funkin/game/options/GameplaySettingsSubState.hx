@@ -79,6 +79,13 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Cursing',
+		"aww, the baby doesn't like bad words?",
+		'cursing',
+		'bool',
+		true);
+		addOption(option);
+
 		var option:Option = new Option('Force Splashes',
 		"Override song set notesplash asset.",
 		'forceNoteSplashes',

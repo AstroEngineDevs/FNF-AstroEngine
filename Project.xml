@@ -129,7 +129,7 @@
 	<!-- Lua -->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<!-- HxCodec -->
-	<haxelib name="hxCodec" if="VIDEOS_ALLOWED html5"/>
+	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<!-- Discord API -->
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<!-- Debug Sever -->

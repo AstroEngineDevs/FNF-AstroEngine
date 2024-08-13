@@ -75,9 +75,20 @@ class Logs // Modded trace func
 			var extra:String = "";
 			for (v in infos.customParams)
 				extra += ", " + v;
+			#if js
+			if (js.Syntax.typeof(untyped console) != "undefined" && (untyped console).log != null)
+				(untyped console).log('$fuckbaby: ${v + extra} : $nerddd');
+			#elseif sys
 			Sys.println('$fuckbaby: ${v + extra} : $nerddd');
+			#end
 		}
-		else
+		else{
+			#if js
+			if (js.Syntax.typeof(untyped console) != "undefined" && (untyped console).log != null)
+				(untyped console).log('$fuckbaby: $v : $nerddd');
+			#elseif sys
 			Sys.println('$fuckbaby: $v : $nerddd');
+			#end
+		}
 	}
 }

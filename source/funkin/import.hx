@@ -10,6 +10,7 @@ import funkin.game.objects.stages.objects.*;
 import funkin.game.transitions.*;
 import funkin.game.objects.notes.NoteUtils;
 import funkin.game.objects.characters.*;
+import funkin.game.options.objects.Option;
 
 // backend
 import funkin.backend.macro.*;

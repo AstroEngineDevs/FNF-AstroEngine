@@ -3,7 +3,9 @@ package funkin.backend.funkinLua;
 import funkin.backend.funkinLua.luaStuff.ModchartText;
 import animateatlas.AtlasFrameMaker;
 import flixel.FlxCamera;
+#if LUA_ALLOWED
 import llua.Lua;
+#end
 import flixel.tweens.FlxEase;
 import flixel.util.FlxTimer;
 import funkin.backend.funkinLua.luaStuff.ModchartSprite;

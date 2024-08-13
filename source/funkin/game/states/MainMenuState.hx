@@ -67,8 +67,8 @@ class MainMenuState extends MusicBeatState
 		{
 			name: 'mods',
 			state: new ModsMenuState()
-		}
-		#end,
+		},
+		#end
 		#if ACHIEVEMENTS_ALLOWED
 		{
 			name: 'awards',

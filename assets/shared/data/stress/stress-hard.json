@@ -5073,6 +5073,7 @@
 		],
 		"player2": "tankman",
 		"player3": null,
+		"gameOverChar": "bf-holding-gf-dead",
 		"song": "Stress",
 		"stage": "tank",
 		"needsVoices": true,

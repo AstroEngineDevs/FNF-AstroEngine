@@ -4279,6 +4279,7 @@
 		"player2": "tankman",
 		"player3": null,
 		"song": "Stress",
+		"gameOverChar": "bf-holding-gf-dead",
 		"stage": "tank",
 		"needsVoices": true,
 		"validScore": true,

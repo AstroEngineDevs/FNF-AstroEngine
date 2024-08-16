@@ -27,11 +27,18 @@ typedef SwagSong =
 	var gfVersion:String;
 	var stage:String;
 
-	var arrowSkin:String;
-	var splashSkin:String;
 	var validScore:Bool;
 
-	var songColor:String;
+	// GameOver
+	@:optional var gameOverChar:String;
+	@:optional var gameOverSound:String;
+	@:optional var gameOverLoop:String;
+	@:optional var gameOverEnd:String;
+
+	// Colors
+	@:optional var arrowSkin:String;
+	@:optional var splashSkin:String;
+	@:optional var songColor:String;
 }
 
 class Song
@@ -49,6 +56,11 @@ class Song
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
 	public var songColor:String; // was FlxColor
+
+	public var gameOverChar:String;
+	public var gameOverSound:String;
+	public var gameOverLoop:String;
+	public var gameOverEnd:String;
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{

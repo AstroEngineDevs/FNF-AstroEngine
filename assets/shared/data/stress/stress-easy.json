@@ -4,6 +4,7 @@
 		"events": [],
 		"songColor": "0xFF8020",
 		"gfVersion": "pico-speaker",
+		"gameOverChar": "bf-holding-gf-dead",
 		"notes": [
 			{
 				"sectionNotes": [

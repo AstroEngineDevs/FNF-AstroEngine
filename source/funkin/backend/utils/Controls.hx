@@ -120,6 +120,7 @@ enum KeyboardScheme
  */
 class Controls extends FlxActionSet
 {
+	public static var instance:Controls; 
 	var _ui_up = new FlxActionDigital(Action.UI_UP);
 	var _ui_left = new FlxActionDigital(Action.UI_LEFT);
 	var _ui_right = new FlxActionDigital(Action.UI_RIGHT);
@@ -302,7 +303,6 @@ class Controls extends FlxActionSet
 	public function new(name, scheme = None)
 	{
 		super(name);
-
 		add(_ui_up);
 		add(_ui_left);
 		add(_ui_right);

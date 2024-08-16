@@ -48,7 +48,7 @@ class AchievementUtils
 				{
 					if (PlayState.isStoryMode
 						&& PlayState.campaignMisses + PlayState.instance.songMisses < 1
-						&& CoolUtil.difficultyString() == 'HARD'
+						&& Difficulty.getString().toUpperCase() == 'HARD'
 						&& PlayState.storyPlaylist.length <= 1
 						&& !PlayState.changedDifficulty
 						&& !usedPractice)

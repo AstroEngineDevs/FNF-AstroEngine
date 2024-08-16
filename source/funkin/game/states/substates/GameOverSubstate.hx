@@ -60,7 +60,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.camera.focusOn(new FlxPoint(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2)));
 		add(camFollow);
 		
-		PlayState.instance.setOnLuas('inGameOver', true);
+		PlayState.instance.setOnScripts('inGameOver', true);
 		PlayState.instance.callOnLuas('onGameOverStart', []);
 
 

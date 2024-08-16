@@ -6,14 +6,14 @@ enum NoteType
 {
 	NORMAL; // normal notes
 	PIXEL; // pixel notes
-	SPECIAL; // special notes like hurtnote (Not Used YET)
+	CUSTOM; // special notes like hurtnote (Not Used YET)
 }
 
 class NoteUtils
 {
 	public inline static var pixelNotePath:String = 'UI/notes/pixel/';
 	public inline static var normalNotePath:String = 'UI/notes/';
-	public inline static var specialNotePath:String = 'UI/notes/special/';
+	public inline static var customNotePath:String = 'UI/notes/custom/';
 	
 	public static var CURRENTSKIN:String = 'NOTE_assets';
 	public static var CURRENTSPLASH:String = 'normal';
@@ -38,7 +38,7 @@ class NoteUtils
 		{
 			case NORMAL: normalNotePath;
 			case PIXEL: pixelNotePath;
-			case SPECIAL: specialNotePath;
+			case CUSTOM: customNotePath;
 			default: throw 'unknown notetype';
 		};
 }

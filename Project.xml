@@ -31,6 +31,9 @@
 	<!-- Enables Lua Support -->
 	<define name="LUA_ALLOWED" if="desktop" />
 
+	<!-- Enables HScript Support -->
+	<define name="HSCRIPT_ALLOWED" if="desktop" />
+
 	<!-- Enables Support For Discord Client Integration -->
 	<define name="DISCORD_ALLOWED"  if="desktop"/>
 
@@ -125,13 +128,13 @@
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons"/>
 	<haxelib name="flixel-ui" />
-	<!-- HScript -->	
-	<haxelib name="hscript" />
-	<define name="hscriptPos" />
+	<haxelib name="tjson" />
 	<!-- Faxe -->
 	<haxelib name="faxe" if='switch'/>
 	<!-- Lua -->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
+	<!-- HScript -->
+	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
 	<!-- HxCodec -->
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<!-- Discord API -->

@@ -137,7 +137,7 @@ class Note extends FlxSprite
 			switch(value) {
 				case 'Hurt Note':
 					ignoreNote = mustPress;
-					reloadNote('HURT');
+					reloadNote('HURT', NoteUtils.NoteType.CUSTOM);
 					noteSplashTexture = 'hurt';
 					colorSwap.hue = 0;
 					colorSwap.saturation = 0;
@@ -254,7 +254,7 @@ class Note extends FlxSprite
 	var lastNoteOffsetXForPixelAutoAdjusting:Float = 0;
 	var lastNoteScaleToo:Float = 1;
 	public var originalHeightForCalcs:Float = 6;
-	function reloadNote(?prefix:String = '', ?texture:String = '', ?suffix:String = '') {
+	function reloadNote(?prefix:String = '', ?texture:String = '', ?suffix:String = '', ?type:NoteUtils.NoteType = NORMAL) {
 		if(prefix == null) prefix = '';
 		if(texture == null) texture = '';
 		if(suffix == null) suffix = '';
@@ -307,7 +307,7 @@ class Note extends FlxSprite
 				}*/
 			}
 		} else {
-			frames = Paths.getSparrowAtlas(NoteUtils.getNotePath(NORMAL) + blahblah);
+			frames = Paths.getSparrowAtlas(NoteUtils.getNotePath(type) + blahblah);
 			loadNoteAnims();
 			antialiasing = ClientPrefs.data.globalAntialiasing;
 		}

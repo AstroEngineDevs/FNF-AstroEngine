@@ -5,10 +5,10 @@ import funkin.game.objects.*;
 import funkin.game.options.objects.*;
 import funkin.game.states.*;
 import funkin.game.transitions.*;
-import funkin.game.objects.Note.EventNote;
+import funkin.game.objects.notes.*;
+import funkin.game.objects.notes.Note.EventNote;
 import funkin.game.objects.stages.objects.*;
 import funkin.game.transitions.*;
-import funkin.game.objects.notes.NoteUtils;
 import funkin.game.objects.characters.*;
 import funkin.game.options.objects.Option;
 

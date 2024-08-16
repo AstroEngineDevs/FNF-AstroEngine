@@ -1,7 +1,7 @@
 package funkin.backend;
 
 import funkin.backend.Song.SwagSong;
-import funkin.game.objects.Note;
+
 import funkin.game.states.PlayState;
 /**
  * ...

@@ -1,6 +1,5 @@
 package funkin.backend.base;
 
-import funkin.game.objects.Note.EventNote;
 import flixel.FlxBasic;
 import flixel.FlxObject;
 import flixel.FlxSubState;

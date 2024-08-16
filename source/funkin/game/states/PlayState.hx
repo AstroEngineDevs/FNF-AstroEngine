@@ -5,8 +5,8 @@ import funkin.game.objects.scorebars.*;
 import flixel.util.FlxSpriteUtil;
 import funkin.backend.data.WeekData;
 import funkin.backend.CoolUtil;
-import funkin.game.objects.Note.EventNote;
-import funkin.game.objects.Note;
+import funkin.game.objects.notes.Note.EventNote;
+
 import funkin.game.objects.stages.*;
 import funkin.backend.utils.ClientPrefs;
 import funkin.game.objects.characters.Character;
@@ -14,7 +14,7 @@ import funkin.game.objects.HealthIcon;
 import flixel.AttachedFlxSprite;
 import flixel.graphics.FlxGraphic;
 import funkin.backend.Highscore;
-import funkin.game.objects.StrumNote;
+
 import funkin.game.states.StoryMenuState;
 import funkin.backend.utils.Section.SwagSection;
 import funkin.backend.Song;
@@ -804,8 +804,9 @@ class PlayState extends MusicBeatState
 
 		super.create();
 
-		cacheCountdown();
-		cachePopUpScore();
+		CacheUtils.cache(COUNTDOWN);
+		CacheUtils.cache(POPUPSCORE);
+
 		for (key => type in precacheList)
 		{
 			//trace('Key $key is type $type');
@@ -1135,24 +1136,6 @@ class PlayState extends MusicBeatState
 	public var countdownSet:FlxSprite;
 	public var countdownGo:FlxSprite;
 	public static var startOnTime:Float = 0;
-
-	function cacheCountdown()
-	{
-		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-		introAssets.set('default', ['UI/default/countdown/ready', 'UI/default/countdown/set', 'UI/default/countdown/go']);
-		introAssets.set('pixel', ['UI/pixel/countdown/ready', 'UI/pixel/countdown/set', 'UI/pixel/countdown/date']);
-
-		var introAlts:Array<String> = introAssets.get('default');
-		if (isPixelStage) introAlts = introAssets.get('pixel');
-		
-		for (asset in introAlts)
-			Paths.image(asset);
-		
-		Paths.sound('intro3' + introSoundsSuffix);
-		Paths.sound('intro2' + introSoundsSuffix);
-		Paths.sound('intro1' + introSoundsSuffix);
-		Paths.sound('introGo' + introSoundsSuffix);
-	}
 
 	public function startCountdown()
 	{
@@ -2731,26 +2714,6 @@ class PlayState extends MusicBeatState
 	public var uiGroup:FlxSpriteGroup;
 	// Stores Note Objects in a Group
 	public var noteGroup:FlxTypedGroup<FlxBasic>;
-	
-
-	private function cachePopUpScore()
-	{
-		var pixelShitPart1:String = "UI/";
-		if (PlayState.isPixelStage)
-			pixelShitPart1 += 'pixel';
-		else
-			pixelShitPart1 += 'default';
-
-		Paths.image('$pixelShitPart1/rating/' + "sick");
-		Paths.image('$pixelShitPart1/rating/' + "good");
-		Paths.image('$pixelShitPart1/rating/' + "bad");
-		Paths.image('$pixelShitPart1/rating/' + "shit");
-		Paths.image('$pixelShitPart1/' + "combo");
-		
-		for (i in 0...10) {
-			Paths.image('$pixelShitPart1/numbers/' + 'num' + i);
-		}
-	}
 
 	private function popUpScore(note:Note = null):Void
 	{

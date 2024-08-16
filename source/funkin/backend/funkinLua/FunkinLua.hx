@@ -13,7 +13,7 @@ import llua.Convert;
 import funkin.game.states.substates.*;
 import funkin.backend.utils.ClientPrefs;
 import funkin.game.objects.characters.Character;
-import funkin.game.objects.StrumNote;
+
 import funkin.backend.Song;
 import funkin.backend.Highscore;
 import funkin.game.states.PlayState;

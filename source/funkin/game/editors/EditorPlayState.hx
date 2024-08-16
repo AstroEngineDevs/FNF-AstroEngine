@@ -1,6 +1,6 @@
 package funkin.game.editors;
 import funkin.game.states.LoadingState;
-import funkin.game.objects.Note;
+
 import funkin.backend.utils.Section.SwagSection;
 import funkin.backend.Song.SwagSong;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -25,7 +25,7 @@ import openfl.events.KeyboardEvent;
 import funkin.backend.funkinLua.FunkinLua;
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
-import funkin.game.objects.StrumNote;
+
 import funkin.backend.utils.ClientPrefs;
 
 

@@ -64,10 +64,10 @@ class Logs // Modded trace func
 
 	public static function init():Void
 	{
-		haxe.Log.trace = tracev2;
+		haxe.Log.trace = _trace;
 	}
 
-	private static function tracev2(v:Dynamic, ?infos:haxe.PosInfos):Void
+	private static function _trace(v:Dynamic, ?infos:haxe.PosInfos):Void
 	{
 		final nerddd = infos.fileName + ":" + infos.lineNumber;
 		if (infos != null && infos.customParams != null)

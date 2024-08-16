@@ -6,7 +6,7 @@ import funkin.backend.client.Discord.DiscordClient;
 #end
 import flash.geom.Rectangle;
 import funkin.backend.Prompt;
-import funkin.game.objects.StrumNote;
+
 import haxe.Json;
 import funkin.backend.utils.Paths;
 import funkin.game.states.PlayState;
@@ -59,7 +59,6 @@ import openfl.utils.Assets as OpenFlAssets;
 import openfl.utils.ByteArray;
 import funkin.game.objects.HealthIcon;
 import flixel.AttachedFlxText;
-import funkin.game.objects.Note;
 
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;

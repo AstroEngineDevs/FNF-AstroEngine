@@ -1,4 +1,4 @@
-package funkin.game.objects;
+package funkin.game.objects.notes;
 
 import funkin.game.editors.ChartingState;
 import flixel.FlxG;
@@ -263,7 +263,7 @@ class Note extends FlxSprite
 		if(texture.length < 1) {
 			skin = PlayState.SONG.arrowSkin;
 			if(skin == null || skin.length < 1) {
-				skin = NoteUtils.checkNote();
+				skin = NoteUtils.CURRENTSKIN;
 			}
 		}
 
@@ -279,16 +279,16 @@ class Note extends FlxSprite
 		var blahblah:String = arraySkin.join('/');
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
-				loadGraphic(Paths.image('UI/pixel/notes/' + blahblah + 'ENDS'));
+				loadGraphic(Paths.image(NoteUtils.getNotePath(PIXEL) + blahblah + 'ENDS'));
 				width = width / 4;
 				height = height / 2;
 				originalHeightForCalcs = height;
-				loadGraphic(Paths.image('UI/pixel/notes/' + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image(NoteUtils.getNotePath(PIXEL) + blahblah + 'ENDS'), true, Math.floor(width), Math.floor(height));
 			} else {
-				loadGraphic(Paths.image('UI/pixel/notes/' + blahblah));
+				loadGraphic(Paths.image(NoteUtils.getNotePath(PIXEL) + blahblah));
 				width = width / 4;
 				height = height / 5;
-				loadGraphic(Paths.image('UI/pixel/notes/' + blahblah), true, Math.floor(width), Math.floor(height));
+				loadGraphic(Paths.image(NoteUtils.getNotePath(PIXEL) + blahblah), true, Math.floor(width), Math.floor(height));
 			}
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 			loadPixelNoteAnims();
@@ -307,7 +307,7 @@ class Note extends FlxSprite
 				}*/
 			}
 		} else {
-			frames = Paths.getSparrowAtlas(blahblah);
+			frames = Paths.getSparrowAtlas(NoteUtils.getNotePath(NORMAL) + blahblah);
 			loadNoteAnims();
 			antialiasing = ClientPrefs.data.globalAntialiasing;
 		}

@@ -90,7 +90,7 @@ class ModsMenuState extends MusicBeatState
 				if (leMods.length > 1 && leMods[0].length > 0)
 				{
 					var modSplit:Array<String> = leMods[i].split('|');
-					if (!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()))
+					if (!Mods.ignoreModFolders.contains(modSplit[0].toLowerCase()))
 					{
 						addToModsList([modSplit[0], (modSplit[1] == '1')]);
 						// trace(modSplit[1]);
@@ -105,7 +105,7 @@ class ModsMenuState extends MusicBeatState
 		{
 			for (folder in Paths.getModDirectories())
 			{
-				if (!Paths.ignoreModFolders.contains(folder))
+				if (!Mods.ignoreModFolders.contains(folder))
 				{
 					addToModsList([folder, true]); // i like it false by default. -bb //Well, i like it True! -Shadow
 				}

@@ -3,7 +3,6 @@ package funkin.game.states.substates;
 import funkin.backend.data.WeekData;
 import funkin.backend.CoolUtil;
 import funkin.game.Main;
-import funkin.backend.utils.Controls.Control;
 import flixel.FlxG;
 import funkin.game.states.PlayState;
 import flixel.FlxSprite;
@@ -282,7 +281,7 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.deathCounter = 0;
 						PlayState.seenCutscene = false;
 
-						WeekData.loadTheFirstEnabledMod();
+						Mods.loadTopMod();
 						if(PlayState.isStoryMode) {
 							MusicBeatState.switchState(new funkin.game.states.StoryMenuState());
 						} else {

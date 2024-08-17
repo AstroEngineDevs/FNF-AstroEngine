@@ -23,10 +23,14 @@ class DiscordClient
 
 	public static function check()
 	{
+		#if !MODS_ALLOWED
 		if(Config.discordID == '')
 			clientID = cast('1095422496473358356', String); // uhm astro engine shiz
 		else
 			clientID = _defaultID;
+		#else 
+			clientID = cast('1095422496473358356', String);
+		#end
 
 		if (ClientPrefs.data.discordRPC)
 			initialize();
@@ -139,6 +143,18 @@ class DiscordClient
 		}
 		return newID;
 	}
+
+	#if MODS_ALLOWED
+	public static function loadModRPC()
+	{
+		var pack:Dynamic = Mods.getPack();
+		if(pack != null && pack.discordRPC != null && pack.discordRPC != clientID)
+		{
+			clientID = pack.discordRPC;
+			//trace('Changing clientID! $clientID, $_defaultID');
+		}
+	}
+	#end
 
 	#if LUA_ALLOWED
 	public static function addLuaCallbacks(lua:State)

@@ -25,17 +25,11 @@ import haxe.Json;
 import flash.media.Sound;
 
 
-
+@:access(openfl.display.BitmapData)
 class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
 	inline public static var VIDEO_EXT = "mp4";
-
-	#if MODS_ALLOWED
-	public static var ignoreModFolders:Array<String> = [
-		'default'
-	];
-	#end
 
 	public static function excludeAsset(key:String) {
 		if (!dumpExclusions.contains(key))
@@ -99,7 +93,6 @@ class Paths
 		#if !html5 openfl.Assets.cache.clear("songs"); #end
 	}
 
-	static public var currentModDirectory:String = '';
 	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 	{
@@ -148,6 +141,8 @@ class Paths
 			var returnPath = '$library:assets/$level/$file';
 			return returnPath;
 		}
+	inline static public function getFolderPath(file:String, folder = "shared")
+		return 'assets/$folder/$file';
 
 	inline public static function getSharedPath(file:String = '')
 		{
@@ -244,6 +239,48 @@ class Paths
 		return returnAsset;
 	}
 
+	public static function cacheBitmap(key:String, ?parentFolder:String = null, ?bitmap:BitmapData, ?allowGPU:Bool = true):FlxGraphic
+		{
+			if (bitmap == null)
+			{
+				var file:String = getPath(key, IMAGE, parentFolder, true);
+				#if MODS_ALLOWED
+				if (FileSystem.exists(file))
+					bitmap = BitmapData.fromFile(file);
+				else #end if (OpenFlAssets.exists(file, IMAGE))
+					bitmap = OpenFlAssets.getBitmapData(file);
+	
+				if (bitmap == null)
+				{
+					trace('oh no its returning null NOOOO ($file)');
+					return null;
+				}
+			}
+	
+			if (allowGPU && bitmap.image != null)
+			{
+				bitmap.lock();
+				if (bitmap.__texture == null)
+				{
+					bitmap.image.premultiplied = true;
+					bitmap.getTexture(FlxG.stage.context3D);
+				}
+				bitmap.getSurface();
+				bitmap.disposeImage();
+				bitmap.image.data = null;
+				bitmap.image = null;
+				bitmap.readable = true;
+			}
+	
+			var graph:FlxGraphic = FlxGraphic.fromBitmapData(bitmap, false, key);
+			graph.persist = true;
+			graph.destroyOnNoUse = false;
+	
+			currentTrackedAssets.set(key, graph);
+			localTrackedAssets.push(key);
+			return graph;
+		}
+
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 		{
 			#if sys
@@ -284,7 +321,7 @@ class Paths
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
 		#if MODS_ALLOWED
-		if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
+		if(FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
 			return true;
 		}
 		#end
@@ -452,9 +489,9 @@ class Paths
 	}*/
 
 	static public function modFolders(key:String) {
-		if(currentModDirectory=='') currentModDirectory='default';
-		if(currentModDirectory != null && currentModDirectory.length > 0) {
-			var fileToCheck:String = mods(currentModDirectory + '/' + key);
+		if(Mods.currentModDirectory=='') Mods.currentModDirectory='default';
+		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
+			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
 			if(FileSystem.exists(fileToCheck)) {
 				return fileToCheck;
 			}
@@ -512,7 +549,7 @@ class Paths
 		if(FileSystem.exists(modsFolder)) {
 			for (folder in FileSystem.readDirectory(modsFolder)) {
 				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
+				if (sys.FileSystem.isDirectory(path) && !Mods.ignoreModFolders.contains(folder) && !list.contains(folder)) {
 					list.push(folder);
 				}
 			}

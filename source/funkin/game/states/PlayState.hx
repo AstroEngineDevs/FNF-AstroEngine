@@ -472,8 +472,8 @@ class PlayState extends MusicBeatState
 
 		#if MODS_ALLOWED
 		foldersToCheck.insert(0, Paths.mods('scripts/'));
-		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/scripts/'));
+		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, Paths.mods(Mods.currentModDirectory + '/scripts/'));
 
 		for(mod in Paths.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/scripts/'));
@@ -756,33 +756,20 @@ class PlayState extends MusicBeatState
 		}
 
 		// SONG SPECIFIC SCRIPTS
-		#if LUA_ALLOWED
-		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [Paths.getSharedPath('data/' + Paths.formatToSongPath(SONG.song) + '/')];
-
-		#if MODS_ALLOWED
-		foldersToCheck.insert(0, Paths.mods('data/' + Paths.formatToSongPath(SONG.song) + '/'));
-		if(Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/data/' + Paths.formatToSongPath(SONG.song) + '/'));
-
-		for(mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/data/' + Paths.formatToSongPath(SONG.song) + '/' ));// using push instead of insert because these should run after everything else
-		#end
-
-		for (folder in foldersToCheck)
-		{
-			if(FileSystem.exists(folder))
+		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
+		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'data/$songName/'))
+			for (file in FileSystem.readDirectory(folder))
 			{
-				for (file in FileSystem.readDirectory(folder))
-				{
-					if(file.endsWith('.lua') && !filesPushed.contains(file))
-					{
-						luaArray.push(new FunkinLua(folder + file));
-						filesPushed.push(file);
-					}
-				}
+				#if LUA_ALLOWED
+				if(file.toLowerCase().endsWith('.lua'))
+					new FunkinLua(folder + file);
+				#end
+
+				#if HSCRIPT_ALLOWED
+				if(file.toLowerCase().endsWith('.hx'))
+					initHScript(folder + file);
+				#end
 			}
-		}
 		#end
 
 		startCallback();		
@@ -871,8 +858,8 @@ class PlayState extends MusicBeatState
 		}
 
 		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
-		if(Paths.currentModDirectory!= null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/shaders/'));
+		if(Mods.currentModDirectory!= null && Mods.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, Paths.mods(Mods.currentModDirectory + '/shaders/'));
 
 		for(mod in Paths.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));
@@ -975,7 +962,7 @@ class PlayState extends MusicBeatState
 			blah.destroy();
 			luaDebugGroup.remove(blah);
 		}
-		luaDebugGroup.insert(0, new DebugLuaText(text, luaDebugGroup, color, Paths.font('OswaldMedium.tff')));
+		luaDebugGroup.insert(0, new DebugLuaText(text, luaDebugGroup, color, Paths.font('OswaldMedium.ttf')));
 		#end
 	}
 
@@ -2637,7 +2624,7 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
-					WeekData.loadTheFirstEnabledMod();
+					Mods.loadTopMod();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 					cancelMusicFadeTween();
@@ -2680,7 +2667,7 @@ class PlayState extends MusicBeatState
 			else
 			{
 				trace('WENT BACK TO FREEPLAY??');
-				WeekData.loadTheFirstEnabledMod();
+				Mods.loadTopMod();
 				cancelMusicFadeTween();
 				if(FlxTransitionableState.skipNextTransIn) {
 					FadeTransition.nextCamera = null;
@@ -3652,7 +3639,7 @@ class PlayState extends MusicBeatState
 					hscriptArray.remove(newScript);
 					trace('failed to initialize tea interp!!! ($file)');
 				}
-				else trace('initialized tea interp successfully: $file');
+				else trace('Initialized Tea Interp: $file');
 			}
 
 		}

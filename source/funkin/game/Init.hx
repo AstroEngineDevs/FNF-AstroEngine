@@ -11,11 +11,11 @@ class Init extends flixel.FlxState
 		Paths.clearUnusedMemory();
 
 		FlxG.save.bind('funkin', funkin.backend.CoolUtil.getSavePath());
-
+		
 		#if LUA_ALLOWED
-		Paths.pushGlobalMods();
+		Mods.pushGlobalMods();
 		#end
-		funkin.backend.data.WeekData.loadTheFirstEnabledMod();
+		Mods.loadTopMod();
 
 		Logs.init();
 		Volume.init();
@@ -23,6 +23,8 @@ class Init extends flixel.FlxState
 		funkin.backend.utils.ClientPrefs.init();
 		MusicBeatState.init();
 		init();
+
+		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(CallbackHandler.call)); #end
 
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();

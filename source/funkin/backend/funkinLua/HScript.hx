@@ -68,7 +68,7 @@ class HScript extends SScript
 			this.origin = scriptFile;
 			#if MODS_ALLOWED
 			var myFolder:Array<String> = scriptFile.split('/');
-			if(myFolder[0] + '/' == Paths.mods() && ( Paths.currentModDirectory== myFolder[1] || Paths.getGlobalMods().contains(myFolder[1]))) //is inside mods folder
+			if(myFolder[0] + '/' == Paths.mods() && ( Mods.currentModDirectory== myFolder[1] || Paths.getGlobalMods().contains(myFolder[1]))) //is inside mods folder
 				this.modFolder = myFolder[1];
 			#end
 		}

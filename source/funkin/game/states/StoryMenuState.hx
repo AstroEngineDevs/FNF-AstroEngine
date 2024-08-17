@@ -338,6 +338,9 @@ class StoryMenuState extends MusicBeatState
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 				funkin.game.states.FreeplayState.destroyFreeplayVocals();
 			});
+			#if (MODS_ALLOWED && DISCORD_ALLOWED)
+			DiscordClient.loadModRPC();
+			#end
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
@@ -357,7 +360,7 @@ class StoryMenuState extends MusicBeatState
 
 		var diff:String = Difficulty.list[curDifficulty];
 		var newImage:FlxGraphic = Paths.image('menudifficulties/' + Paths.formatToSongPath(diff));
-		//trace(Paths.currentModDirectory + ', menudifficulties/' + Paths.formatToSongPath(diff));
+		//trace(Mods.currentModDirectory + ', menudifficulties/' + Paths.formatToSongPath(diff));
 
 		if(sprDifficulty.graphic != newImage)
 		{

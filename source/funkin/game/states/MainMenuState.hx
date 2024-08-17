@@ -122,10 +122,6 @@ class MainMenuState extends MusicBeatState
 		WindowUtil.setTitle('Main Menu');
 		#end
 
-		// Mods
-		#if MODS_ALLOWED Paths.pushGlobalMods(); #end
-		WeekData.loadTheFirstEnabledMod();
-
 		// Editor Debug Keys
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 

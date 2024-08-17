@@ -149,7 +149,7 @@ class LuaUtils
 					}
 					catch(e:Dynamic)
 					{
-						var errorTitle = 'Mod name: ' + Paths.currentModDirectory;
+						var errorTitle = 'Mod name: ' + Mods.currentModDirectory;
 						var errorMsg = 'An error occurred: $e';
 						#if windows
 						lime.app.Application.current.window.alert(errorMsg, errorTitle);

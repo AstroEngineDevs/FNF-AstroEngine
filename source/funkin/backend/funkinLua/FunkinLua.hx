@@ -123,7 +123,7 @@ class FunkinLua
 		scriptName = script;
 		initHaxeModule();
 
-		trace('lua file loaded succesfully:' + script);
+		trace('Loaded Lua File:' + script);
 
 		// Lua shit
 		set('Function_StopLua', LuaUtils.Function_StopLua);
@@ -238,7 +238,7 @@ class FunkinLua
 		set('hideFullHUD', ClientPrefs.data.hideFullHUD);
 		set('shadersEnabled', ClientPrefs.data.shaders);
 		set('scriptName', scriptName);
-		set('currentModDirectory', Paths.currentModDirectory);
+		set('currentModDirectory', Mods.currentModDirectory);
 		set('scoreBarType', ClientPrefs.data.scoreBarType);
 		#if windows set('darkMode', WindowUtil.darkMode); #end
 
@@ -1386,7 +1386,7 @@ class FunkinLua
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
 			game.transitioning = true;
-			WeekData.loadTheFirstEnabledMod();
+			Mods.loadTopMod();
 			return true;
 		});
 		Lua_helper.add_callback(lua, "getSongPosition", function()
@@ -2615,7 +2615,7 @@ class FunkinLua
 	{
 		if (hscript == null)
 		{
-			trace('initializing haxe interp for: $scriptName');
+			trace('Initializing Haxe Interp: $scriptName');
 			hscript = new HScript(); // TO DO: Fix issue with 2 scripts not being able to use the same variable names
 		}
 	}
@@ -2662,8 +2662,8 @@ class FunkinLua
 		}
 
 		var foldersToCheck:Array<String> = [Paths.mods('shaders/')];
-		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0)
-			foldersToCheck.insert(0, Paths.mods( Paths.currentModDirectory+ '/shaders/'));
+		if (Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
+			foldersToCheck.insert(0, Paths.mods( Mods.currentModDirectory+ '/shaders/'));
 
 		for (mod in Paths.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/shaders/'));

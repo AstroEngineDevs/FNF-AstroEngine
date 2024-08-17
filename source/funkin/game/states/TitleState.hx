@@ -1,6 +1,5 @@
 package funkin.game.states;
 
-import funkin.backend.PlayerSettings;
 import funkin.backend.CoolUtil;
 #if desktop
 import sys.thread.Thread;
@@ -283,8 +282,13 @@ class TitleState extends MusicBeatState
 
 	function getIntroTextShit():Array<Array<String>>
 	{
+		#if MODS_ALLOWED
+		var firstArray:Array<String> = Mods.mergeAllTextsNamed('data/introText.txt');
+		#else
 		var fullText:String = Assets.getText(Paths.txt('introText'));
 		var firstArray:Array<String> = fullText.split('\n');
+		#end
+
 		var swagGoodArray:Array<Array<String>> = [];
 
 		for (i in firstArray)

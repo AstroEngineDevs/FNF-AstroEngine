@@ -23,14 +23,12 @@ class DiscordClient
 
 	public static function check()
 	{
-		#if !MODS_ALLOWED
+
 		if(Config.discordID == '')
 			clientID = cast('1095422496473358356', String); // uhm astro engine shiz
 		else
 			clientID = _defaultID;
-		#else 
-			clientID = cast('1095422496473358356', String);
-		#end
+
 
 		if (ClientPrefs.data.discordRPC)
 			initialize();

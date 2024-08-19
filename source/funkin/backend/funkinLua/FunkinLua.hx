@@ -539,7 +539,7 @@ class FunkinLua
 
 		addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
 			#if HSCRIPT_ALLOWED
-			initHaxeModuleCode(this, codeToRun, varsToBring);
+			HScript.initHaxeModuleCode(this, codeToRun, varsToBring);
 			try
 			{
 				final retVal:IrisCall = hscript.executeCode(funcToRun, funcArgs);

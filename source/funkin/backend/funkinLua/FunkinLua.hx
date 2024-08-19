@@ -120,7 +120,7 @@ class FunkinLua
 			return;
 		}
 		scriptName = script;
-		initHaxeModule();
+		#if HSCRIPT_ALLOWED initHaxeModule();#end
 
 		trace('Loaded Lua File:' + script);
 
@@ -539,7 +539,7 @@ class FunkinLua
 
 		addLocalCallback("runHaxeCode", function(codeToRun:String, ?varsToBring:Any = null, ?funcToRun:String = null, ?funcArgs:Array<Dynamic> = null):IrisCall {
 			#if HSCRIPT_ALLOWED
-			HScript.initHaxeModuleCode(this, codeToRun, varsToBring);
+			initHaxeModuleCode(this, codeToRun, varsToBring);
 			try
 			{
 				final retVal:IrisCall = hscript.executeCode(funcToRun, funcArgs);
@@ -2604,7 +2604,7 @@ class FunkinLua
 		#end
 	}
 
-	#if hscript
+	#if HSCRIPT_ALLOWED
 	public function initHaxeModule()
 	{
 		if (hscript == null)

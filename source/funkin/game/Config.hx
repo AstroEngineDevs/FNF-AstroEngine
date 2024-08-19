@@ -1,6 +1,6 @@
 package funkin.game;
 
-@:publicFields
+@:publicFields//uhh
 final class Config {
     static final gameSize:Array<Int> = [1280, 720]; // WINDOW width & height.
 	static final skipSplash:Bool = true; // If HaxeFlixel splash screen should be skipped.

@@ -45,7 +45,6 @@ class MainMenuState extends MusicBeatState
 	var versionTextGroup:FlxTypedGroup<FlxSprite>;
 
 	// Cameras
-	var camGame:FlxCamera;
 	var camAchievement:FlxCamera;
 
 	// Sprites
@@ -126,13 +125,10 @@ class MainMenuState extends MusicBeatState
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 
 		// Camera
-		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();
 		camAchievement.bgColor.alpha = 0;
 
-		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camAchievement, false);
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);

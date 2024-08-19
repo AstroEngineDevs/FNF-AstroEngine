@@ -108,7 +108,7 @@ class HScript extends SScript
 		#end
 		set('ShaderFilter', openfl.filters.ShaderFilter);
 		set('StringTools', StringTools);
-		#if flxanimate
+		#if FLXANIMATE_ALLOWED
 		set('FlxAnimate', FlxAnimate);
 		#end
 

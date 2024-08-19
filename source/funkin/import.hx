@@ -10,7 +10,9 @@ import funkin.game.objects.notes.Note.EventNote;
 import funkin.game.objects.stages.objects.*;
 import funkin.game.transitions.*;
 import funkin.game.objects.characters.*;
-import funkin.game.options.objects.Option;
+import funkin.game.options.objects.*;
+import funkin.game.editors.content.*;
+import funkin.game.states.substates.*;
 
 // backend
 import funkin.backend.macro.*;
@@ -23,6 +25,7 @@ import funkin.backend.utils.native.*;
 import funkin.backend.base.BaseStage.Countdown;
 import funkin.backend.Structures;
 import funkin.backend.ui.*;
+import funkin.backend.handlers.*;
 
 //Discord API
 #if DISCORD_ALLOWED
@@ -35,6 +38,12 @@ import funkin.backend.funkinLua.luaStuff.*;
 #if LUA_ALLOWED
 import llua.*;
 import llua.Lua;
+#end
+
+// FlxAnimate
+#if FLXANIMATE_ALLOWED
+import flxanimate.*;
+import flxanimate.AstroFlxAnimate as FlxAnimate;
 #end
 
 // System

@@ -16,7 +16,6 @@ import funkin.game.objects.characters.Character;
 import funkin.backend.Song;
 import funkin.backend.Highscore;
 import funkin.game.states.PlayState;
-import animateatlas.AtlasFrameMaker;
 import funkin.backend.Conductor;
 import funkin.game.states.substates.GameOverSubstate;
 import flixel.FlxG;
@@ -1326,17 +1325,14 @@ class FunkinLua
 			}
 			game.addCharacterToList(name, charType);
 		});
-		Lua_helper.add_callback(lua, "precacheImage", function(name:String)
-		{
-			Paths.returnGraphic(name);
+		Lua_helper.add_callback(lua, "precacheImage", function(name:String, ?allowGPU:Bool = true) {
+			Paths.image(name);
 		});
-		Lua_helper.add_callback(lua, "precacheSound", function(name:String)
-		{
-			CoolUtil.precacheSound(name);
+		Lua_helper.add_callback(lua, "precacheSound", function(name:String) {
+			Paths.sound(name);
 		});
-		Lua_helper.add_callback(lua, "precacheMusic", function(name:String)
-		{
-			CoolUtil.precacheMusic(name);
+		Lua_helper.add_callback(lua, "precacheMusic", function(name:String) {
+			Paths.music(name);
 		});
 		Lua_helper.add_callback(lua, "triggerEvent", function(name:String, arg1:Dynamic, arg2:Dynamic)
 		{

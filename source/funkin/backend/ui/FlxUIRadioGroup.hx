@@ -8,7 +8,7 @@ class FlxUIRadioGroup extends FlxSpriteGroup
 	public static final CLICK_EVENT = 'radiogroup_click';
 
 	public var labels(default, set):Array<String> = [];
-	public var radios:Array<PsychUIRadioItem> = [];
+	public var radios:Array<FlxUiRadioItem> = [];
 
 	public var space(default, set):Float = 25;
 	public var textWidth(default, set):Int = 100;
@@ -17,7 +17,7 @@ class FlxUIRadioGroup extends FlxSpriteGroup
 	public var stackHorizontal(default, set):Bool = false;
 
 	public var checked(default, set):Int = -1;
-	public var checkedRadio(default, set):PsychUIRadioItem;
+	public var checkedRadio(default, set):FlxUiRadioItem;
 
 	public var arrowUp:FlxSprite;
 	public var arrowDown:FlxSprite;
@@ -191,7 +191,7 @@ class FlxUIRadioGroup extends FlxSpriteGroup
 		return labels;
 	}
 
-	function set_checkedRadio(v:PsychUIRadioItem)
+	function set_checkedRadio(v:FlxUiRadioItem)
 	{
 		checkedRadio = null;
 		for (num => radio in radios)
@@ -303,7 +303,7 @@ class FlxUIRadioGroup extends FlxSpriteGroup
 	public var broadcastRadioGroupEvent:Bool = true;
 	function _addNewRadio()
 	{
-		var radio:PsychUIRadioItem = cast recycle(PsychUIRadioItem);
+		var radio:FlxUiRadioItem = cast recycle(FlxUiRadioItem);
 		radio.onClick = function() {
 			checkedRadio = radio;
 			if(onClick != null) onClick();
@@ -316,7 +316,7 @@ class FlxUIRadioGroup extends FlxSpriteGroup
 	}
 }
 
-class PsychUIRadioItem extends FlxUICheckBox
+class FlxUiRadioItem extends FlxUICheckBox
 {
 	public function new(x:Float, y:Float, label:String, textWid:Int = 100)
 	{

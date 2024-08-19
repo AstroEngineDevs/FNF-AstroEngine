@@ -22,8 +22,7 @@ class MusicBeatState extends FlxUIState
 	private var curDecBeat:Float = 0;
 	private var controls(get, never):Controls;
 
-	public static var camBeat:FlxCamera;
-
+	var _astroCameraInitialized:Bool = false;
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 
@@ -33,9 +32,10 @@ class MusicBeatState extends FlxUIState
 
 	override function create()
 	{
-		camBeat = FlxG.camera;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
+
+		if(!_astroCameraInitialized) initAstroCamera();
 
 		if (!skip)
 		{
@@ -43,6 +43,17 @@ class MusicBeatState extends FlxUIState
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}
+
+	
+	public function initAstroCamera():AstroCamera
+		{
+			var camera = new AstroCamera();
+			FlxG.cameras.reset(camera);
+			FlxG.cameras.setDefaultDrawTarget(camera, true);
+			_astroCameraInitialized = true;
+			//trace('initialized psych camera ' + Sys.cpuTime());
+			return camera;
+		}
 
 	public static function init()
 	{

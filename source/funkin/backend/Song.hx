@@ -11,8 +11,6 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 
-
-
 typedef SwagSong =
 {
 	var song:String;
@@ -26,8 +24,7 @@ typedef SwagSong =
 	var player2:String;
 	var gfVersion:String;
 	var stage:String;
-
-	var validScore:Bool;
+	var songColor:String;
 
 	// GameOver
 	@:optional var gameOverChar:String;
@@ -36,9 +33,8 @@ typedef SwagSong =
 	@:optional var gameOverEnd:String;
 
 	// Colors
-	@:optional var arrowSkin:String;
-	@:optional var splashSkin:String;
-	@:optional var songColor:String;
+	@:optional var arrowSkin:Null<String>;
+	@:optional var splashSkin:Null<String>;
 }
 
 class Song
@@ -55,7 +51,7 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
-	public var songColor:String; // was FlxColor
+	public var songColor:String = "0xFFFFFFFF"; // was FlxColor
 
 	public var gameOverChar:String;
 	public var gameOverSound:String;
@@ -64,37 +60,44 @@ class Song
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
-		if(songJson.songColor == "") songJson.songColor = "0xFFFFFFFF";
-		if(songJson.songColor == null) songJson.songColor = "0xFFFFFFFF";
-
-		if(songJson.gfVersion == null)
+		try
 		{
-			songJson.gfVersion = songJson.player3;
-			songJson.player3 = null;
-		}
-
-		if(songJson.events == null)
-		{
-			songJson.events = [];
-			for (secNum in 0...songJson.notes.length)
+			if (songJson.gfVersion == null)
 			{
-				var sec:SwagSection = songJson.notes[secNum];
+				songJson.gfVersion = songJson.player3;
+				songJson.player3 = null;
+			}
 
-				var i:Int = 0;
-				var notes:Array<Dynamic> = sec.sectionNotes;
-				var len:Int = notes.length;
-				while(i < len)
+			if (songJson.songColor == null)
+				songJson.songColor = "0xFFFFFFFF";
+
+			if (songJson.events == null)
+			{
+				songJson.events = [];
+				for (secNum in 0...songJson.notes.length)
 				{
-					var note:Array<Dynamic> = notes[i];
-					if(note[1] < 0)
+					var sec:SwagSection = songJson.notes[secNum];
+
+					var i:Int = 0;
+					var notes:Array<Dynamic> = sec.sectionNotes;
+					var len:Int = notes.length;
+					while (i < len)
 					{
-						songJson.events.push([note[0], [[note[2], note[3], note[4]]]]);
-						notes.remove(note);
-						len = notes.length;
+						var note:Array<Dynamic> = notes[i];
+						if (note[1] < 0)
+						{
+							songJson.events.push([note[0], [[note[2], note[3], note[4]]]]);
+							notes.remove(note);
+							len = notes.length;
+						}
+						else
+							i++;
 					}
-					else i++;
 				}
 			}
+		}
+		catch (e:Dynamic)
+		{
 		}
 	}
 
@@ -108,17 +111,19 @@ class Song
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
 		var rawJson = null;
-		
+
 		var formattedFolder:String = Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
 		#if MODS_ALLOWED
 		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
-		if(FileSystem.exists(moddyFile)) {
+		if (FileSystem.exists(moddyFile))
+		{
 			rawJson = File.getContent(moddyFile).trim();
 		}
 		#end
 
-		if(rawJson == null) {
+		if (rawJson == null)
+		{
 			#if sys
 			rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 			#else
@@ -149,7 +154,8 @@ class Song
 				daBpm = songData.bpm; */
 
 		var songJson:Dynamic = parseJSONshit(rawJson);
-		if(jsonInput != 'events') StageData.loadDirectory(songJson);
+		if (jsonInput != 'events')
+			StageData.loadDirectory(songJson);
 		onLoadJson(songJson);
 		return songJson;
 	}
@@ -157,7 +163,6 @@ class Song
 	public static function parseJSONshit(rawJson:String):SwagSong
 	{
 		var swagShit:SwagSong = cast Json.parse(rawJson).song;
-		swagShit.validScore = true;
 		return swagShit;
 	}
 }

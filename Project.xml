@@ -34,6 +34,9 @@
 	<!-- Enables HScript Support -->
 	<define name="HSCRIPT_ALLOWED" if="desktop" />
 
+	<!-- Enables FlxAnimate Support -->
+	<define name="FLXANIMATE_ALLOWED" />
+
 	<!-- Enables Support For Discord Client Integration -->
 	<define name="DISCORD_ALLOWED"  if="desktop"/>
 
@@ -103,10 +106,10 @@
 	<assets path="assets/shared" exclude="*.ogg" if="web"/>
 	<assets path="assets/shared" exclude="*.mp3" unless="web"/>
 	<assets path='mods' embed='false'/>
-	<assets path="assets/embed" library="embed" exclude="*.ogg" if="web" embed="true"/>
-	<assets path="assets/embed" library="embed" exclude="*.mp3" unless="web" embed="true"/>
-	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/week_assets"   library="week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
+	<assets path="assets/embed" exclude="*.ogg" if="web" embed="true"/>
+	<assets path="assets/embed" exclude="*.mp3" unless="web" embed="true"/>
+	<assets path="assets/week_assets"   rename="assets" exclude="*.ogg" if="web"/>
+	<assets path="assets/week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
 	<assets path='art/icons/iconOG.png' rename='icon.png' if="linux" />
  
 	<!-- <section if="MODS_ALLOWED">
@@ -140,10 +143,15 @@
 	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
 	<!-- HxCodec -->
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
+	<!-- FlxAnimate -->
+	<haxelib name="flxanimate" path="./libs/flxanimate" if="FLXANIMATE_ALLOWED"/>
 	<!-- Discord API -->
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<!-- Debug Sever -->
 	<haxelib name="hxcpp-debug-server" if="DEBUG_SERVER_ALLOWED"/>
+	<!-- V-Slice Stuff -->
+	<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
+	<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 	

@@ -72,7 +72,7 @@ class StatsSubState extends MusicBeatSubstate
 				statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
 				statsTxt.screenCenter();
 				statsTxt.text = statID[i] + ": " + ClientPrefs.data.stats.get(statID[i]);
-				statsTxt.isMenuItemCenter = true;
+				statsTxt.alignment = CENTERED;
 				statsTxt.targetY = i;
 				statsTxt.ID = i;
 				statsTxt.changeX = false;

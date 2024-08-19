@@ -28,6 +28,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var deathSoundName:String = 'fnf_loss_sfx';
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
+	public static var deathDelay:Float = 0;
 
 	public static var instance:GameOverSubstate;
 
@@ -36,6 +37,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		deathSoundName = 'fnf_loss_sfx';
 		loopSoundName = 'gameOver';
 		endSoundName = 'gameOverEnd';
+		deathDelay = 0;
 
 		var _song = PlayState.SONG;
 		if(_song != null)
@@ -133,7 +135,6 @@ class GameOverSubstate extends MusicBeatSubstate
 				{
 					coolStartDeath();
 				}
-				boyfriend.startedDeath = true;
 			}
 		}
 

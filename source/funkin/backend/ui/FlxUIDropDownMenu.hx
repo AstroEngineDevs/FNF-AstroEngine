@@ -1,6 +1,6 @@
 package funkin.backend.ui;
 
-import backend.ui.FlxUIBox.UIStyleData;
+import funkin.backend.ui.FlxUIBox.UIStyleData;
 
 class FlxUIDropDownMenu extends FlxUIInputText
 {
@@ -80,7 +80,7 @@ class FlxUIDropDownMenu extends FlxUIInputText
 		return selectedLabel;
 	}
 
-	var _items:Array<PsychUIDropDownItem> = [];
+	var _items:Array<FlxUiDropDownItem> = [];
 	public var curScroll:Int = 0;
 	override function update(elapsed:Float)
 	{
@@ -186,7 +186,7 @@ class FlxUIDropDownMenu extends FlxUIInputText
 	{
 		@:bypassAccessor list.push(option);
 		var curID:Int = list.length - 1;
-		var item:PsychUIDropDownItem = cast recycle(PsychUIDropDownItem);
+		var item:FlxUiDropDownItem = cast recycle(FlxUiDropDownItem);
 		item.x = 1;
 		item.y = 1;
 		item.label = option;
@@ -215,7 +215,7 @@ class FlxUIDropDownMenu extends FlxUIInputText
 	}
 }
 
-class PsychUIDropDownItem extends FlxSpriteGroup
+class FlxUiDropDownItem extends FlxSpriteGroup
 {
 	public var hoverStyle:UIStyleData = {
 		bgColor: 0xFF0066FF,

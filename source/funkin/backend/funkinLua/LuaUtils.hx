@@ -1,7 +1,6 @@
 package funkin.backend.funkinLua;
 
 import funkin.backend.funkinLua.luaStuff.ModchartText;
-import animateatlas.AtlasFrameMaker;
 import flixel.FlxCamera;
 #if LUA_ALLOWED
 import llua.Lua;
@@ -294,23 +293,25 @@ class LuaUtils
 	}
 
 	public static function loadFrames(spr:FlxSprite, image:String, spriteType:String)
-	{
-		switch (spriteType.toLowerCase().trim())
 		{
-			case "texture" | "textureatlas" | "tex":
-				spr.frames = AtlasFrameMaker.construct(image);
-
-			case "texture_noaa" | "textureatlas_noaa" | "tex_noaa":
-				spr.frames = AtlasFrameMaker.construct(image, null, true);
-
-			case "packer" | "packeratlas" | "pac":
-				spr.frames = Paths.getPackerAtlas(image);
-
-			default:
-				spr.frames = Paths.getSparrowAtlas(image);
+			switch(spriteType.toLowerCase().trim())
+			{
+				//case "texture" | "textureatlas" | "tex":
+					//spr.frames = AtlasFrameMaker.construct(image);
+	
+				//case "texture_noaa" | "textureatlas_noaa" | "tex_noaa":
+					//spr.frames = AtlasFrameMaker.construct(image, null, true);
+	
+				case 'aseprite' | 'jsoni8':
+					spr.frames = Paths.getAsepriteAtlas(image);
+	
+				case "packer" | "packeratlas" | "pac":
+					spr.frames = Paths.getPackerAtlas(image);
+	
+				default:
+					spr.frames = Paths.getSparrowAtlas(image);
+			}
 		}
-	}
-
 	public static function destroyObject(tag:String) {
 		var variables = MusicBeatState.getVariables();
 		var obj:FlxSprite = variables.get(tag);

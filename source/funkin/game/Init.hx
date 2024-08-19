@@ -9,6 +9,7 @@ class Init extends flixel.FlxState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+		WindowUtil.resetTitle();
 
 		FlxG.save.bind('funkin', funkin.backend.CoolUtil.getSavePath());
 		
@@ -29,6 +30,8 @@ class Init extends flixel.FlxState
 		#if DISCORD_ALLOWED
 		DiscordClient.prepare();
 		#end
+
+		funkin.game.objects.Alphabet.AlphaCharacter.loadAlphabetData();
 
 		super.create();
 

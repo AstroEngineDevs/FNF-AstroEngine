@@ -84,6 +84,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		Paths.clearStoredMemory();
+		
 		#if desktop
 		DiscordClient.changePresence("Viewing The Title", null);
 		WindowUtil.resetTitle();
@@ -128,7 +130,7 @@ class TitleState extends MusicBeatState
 		#end
 
 		// IGNORE THIS!!!
-		titleJSON = Json.parse(Paths.getTextFromFile('data/titleJson.json'));
+		titleJSON = tjson.TJSON.parse(Paths.getTextFromFile('data/titleJson.json'));
 
 		if (!initialized)
 			persistentUpdate = persistentDraw = true;
@@ -261,6 +263,7 @@ class TitleState extends MusicBeatState
 
 		credTextShit = new Alphabet(0, 0, "", true);
 		credTextShit.screenCenter();
+
 
 		credTextShit.visible = false;
 
@@ -405,40 +408,38 @@ class TitleState extends MusicBeatState
 	}
 
 	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
-	{
-		for (i in 0...textArray.length)
 		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
-			money.screenCenter(X);
-			money.y += (i * 60) + 200 + offset;
-			if (credGroup != null && textGroup != null)
+			for (i in 0...textArray.length)
 			{
-				credGroup.add(money);
-				textGroup.add(money);
+				var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
+				money.screenCenter(X);
+				money.y += (i * 60) + 200 + offset;
+				if(credGroup != null && textGroup != null) {
+					credGroup.add(money);
+					textGroup.add(money);
+				}
 			}
 		}
-	}
-
-	function addMoreText(text:String, ?offset:Float = 0)
-	{
-		if (textGroup != null && credGroup != null)
+	
+		function addMoreText(text:String, ?offset:Float = 0)
 		{
-			var coolText:Alphabet = new Alphabet(0, 0, text, true);
-			coolText.screenCenter(X);
-			coolText.y += (textGroup.length * 60) + 200 + offset;
-			credGroup.add(coolText);
-			textGroup.add(coolText);
+			if(textGroup != null && credGroup != null) {
+				var coolText:Alphabet = new Alphabet(0, 0, text, true);
+				coolText.screenCenter(X);
+				coolText.y += (textGroup.length * 60) + 200 + offset;
+				credGroup.add(coolText);
+				textGroup.add(coolText);
+			}
 		}
-	}
-
-	function deleteCoolText()
-	{
-		while (textGroup.members.length > 0)
+	
+		function deleteCoolText()
 		{
-			credGroup.remove(textGroup.members[0], true);
-			textGroup.remove(textGroup.members[0], true);
+			while (textGroup.members.length > 0)
+			{
+				credGroup.remove(textGroup.members[0], true);
+				textGroup.remove(textGroup.members[0], true);
+			}
 		}
-	}
 
 	private var sickBeats:Int = 0; // Basically curBeat but won't be skipped if you hold the tab or resize the screen
 

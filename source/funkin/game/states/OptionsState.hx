@@ -94,7 +94,8 @@ class OptionsState extends MusicBeatState
 		{
 			var optionText:funkin.game.objects.Alphabet = new funkin.game.objects.Alphabet(0, OFFSETFUCKME, options[i], true);
 			optionText.screenCenter();
-			optionText.isMenuItemCenter = true;
+			optionText.astroMenuItem = true;
+			//optionText.alignment = CENTERED;
 			// optionText.changeY = false;
 			optionText.changeX = false;
 			optionText.y += (100 * (i - (options.length / 2))) + 50;

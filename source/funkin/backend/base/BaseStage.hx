@@ -74,6 +74,7 @@ class BaseStage extends FlxBasic
 	public function countdownTick(count:Countdown, num:Int)
 	{
 	}
+	public function startSong() {}
 
 	// FNF steps, beats and sections
 	public var curBeat:Int = 0;
@@ -116,15 +117,16 @@ class BaseStage extends FlxBasic
 	{
 	}
 
+	// Note Hit/Miss
+	public function goodNoteHit(note:Note) {}
+	public function opponentNoteHit(note:Note) {}
+	public function noteMiss(note:Note) {}
+	public function noteMissPress(direction:Int) {}
+
 	// Things to replace FlxGroup stuff and inject sprites directly into the state
-	function add(object:FlxBasic)
-		game.add(object);
-
-	function remove(object:FlxBasic)
-		game.remove(object);
-
-	function insert(position:Int, object:FlxBasic)
-		game.insert(position, object);
+	function add(object:FlxBasic) return FlxG.state.add(object);
+	function remove(object:FlxBasic, splice:Bool = false) return FlxG.state.remove(object, splice);
+	function insert(position:Int, object:FlxBasic) return FlxG.state.insert(position, object);
 
 	public function addBehindGF(obj:FlxBasic)
 		insert(members.indexOf(game.gfGroup), obj);
@@ -143,6 +145,21 @@ class BaseStage extends FlxBasic
 			gfVersion = name;
 			playstate.SONG.gfVersion = gfVersion;
 		}
+	}
+
+	public function getStageObject(name:String) //Objects can only be accessed *after* create(), use createPost() if you want to mess with them on init
+		return game.variables.get(name);
+
+	//start/end callback functions
+	public function setStartCallback(myfn:Void->Void)
+	{
+		if(!onPlayState) return;
+		PlayState.instance.startCallback = myfn;
+	}
+	public function setEndCallback(myfn:Void->Void)
+	{
+		if(!onPlayState) return;
+		PlayState.instance.endCallback = myfn;
 	}
 
 	// start/end callback functions

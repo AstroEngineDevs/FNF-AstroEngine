@@ -36,7 +36,7 @@ import sys.io.File;
 #end
 import funkin.backend.system.MusicBeatSubstate;
 import funkin.backend.system.MusicBeatState;
-
+import funkin.game.objects.stages.Stage;
 
 
 class DialogueEditorState extends MusicBeatState
@@ -53,7 +53,13 @@ class DialogueEditorState extends MusicBeatState
 
 	override function create() {
 		persistentUpdate = persistentDraw = true;
-		FlxG.camera.bgColor = FlxColor.fromHSL(0, 0, 0.5);
+		//FlxG.camera.bgColor = FlxColor.fromHSL(0, 0, 0.5);
+
+		Paths.setCurrentLevel('week1');
+		new Stage();
+		var uhh = new FlxSprite().makeGraphic(FlxG.width,FlxG.height,FlxColor.BLACK);//im lazy to day Fuck types
+		uhh.alpha = 0.5;
+		add(uhh);
 
 		defaultLine = {
 			portrait: DialogueCharacter.DEFAULT_CHARACTER,

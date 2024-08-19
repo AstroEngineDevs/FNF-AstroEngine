@@ -70,12 +70,13 @@ class LoadingState extends MusicBeatState
 				callbacks = new MultiCallback(onLoad);
 				var introComplete = callbacks.add("introComplete");
 				if (PlayState.SONG != null) {
-					checkLoadSong(getSongPath());
-					if (PlayState.SONG.needsVoices)
-						checkLoadSong(getVocalPath());
-				}
-				if(directory != null && directory.length > 0 && directory != 'shared') {
-					checkLibrary('week_assets');
+					new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song));
+					if (PlayState.SONG.needsVoices){
+						try{
+							new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song, 'Player'));
+							new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song, 'Opponent'));
+						} catch(e:Dynamic){}
+					}
 				}
 
 				var fadeTime = 0.5;
@@ -83,21 +84,6 @@ class LoadingState extends MusicBeatState
 				new FlxTimer().start(fadeTime + MIN_TIME, function(_) introComplete());
 			}
 		);
-	}
-	
-	function checkLoadSong(path:String)
-	{
-		if (!Assets.cache.hasSound(path))
-		{
-			var library = Assets.getLibrary("songs");
-			final symbolPath = path.split(":").pop();
-			// @:privateAccess
-			// library.types.set(symbolPath, SOUND);
-			// @:privateAccess
-			// library.pathGroups.set(symbolPath, [library.__cacheBreak(symbolPath)]);
-			var callback = callbacks.add("song:" + path);
-			Assets.loadSound(path).onComplete(function (_) { callback(); });
-		}
 	}
 	
 	function checkLibrary(library:String) {
@@ -145,7 +131,7 @@ class LoadingState extends MusicBeatState
 	
 	static function getVocalPath()
 	{
-		return Paths.voices(PlayState.SONG.song);
+		return Paths.voices(PlayState.SONG.song, 'Player');
 	}
 	
 	inline static public function loadAndSwitchState(target:FlxState, stopMusic = false)

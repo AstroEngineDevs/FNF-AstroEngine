@@ -15,6 +15,6 @@ class FlxUIEventHandler
 	}
 }
 
-interface PsychUIEvent {
+interface FlxUIEvent {
 	public function UIEvent(id:String, sender:Dynamic):Void;
 }

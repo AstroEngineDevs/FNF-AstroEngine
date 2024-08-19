@@ -140,7 +140,7 @@
 	<!-- Lua -->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<!-- HScript -->
-	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
+	<haxelib name="hscript-iris" if="HSCRIPT_ALLOWED" version="1.0.2"/>
 	<!-- HxCodec -->
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<!-- FlxAnimate -->

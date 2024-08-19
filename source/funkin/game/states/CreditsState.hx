@@ -161,7 +161,7 @@ class CreditsState extends MusicBeatState
 			[
 				'Tahir',
 				'tahir',
-				'Implementing & Maintaining SScript and Other PRs',
+				'Other PRs',
 				'https://twitter.com/tahirk618',
 				'A04397'
 			],

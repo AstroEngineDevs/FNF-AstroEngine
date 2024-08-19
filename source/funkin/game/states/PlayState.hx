@@ -68,8 +68,8 @@ import funkin.backend.data.StageData;
 import funkin.game.objects.playstateBG.*;
 import funkin.backend.Rating;
 
-#if SScript
-import tea.SScript;
+#if HSCRIPT_ALLOWED
+import crowplexus.iris.Iris;
 #end
 
 
@@ -479,25 +479,23 @@ class PlayState extends MusicBeatState
 		for(mod in Paths.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/scripts/'));
 		#end
+		#end
 
-		for (folder in foldersToCheck)
-		{
-			if(FileSystem.exists(folder))
+		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
+		// "SCRIPTS FOLDER" SCRIPTS
+		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'scripts/'))
+			for (file in FileSystem.readDirectory(folder))
 			{
-				for (file in FileSystem.readDirectory(folder))
-				{
-					#if LUA_ALLOWED
-					if(file.toLowerCase().endsWith('.lua'))
-						new FunkinLua(folder + file);
-					#end
+				#if LUA_ALLOWED
+				if(file.toLowerCase().endsWith('.lua'))
+					new FunkinLua(folder + file);
+				#end
 
-					#if HSCRIPT_ALLOWED
-					if(file.toLowerCase().endsWith('.hx'))
-						initHScript(folder + file);
-					#end
-				}
+				#if HSCRIPT_ALLOWED
+				if(file.toLowerCase().endsWith('.hx'))
+					initHScript(folder + file);
+				#end
 			}
-		}
 		#end
 
 		// STAGE SCRIPTS
@@ -3643,9 +3641,9 @@ class PlayState extends MusicBeatState
 		var scriptToLoad:String = Paths.getSharedPath(scriptFile);
 		#end
 
-		if(FileSystem.exists(scriptToLoad))
+	if(FileSystem.exists(scriptToLoad))
 		{
-			if (SScript.global.exists(scriptToLoad)) return false;
+			if (Iris.instances.exists(scriptToLoad)) return false;
 
 			initHScript(scriptToLoad);
 			return true;
@@ -3654,54 +3652,23 @@ class PlayState extends MusicBeatState
 	}
 
 	public function initHScript(file:String)
-	{
-		try
 		{
-			var newScript:HScript = new HScript(null, file);
-			if(newScript.parsingException != null)
+			var newScript:HScript = null;
+			try
 			{
-				addTextToDebug('ERROR ON LOADING: ${newScript.parsingException.message}', FlxColor.RED);
-				newScript.destroy();
-				return;
+				newScript = new HScript(null, file);
+				newScript.call('onCreate');
+				trace('initialized hscript interp successfully: $file');
+				hscriptArray.push(newScript);
 			}
-
-			hscriptArray.push(newScript);
-			if(newScript.exists('onCreate'))
+			catch(e:Dynamic)
 			{
-				var callValue = newScript.call('onCreate');
-				if(!callValue.succeeded)
-				{
-					for (e in callValue.exceptions)
-					{
-						if (e != null)
-						{
-							var len:Int = e.message.indexOf('\n') + 1;
-							if(len <= 0) len = e.message.length;
-								addTextToDebug('ERROR ($file: onCreate) - ${e.message.substr(0, len)}', FlxColor.RED);
-						}
-					}
-
+				addTextToDebug('ERROR ON LOADING ($file) - $e', FlxColor.RED);
+				var newScript:HScript = cast (Iris.instances.get(file), HScript);
+				if(newScript != null)
 					newScript.destroy();
-					hscriptArray.remove(newScript);
-					trace('failed to initialize tea interp!!! ($file)');
-				}
-				else trace('Initialized Tea Interp: $file');
-			}
-
-		}
-		catch(e)
-		{
-			var len:Int = e.message.indexOf('\n') + 1;
-			if(len <= 0) len = e.message.length;
-			addTextToDebug('ERROR - ' + e.message.substr(0, len), FlxColor.RED);
-			var newScript:HScript = cast (SScript.global.get(file), HScript);
-			if(newScript != null)
-			{
-				newScript.destroy();
-				hscriptArray.remove(newScript);
 			}
 		}
-	}
 	#end
 
 	public function callOnScripts(funcToCall:String, args:Array<Dynamic> = null, ignoreStops = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic {

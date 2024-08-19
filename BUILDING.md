@@ -79,7 +79,7 @@ head into the `setup` folder located in the root directory of this repository, a
 
 ### "Which setup file?"
 
-It depends on your Operating System, for Windows, run `setup-windows.bat`, for anything else, `setup-unix.sh`
+It depends on your Operating System, for Windows, run `windows.bat`, for anything else, `unix.sh`
 
 sit back, relax, wait for haxelib to do its magic, and once everything is done, run
 

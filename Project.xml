@@ -150,8 +150,8 @@
 	<!-- Debug Sever -->
 	<haxelib name="hxcpp-debug-server" if="DEBUG_SERVER_ALLOWED"/>
 	<!-- V-Slice Stuff -->
-	<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
-	<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
+	<haxelib name="grig.audio" />
+	<haxelib name="funkin.vis"/>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 	

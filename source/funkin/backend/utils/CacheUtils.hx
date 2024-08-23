@@ -8,7 +8,7 @@ enum CacheType {
 class CacheUtils
 {
     public static function cache(type:CacheType = COUNTDOWN) {
-        trace('Cache: $type');
+        trace('Cached: $type');
         switch (type){
             case COUNTDOWN: cacheCountdown();
             case POPUPSCORE: cachePopUpScore();

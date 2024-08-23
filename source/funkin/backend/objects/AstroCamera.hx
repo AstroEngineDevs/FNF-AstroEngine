@@ -1,7 +1,4 @@
-package funkin.backend;
-
-// PsychCamera handles followLerp based on elapsed
-// and stops camera from snapping at higher framerates
+package funkin.backend.objects;
 
 class AstroCamera extends FlxCamera
 {

@@ -1,5 +1,8 @@
 package funkin.game;
 
+import openfl.text.TextFormat;
+import openfl.text.TextField;
+import openfl.Lib;
 import flixel.input.keyboard.FlxKey;
 import funkin.backend.utils.Paths;
 
@@ -27,9 +30,9 @@ class Init extends flixel.FlxState
 
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(CallbackHandler.call)); #end
 
-		#if DISCORD_ALLOWED
-		DiscordClient.prepare();
-		#end
+		#if DISCORD_ALLOWED DiscordClient.prepare(); #end
+
+		#if BETA_TESTING owoWatermark(); #end
 
 		funkin.game.objects.Alphabet.AlphaCharacter.loadAlphabetData();
 
@@ -45,6 +48,22 @@ class Init extends flixel.FlxState
 			FlxG.fullscreen = FlxG.save.data.fullscreen;
 		if (FlxG.save.data.weekCompleted != null)
 			funkin.game.states.StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
+	}
+
+	private function owoWatermark():Void {
+		
+		// uhh tester text lmao
+		final owoTxt:TextField = new TextField();
+		owoTxt.defaultTextFormat = new TextFormat("assets/fonts/OswaldMedium.ttf",100,FlxColor.WHITE);
+		owoTxt.text = 'BETA BUILD OF ASTRO ENGINE';
+		owoTxt.alpha = .4;
+		owoTxt.width = Lib.current.stage.stageWidth;
+		owoTxt.height = Lib.current.stage.stageHeight;
+		owoTxt.x = (Lib.current.stage.stageWidth - owoTxt.width) / 2;
+        owoTxt.y = (Lib.current.stage.stageHeight - owoTxt.height) / 2;
+		owoTxt.selectable = false;
+
+		Lib.current.addChild(owoTxt);
 	}
 }
 

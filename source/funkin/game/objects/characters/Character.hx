@@ -1,5 +1,6 @@
 package funkin.game.objects.characters;
 
+import funkin.backend.Song.SwagSection;
 import funkin.backend.animation.AstroAnimationController;
 
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -10,8 +11,6 @@ import flixel.util.FlxDestroyUtil;
 import openfl.utils.AssetType;
 import openfl.utils.Assets;
 import haxe.Json;
-
-import funkin.backend.utils.Section.SwagSection;
 
 typedef CharacterFile = {
 	var animations:Array<AnimArray>;

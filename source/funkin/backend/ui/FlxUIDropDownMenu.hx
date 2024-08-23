@@ -14,11 +14,13 @@ class FlxUIDropDownMenu extends FlxUIInputText
 	public var selectedLabel(default, set):String = null;
 
 	var _curFilter:Array<String>;
-	public function new(x:Float, y:Float, list:Array<String>, callback:Int->String->Void)
+	var _itemWidth:Float = 0;
+	public function new(x:Float, y:Float, list:Array<String>, callback:Int->String->Void, ?width:Float = 100)
 	{
 		super(x, y);
 		if(list == null) list = [];
 
+		_itemWidth = width - 2;
 		setGraphicSize(width, 20);
 		updateHitbox();
 		textObj.y += 2;
@@ -35,7 +37,7 @@ class FlxUIDropDownMenu extends FlxUIInputText
 		{
 			if(old != cur)
 			{
-				_curFilter = list.filter(function(str:String) return str.startsWith(cur));
+				_curFilter = this.list.filter(function(str:String) return str.startsWith(cur));
 				showDropDown(true, 0, _curFilter);
 			}
 		}
@@ -80,7 +82,7 @@ class FlxUIDropDownMenu extends FlxUIInputText
 		return selectedLabel;
 	}
 
-	var _items:Array<FlxUiDropDownItem> = [];
+	var _items:Array<FlxUIDropDownItem> = [];
 	public var curScroll:Int = 0;
 	override function update(elapsed:Float)
 	{
@@ -156,6 +158,7 @@ class FlxUIDropDownMenu extends FlxUIInputText
 			for (num => item in _items)
 			{
 				if(!item.visible) continue;
+				item.x = behindText.x;
 				item.y = txtY;
 				txtY += item.height;
 				item.forceNextUpdate = true;
@@ -186,9 +189,8 @@ class FlxUIDropDownMenu extends FlxUIInputText
 	{
 		@:bypassAccessor list.push(option);
 		var curID:Int = list.length - 1;
-		var item:FlxUiDropDownItem = cast recycle(FlxUiDropDownItem);
-		item.x = 1;
-		item.y = 1;
+		var item:FlxUIDropDownItem = cast recycle(FlxUIDropDownItem, () -> new FlxUIDropDownItem(1, 1, this._itemWidth), true);
+		item.cameras = cameras;
 		item.label = option;
 		item.visible = item.active = false;
 		item.onClick = function() clickedOn(curID, option);
@@ -215,7 +217,7 @@ class FlxUIDropDownMenu extends FlxUIInputText
 	}
 }
 
-class FlxUiDropDownItem extends FlxSpriteGroup
+class FlxUIDropDownItem extends FlxSpriteGroup
 {
 	public var hoverStyle:UIStyleData = {
 		bgColor: 0xFF0066FF,
@@ -230,7 +232,7 @@ class FlxUiDropDownItem extends FlxSpriteGroup
 
 	public var bg:FlxSprite;
 	public var text:FlxText;
-	public function new(x:Float = 0, y:Float = 0, width:Int = 100)
+	public function new(x:Float = 0, y:Float = 0, width:Float = 100)
 	{
 		super(x, y);
 

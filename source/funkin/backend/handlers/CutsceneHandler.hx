@@ -41,7 +41,7 @@ class CutsceneHandler extends FlxBasic
 		FlxG.state.add(this);
 
 		this._canSkip = canSkip;
-		if(canSkip)
+		if(_canSkip)
 		{
 			skipSprite = new FlxPieDial(0, 0, 40, FlxColor.WHITE, 40, true, 24);
 			skipSprite.replaceColor(FlxColor.BLACK, FlxColor.TRANSPARENT);

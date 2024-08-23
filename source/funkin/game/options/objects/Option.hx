@@ -1,5 +1,16 @@
 package funkin.game.options.objects;
 
+enum OptionType {
+	// Bool will use checkboxes
+	// Everything else will use a text
+	BOOL;
+	INT;
+	FLOAT;
+	PERCENT;
+	STRING;
+}
+
+
 class Option
 {
 	private var child:Alphabet;

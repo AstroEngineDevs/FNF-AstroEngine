@@ -1,4 +1,5 @@
-package flxanimate;
+package funkin.backend.animation;
+
 import flxanimate.frames.FlxAnimateFrames;
 import flxanimate.data.AnimationData.AnimAtlas;
 import flixel.util.FlxDestroyUtil;
@@ -7,7 +8,7 @@ import sys.io.File;
 
 using StringTools;
 
-class AstroFlxAnimate extends FlxAnimate
+class AstroFlxAnimate extends flxanimate.FlxAnimate
 {
 	public function loadAtlasEx(img:FlxGraphicAsset, pathOrStr:String = null, myJson:Dynamic = null)
 	{

@@ -1,4 +1,4 @@
-package funkin.game.editors.content;
+package funkin.backend.objects.editers;
 
 import haxe.format.JsonPrinter;
 

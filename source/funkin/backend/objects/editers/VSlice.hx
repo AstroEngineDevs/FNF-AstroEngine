@@ -1,5 +1,6 @@
-package states.editors.content;
-
+package funkin.backend.objects.editers;
+import funkin.backend.Song.SwagSection;
+import funkin.backend.Song.SwagSong;
 import flixel.math.FlxMath;
 import flixel.util.FlxSort;
 
@@ -63,7 +64,7 @@ typedef VSliceTimeChange =
 	var bpm:Float;
 }
 
-typedef PsychEventChart = {
+typedef AstroEventChart = {
 	var events:Array<Dynamic>;
 	var format:String;
 }
@@ -75,17 +76,17 @@ typedef VSlicePackage =
 	var metadata:VSliceMetadata;
 }
 
-typedef PsychPackage =
+typedef AstroPackage =
 {
 	var difficulties:Map<String, SwagSong>;
-	var events:PsychEventChart;
+	var events:AstroEventChart;
 }
 
 class VSlice
 {
 	public static final metadataVersion = '2.2.3';
 	public static final chartVersion = '2.0.0';
-	public static function convertToPsych(chart:VSliceChart, metadata:VSliceMetadata):PsychPackage
+	public static function convertToAstro(chart:VSliceChart, metadata:VSliceMetadata):AstroPackage
 	{
 		var songDifficulties:Map<String, SwagSong> = [];
 		var timeChanges:Array<VSliceTimeChange> = cast metadata.timeChanges;
@@ -261,10 +262,10 @@ class VSlice
 
 			Reflect.setField(swagSong, 'artist', metadata.artist);
 			Reflect.setField(swagSong, 'charter', metadata.charter);
-			Reflect.setField(swagSong, 'generatedBy', 'Psych Engine v${MainMenuState.psychEngineVersion} - Chart Editor V-Slice Importer');
+			Reflect.setField(swagSong, 'generatedBy', 'Astro Engine v${EngineData.engineData.coreVersion} - Chart Editor V-Slice Importer');
 			songDifficulties.set(diff, swagSong);
 		}
-		var pack:PsychPackage = {difficulties: songDifficulties, events: null};
+		var pack:AstroPackage = {difficulties: songDifficulties, events: null};
 
 		var fileEvents:Array<Dynamic> = [];
 		var remainingEvents:Array<Dynamic> = allEvents.filter((event:Dynamic) -> !focusCameraEvents.contains(event));
@@ -326,7 +327,7 @@ class VSlice
 		}
 
 		var notes:Array<VSliceNote> = [];
-		var generatedBy:String = 'Psych Engine v${MainMenuState.psychEngineVersion} - Chart Editor V-Slice Exporter';
+		var generatedBy:String = 'Astro Engine v${EngineData.engineData.coreVersion} - Chart Editor V-Slice Exporter';
 		var timeChanges:Array<VSliceTimeChange> = [];
 
 		var time:Float = 0;
@@ -401,7 +402,7 @@ class VSlice
 		}
 		else
 		{
-			var diff:String = Difficulty.getString(false);
+			var diff:String = Difficulty.getString();
 			if(diff == null) diff = Difficulty.getDefault();
 			diff = Paths.formatToSongPath(diff);
 			

@@ -4,6 +4,7 @@
 * psych engine charter editer
 * weekend1 fix chart system
 * stage editor(psych)
+* fix -DBETA_TESTING
 
 ---
   

@@ -181,4 +181,7 @@
 
 	<!-- Fixes HXCPP NOT FOUND ERRORS -->
 	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
+
+	<!-- Beta Testing (for mods lmao) -->
+	<haxedef name="BETA_TESTING"/>
 </project>

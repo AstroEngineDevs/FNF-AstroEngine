@@ -3,20 +3,12 @@ package funkin.backend;
 import flixel.util.FlxColor;
 import flixel.util.FlxSave;
 import flixel.FlxG;
-import funkin.game.states.PlayState;
-import openfl.utils.Assets;
-import lime.utils.Assets as LimeAssets;
-import lime.utils.AssetLibrary;
-import lime.utils.AssetManifest;
-import flixel.sound.FlxSound;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
 #else
 import openfl.utils.Assets;
 #end
-
-
 
 class CoolUtil
 {
@@ -123,12 +115,10 @@ class CoolUtil
 		since newer flixel versions are being enforced anyways.
 		@crowplexus
 	**/
-	@:access(flixel.util.FlxSave.validate)
 	inline public static function getSavePath():String {
 		final company:String = FlxG.stage.application.meta.get('company');
-		// #if (flixel < "5.0.0") return company; #else
-		return '${company}/${flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
-		// #end
+		@:privateAccess
+		return '${company}/${FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
 	}
 
 

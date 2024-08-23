@@ -13,6 +13,8 @@ import funkin.game.objects.characters.*;
 import funkin.game.options.objects.*;
 import funkin.game.editors.content.*;
 import funkin.game.states.substates.*;
+import funkin.game.objects.shaders.*;
+import funkin.game.objects.shaders.RGBPalette;
 
 // backend
 import funkin.backend.macro.*;
@@ -23,9 +25,13 @@ import funkin.backend.*;
 import funkin.backend.base.*;
 import funkin.backend.utils.native.*;
 import funkin.backend.base.BaseStage.Countdown;
-import funkin.backend.Structures;
 import funkin.backend.ui.*;
 import funkin.backend.handlers.*;
+import funkin.backend.objects.*;
+import funkin.backend.Structures;
+import funkin.backend.objects.editers.*;
+import funkin.backend.objects.editers.VSlice;
+import funkin.backend.animation.*;
 
 //Discord API
 #if DISCORD_ALLOWED
@@ -43,7 +49,7 @@ import llua.Lua;
 // FlxAnimate
 #if FLXANIMATE_ALLOWED
 import flxanimate.*;
-import flxanimate.AstroFlxAnimate as FlxAnimate;
+import funkin.backend.animation.AstroFlxAnimate as FlxAnimate;
 #end
 
 // System
@@ -71,12 +77,16 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
+// Haxe
+import haxe.*;
+
 // Flixel
 import flixel.sound.FlxSound;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
 import flixel.math.FlxMath;
+import flixel.math.FlxRect;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;

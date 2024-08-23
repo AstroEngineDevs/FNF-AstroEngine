@@ -1,5 +1,4 @@
 package funkin.backend.ui;
-
 typedef UIStyleData = {
 	var bgColor:FlxColor;
 	var textColor:FlxColor;
@@ -9,13 +8,16 @@ typedef UIStyleData = {
 class FlxUIBox extends FlxSpriteGroup
 {
 	public static final CLICK_EVENT = "uibox_click";
+	public static final MINIMIZE_EVENT = "uibox_minimize"; //called on both minimizing and maximizing
+	public static final DRAG_EVENT = "uibox_drag";
+	public static final DROP_EVENT = "uibox_drop";
 	public var tabs(default, null):Array<FlxUITab> = [];
 	
 	public var selectedTab(default, set):FlxUITab = null;
 	public var selectedIndex(default, set):Int = -1;
 	public var selectedName(default, set):String = null;
 
-	var bg:FlxSprite;
+	public var bg:FlxSprite;
 
 	public var selectedStyle:UIStyleData = {
 		bgColor: FlxColor.WHITE,
@@ -36,6 +38,7 @@ class FlxUIBox extends FlxSpriteGroup
 	public var canMove:Bool = true;
 	public var canMinimize(default, set):Bool = true;
 	public var isMinimized(default, set):Bool = false;
+	public var minimizeOnFocusLost:Bool = false;
 
 	public function new(x:Float, y:Float, width:Int, height:Int, tabs:Array<String> = null)
 	{
@@ -69,7 +72,7 @@ class FlxUIBox extends FlxSpriteGroup
 	var _lastClick:Float = 0;
 
 	public var forceCheckNext:Bool = false;
-	public var broadcastBoxEvent:Bool = true;
+	public var broadcastBoxEvents:Bool = true;
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -82,6 +85,7 @@ class FlxUIBox extends FlxSpriteGroup
 		}
 		else
 		{
+			var wasDragging:Bool = _draggingBox;
 			_draggingPos = null;
 			_draggingPoint = null;
 			_draggingBox = false;
@@ -90,6 +94,7 @@ class FlxUIBox extends FlxSpriteGroup
 				if(_pressedBox) forceCheckNext = true;
 				_pressedBox = false;
 			}
+			if(wasDragging && broadcastBoxEvents) FlxUIEventHandler.event(DROP_EVENT, this);
 		}
 
 		for (tab in tabs)
@@ -98,6 +103,7 @@ class FlxUIBox extends FlxSpriteGroup
 			tab.text.scrollFactor.set(scrollFactor.x, scrollFactor.y);
 		}
 
+		var _ignoreTabUpdate:Bool = false;
 		if(forceCheckNext || FlxG.mouse.justMoved || FlxG.mouse.justPressed || FlxG.mouse.justReleased)
 		{
 			forceCheckNext = false;
@@ -117,10 +123,12 @@ class FlxUIBox extends FlxSpriteGroup
 						_draggingPos = FlxPoint.weak(x, y);
 						_draggingPoint = FlxG.mouse.getPositionInCameraView(camera);
 						_draggingBox = true;
+						if(broadcastBoxEvents) FlxUIEventHandler.event(DRAG_EVENT, this);
 					}
 					
 					if(FlxG.mouse.justReleased && canMinimize && _lastClick < 0.15 && selectedTab == tab && _lastTab == selectedTab)
 					{
+						_ignoreTabUpdate = true;
 						isMinimized = !isMinimized;
 						_lastClick = 0;
 						//trace('do minimize: $isMinimized');
@@ -128,11 +136,15 @@ class FlxUIBox extends FlxSpriteGroup
 					
 					if(FlxG.mouse.justPressed)
 					{
-						if(selectedTab != tab) isMinimized = false;
+						if(selectedTab != tab)
+						{
+							isMinimized = false;
+							_ignoreTabUpdate = true;
+						}
 						_lastTab = selectedTab;
 						selectedTab = tab;
 						_lastClick = 0;
-						if(broadcastBoxEvent) FlxUIEventHandler.event(CLICK_EVENT, this);
+						if(broadcastBoxEvents) FlxUIEventHandler.event(CLICK_EVENT, this);
 					}
 					else if(selectedTab != tab) continue;
 				}
@@ -144,8 +156,20 @@ class FlxUIBox extends FlxSpriteGroup
 			}
 		}
 
-		if(selectedTab != null && !isMinimized)
+		if(_ignoreTabUpdate)
+		{
+			if(broadcastBoxEvents)
+				FlxUIEventHandler.event(MINIMIZE_EVENT, this);
+		}
+		else if(selectedTab != null && !isMinimized)
 			selectedTab.updateMenu(this, elapsed);
+
+		if(minimizeOnFocusLost && FlxG.mouse.justPressed && !isMinimized && !FlxG.mouse.overlaps(bg, camera))
+		{
+			isMinimized = true;
+			if(broadcastBoxEvents)
+				FlxUIEventHandler.event(MINIMIZE_EVENT, this);
+		}
 	}
 
 	override function set_cameras(v:Array<FlxCamera>)
@@ -271,6 +295,7 @@ class FlxUIBox extends FlxSpriteGroup
 		{
 			bg.scale.y = tabHeight + 20;
 			bg.updateHitbox();
+			selectedTab = null;
 		}
 		return (isMinimized = v);
 	}

@@ -21,6 +21,16 @@ class DiscordClient
 	public static var clientID(default, set):String;
 	private static var presence:DiscordRichPresence = DiscordRichPresence.create();
 
+	public static var clientName(default, set):String = null;
+	private static function set_clientName(owo:String)
+		return clientName = owo;
+
+	public static var clientDiscrim(default, set):String = null;
+	private static function set_clientDiscrim(owo:String)
+		return clientDiscrim = owo;
+
+	//discriminator
+
 	public static function check()
 	{
 
@@ -57,6 +67,9 @@ class DiscordClient
 	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void
 	{
 		var requestPtr:cpp.Star<DiscordUser> = cpp.ConstPointer.fromRaw(request).ptr;
+
+		clientName = '${cast(requestPtr.username,String)}';
+		clientDiscrim = '$clientName#${cast (requestPtr.discriminator, String)}';
 
 		if (Std.parseInt(cast(requestPtr.discriminator, String)) != 0) // New Discord IDs/Discriminator system
 			traceFr('Connected to User (${cast (requestPtr.username, String)}#${cast (requestPtr.discriminator, String)})');

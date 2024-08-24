@@ -64,7 +64,7 @@ class CharacterEditorState extends MusicBeatState implements FlxUIEventHandler.F
 
 	override function create()
 	{
-//		if(ClientPrefs.data.cacheOnGPU) Paths.clearStoredMemory();
+		if(ClientPrefs.data.cacheOnGPU) Paths.clearStoredMemory();
 
 		FlxG.sound.music.stop();
 		camEditor = initAstroCamera();
@@ -157,7 +157,7 @@ class CharacterEditorState extends MusicBeatState implements FlxUIEventHandler.F
 		updateHealthBar();
 		character.finishAnimation();
 
-//		if(ClientPrefs.data.cacheOnGPU) Paths.clearUnusedMemory();
+		if(ClientPrefs.data.cacheOnGPU) Paths.clearUnusedMemory();
 
 		super.create();
 	}
@@ -1121,14 +1121,14 @@ class CharacterEditorState extends MusicBeatState implements FlxUIEventHandler.F
 	}
 
 	inline function updateHealthBar()
-	{
-		healthColorStepperR.value = character.healthColorArray[0];
-		healthColorStepperG.value = character.healthColorArray[1];
-		healthColorStepperB.value = character.healthColorArray[2];
-		healthBar.leftBar.color = healthBar.rightBar.color = FlxColor.fromRGB(character.healthColorArray[0], character.healthColorArray[1], character.healthColorArray[2]);
-		healthIcon.changeIcon(character.healthIcon, false);
-		updatePresence();
-	}
+		{
+			healthColorStepperR.value = character.healthColorArray[0];
+			healthColorStepperG.value = character.healthColorArray[1];
+			healthColorStepperB.value = character.healthColorArray[2];
+			healthBar.leftBar.color = healthBar.rightBar.color = FlxColor.fromRGB(character.healthColorArray[0], character.healthColorArray[1], character.healthColorArray[2]);
+			healthIcon.changeIcon(character.healthIcon, false);
+			updatePresence();
+		}
 
 	inline function updatePresence() {
 		#if DISCORD_ALLOWED

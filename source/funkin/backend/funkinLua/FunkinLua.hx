@@ -1742,41 +1742,21 @@ class FunkinLua
 				object.scrollFactor.set(scrollX, scrollY);
 			}
 		});
-		Lua_helper.add_callback(lua, "addLuaSprite", function(tag:String, front:Bool = false)
-		{
-			if (variables.exists(tag))
+		Lua_helper.add_callback(lua, "addLuaSprite", function(tag:String, front:Bool = false) {
+			var mySprite:FlxSprite = MusicBeatState.getVariables().get(tag);
+			if(mySprite == null) return false;
+
+			var instance = LuaUtils.getTargetInstance();
+			if(front)
+				instance.add(mySprite);
+			else
 			{
-				var shit:ModchartSprite = variables.get(tag);
-				if (!shit.wasAdded)
-				{
-					if (front)
-					{
-						LuaUtils.getInstance().add(shit);
-					}
-					else
-					{
-						if (game.isDead)
-						{
-							GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), shit);
-						}
-						else
-						{
-							var position:Int = game.members.indexOf(game.gfGroup);
-							if (game.members.indexOf(game.boyfriendGroup) < position)
-							{
-								position = game.members.indexOf(game.boyfriendGroup);
-							}
-							else if (game.members.indexOf(game.dadGroup) < position)
-							{
-								position = game.members.indexOf(game.dadGroup);
-							}
-							game.insert(position, shit);
-						}
-					}
-					shit.wasAdded = true;
-					// trace('added a thing: ' + tag);
-				}
+				if(PlayState.instance == null || !PlayState.instance.isDead)
+					instance.insert(instance.members.indexOf(LuaUtils.getLowestCharacterGroup()), mySprite);
+				else
+					GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), mySprite);
 			}
+			return true;
 		});
 		Lua_helper.add_callback(lua, "setGraphicSize", function(obj:String, x:Int, y:Int = 0, updateHitbox:Bool = true)
 		{
@@ -1859,29 +1839,20 @@ class FunkinLua
 			Reflect.getProperty(LuaUtils.getInstance(), group)[index].updateHitbox();
 		});
 
-		Lua_helper.add_callback(lua, "removeLuaSprite", function(tag:String, destroy:Bool = true)
-		{
-			if (!variables.exists(tag))
-			{
+		Lua_helper.add_callback(lua, "removeLuaSprite", function(tag:String, destroy:Bool = true, ?group:String = null) {
+			var obj:FlxSprite = LuaUtils.getObjectDirectly(tag);
+			if(obj == null || obj.destroy == null)
 				return;
-			}
+			
+			var groupObj:Dynamic = null;
+			if(group == null) groupObj = LuaUtils.getTargetInstance();
+			else groupObj = LuaUtils.getObjectDirectly(group);
 
-			var pee:ModchartSprite = variables.get(tag);
-			if (destroy)
+			groupObj.remove(obj, true);
+			if(destroy)
 			{
-				pee.kill();
-			}
-
-			if (pee.wasAdded)
-			{
-				LuaUtils.getInstance().remove(pee, true);
-				pee.wasAdded = false;
-			}
-
-			if (destroy)
-			{
-				pee.destroy();
-				variables.remove(tag);
+				MusicBeatState.getVariables().remove(tag);
+				obj.destroy();
 			}
 		});
 
@@ -1898,29 +1869,23 @@ class FunkinLua
 			return variables.exists(tag);
 		});
 
-		Lua_helper.add_callback(lua, "setHealthBarColors", function(leftHex:String, rightHex:String)
-		{
-			var left:FlxColor = Std.parseInt(leftHex);
-			if (!leftHex.startsWith('0x'))
-				left = Std.parseInt('0xff' + leftHex);
-			var right:FlxColor = Std.parseInt(rightHex);
-			if (!rightHex.startsWith('0x'))
-				right = Std.parseInt('0xff' + rightHex);
-
-			game.healthBar.createFilledBar(left, right);
-			game.healthBar.updateBar();
+		Lua_helper.add_callback(lua, "setHealthBarColors", function(left:String, right:String) {
+			var left_color:Null<FlxColor> = null;
+			var right_color:Null<FlxColor> = null;
+			if (left != null && left != '')
+				left_color = CoolUtil.colorFromString(left);
+			if (right != null && right != '')
+				right_color = CoolUtil.colorFromString(right);
+			game.healthBar.setColors(left_color, right_color);
 		});
-		Lua_helper.add_callback(lua, "setTimeBarColors", function(leftHex:String, rightHex:String)
-		{
-			var left:FlxColor = Std.parseInt(leftHex);
-			if (!leftHex.startsWith('0x'))
-				left = Std.parseInt('0xff' + leftHex);
-			var right:FlxColor = Std.parseInt(rightHex);
-			if (!rightHex.startsWith('0x'))
-				right = Std.parseInt('0xff' + rightHex);
-
-			game.timeBar.createFilledBar(right, left);
-			game.timeBar.updateBar();
+		Lua_helper.add_callback(lua, "setTimeBarColors", function(left:String, right:String) {
+			var left_color:Null<FlxColor> = null;
+			var right_color:Null<FlxColor> = null;
+			if (left != null && left != '')
+				left_color = CoolUtil.colorFromString(left);
+			if (right != null && right != '')
+				right_color = CoolUtil.colorFromString(right);
+			game.timeBar.setColors(left_color, right_color);
 		});
 
 		Lua_helper.add_callback(lua, "setObjectCamera", function(obj:String, camera:String = '')

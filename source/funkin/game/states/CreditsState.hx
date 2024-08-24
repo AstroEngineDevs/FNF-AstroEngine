@@ -152,13 +152,6 @@ class CreditsState extends MusicBeatState
 				'FFBD40'
 			],
 			[
-				'PolybiusProxy',
-				'proxy',
-				'.MP4 Video Loader Library (hxCodec)',
-				'https://twitter.com/polybiusproxy',
-				'DCD294'
-			],
-			[
 				'Tahir',
 				'tahir',
 				'Other PRs',

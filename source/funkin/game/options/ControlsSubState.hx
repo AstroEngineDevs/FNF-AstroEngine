@@ -30,7 +30,7 @@ import funkin.backend.data.*;
 
 
 
-class ControlsSubState extends MusicBeatSubstate {
+class ControlsSubState extends BaseMenu {
 	private static var curSelected:Int = 1;
 	private static var curAlt:Bool = false;
 
@@ -79,12 +79,6 @@ class ControlsSubState extends MusicBeatSubstate {
 		DiscordClient.changePresence('Controls', null);
 		WindowUtil.setTitle('Options - Controls');
 		#end
-
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = EngineData.coreGame.menuColor;
-		bg.screenCenter();
-		bg.antialiasing = funkin.backend.utils.ClientPrefs.data.globalAntialiasing;
-		add(bg);
 
 		grpOptions = new FlxTypedGroup<funkin.game.objects.Alphabet>();
 		add(grpOptions);

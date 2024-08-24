@@ -120,7 +120,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 	public static var GRID_COLUMNS_PER_PLAYER = 4;
 	public static var GRID_PLAYERS = 2;
 	public static var GRID_SIZE = 40;
-	final BACKUP_EXT = '.bkp';
+	final BACKUP_EXT = '.fnfBackup';
 
 	public var quantizations:Array<Int> = [
 		4,
@@ -374,7 +374,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 			columns += GRID_COLUMNS_PER_PLAYER;
 
 			var icon:HealthIcon = new HealthIcon();
-
+			icon.autoAdjustOffset = false;
 			icon.y = iconY;
 			icon.alpha = 0.6;
 			icon.scrollFactor.set();
@@ -616,7 +616,8 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 			player2: 'dad',
 			gfVersion: 'gf',
 			stage: 'stage',
-			format: 'astro_v0.2'
+			format: 'astro_v0.2',
+			songColor: '0xFFFFFF'
 		};
 		Song.chartPath = null;
 		loadChart(song);
@@ -644,6 +645,8 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 
 		// SONG TAB
 		songNameInputText.text = PlayState.SONG.song;
+		songColorInputText.text = PlayState.SONG.songColor;
+
 		allowVocalsCheckBox.checked = (PlayState.SONG.needsVoices != false); //If the song for some reason does not have this value, it will be set to true
 
 		bpmStepper.value = PlayState.SONG.bpm;
@@ -1830,6 +1833,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 
 		#if DISCORD_ALLOWED
 		DiscordClient.changePresence('Chart Editor', 'Song: ' + PlayState.SONG.song);
+		WindowUtil.setTitle('Chart Editor - ${PlayState.SONG.song} (${Difficulty.list[PlayState.storyDifficulty]})');
 		#end
 
 		updateAudioVolume();
@@ -3144,6 +3148,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 	}
 
 	var songNameInputText:FlxUIInputText;
+	var songColorInputText:FlxUIInputText;
 	var allowVocalsCheckBox:FlxUICheckBox;
 
 	var bpmStepper:FlxUINumericStepper;
@@ -3164,12 +3169,15 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 		songNameInputText = new FlxUIInputText(objX, objY, 100, 'None', 8);
 		songNameInputText.onChange = function(old:String, cur:String) PlayState.SONG.song = cur;
 
+		songColorInputText = new FlxUIInputText(objX + 120, objY, 100, 'None', 8);
+		songColorInputText.onChange = function(old:String, cur:String) PlayState.SONG.songColor = cur;
+
 		allowVocalsCheckBox = new FlxUICheckBox(objX, objY + 20, 'Allow Vocals', 80, function()
 		{
 			PlayState.SONG.needsVoices = allowVocalsCheckBox.checked;
 			loadMusic();
 		});
-		var reloadAudioButton:FlxUIButton = new FlxUIButton(objX + 120, objY, 'Reload Audio', function() loadMusic(true), 80);
+		var reloadAudioButton:FlxUIButton = new FlxUIButton(objX + 120, objY + 20, 'Reload Audio', function() loadMusic(true), 80);
 
 		objY += 65;
 		//(x:Float = 0, y:Float = 0, step:Float = 1, defValue:Float = 0, min:Float = -999, max:Float = 999, decimals:Int = 0, ?wid:Int = 60, ?isPercent:Bool = false)
@@ -3193,7 +3201,9 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 		};
 
 		tab_group.add(new FlxText(songNameInputText.x, songNameInputText.y - 15, 80, 'Song Name:'));
+		tab_group.add(new FlxText(songColorInputText.x, songColorInputText.y - 15, 80, 'Song Color:'));
 		tab_group.add(songNameInputText);
+		tab_group.add(songColorInputText);
 		tab_group.add(allowVocalsCheckBox);
 		tab_group.add(reloadAudioButton);
 
@@ -3530,7 +3540,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 				upperBox.isMinimized = true;
 	
 				updateChartData();
-				fileDialog.save('events.json', AstroJsonPrinter.print({events: PlayState.SONG.events, format: 'Flx_v1'}, ['events']),
+				fileDialog.save('events.json', AstroJsonPrinter.print({events: PlayState.SONG.events, format: 'Astro_v0.3'}, ['events']),
 					function() showOutput('Events saved successfully to: ${fileDialog.path}'), null,
 					function() showOutput('Error on saving events!', true));
 			}, btnWid);
@@ -3662,7 +3672,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 		tab_group.add(btn);
 
 		btnY += 20;
-		var btn:FlxUIButton = new FlxUIButton(btnX, btnY, '  Astro to V-Slice(Psych)...', function()
+		var btn:FlxUIButton = new FlxUIButton(btnX, btnY, '  Astro to V-Slice...', function()
 		{
 			if(!fileDialog.completed) return;
 			upperBox.isMinimized = true;
@@ -3925,7 +3935,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 					var loadedChart:SwagSong = Song.parseJSON(fileDialog.data, filePath, '');
 					if(loadedChart == null || !Reflect.hasField(loadedChart, 'song')) //Check if chart is ACTUALLY a chart and valid
 					{
-						showOutput('Error: File loaded is not a Flx Engine 0.x.x/FNF 0.2.x.x chart.', true);
+						showOutput('Error: File loaded is not a Astro Engine 0.x.x/FNF 0.2.x.x chart.', true);
 						return;
 					}
 
@@ -3933,12 +3943,12 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 					if(fmt == null || fmt.length < 1)
 						fmt = loadedChart.format = 'unknown';
 
-					if(!fmt.startsWith('Flx_v1'))
+					if(!fmt.startsWith('Astro_v0.3'))
 					{
-						loadedChart.format = 'Flx_v1_convert';
+						loadedChart.format = 'Astro_v0.3_convert';
 						Song.convert(loadedChart);
 						File.saveContent(fileDialog.path, AstroJsonPrinter.print(loadedChart, ['sectionNotes', 'events']));
-						showOutput('Updated "$filePath" from format "$fmt" to "Flx_v1" successfully!');
+						showOutput('Updated "$filePath" from format "$fmt" to "Astro_v0.3" successfully!');
 					}
 					else showOutput('Chart is already up-to-date! Format: "$fmt"', true);
 				}
@@ -4623,7 +4633,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 		setSongPlaying(false);
 		chartEditorSave.flush(); //just in case a random crash happens before loading
 
-	//	openSubState(new EditorPlayState(cast notes, [vocals, opponentVocals]));
+		openSubState(new EditorPlayState(cast notes, [vocals, opponentVocals]));
 		upperBox.isMinimized = true;
 		upperBox.visible = mainBox.visible = infoBox.visible = false;
 	}

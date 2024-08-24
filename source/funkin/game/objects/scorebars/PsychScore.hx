@@ -2,14 +2,13 @@ package funkin.game.objects.scorebars;
 
 class PsychScore extends BaseScorebar
 {
-	private final yVal:Float = game.healthBarBG.y;
 	private var scoreText:FlxText;
 
 	override function create()
 	{
 		super.create();
 
-		scoreText = new FlxText(0, yVal + 36, FlxG.width, "", 20);
+		scoreText = new FlxText(0, defaultPos.y + 36, FlxG.width, "", 20);
 		scoreText.scrollFactor.set();
 		scoreText.borderSize = 1.25;
 		scoreText.visible = !ClientPrefs.data.hideFullHUD;

@@ -5,7 +5,6 @@ import funkin.backend.Highscore;
 
 class AstroScore extends BaseScorebar
 {
-	private final yVal:Float = game.healthBarBG.y;
 	private var scoreText:FlxText;
 	private var watermark:FlxText;
 	private var songLeft:FlxText;
@@ -21,21 +20,21 @@ class AstroScore extends BaseScorebar
 	{
 		super.create();
 
-		scoreText = new FlxText(0, yVal + 36, FlxG.width, "ermOwo?", 20);
+		scoreText = new FlxText(0, defaultPos.y + 36, FlxG.width, "ermOwo?", 20);
 		scoreText.scrollFactor.set();
 		scoreText.borderSize = 1.25;
 		scoreText.visible = !ClientPrefs.data.hideFullHUD;
 		scoreText.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(scoreText);
 
-		watermark = new FlxText(40, yVal + 37, 0, "", 16);
+		watermark = new FlxText(40, defaultPos.y + 37, 0, "", 16);
 		watermark.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		watermark.scrollFactor.set();
 		watermark.borderSize = 1.25;
 		watermark.visible = !ClientPrefs.data.hideFullHUD;
 		add(watermark);
 
-		songLeft = new FlxText(1140, yVal + 37, 0, "0:00 • 0:00", 16);
+		songLeft = new FlxText(1140, defaultPos.y + 37, 0, "0:00 • 0:00", 16);
 		songLeft.setFormat(Paths.font("PhantomMuff.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		songLeft.scrollFactor.set();
 		songLeft.borderSize = 1.25;
@@ -51,7 +50,7 @@ class AstroScore extends BaseScorebar
 
 		watermark.text = PlayState.SONG.song.formatText() + " • " + Difficulty.list[PlayState.storyDifficulty];
 		addCurveBG(watermark.x - 10, scoreText.y + 4.5, watermark.fieldWidth + 20, 35, 35, 0, game.uiBackgroundGroup); // WaterMark
-		addCurveBG(game.healthBarBG.x, scoreText.y + 4.5, 600, 35, 35, 0, game.uiBackgroundGroup); // ScoreBar
+		addCurveBG(defaultPos.x, scoreText.y + 4.5, 600, 35, 35, 0, game.uiBackgroundGroup); // ScoreBar
 		addCurveBG(songLeft.x - 12.5, scoreText.y + 4.5, 125, 35, 35, 0, game.uiBackgroundGroup); // TimeBar (Alt)
 
 		songLeft.y += 10;

@@ -19,6 +19,8 @@ typedef SwagSong =
 	var stage:String;
 	var format:String;
 
+	@:optional var songColor:String;
+
 	@:optional var gameOverChar:String;
 	@:optional var gameOverSound:String;
 	@:optional var gameOverLoop:String;
@@ -59,9 +61,15 @@ class Song
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
 	public var format:String = 'astro_v0.3';
+	public var songColor:String = '0xFFFFFFFF';
 
 	public static function convert(songJson:Dynamic) // Convert old charts to astro_v0.3 format
 	{
+		if(songJson.songColor != null && songJson.songColor != '')
+			songJson.songColor = songJson.songColor;
+		else 
+			songJson.songColor = "0xFFFFFFFF";
+
 		if(songJson.gfVersion == null)
 		{
 			songJson.gfVersion = songJson.player3;

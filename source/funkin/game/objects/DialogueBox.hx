@@ -1,6 +1,5 @@
 package funkin.game.objects;
 
-import funkin.backend.PlayerSettings;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
@@ -180,7 +179,7 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if(PlayerSettings.player1.controls.ACCEPT)
+		if(Controls.instance.ACCEPT)
 		{
 			if (dialogueEnded)
 			{

@@ -16,10 +16,11 @@ class Init extends flixel.FlxState
 
 		FlxG.save.bind('funkin', funkin.backend.CoolUtil.getSavePath());
 		
-		#if LUA_ALLOWED
-		Mods.pushGlobalMods();
-		#end
+		#if LUA_ALLOWED Mods.pushGlobalMods();#end
+		
 		Mods.loadTopMod();
+
+		Controls.instance = new Controls();
 
 		Logs.init();
 		Volume.init();
@@ -32,7 +33,9 @@ class Init extends flixel.FlxState
 
 		#if DISCORD_ALLOWED DiscordClient.prepare(); #end
 
-		#if BETA_TESTING owoWatermark(); #end
+		#if VIDEOS_ALLOWED hxvlc.util.Handle.init(#if (hxvlc >= "1.8.0")  ['--no-lua'] #end);#end
+
+		#if beta owoWatermark(); #end
 
 		funkin.game.objects.Alphabet.AlphaCharacter.loadAlphabetData();
 

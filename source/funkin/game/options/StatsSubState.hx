@@ -16,9 +16,8 @@ import funkin.backend.client.Discord.DiscordClient;
 
 
 
-class StatsSubState extends MusicBeatSubstate
+class StatsSubState extends BaseMenu
 {
-	private var bg:FlxSprite;
 	private var text:FlxText;
 	private var textBG:FlxSprite;
 
@@ -39,13 +38,6 @@ class StatsSubState extends MusicBeatSubstate
 		DiscordClient.changePresence('Viewing Stats', null);
 		WindowUtil.setTitle('Options - Stats');
 		#end
-
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = EngineData.coreGame.menuColor;
-		bg.updateHitbox();
-		bg.screenCenter();
-		bg.antialiasing = funkin.backend.utils.ClientPrefs.data.globalAntialiasing;
-		add(bg);
 
 		grpTexts = new FlxTypedGroup<Alphabet>();
 		add(grpTexts);
@@ -72,7 +64,9 @@ class StatsSubState extends MusicBeatSubstate
 				statsTxt = new Alphabet(0, 200, "N/A: 0000", false);
 				statsTxt.screenCenter();
 				statsTxt.text = statID[i] + ": " + ClientPrefs.data.stats.get(statID[i]);
-				statsTxt.alignment = CENTERED;
+				statsTxt.screenCenter();
+				statsTxt.astroMenuItem = true;
+				statsTxt.changeX = false;
 				statsTxt.targetY = i;
 				statsTxt.ID = i;
 				statsTxt.changeX = false;

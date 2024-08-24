@@ -48,6 +48,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	private var boyfriend:Character = null;
 	private var descBox:FlxSprite;
 	private var descText:FlxText;
+	private var bg:FlxSprite;
+	private var grid:FlxBackdrop;
 
 	public var title:String;
 	public var rpcTitle:String;
@@ -64,11 +66,17 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		WindowUtil.setTitle('Options - $title');
 		#end
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = EngineData.coreGame.menuColor;
 		bg.screenCenter();
 		bg.antialiasing = funkin.backend.utils.ClientPrefs.data.globalAntialiasing;
 		add(bg);
+
+		grid = new FlxBackdrop(FlxGridOverlay.createGrid(80, 80, 160, 160, true, 0x33FFFFFF, 0x0));
+		grid.velocity.set(40, 40);
+		grid.alpha = 0;
+		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
+		add(grid);
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();

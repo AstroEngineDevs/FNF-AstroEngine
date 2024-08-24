@@ -255,9 +255,31 @@ class LuaUtils
 	}
 
 	public static inline function getInstance()
-	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
-	}
+
+	@:deprecated("uhh fuck you :3c") public static inline function getTargetInstance()
+		return getInstance();
+
+	public static inline function getLowestCharacterGroup():FlxSpriteGroup
+		{
+			var group:FlxSpriteGroup = PlayState.instance.gfGroup;
+			var pos:Int = PlayState.instance.members.indexOf(group);
+	
+			var newPos:Int = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
+			if(newPos < pos)
+			{
+				group = PlayState.instance.boyfriendGroup;
+				pos = newPos;
+			}
+			
+			newPos = PlayState.instance.members.indexOf(PlayState.instance.dadGroup);
+			if(newPos < pos)
+			{
+				group = PlayState.instance.dadGroup;
+				pos = newPos;
+			}
+			return group;
+		}
 
 	public static function addAnimByIndices(obj:String, name:String, prefix:String, indices:String, framerate:Int = 24, loop:Bool = false)
 	{

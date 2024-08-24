@@ -24,7 +24,7 @@ class MusicBeatState extends FlxUIState
 
 	var _astroCameraInitialized:Bool = false;
 	inline function get_controls():Controls
-		return PlayerSettings.player1.controls;
+		return Controls.instance;
 
 	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
 	public static function getVariables()
@@ -42,6 +42,7 @@ class MusicBeatState extends FlxUIState
 			openSubState(new FadeTransition(0.5, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
+		timePassedOnState = 0;
 	}
 
 	
@@ -66,6 +67,7 @@ class MusicBeatState extends FlxUIState
 	public function addAheadObject(obj:FlxBasic, obj2:FlxBasic)
 		return insert(members.indexOf(obj2) + 1, obj);
 
+	public static var timePassedOnState:Float = 0;
 	override function update(elapsed:Float)
 	{
 		// everyStep();

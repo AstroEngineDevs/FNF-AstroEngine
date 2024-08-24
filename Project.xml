@@ -25,6 +25,9 @@
 
 	<!-- _____________________________ ASTRO ENGINE CUSTOMIZATION ____________________________ -->
 
+	<!-- uhh adds base assets lol -->
+	<define name="BASE_GAME_FILES" />
+
 	<!-- Enable Mod Support -->
 	<define name="MODS_ALLOWED" if="desktop" />
 
@@ -111,11 +114,13 @@
 	<assets path="assets/week_assets"   rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/week_assets"   rename="assets" exclude="*.mp3" unless="web"/>
 	<assets path='art/icons/iconOG.png' rename='icon.png' if="linux" />
- 
-	<!-- <section if="MODS_ALLOWED">
-			<assets path='mods' embed='false'/>
-			<assets path="assets/shared/images" rename="modss/default/images" exclude="*.png|*.ogg|*.xml|*.json|*.txt"/>	
-	</section> -->
+
+	<section if="BASE_GAME_FILES">
+		<assets path="assets/BASE_GAME" rename="assets" exclude="*.ogg" if="web"/>
+		<assets path="assets/BASE_GAME" rename="assets" exclude="*.mp3" unless="web"/>
+		<haxelib name="grig.audio" if="BASE_GAME_FILES"/>
+		<haxelib name="funkin.vis" if="BASE_GAME_FILES"/>
+	</section>
 
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 
@@ -141,17 +146,14 @@
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<!-- HScript -->
 	<haxelib name="hscript-iris" if="HSCRIPT_ALLOWED" version="1.0.2"/>
-	<!-- HxCodec -->
-	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
+	<!-- Hxvlc -->
+	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/>
 	<!-- FlxAnimate -->
 	<haxelib name="flxanimate" path="./libs/flxanimate" if="FLXANIMATE_ALLOWED"/>
 	<!-- Discord API -->
 	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
 	<!-- Debug Sever -->
 	<haxelib name="hxcpp-debug-server" if="DEBUG_SERVER_ALLOWED"/>
-	<!-- V-Slice Stuff -->
-	<haxelib name="grig.audio" />
-	<haxelib name="funkin.vis"/>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 	
@@ -163,7 +165,6 @@
 
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
-	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
 
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
@@ -181,7 +182,4 @@
 
 	<!-- Fixes HXCPP NOT FOUND ERRORS -->
 	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
-
-	<!-- Beta Testing (for mods lmao) -->
-	<haxedef name="BETA_TESTING"/>
 </project>

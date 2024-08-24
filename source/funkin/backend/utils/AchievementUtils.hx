@@ -4,7 +4,7 @@ import funkin.game.objects.Achievements.AchievementObject;
 #if ACHIEVEMENTS_ALLOWED
 class AchievementUtils
 {
-	public static var keysPressed:Array<Bool> = [];
+	public static var keysPressed:Array<Int> = [];
 	public static var boyfriendIdleTime:Float = 0.0;
 	public static var boyfriendIdled:Bool = false;
 
@@ -82,19 +82,9 @@ class AchievementUtils
 							unlock = true;
 
 					case 'two_keys':
-						if (!usedPractice)
-						{
-							var howManyPresses:Int = 0;
-							for (j in 0...keysPressed.length)
-								if (keysPressed[j])
-									howManyPresses++;
-
-							if (howManyPresses <= 2)
-								unlock = true;
-						}
+						unlock = (!usedPractice && keysPressed.length <= 2);
 					case 'toastie':
-						if (!ClientPrefs.data.shaders && ClientPrefs.data.lowQuality && !ClientPrefs.data.globalAntialiasing)
-							unlock = true;
+						unlock = (!ClientPrefs.data.cacheOnGPU && !ClientPrefs.data.shaders && ClientPrefs.data.lowQuality && !ClientPrefs.data.antialiasing);
 
 					case 'debugger':
 						if (Paths.formatToSongPath(PlayState.SONG.song) == 'test' && !usedPractice)

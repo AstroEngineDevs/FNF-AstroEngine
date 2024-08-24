@@ -19,6 +19,21 @@ class CoolUtil
 		return (m / snap);
 	}
 
+	
+	public static function floorDecimal(value:Float, decimals:Int):Float
+		{
+			if(decimals < 1)
+				return Math.floor(value);
+	
+			var tempMult:Float = 1;
+			for (i in 0...decimals)
+				tempMult *= 10;
+	
+			var newValue:Float = Math.floor(value * tempMult);
+			return newValue / tempMult;
+		}
+	
+
 
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));

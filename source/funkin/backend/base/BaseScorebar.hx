@@ -5,7 +5,7 @@ class BaseScorebar extends FlxBasic
 	private var game(get, never):Dynamic;
 	private var scoreUpdate(default, set):Void->Void;
 	private var stageUpdate(default, set):Void->Void;
-	private var defaultY(get,never):Float;
+	private var defaultPos(get,never):FlxPoint;
 
 	public function new()
 	{
@@ -54,11 +54,10 @@ class BaseScorebar extends FlxBasic
 		return cast FlxG.state;
 
 
-	private inline function get_defaultY() 
-		return game.healthBarBG.y;
+	private inline function get_defaultPos() 
+		return game.healthBar.getPosition();
 
-	// FlxBasic Default
-
+	// uhh owo?
 	function add(object:FlxBasic)
 		game.uiGroup.add(object);
 

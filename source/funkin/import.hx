@@ -62,7 +62,7 @@ import js.html.*;
 
 // Videos
 #if VIDEOS_ALLOWED
-import hxcodec.flixel.FlxVideo;
+import hxvlc.flixel.FlxVideoSprite;
 #end
 
 // Shader
@@ -95,6 +95,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.addons.display.FlxBackdrop;
 import flixel.FlxBasic;
 #end
 using StringTools;

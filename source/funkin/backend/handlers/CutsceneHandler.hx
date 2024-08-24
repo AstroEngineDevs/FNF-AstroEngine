@@ -41,7 +41,7 @@ class CutsceneHandler extends FlxBasic
 		FlxG.state.add(this);
 
 		this._canSkip = canSkip;
-		if(_canSkip)
+		if(canSkip)
 		{
 			skipSprite = new FlxPieDial(0, 0, 40, FlxColor.WHITE, 40, true, 24);
 			skipSprite.replaceColor(FlxColor.BLACK, FlxColor.TRANSPARENT);
@@ -75,7 +75,7 @@ class CutsceneHandler extends FlxBasic
 		if(_canSkip && cutsceneTime > 0.1)
 		{
 			@:privateAccess
-			if(PlayerSettings.player1.controls.ACCEPT)
+			if(Controls.instance.pressed('accept'))
 				holdingTime = Math.max(0, Math.min(_timeToSkip, holdingTime + elapsed));
 			else if (holdingTime > 0)
 				holdingTime = Math.max(0, FlxMath.lerp(holdingTime, -0.1, FlxMath.bound(elapsed * 3, 0, 1)));

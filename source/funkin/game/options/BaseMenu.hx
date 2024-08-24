@@ -8,8 +8,8 @@ class BaseMenu extends MusicBeatSubstate
 	private var grid:FlxSprite;
 
 	public function new()
-		{
-			super();
+	{
+		super();
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = EngineData.coreGame.menuColor;

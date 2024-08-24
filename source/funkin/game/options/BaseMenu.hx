@@ -7,9 +7,9 @@ class BaseMenu extends MusicBeatSubstate
 	private var bg:FlxSprite;
 	private var grid:FlxSprite;
 
-	override function create()
-	{
-		super.create();
+	public function new()
+		{
+			super();
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = EngineData.coreGame.menuColor;
@@ -22,12 +22,5 @@ class BaseMenu extends MusicBeatSubstate
 		grid.alpha = 0;
 		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
 		add(grid);
-
-		var bg:FlxSprite = new FlxSprite(720).makeGraphic(FlxG.width - 720, FlxG.height, FlxColor.BLACK);
-		bg.alpha = 0.25;
-		add(bg);
-		var bg:FlxSprite = new FlxSprite(750, 160).makeGraphic(FlxG.width - 780, 540, FlxColor.BLACK);
-		bg.alpha = 0.25;
-		add(bg);
 	}
 }

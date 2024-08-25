@@ -480,8 +480,6 @@ class Paths
 	}*/
 	static public function modFolders(key:String)
 	{
-		if (Mods.currentModDirectory == '')
-			Mods.currentModDirectory = 'default';
 		if (Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0)
 		{
 			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);

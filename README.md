@@ -3,9 +3,9 @@
     <br>
     <h1>Friday Night Funkin' • <code>Astro Engine</code> (<strong>Beta</strong>)</h1>
     <br>    
-    <img src="https://img.shields.io/github/forks/Hackx2/FNF-AstroEngine?style=for-the-badge" />
-    <img src="https://img.shields.io/github/license/Hackx2/FNF-AstroEngine?style=for-the-badge" />
-    <img src="https://img.shields.io/github/actions/workflow/status/Hackx2/FNF-AstroEngine/windows.yml?style=for-the-badge" /> 
+    <img src="https://img.shields.io/github/forks/AstroEngineDevs/FNF-AstroEngine?style=for-the-badge" />
+    <img src="https://img.shields.io/github/license/AstroEngineDevs/FNF-AstroEngine?style=for-the-badge" />
+    <img src="https://img.shields.io/github/actions/workflow/status/AstroEngineDevs/FNF-AstroEngine/windows.yml?style=for-the-badge" /> 
     <br>
 
 Hello, this is a modified version of the **Psych Engine** that includes events and functions missing from the original engine.
@@ -39,3 +39,8 @@ Could not parse frame number of: `haxelib install flixel 5.6.1`
 ---
 
 </div>
+question-ai-logo
+useruser
+fullfull
+closeclose
+Chat AI

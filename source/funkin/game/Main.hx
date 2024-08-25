@@ -96,8 +96,14 @@ class Main extends Sprite
 		}
 
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(Config.gameSize[0], Config.gameSize[1], Init, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, Config.skipSplash,
-			Config.startFullscreen));
+
+		var game:FlxGame = new FlxGame(Config.gameSize[0], Config.gameSize[1], Init, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, Config.skipSplash,
+		Config.startFullscreen);
+
+		@:privateAccess
+		game._customSoundTray = funkin.backend.system.ui.FunkinSoundTray;
+
+		addChild(game);
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);

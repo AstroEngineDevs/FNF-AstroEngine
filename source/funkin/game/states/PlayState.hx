@@ -69,6 +69,11 @@ import funkin.backend.data.StageData;
 import funkin.game.objects.playstateBG.*;
 import funkin.backend.Rating;
 
+#if !flash
+import flixel.addons.display.FlxRuntimeShader;
+import openfl.filters.ShaderFilter;
+#end
+
 #if HSCRIPT_ALLOWED
 import crowplexus.iris.Iris;
 #end
@@ -113,7 +118,7 @@ class PlayState extends MusicBeatState
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
 
-	public var boyfriendMap:Map<String, Boyfriend> = new Map<String, Boyfriend>();
+	public var boyfriendMap:Map<String, Character> = new Map<String, Character>();
 	public var dadMap:Map<String, Character> = new Map<String, Character>();
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
 
@@ -495,11 +500,6 @@ class PlayState extends MusicBeatState
 			}
 		#end
 
-		// STAGE SCRIPTS
-		#if (MODS_ALLOWED && LUA_ALLOWED)
-		startLuasNamed('stages/' + curStage + '.lua');
-		#end
-
 		var gfVersion:String = SONG.gfVersion;
 		if(gfVersion == null || gfVersion.length < 1)
 		{
@@ -526,23 +526,22 @@ class PlayState extends MusicBeatState
 		}
 
 		if (!stageData.hide_girlfriend)
-		{
-			gf = new Character(0, 0, gfVersion);
-			startCharacterPos(gf);
-			gf.scrollFactor.set(0.95, 0.95);
-			gfGroup.add(gf);
-			startCharacterLua(gf.curCharacter);
-		}
+			{
+				if(SONG.gfVersion == null || SONG.gfVersion.length < 1) SONG.gfVersion = 'gf'; //Fix for the Chart Editor
+				gf = new Character(0, 0, SONG.gfVersion);
+				startCharacterPos(gf);
+				gfGroup.scrollFactor.set(0.95, 0.95);
+				gfGroup.add(gf);
+			}
+
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
-		startCharacterLua(dad.curCharacter);
 
 		boyfriend = new Character(0, 0, SONG.player1, true);
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
-		startCharacterLua(boyfriend.curCharacter);
 
 		var camPos:FlxPoint = new FlxPoint(girlfriendCameraOffset[0], girlfriendCameraOffset[1]);
 		if(gf != null)
@@ -556,6 +555,17 @@ class PlayState extends MusicBeatState
 			if(gf != null)
 				gf.visible = false;
 		}
+
+		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
+		// STAGE SCRIPTS
+		#if LUA_ALLOWED startLuasNamed('stages/' + curStage + '.lua'); #end
+		#if HSCRIPT_ALLOWED startHScriptsNamed('stages/' + curStage + '.hx'); #end
+
+		// CHARACTER SCRIPTS
+		if(gf != null) startCharacterScripts(gf.curCharacter);
+		startCharacterScripts(dad.curCharacter);
+		startCharacterScripts(boyfriend.curCharacter);
+		#end
 
 		comboGroup = new FlxSpriteGroup();
 		add(comboGroup);
@@ -700,13 +710,16 @@ class PlayState extends MusicBeatState
 		
 		#if LUA_ALLOWED
 		for (notetype in noteTypes)
-		{
 			startLuasNamed('custom_notetypes/' + notetype + '.lua');
-		}
 		for (event in eventsPushed)
-		{
 			startLuasNamed('custom_events/' + event + '.lua');
-		}
+		#end
+
+		#if HSCRIPT_ALLOWED
+		for (notetype in noteTypes)
+			startHScriptsNamed('custom_notetypes/' + notetype + '.hx');
+		for (event in eventsPushed)
+			startHScriptsNamed('custom_events/' + event + '.hx');
 		#end
 		noteTypes = null;
 		eventsPushed = null;
@@ -938,12 +951,12 @@ class PlayState extends MusicBeatState
 		switch(type) {
 			case 0:
 				if(!boyfriendMap.exists(newCharacter)) {
-					var newBoyfriend:Boyfriend = new Boyfriend(0, 0, newCharacter);
+					var newBoyfriend:Character = new Character(0, 0, newCharacter, true);
 					boyfriendMap.set(newCharacter, newBoyfriend);
 					boyfriendGroup.add(newBoyfriend);
 					startCharacterPos(newBoyfriend);
 					newBoyfriend.alpha = 0.00001;
-					startCharacterLua(newBoyfriend.curCharacter);
+					startCharacterScripts(newBoyfriend.curCharacter);
 				}
 
 			case 1:
@@ -953,7 +966,7 @@ class PlayState extends MusicBeatState
 					dadGroup.add(newDad);
 					startCharacterPos(newDad, true);
 					newDad.alpha = 0.00001;
-					startCharacterLua(newDad.curCharacter);
+					startCharacterScripts(newDad.curCharacter);
 				}
 
 			case 2:
@@ -964,43 +977,77 @@ class PlayState extends MusicBeatState
 					gfGroup.add(newGf);
 					startCharacterPos(newGf);
 					newGf.alpha = 0.00001;
-					startCharacterLua(newGf.curCharacter);
+					startCharacterScripts(newGf.curCharacter);
 				}
 		}
 	}
 
-	function startCharacterLua(name:String)
-	{
-		#if LUA_ALLOWED
-		var doPush:Bool = false;
-		var luaFile:String = 'characters/' + name + '.lua';
-		#if MODS_ALLOWED
-		if(FileSystem.exists(Paths.modFolders(luaFile))) {
-			luaFile = Paths.modFolders(luaFile);
-			doPush = true;
-		} else {
-			luaFile = Paths.getSharedPath(luaFile);
-			if(FileSystem.exists(luaFile)) {
+	function startCharacterScripts(name:String)
+		{
+			// Lua
+			#if LUA_ALLOWED
+			var doPush:Bool = false;
+			var luaFile:String = 'characters/$name.lua';
+			#if MODS_ALLOWED
+			var replacePath:String = Paths.modFolders(luaFile);
+			if(FileSystem.exists(replacePath))
+			{
+				luaFile = replacePath;
 				doPush = true;
 			}
-		}
-		#else
-		luaFile = Paths.getSharedPath(luaFile);
-		if(Assets.exists(luaFile)) {
-			doPush = true;
-		}
-		#end
-
-		if(doPush)
-		{
-			for (script in luaArray)
+			else
 			{
-				if(script.scriptName == luaFile) return;
+				luaFile = Paths.getSharedPath(luaFile);
+				if(FileSystem.exists(luaFile))
+					doPush = true;
 			}
-			luaArray.push(new FunkinLua(luaFile));
+			#else
+			luaFile = Paths.getSharedPath(luaFile);
+			if(Assets.exists(luaFile)) doPush = true;
+			#end
+	
+			if(doPush)
+			{
+				for (script in luaArray)
+				{
+					if(script.scriptName == luaFile)
+					{
+						doPush = false;
+						break;
+					}
+				}
+				if(doPush) new FunkinLua(luaFile);
+			}
+			#end
+	
+			// HScript
+			#if HSCRIPT_ALLOWED
+			var doPush:Bool = false;
+			var scriptFile:String = 'characters/' + name + '.hx';
+			#if MODS_ALLOWED
+			var replacePath:String = Paths.modFolders(scriptFile);
+			if(FileSystem.exists(replacePath))
+			{
+				scriptFile = replacePath;
+				doPush = true;
+			}
+			else
+			#end
+			{
+				scriptFile = Paths.getSharedPath(scriptFile);
+				if(FileSystem.exists(scriptFile))
+					doPush = true;
+			}
+	
+			if(doPush)
+			{
+				if(Iris.instances.exists(scriptFile))
+					doPush = false;
+	
+				if(doPush) initHScript(scriptFile);
+			}
+			#end
 		}
-		#end
-	}
 
 	public function getLuaObject(tag:String, text:Bool=true):FlxSprite
 		return variables.get(tag);
@@ -3448,24 +3495,24 @@ class PlayState extends MusicBeatState
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
 
-		if (gf != null && curBeat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
-		{
-			gf.dance();
-		}
-		if (curBeat % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
-		{
-			boyfriend.dance();
-		}
-		if (curBeat % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
-		{
-			dad.dance();
-		}
+		characterBopper(curBeat);
 
 		lastBeatHit = curBeat;
 
 		setOnScripts('curBeat', curBeat); //DAWGG?????
 		callOnScripts('onBeatHit', []);
 	}
+
+	public function characterBopper(beat:Int):Void
+		{
+			if (gf != null && beat % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && !gf.getAnimationName().startsWith('sing') && !gf.stunned)
+				gf.dance();
+			if (boyfriend != null && beat % boyfriend.danceEveryNumBeats == 0 && !boyfriend.getAnimationName().startsWith('sing') && !boyfriend.stunned)
+				boyfriend.dance();
+			if (dad != null && beat % dad.danceEveryNumBeats == 0 && !dad.getAnimationName().startsWith('sing') && !dad.stunned)
+				dad.dance();
+		}
+	
 
 	override function sectionHit()
 	{
@@ -3770,9 +3817,4 @@ class PlayState extends MusicBeatState
 		setOnScripts('ratingName', ratingName);
 		setOnScripts('ratingFC', ratingFC);
 	}
-
-
-
-	var curLight:Int = -1;
-	var curLightEvent:Int = -1;
 }

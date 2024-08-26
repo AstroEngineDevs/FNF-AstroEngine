@@ -25,11 +25,9 @@ import funkin.backend.Song.SwagSong;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.util.FlxSave;
-import funkin.game.objects.FlxUIDropDownMenuCustom;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
@@ -764,6 +762,9 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 				});
 			}
 		}
+
+		ClientPrefs.toggleVolumeKeys(FlxUIInputText.focusOn == null);
+
 
 		var lastTime:Float = Conductor.songPosition;
 		outputAlpha = Math.max(0, outputAlpha - elapsed);
@@ -3608,7 +3609,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 					updateChartData();
 					var pack:VSlicePackage = VSlice.export(PlayState.SONG);
 
-
+					ClientPrefs.toggleVolumeKeys(false);
 					openSubState(new BasePrompt('Metadata',
 						function(state:BasePrompt)
 						{
@@ -3695,7 +3696,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 					return;
 				}
 
-	
+				ClientPrefs.toggleVolumeKeys(false);
 				openSubState(new BasePrompt('Metadata',
 					function(state:BasePrompt)
 					{
@@ -4213,7 +4214,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 		btnY += 20;
 		var btn:FlxUIButton = new FlxUIButton(btnX, btnY, '  Waveform...', function()
 		{
-	
+			ClientPrefs.toggleVolumeKeys(false);
 			openSubState(new BasePrompt(320, 200, 'Waveform Settings',
 				function(state:BasePrompt) {
 					upperBox.isMinimized = true;
@@ -4658,6 +4659,7 @@ class ChartingState extends MusicBeatState implements FlxUIEventHandler.FlxUIEve
 
 	override function closeSubState()
 	{
+		ClientPrefs.toggleVolumeKeys(true);
 		super.closeSubState();
 		upperBox.isMinimized = true;
 		upperBox.visible = mainBox.visible = infoBox.visible = true;

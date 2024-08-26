@@ -1090,7 +1090,7 @@
 	"generatedBy": "Psych Engine v1.0b - Chart Editor V-Slice Importer",
 	"stage": "phillyStreets",
 	"bpm": 155,
-	"format": "psych_v1_convert",
+	"format": "astro_v0.3_convert",
 	"speed": 1.8,
 	"artist": "Kawai Sprite"
 }

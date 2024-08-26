@@ -873,6 +873,14 @@ class CharacterEditorState extends MusicBeatState implements FlxUIEventHandler.F
 	{
 		super.update(elapsed);
 
+
+		if(FlxUIInputText.focusOn != null)
+			{
+				ClientPrefs.toggleVolumeKeys(false);
+				return;
+			}
+			ClientPrefs.toggleVolumeKeys(true);
+
 		var shiftMult:Float = 1;
 		var ctrlMult:Float = 1;
 		var shiftMultBig:Float = 1;

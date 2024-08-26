@@ -2542,7 +2542,7 @@
 		"song": "Cocoa",
 		"needsVoices": true,
 		"stage": "mall",
-		"format": "psych_v1_convert",
+		"format": "astro_v0.3_convert",
 		"speed": 1.5,
 		"bpm": 100
 	}

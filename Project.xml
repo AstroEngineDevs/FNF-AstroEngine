@@ -98,11 +98,6 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/32bit" if="32bits" />
 
-	<library name="videos" preload="true" />
-	<library name="songs" preload="true" />
-	<library name="shared" preload="true" />
-	<library name="week_assets"   preload="true" />
-
 	<assets path="assets/videos" library="videos" if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs" library="songs" exclude="*.ogg" if="web"/>
 	<assets path="assets/songs" library="songs" exclude="*.mp3" unless="web"/>
@@ -133,12 +128,9 @@
 
 	<!-- Lime -->
 	<haxelib name="lime" />
-	<!-- OpenFL -->
-	<haxelib name="openfl" />
 	<!-- HaxeFlixel -->
 	<haxelib name="flixel"/>
 	<haxelib name="flixel-addons"/>
-	<haxelib name="flixel-ui" />
 	<haxelib name="tjson" />
 	<!-- Faxe -->
 	<haxelib name="faxe" if='switch'/>

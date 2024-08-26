@@ -468,7 +468,7 @@
 		"song": "Tutorial",
 		"sections": 0,
 		"needsVoices": true,
-		"format": "psych_v1_convert",
+		"format": "astro_v0.3_convert",
 		"speed": 1,
 		"bpm": 100
 	}

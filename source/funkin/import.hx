@@ -15,6 +15,7 @@ import funkin.game.editors.content.*;
 import funkin.game.states.substates.*;
 import funkin.game.objects.shaders.*;
 import funkin.game.objects.shaders.RGBPalette;
+import funkin.backend.Prompt;
 
 // backend
 import funkin.backend.macro.*;

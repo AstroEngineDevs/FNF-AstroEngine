@@ -1766,6 +1766,6 @@
 		"needsVoices": true,
 		"bpm": 180,
 		"speed": 1.5,
-		"format": "psych_v1_convert"
+		"format": "astro_v0.3_convert"
 	}
 }

@@ -10,7 +10,7 @@ import funkin.game.Init.Volume;
 @:structInit class SaveVariables
 {
 	// if u use psych
-	@:deprecated public var antialiasing:Bool = true;
+	@:deprecated("uhh psych") public var antialiasing:Bool = true;
 	public var globalAntialiasing(default,set):Bool = true;
 	private function set_globalAntialiasing (owo:Bool)
 		return globalAntialiasing = antialiasing = owo;
@@ -228,8 +228,9 @@ class ClientPrefs
 			{
 				keyBinds.set(control, keys);
 			}
-			reloadControls();
 		}
+
+		reloadVolumeKeys();
 	}
 
 	public static function init()
@@ -239,7 +240,6 @@ class ClientPrefs
 			loadPrefs();
 			saveSettings();
 			#if windows WindowUtil.darkMode(data.darkMode); #end
-
 			trace("Initialization Successful");
 		}
 		catch (e)
@@ -254,15 +254,21 @@ class ClientPrefs
 			defaultValue = defaultData.gameplaySettings.get(name);
 		return (data.gameplaySettings.exists(name) ? data.gameplaySettings.get(name) : defaultValue);
 	}
-
-	public static function reloadControls()
+	
+	public static function reloadVolumeKeys()
+		{
+			Volume.muteKeys = copyKey(keyBinds.get('volume_mute'));
+			Volume.volumeDownKeys = copyKey(keyBinds.get('volume_down'));
+			Volume.volumeUpKeys = copyKey(keyBinds.get('volume_up'));
+			
+			toggleVolumeKeys(true);
+		}
+	public static function toggleVolumeKeys(?turnOn:Bool = true)
 	{
-		Volume.muteKeys = copyKey(keyBinds.get('volume_mute'));
-		Volume.volumeDownKeys = copyKey(keyBinds.get('volume_down'));
-		Volume.volumeUpKeys = copyKey(keyBinds.get('volume_up'));
-		FlxG.sound.muteKeys = Volume.muteKeys;
-		FlxG.sound.volumeDownKeys = Volume.volumeDownKeys;
-		FlxG.sound.volumeUpKeys = Volume.volumeUpKeys;
+		final emptyArray = [];
+		FlxG.sound.muteKeys = turnOn ? Volume.muteKeys : emptyArray;
+		FlxG.sound.volumeDownKeys = turnOn ? Volume.volumeDownKeys : emptyArray;
+		FlxG.sound.volumeUpKeys = turnOn ? Volume.volumeUpKeys : emptyArray;
 	}
 
 	public static function copyKey(arrayToCopy:Array<FlxKey>):Array<FlxKey>

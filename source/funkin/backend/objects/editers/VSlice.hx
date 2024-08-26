@@ -257,7 +257,7 @@ class VSlice
 				player2: metadata.playData.characters.opponent,
 				gfVersion: metadata.playData.characters.girlfriend,
 				stage: stage,
-				format: 'psych_v1_convert'
+				format: 'astro_v0.3_convert'
 			}
 
 			Reflect.setField(swagSong, 'artist', metadata.artist);
@@ -307,7 +307,7 @@ class VSlice
 				fileEvents.push([event.t, [fields]]);
 			}
 			fileEvents.sort(sortByTime);
-			pack.events = {events: fileEvents, format: 'psych_v1_convert'};
+			pack.events = {events: fileEvents, format: 'astro_v0.3_convert'};
 		}
 		return pack;
 	}

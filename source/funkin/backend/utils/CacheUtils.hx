@@ -20,19 +20,16 @@ class CacheUtils
 	{
         final introStuffix = PlayState.instance.introSoundsSuffix;
         
-		var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-		introAssets.set('default', [
-			'UI/default/countdown/ready',
-			'UI/default/countdown/set',
-			'UI/default/countdown/go'
-		]);
-		introAssets.set('pixel', ['UI/pixel/countdown/ready', 'UI/pixel/countdown/set', 'UI/pixel/countdown/date']);
+        var stageUI = PlayState?.stageUI;
+        var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
+        var introImagesArray:Array<String> = switch(stageUI) {
+            case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
+            case "normal": ["ready", "set" ,"go"];
+            default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
+        }
+        introAssets.set(stageUI, introImagesArray);
 
-		var introAlts:Array<String> = introAssets.get('default');
-		if (PlayState.isPixelStage)
-			introAlts = introAssets.get('pixel');
-
-		for (asset in introAlts)
+		for (asset in introAssets.get(stageUI))
 			Paths.image(asset);
 
 		Paths.sound('intro3' + introStuffix);

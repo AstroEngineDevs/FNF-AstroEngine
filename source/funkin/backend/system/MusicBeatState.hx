@@ -1,7 +1,6 @@
 package funkin.backend.system;
 
 import flixel.FlxG;
-import flixel.addons.ui.FlxUIState;
 import funkin.game.states.PlayState;
 import funkin.backend.Conductor;
 import flixel.addons.transition.FlxTransitionableState;
@@ -10,7 +9,7 @@ import funkin.backend.utils.Controls;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
 
-class MusicBeatState extends FlxUIState
+class MusicBeatState extends FlxState
 {
 	private var curSection:Int = 0;
 	private var stepsToDo:Int = 0;
@@ -52,7 +51,6 @@ class MusicBeatState extends FlxUIState
 			FlxG.cameras.reset(camera);
 			FlxG.cameras.setDefaultDrawTarget(camera, true);
 			_astroCameraInitialized = true;
-			//trace('initialized psych camera ' + Sys.cpuTime());
 			return camera;
 		}
 
@@ -149,40 +147,37 @@ class MusicBeatState extends FlxUIState
 	}
 
 	public static function switchState(nextState:FlxState)
-	{
-		// Custom made Trans in
-		var curState:Dynamic = FlxG.state;
-		var leState:MusicBeatState = curState;
-		if (!FlxTransitionableState.skipNextTransIn)
 		{
-			leState.openSubState(new FadeTransition(0.6, false));
-			if (nextState == FlxG.state)
+			if(nextState == null) nextState = FlxG.state;
+			if(nextState == FlxG.state)
 			{
-				FadeTransition.finishCallback = function()
-				{
-					FlxG.resetState();
-				};
-				// trace('resetted');
+				resetState();
+				return;
 			}
-			else
-			{
-				FadeTransition.finishCallback = function()
-				{
-					FlxG.switchState(nextState);
-				};
-				// trace('changed state');
-			}
-			return;
+	
+			if(FlxTransitionableState.skipNextTransIn) FlxG.switchState(nextState);
+			else startTransition(nextState);
+			FlxTransitionableState.skipNextTransIn = false;
 		}
-		FlxTransitionableState.skipNextTransIn = false;
-		FlxG.switchState(nextState);
-	}
-
-	public static function resetState()
-	{
-		MusicBeatState.switchState(FlxG.state);
-	}
-
+	
+		public static function resetState() {
+			if(FlxTransitionableState.skipNextTransIn) FlxG.resetState();
+			else startTransition();
+			FlxTransitionableState.skipNextTransIn = false;
+		}
+	
+		// Custom made Trans in
+		public static function startTransition(nextState:FlxState = null)
+		{
+			if(nextState == null)
+				nextState = FlxG.state;
+	
+			FlxG.state.openSubState(new FadeTransition(0.6, false));
+			if(nextState == FlxG.state)
+				FadeTransition.finishCallback = function() FlxG.resetState();
+			else
+				FadeTransition.finishCallback = function() FlxG.switchState(nextState);
+		}
 	public static function getState():MusicBeatState
 	{
 		return cast (FlxG.state, MusicBeatState);

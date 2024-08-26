@@ -23,7 +23,6 @@ class Init extends flixel.FlxState
 		Controls.instance = new Controls();
 
 		Logs.init();
-		Volume.init();
 		funkin.backend.Highscore.init();
 		funkin.backend.utils.ClientPrefs.init();
 		MusicBeatState.init();
@@ -75,14 +74,6 @@ class Volume
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
-
-	public static function init():Void
-	{
-		FlxG.sound.muteKeys = muteKeys;
-		FlxG.sound.volumeDownKeys = volumeDownKeys;
-		FlxG.sound.volumeUpKeys = volumeUpKeys;
-		FlxG.keys.preventDefaultKeys = [TAB];
-	}
 }
 
 class Logs // Modded trace func

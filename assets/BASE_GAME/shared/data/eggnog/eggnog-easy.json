@@ -1934,7 +1934,7 @@
 		"song": "Eggnog",
 		"needsVoices": true,
 		"stage": "mall",
-		"format": "psych_v1_convert",
+		"format": "astro_v0.3_convert",
 		"speed": 1.4,
 		"bpm": 150
 	}

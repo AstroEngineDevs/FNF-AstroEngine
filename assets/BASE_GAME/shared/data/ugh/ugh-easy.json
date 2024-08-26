@@ -1840,7 +1840,7 @@
 		"song": "Ugh",
 		"needsVoices": true,
 		"stage": "tank",
-		"format": "psych_v1_convert",
+		"format": "astro_v0.3_convert",
 		"speed": 1.25,
 		"bpm": 160
 	}

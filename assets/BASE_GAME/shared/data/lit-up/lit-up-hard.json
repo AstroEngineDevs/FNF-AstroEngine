@@ -1314,7 +1314,7 @@
 			}
 		],
 		"gfVersion": "nene",
-		"format": "psych_v1_convert",
+		"format": "astro_v0.3_convert",
 		"bpm": 176,
 		"needsVoices": true,
 		"song": "Lit Up",

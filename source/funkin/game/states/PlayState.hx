@@ -374,7 +374,6 @@ class PlayState extends MusicBeatState
 		
 		// Init Stuff
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
-		FadeTransition.nextCamera = camOther;
 		persistentUpdate = persistentDraw = true;
 		if(isPixelStage) introSoundsSuffix = '-pixel';
 		if (SONG == null) SONG = Song.loadFromJson('tutorial');
@@ -407,10 +406,13 @@ class PlayState extends MusicBeatState
 		GameOverSubstate.resetVariables();
 		songName = Paths.formatToSongPath(SONG.song);
 
-		curStage = SONG.stage;
-		SONG.stage = curStage;
+		if(SONG.stage == null || SONG.stage.length < 1)
+			SONG.stage = StageData.vanillaSongStage(Paths.formatToSongPath(Song.loadedSongName));
 
+		curStage = SONG.stage;
+		
 		var stageData:StageFile = StageData.getStageFile(curStage);
+		defaultCamZoom = stageData.defaultZoom;
 
 		// if u wanna hardcode stage json files
 		stageUI = "normal";
@@ -796,7 +798,6 @@ class PlayState extends MusicBeatState
 		}
 		Paths.clearUnusedMemory();
 		
-		FadeTransition.nextCamera = camOther;
 		if(eventNotes.length < 1) checkEventNote();
 	}
 
@@ -1175,16 +1176,17 @@ class PlayState extends MusicBeatState
 	public function startCountdown()
 	{
 		if(startedCountdown) {
-			callOnScripts('onStartCountdown', []);
+			callOnScripts('onStartCountdown');
 			return false;
 		}
-		
+
 		seenCutscene = true;
 		inCutscene = false;
-		var ret:Dynamic = callOnScripts('onStartCountdown', [], false);
+		var ret:Dynamic = callOnScripts('onStartCountdown', null, true);
 		if(ret != LuaUtils.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
+			canPause = true;
 			generateStaticArrows(0);
 			generateStaticArrows(1);
 			for (i in 0...playerStrums.length) {
@@ -1198,14 +1200,11 @@ class PlayState extends MusicBeatState
 			}
 
 			startedCountdown = true;
-			Conductor.songPosition = -Conductor.crochet * 5;
+			Conductor.songPosition = -Conductor.crochet * 5 + Conductor.offset;
 			setOnScripts('startedCountdown', true);
-			callOnScripts('onCountdownStarted', []);
+			callOnScripts('onCountdownStarted');
 
 			var swagCounter:Int = 0;
-
-			if(startOnTime < 0) startOnTime = 0;
-
 			if (startOnTime > 0) {
 				clearNotesBefore(startOnTime);
 				setSongTime(startOnTime - 350);
@@ -1216,38 +1215,24 @@ class PlayState extends MusicBeatState
 				setSongTime(0);
 				return true;
 			}
-
 			moveCameraSection();
 
 			startTimer = new FlxTimer().start(Conductor.crochet / 1000 / playbackRate, function(tmr:FlxTimer)
 			{
-				if (gf != null && tmr.loopsLeft % Math.round(gfSpeed * gf.danceEveryNumBeats) == 0 && gf.animation.curAnim != null && !gf.animation.curAnim.name.startsWith("sing") && !gf.stunned)
-				{
-					gf.dance();
-				}
-				if (tmr.loopsLeft % boyfriend.danceEveryNumBeats == 0 && boyfriend.animation.curAnim != null && !boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.stunned)
-				{
-					boyfriend.dance();
-				}
-				if (tmr.loopsLeft % dad.danceEveryNumBeats == 0 && dad.animation.curAnim != null && !dad.animation.curAnim.name.startsWith('sing') && !dad.stunned)
-				{
-					dad.dance();
-				}
+				characterBopper(tmr.loopsLeft);
 
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-				introAssets.set('default', ['UI/default/countdown/ready', 'UI/default/countdown/set', 'UI/default/countdown/go']);
-				introAssets.set('pixel', ['UI/pixel/countdown/ready', 'UI/pixel/countdown/set', 'UI/pixel/countdown/date']);
-
-		
-				var introAlts:Array<String> = introAssets.get('default');
-				var antialias:Bool = ClientPrefs.data.globalAntialiasing;
-				var tick:BaseStage.Countdown = THREE;
-
-				if(isPixelStage) {
-					introAlts = introAssets.get('pixel');
-					antialias = false;
+				var introImagesArray:Array<String> = switch(stageUI) {
+					case "pixel": ['${stageUI}UI/ready-pixel', '${stageUI}UI/set-pixel', '${stageUI}UI/date-pixel'];
+					case "normal": ["ready", "set" ,"go"];
+					default: ['${stageUI}UI/ready', '${stageUI}UI/set', '${stageUI}UI/go'];
 				}
-			
+				introAssets.set(stageUI, introImagesArray);
+
+				var introAlts:Array<String> = introAssets.get(stageUI);
+				var antialias:Bool = (ClientPrefs.data.antialiasing && !isPixelStage);
+				var tick:Countdown = THREE;
+
 				switch (swagCounter)
 				{
 					case 0:
@@ -1269,27 +1254,29 @@ class PlayState extends MusicBeatState
 						tick = START;
 				}
 
-				notes.forEachAlive(function(note:Note) {
-					if(ClientPrefs.data.opponentStrums || note.mustPress)
-					{
-						note.copyAlpha = false;
-						note.alpha = note.multAlpha;
-						if(ClientPrefs.data.middleScroll && !note.mustPress) {
-							note.alpha *= 0.35;
+				if(!skipArrowStartTween)
+				{
+					notes.forEachAlive(function(note:Note) {
+						if(ClientPrefs.data.opponentStrums || note.mustPress)
+						{
+							note.copyAlpha = false;
+							note.alpha = note.multAlpha;
+							if(ClientPrefs.data.middleScroll && !note.mustPress)
+								note.alpha *= 0.35;
 						}
-					}
-				});
+					});
+				}
+
 				stagesFunc(function(stage:BaseStage) stage.countdownTick(tick, swagCounter));
-				callOnScripts('onCountdownTick', [swagCounter]);
+				callOnLuas('onCountdownTick', [swagCounter]);
+				callOnHScript('onCountdownTick', [tick, swagCounter]);
 
 				swagCounter += 1;
-				// generateSong('fresh');
 			}, 5);
 		}
 		return true;
 	}
 
-	
 	inline private function createCountdownSprite(image:String, antialias:Bool):FlxSprite
 		{
 			var spr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(image));
@@ -1728,6 +1715,8 @@ class PlayState extends MusicBeatState
 	public var skipArrowStartTween:Bool = false; //for lua
 	private function generateStaticArrows(player:Int):Void
 	{
+		var strumLineX:Float = ClientPrefs.data.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X;
+		var strumLineY:Float = ClientPrefs.data.downScroll ? (FlxG.height - 150) : 50;
 		for (i in 0...4)
 		{
 			// FlxG.log.add(i);
@@ -1738,7 +1727,7 @@ class PlayState extends MusicBeatState
 				else if(ClientPrefs.data.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:StrumNote = new StrumNote(ClientPrefs.data.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
+			var babyArrow:StrumNote = new StrumNote(strumLineX, strumLineY, i, player);
 			babyArrow.downScroll = ClientPrefs.data.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
 			{
@@ -1746,15 +1735,10 @@ class PlayState extends MusicBeatState
 				babyArrow.alpha = 0;
 				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
-			else
-			{
-				babyArrow.alpha = targetAlpha;
-			}
+			else babyArrow.alpha = targetAlpha;
 
 			if (player == 1)
-			{
 				playerStrums.add(babyArrow);
-			}
 			else
 			{
 				if(ClientPrefs.data.middleScroll)
@@ -1784,7 +1768,7 @@ class PlayState extends MusicBeatState
 					opponentVocals.pause();
 				}
 				FlxTimer.globalManager.forEach(function(tmr:FlxTimer) if(!tmr.finished) tmr.active = false);
-				//FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = false);
+				FlxTween.globalManager.forEach(function(twn:FlxTween) if(!twn.finished) twn.active = false);
 			}
 	
 			super.openSubState(SubState);
@@ -1818,7 +1802,7 @@ class PlayState extends MusicBeatState
 			#end
 
 			#if desktop
-			WindowUtil.setTitle(detailsText + '- ${SONG.song} (${storyDifficultyText})');
+			WindowUtil.setTitle(detailsText + ' - ${SONG.song} (${storyDifficultyText})');
 			#end
 		}
 
@@ -2648,9 +2632,7 @@ class PlayState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 
 					cancelMusicFadeTween();
-					if(FlxTransitionableState.skipNextTransIn) {
-						FadeTransition.nextCamera = null;
-					}
+
 					canResync = false;
 					MusicBeatState.switchState(new StoryMenuState());
 
@@ -2691,9 +2673,7 @@ class PlayState extends MusicBeatState
 				trace('WENT BACK TO FREEPLAY??');
 				Mods.loadTopMod();
 				cancelMusicFadeTween();
-				if(FlxTransitionableState.skipNextTransIn) {
-					FadeTransition.nextCamera = null;
-				}
+
 				canResync = false;
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));

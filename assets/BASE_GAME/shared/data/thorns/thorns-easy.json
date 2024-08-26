@@ -1915,7 +1915,7 @@
 		"song": "Thorns",
 		"needsVoices": true,
 		"stage": "schoolEvil",
-		"format": "psych_v1_convert",
+		"format": "astro_v0.3_convert",
 		"speed": 1.1,
 		"bpm": 190
 	}

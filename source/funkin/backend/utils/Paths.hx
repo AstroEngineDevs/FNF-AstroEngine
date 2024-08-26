@@ -275,6 +275,7 @@ class Paths
 		localTrackedAssets.push(key);
 		return graph;
 	}
+
 	inline static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 		{
 			var path:String = getPath(key, TEXT, true);

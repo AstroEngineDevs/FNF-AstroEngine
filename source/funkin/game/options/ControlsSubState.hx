@@ -130,7 +130,7 @@ class ControlsSubState extends BaseMenu {
 			}
 
 			if (controls.BACK) {
-				funkin.backend.utils.ClientPrefs.reloadControls();
+				ClientPrefs.reloadVolumeKeys();
 				close();
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}

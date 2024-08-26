@@ -1975,6 +1975,6 @@
 		"needsVoices": true,
 		"bpm": 175,
 		"speed": 1.3,
-		"format": "psych_v1_convert"
+		"format": "astro_v0.3_convert"
 	}
 }

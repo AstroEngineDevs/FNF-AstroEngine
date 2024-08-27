@@ -52,13 +52,6 @@ class Main extends Sprite
 
 	public function new()
 	{
-		#if CRISP_VISUALS
-		@:functionCode("
-			#include <windows.h>
-			setProcessDPIAware()
-		")
-		#end
-
 		super();
 
 		if (stage != null)

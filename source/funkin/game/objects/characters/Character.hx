@@ -90,6 +90,8 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 		changeCharacter(character);
 		
+		
+		#if BASE_GAME_FILES
 		switch(curCharacter)
 		{
 			case 'pico-speaker':
@@ -99,6 +101,7 @@ class Character extends FlxSprite
 			case 'pico-blazin', 'darnell-blazin':
 				skipDance = true;
 		}
+		#end
 	}
 
 	public function changeCharacter(character:String)
@@ -284,7 +287,7 @@ class Character extends FlxSprite
 			dance();
 			finishAnimation();
 		}
-
+		#if BASE_GAME_FILES
 		switch(curCharacter)
 		{
 			case 'pico-speaker':
@@ -299,6 +302,7 @@ class Character extends FlxSprite
 				}
 				if(isAnimationFinished()) playAnim(getAnimationName(), false, false, animation.curAnim.frames.length - 3);
 		}
+		#end
 
 		if (getAnimationName().startsWith('sing')) holdTimer += elapsed;
 		else if(isPlayer) holdTimer = 0;

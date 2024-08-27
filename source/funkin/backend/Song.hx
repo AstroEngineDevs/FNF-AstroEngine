@@ -173,7 +173,9 @@ class Song
 			switch(convertTo)
 			{
 				case 'astro_v0.3':
-					if(!fmt.toLowerCase().startsWith('astro_v0.3')) //Convert to Psych 1.0 format
+					// psych support :3
+					final fmt = fmt.toLowerCase();
+					if(!fmt.startsWith('astro_v0.3') && !fmt.startsWith('psych_v1')) //Convert to Psych 1.0 format
 					{
 						trace('converting chart $nameForError with format $fmt to astro_v0.3 format...');
 						songJson.format = 'astro_v0.3_convert';

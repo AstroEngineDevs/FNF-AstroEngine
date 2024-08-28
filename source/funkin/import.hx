@@ -81,6 +81,9 @@ import sys.io.File;
 // Haxe
 import haxe.*;
 
+//Openfl
+import openfl.utils.Assets as OpenFlAssets;
+
 // Flixel
 import flixel.sound.FlxSound;
 import flixel.FlxG;

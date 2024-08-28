@@ -608,26 +608,26 @@ class FunkinLua
 			#end
 		});
 
-		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1)
-		{
-			if (name == null || name.length < 1)
-				name = PlayState.SONG.song;
+		Lua_helper.add_callback(lua, "loadSong", function(?name:String = null, ?difficultyNum:Int = -1) {
+			if(name == null || name.length < 1)
+				name = Song.loadedSongName;
 			if (difficultyNum == -1)
 				difficultyNum = PlayState.storyDifficulty;
 
 			var poop = Highscore.formatSong(name, difficultyNum);
-			PlayState.SONG = Song.loadFromJson(poop, name);
+			Song.loadFromJson(poop, name);
 			PlayState.storyDifficulty = difficultyNum;
-			game.persistentUpdate = false;
+			FlxG.state.persistentUpdate = false;
 			LoadingState.loadAndSwitchState(new PlayState());
 
 			FlxG.sound.music.pause();
 			FlxG.sound.music.volume = 0;
-			if (game.vocals != null)
+			if(game != null && game.vocals != null)
 			{
 				game.vocals.pause();
 				game.vocals.volume = 0;
 			}
+			FlxG.camera.followLerp = 0;
 		});
 
 		Lua_helper.add_callback(lua, "loadGraphic", function(variable:String, image:String, ?gridX:Int = 0, ?gridY:Int = 0)

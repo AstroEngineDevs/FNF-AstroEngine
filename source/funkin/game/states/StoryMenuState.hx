@@ -363,11 +363,10 @@ class StoryMenuState extends MusicBeatState
 			}
 
 			var directory = StageData.forceNextDirectory;
-			//LoadingState.loadNextDirectory();
+			LoadingState.loadNextDirectory();
 			StageData.forceNextDirectory = directory;
-			Paths.setCurrentLevel(directory);
 
-		//	LoadingState.prepareToSong();
+			LoadingState.prepareToSong();
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
 				#if !SHOW_LOADING_SCREEN FlxG.sound.music.stop(); #end

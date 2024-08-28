@@ -4,7 +4,6 @@ import flixel.FlxBasic;
 import flixel.util.FlxSort;
 import flixel.util.FlxDestroyUtil;
 import flixel.addons.display.FlxPieDial;
-
 typedef CutsceneEvent = {
 	var time:Float;
 	var func:Void->Void;
@@ -74,7 +73,6 @@ class CutsceneHandler extends FlxBasic
 		
 		if(_canSkip && cutsceneTime > 0.1)
 		{
-			@:privateAccess
 			if(Controls.instance.pressed('accept'))
 				holdingTime = Math.max(0, Math.min(_timeToSkip, holdingTime + elapsed));
 			else if (holdingTime > 0)

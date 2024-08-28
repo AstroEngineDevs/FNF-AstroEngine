@@ -382,6 +382,7 @@ class FreeplayState extends MusicBeatState
 			if (FlxG.keys.pressed.SHIFT){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
+				LoadingState.prepareToSong();
 				LoadingState.loadAndSwitchState(new PlayState());
 			}
 

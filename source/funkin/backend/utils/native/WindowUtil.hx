@@ -25,6 +25,10 @@ class WindowUtil
 	public static function darkMode(enable:Bool)
 	{
 		trace('Darkmode ${enable ? 'Enabled' : 'Disabled'}');
+
+		// Windows 10 support?
+		lime.app.Application.current.window.borderless = true;
+		lime.app.Application.current.window.borderless = false;
 	}
 	#end
 

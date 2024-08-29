@@ -1,32 +1,33 @@
 package funkin.backend.utils.native;
 
-import flixel.input.mouse.FlxMouseEvent;
-import flixel.FlxSprite;
+import flixel.input.mouse.*;
 
-typedef MouseUtilStruc = {
-    // Mouse shit
-    var onClick:FlxSprite->Void; 
-    var onHover:Void ->Void;//clicklmao
+typedef MouseUtilStruc =
+{
+	// Mouse shit
+	var onClick:flixel.FlxSprite->Void;
+	var onHover:Void->Void; // clicklmao
 
-    // Selected Smth
-    var selectedSomethin:Bool;
-    var selectedSomethinMouse:Bool;
-} 
+	// Selected Smth
+	var selectedSomethin:Bool;
+	var selectedSomethinMouse:Bool;
+}
 
-class MouseUtil {
-    public static function MOUSESUPPORT(spr:FlxSprite, data:MouseUtilStruc)
-        {
-            if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
-            {
-                FlxMouseEvent.add(spr, null, data.onClick, function(_)
-                {
-                    new FlxTimer().start(0.01, function(tmr:FlxTimer) data.selectedSomethinMouse = true);
-    
-                    if (!data.selectedSomethin && data.selectedSomethinMouse)
-                    {
-                        data.onHover();
-                    }
-                });
-            }
-        }
+class MouseUtil
+{
+	private static var globalManager:FlxMouseEventManager = new FlxMouseEventManager();
+
+	public static function MOUSESUPPORT(spr:flixel.FlxSprite, data:MouseUtilStruc)
+	{
+		if (ClientPrefs.data.mouseEvents && !ClientPrefs.data.lowQuality)
+		{
+			globalManager.add(spr, null, data.onClick, function(_)
+			{
+				new FlxTimer().start(0.01, function(tmr:FlxTimer) data.selectedSomethinMouse = true);
+
+				if (!data.selectedSomethin && data.selectedSomethinMouse)
+					data.onHover();
+			});
+		}
+	}
 }

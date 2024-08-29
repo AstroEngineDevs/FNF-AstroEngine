@@ -88,6 +88,8 @@ import funkin.game.Init.Volume;
 	public var showRatingStats:Bool = true;
 	public var darkMode:Bool = false;
 
+	public var gayFurryStuff:Bool = false;
+
 	public var stats:Map<String, Dynamic> = ['Max Misses' => 0, 'Max Score' => 0];
 
 	public var achievementsMap:Map<String, Bool> = new Map<String, Bool>();

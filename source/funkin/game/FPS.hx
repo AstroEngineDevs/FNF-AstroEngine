@@ -73,7 +73,7 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount)
 		{
-			text = "FPS: " + currentFPS;
+			text = '${ClientPrefs.data.gayFurryStuff ? "owo's per seconds" : 'FPS'}: $currentFPS';
 			
 			var memoryMegas:Float = 0;
 

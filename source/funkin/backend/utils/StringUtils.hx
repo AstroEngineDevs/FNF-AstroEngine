@@ -10,10 +10,17 @@ class StringUtils
 	**/
 	public inline static function formatText(x:String, ?y:String = '-'):String
 	{
-		return StringTools.replace(x, y, " ")
-			.split(" ")
-			.map(s -> s.charAt(0).toUpperCase() + s.substr(1))
-			.join(" ");
+		return StringTools.replace(x, y, " ").capitalize();
+	}
+
+	/**
+	 * Capitalizes Text
+	 * @param x Input
+	 * @return Converted String 
+	**/
+	public inline static function capitalize(x:String):String
+	{
+		return x.split(" ").map(s -> s.charAt(0).toUpperCase() + s.substr(1)).join(" ");
 	}
 
 	/**

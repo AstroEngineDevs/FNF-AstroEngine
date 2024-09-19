@@ -34,7 +34,7 @@ jobs:
       - name: Compile
         run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4
         with:
           name: linuxBuild
           path: export/release/linux/bin

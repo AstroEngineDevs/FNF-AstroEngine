@@ -40,12 +40,14 @@ class WindowUtil
 
 	public static function setTitle(?s:String, ?normal:Bool = true)
 	{
-		if (s == null)
+		if (s != null)
 		{
-			if (normal)
+			if (normal)// dis it problem 
 				Application.current.window.title = Application.current.meta.get('name') + " - " + s;
 			else
 				Application.current.window.title = s;
+		} else {
+			Application.current.window.title = Application.current.meta.get('name');
 		}
 	}
 
